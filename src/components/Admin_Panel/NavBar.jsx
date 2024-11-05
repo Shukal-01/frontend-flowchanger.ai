@@ -11,7 +11,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 
-
 const NavBar = ({ handleToggleSideBar, toggleSideBar }) => {
 
   const handleAddClass = () => {
@@ -33,9 +32,8 @@ const NavBar = ({ handleToggleSideBar, toggleSideBar }) => {
           <SearchIcon className="absolute right-[8px] top-[10px] cursor-pointer" />
         </div>
         <img src={photo} alt="" className="cursor-pointer" />
-
-
-      </div>
+        
+</div>
     </div>
   );
 };
