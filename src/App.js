@@ -39,7 +39,7 @@ import Reviewfine from "./pages/Admin_Panel/StaffSection/Attendance/Reviewfine";
 import Overtime from "./pages/Admin_Panel/StaffSection/Attendance/Overtime";
 import Project_Summary from "./pages/Admin_Panel/Projects/Project_Summary";
 import ProjectsOverview from "./pages/Admin_Panel/Projects/Project_overview";
-import Projects from './pages/Admin_Panel/Projects/Projects';
+import Projects from "./pages/Admin_Panel/Projects/Projects";
 import Taskview from "../src/pages/Admin_Panel/Tasks/Taskview";
 import Clients from "../src/pages/Admin_Panel/Clients/Clients";
 import NewTicket from "./pages/Admin_Panel/Projects/NewTicketForm";
@@ -66,9 +66,9 @@ import ExpenseEdit from "./pages/Admin_Panel/ExpensesClient/ExpenseEdit";
 import ExpensePage from "./pages/Admin_Panel/ExpensesClient/ExpensePage";
 import AddNewClient from "../src/pages/Admin_Panel/Clients/AddNewClient";
 import EditClient from "../src/pages/Admin_Panel/Clients/EditClient";
-import Subscription from '../src/pages/Admin_Panel/Subscription Plan/Subscription'
-import Buy_plan from '../src/pages/Admin_Panel/Subscription Plan/Pricing Plans/Plan'
-import CalenderWeekly from './pages/Admin_Panel/Calender/CalenderWeekly'
+import Subscription from "../src/pages/Admin_Panel/Subscription Plan/Subscription";
+import Buy_plan from "../src/pages/Admin_Panel/Subscription Plan/Pricing Plans/Plan";
+import CalenderWeekly from "./pages/Admin_Panel/Calender/CalenderWeekly";
 // import Task from "./Admin/pages/Project/Task";
 import Task from "./pages/Admin_Panel/Projects/Task";
 import ClientHeader from "./components/Client_Panel/ClientHeader";
@@ -79,19 +79,19 @@ import PayrollMenu from "../src/pages/Admin_Panel/payroll/PayrollMenu";
 import CalenderHeader from "./pages/Admin_Panel/Calender/CalenderHeader";
 import RunPayroll from "../src/pages/Admin_Panel/payroll/RunPayroll";
 import StatusMainPage from "../src/pages/Admin_Panel/statustask/StatusMainPage";
-import Department_Details from '../src/pages/Admin_Panel/Department/DepartmentDetails';
+import Department_Details from "../src/pages/Admin_Panel/Department/DepartmentDetails";
 import AdminChatInterface from "./pages/Admin_Panel/Chats/AdminChatInterFace";
 import StaffChatInterface from "./pages/Staff_Panel/StaffChatInterface";
 import ClientChatInterface from "./pages/Client_Panel/ClientChatInterFace";
 import ResetPassword from "./pages/Admin_Panel/authentication/steps/ResetPassword";
 import LoginPage from "../src/pages/Admin_Panel/authentication/steps/login";
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from "./ProtectedRoute";
 import DashBoard from "./pages/Admin_Panel/DashBoard";
+import Login from "./pages/Staff_Panel/login/Login";
 
 // import StatusMainPage from "../src/pages/Admin_Panel/statustask/StatusMainPage";
 const App = () => {
   const [toggleSideBar, setToggleSideBar] = useState(true);
-
 
   const handleToggleSideBar = () => {
     setToggleSideBar(!toggleSideBar);
@@ -101,7 +101,6 @@ const App = () => {
     return (
       <>
         <Outlet />
-
       </>
     );
   }
@@ -123,7 +122,6 @@ const App = () => {
   }
 
   function Editstaff() {
-
     return (
       <>
         <div className="">
@@ -153,8 +151,8 @@ const App = () => {
         <div className="flex">
           <div className="">
             {toggleSideBar && <SidebarClient toggleSideBar={toggleSideBar} />}
-          </div>``
-
+          </div>
+          ``
           {/* container for navbar and outlet */}
           <div className={`flex flex-col  flex-grow overflow-hidden`}>
             <ClientHeader
@@ -166,18 +164,16 @@ const App = () => {
                 <Outlet />
               </div>
             </main>
-            
           </div>
         </div>
       </>
     );
   }
 
-
   function Calender_Layout() {
     return (
       <>
-        <div className="flex w-full  flex-row" >
+        <div className="flex w-full  flex-row">
           <div className="flex min-h-screen ">
             <SideBar />
           </div>
@@ -187,7 +183,6 @@ const App = () => {
               <CalenderHeader />
               <Outlet />
             </>
-
           </div>
         </div>
       </>
@@ -205,7 +200,6 @@ const App = () => {
               <PayrollMenu />
               {/* <Outlet /> */}
             </div>
-
           </div>
         </div>
       </>
@@ -221,7 +215,7 @@ const App = () => {
             <Route path="/project-overview" element={<ProjectsOverview />} />
             <Route path="/new-ticket" element={<NewTicket />} />
             {/* this is changed on 04-11-2024*/}
-            <Route path = "/staff-menu" element = {<StaffMenu/>} />
+            <Route path="/staff-menu" element={<StaffMenu />} />
             {/* end */}
             <Route path="/addnewclient" element={<AddNewClient />} />
             <Route path="/editclient" element={<EditClient />} />
@@ -236,7 +230,10 @@ const App = () => {
             <Route path="/overtime" element={<Overtime />} />
             <Route path="/reviewfine" element={<Reviewfine />} />
             <Route path="/worktime" element={<Worktime />} />
-            <Route path="/attendence_summary" element={<Attendence_summary />} />
+            <Route
+              path="/attendence_summary"
+              element={<Attendence_summary />}
+            />
             <Route path="/project_summary" element={<Project_Summary />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/overtime" element={<Overtime />} />
@@ -248,11 +245,15 @@ const App = () => {
             <Route path="/task" element={<Task />} />
             <Route path="/adddepartment" element={<AddDepartment />} />
             <Route path="/create-new-project" element={<Add_Project />}></Route>
-            <Route path="/department-details" element={<Department_Details />} />
+            <Route
+              path="/department-details"
+              element={<Department_Details />}
+            />
             <Route path="/taskstatus" element={<Task_Status />} />
             <Route path="chats/admin" element={<AdminChatInterface />} />
             <Route path="chats/client" element={<ClientChatInterface />} />
             <Route path="chats/staff" element={<StaffChatInterface />} />
+            <Route path="chats/staff/login" element={<Login />} />
             <Route path="/status-main-page" element={<StatusMainPage />} />
             <Route path="/edittaskstatus" element={<Edit_Task_Status />} />
             <Route path="/edit-project" element={<Edit_Project />} />
@@ -267,8 +268,6 @@ const App = () => {
             <Route path="/subscription-plan" element={<Subscription />} />
             <Route path="/subscription-plan/buy-plan" element={<Buy_plan />} />
           </Route>
-         
-
         </Route>
 
         <Route element={<Editstaff />}>
@@ -277,15 +276,20 @@ const App = () => {
           <Route path="/attendance-detail/:id" element={<Editattendance />} />
           <Route path="/employee-detail/:id" element={<EmployementDetail />} />
           <Route path="/user-permission/:id" element={<UserPermission />} />
-          <Route path="/leavepolicy-detail/:id" element={<EditLeavePolicies />} />
+          <Route
+            path="/leavepolicy-detail/:id"
+            element={<EditLeavePolicies />}
+          />
           <Route path="/custom-detail/:id" element={<CustomDetail />} />
-          <Route path="/salary-details-edit/:id" element={<EditSalaryDetails />} />
+          <Route
+            path="/salary-details-edit/:id"
+            element={<EditSalaryDetails />}
+          />
           <Route path="/edit-penalty/:id" element={<EditPenalty />} />
           <Route path="/salary-overview/:id" element={<SalaryOverview />} />
           <Route path="/staff-salary-summary" element={<StaffSalarySummry />} />
 
           <Route
-
             path="/background-verification/:id"
             element={<BackgroundVerification />}
           />
@@ -295,7 +299,6 @@ const App = () => {
           <Route path="/uan" element={<VerifyUan />} />
           <Route path="/face" element={<VerifyFace />} />
           <Route path="/address" element={<VerifyAddress />} />
-
         </Route>
         <Route element={<Client_Panel />}>
           {/* <Route path="/sidebarclient" element={<SidebarClient />} /> */}
@@ -307,7 +310,6 @@ const App = () => {
             element={<BackgroundVerification />}
           />
           <Route path="/verify-aadhar" element={<VerifyAadhaar />} />
-
         </Route>
 
         <Route element={<Payroll_Summary />}>
@@ -323,19 +325,18 @@ const App = () => {
         </Route>
 
         <Route element={<AuthLayout />}>
-        <Route path="/authentication" element={<MultiStepForm />} />
+          <Route path="/authentication" element={<MultiStepForm />} />
           <Route path="/authentication/login" element={<LoginPage />} />
           <Route path="/authentication/reset" element={<ResetPassword />} />
-          <Route path="/authentication/request-password" element={<RequestPassword />} />
+          <Route
+            path="/authentication/request-password"
+            element={<RequestPassword />}
+          />
         </Route>
 
         {/* <Route element={<CustomerPanel />}>
           <Route path="/customer-panel"></Route>
         </Route> */}
-
-
-
-
       </Routes>
     </BrowserRouter>
   );
