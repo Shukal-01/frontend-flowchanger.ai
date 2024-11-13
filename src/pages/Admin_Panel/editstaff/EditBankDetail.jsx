@@ -4,41 +4,44 @@ import { useParams } from 'react-router';
 
 
 const PersonalDetail = () => {
-    const {id}= useParams();
+
+
+    const { id } = useParams();
     console.log(id)
 
-    const {baseUrl,selectedStaff} = useGlobalContext()
+    const { baseUrl, selectedStaff } = useGlobalContext()
     const [isEditable, setIsEditable] = useState(false);
-    const [inputValue, setInputValue] = useState(selectedStaff?.BankDetails?.bank_name);
+    const [inputValue, setInputValue] = useState(selectedStaff?.staffDetails?.BankDetails?.bank_name);
 
-    const [inputValue1, setInputValue1] = useState(selectedStaff?.BankDetails?.ifsc_code);
+
+    const [inputValue1, setInputValue1] = useState(selectedStaff?.staffDetails?.BankDetails?.ifsc_code);
 
     const [inputValue2, setInputValue2] = useState("--");
 
     const [inputValue3, setInputValue3] = useState("--");
 
-    const [inputValue4, setInputValue4] = useState(selectedStaff?.BankDetails?.account_number);
+    const [inputValue4, setInputValue4] = useState(selectedStaff?.staffDetails?.BankDetails?.account_number);
 
-    const [inputValue5, setInputValue5] = useState(selectedStaff?.BankDetails?.branch_name);
+    const [inputValue5, setInputValue5] = useState(selectedStaff?.staffDetails?.BankDetails?.branch_name);
 
 
     const [isEditable6, setIsEditable6] = useState(false);
-    const [inputValue6, setInputValue6] = useState(selectedStaff?.UpiDetails?.UpiId);
+    const [inputValue6, setInputValue6] = useState(selectedStaff?.staffDetails?.UpiDetails?.UpiId);
 
     // Function to toggle between editable and readonly mode
-    const handleEditClick =async () => {
-        if(isEditable){
-            const response= await fetch(baseUrl+"bank-details/"+selectedStaff.id, {
-                method:"POST",
-                headers:{
-                    "content-type":"application/json"
+    const handleEditClick = async () => {
+        if (isEditable) {
+            const response = await fetch(baseUrl + "bank-details/" + selectedStaff.staffDetails.id, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
                 },
-                body:JSON.stringify({bank_name:inputValue,account_number:inputValue4,branch_name:inputValue5,ifsc_code:inputValue1})
+                body: JSON.stringify({ bank_name: inputValue, account_number: inputValue4, branch_name: inputValue5, ifsc_code: inputValue1 })
             })
-            if(response.status==201){
+            if (response.status == 201) {
                 alert("Bank Details Updated Successfully")
             }
-            else{
+            else {
                 alert("An Error Accured")
             }
 
@@ -51,21 +54,21 @@ const PersonalDetail = () => {
     };
 
     const handleEditClick2 = async () => {
-        if(isEditable6){
-            const response = await fetch(baseUrl+"upi-details",{
-                method:"POST",
-                headers:{
-                    "Content-type":"application/json"
+        if (isEditable6) {
+            const response = await fetch(baseUrl + "upi-details", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
                 },
-                body:JSON.stringify({
-                    staffId:selectedStaff.id,
-                    UpiId:inputValue6
+                body: JSON.stringify({
+                    staffId: selectedStaff.staffDetails.id,
+                    UpiId: inputValue6
                 })
             })
-            if(response.status == 200){
+            if (response.status == 200) {
                 alert("UPI Details Added Successfully")
             }
-            else{
+            else {
                 alert("Internal Server Error")
             }
         }
@@ -122,7 +125,7 @@ const PersonalDetail = () => {
     return (
         <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] p-[20px] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
-            <h3 className='font-medium'>Bank Details</h3>
+                <h3 className='font-medium'>Bank Details</h3>
                 <button className='second-btn'>Update Details</button>
             </div>
 
@@ -165,7 +168,7 @@ const PersonalDetail = () => {
                 </div>
 
                 <div className='flex w-[100%] gap-[10px] justify-between  xl:mb-4 mb-[6px] xl:flex-row flex-col'>
-                  
+
                     <div className='w-[100%]  xl:w-[48%] 2xl:w-[48%] '>
                         <label className='text-[14px]'>Account Number</label><br />
                         <input
@@ -204,7 +207,7 @@ const PersonalDetail = () => {
 
 
 
-     
+
 
 
 

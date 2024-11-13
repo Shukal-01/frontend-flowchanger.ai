@@ -19,13 +19,20 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
   const { isAuthenticated, setIsAuthenticated } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
   const { openToast, baseUrl } = useGlobalContext();
   const navigate = useNavigate();
 
-  console.log(isAuthenticated);
-
+  const handleGoogleLogin = () => {
+    try {
+      loginWithRedirect();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleLoggedIn = async (loginInfo) => {
     console.log(loginInfo);
+    setIsLoading(true);
     try {
       const response = await fetch(baseUrl + "admin/login", {
         method: "POST",
@@ -34,32 +41,26 @@ const LoginPage = () => {
         },
         body: JSON.stringify(loginInfo),
       });
-      console.log(response);
       const result = await response.json();
       const { token } = result;
       if (response.status === 200 && token) {
         openToast("You have successfully logged in", "success");
         console.log("You have logged in");
         Cookies.set("flowChangerAuthToken", token);
+        setIsLoading(false);
         return true;
       } else {
         console.log("there is no token");
         openToast(result.message || "Login failed", "error");
         console.log("can't logged in");
+        setIsLoading(false);
         return false;
       }
     } catch (error) {
       console.error("Login error:", error);
       openToast("An error occurred. Please try again.", "error");
+      setIsLoading(false);
       return false;
-    }
-  };
-
-  const handleGoogleLogin = () => {
-    try {
-      loginWithRedirect();
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -86,7 +87,7 @@ const LoginPage = () => {
               className="bg-black w-[350px] h-[200px]"
             />
           </div>
-          <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-300">
             <h2 className="text-2xl font-bold mb-6 text-center">Log in</h2>
             <button
               onClick={handleGoogleLogin}
@@ -127,14 +128,17 @@ const LoginPage = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-purple-600 text-white py-4 px-4 hover:bg-purple-500 transition duration-300 rounded-full"
+                disabled={isLoading}
+                className={`w-full ${
+                  isLoading ? "bg-purple-400" : "bg-purple-600"
+                } text-white py-4 px-4 hover:bg-purple-500 transition duration-300 rounded-full`}
               >
                 Log in
               </button>
             </form>
             <div className="text-center mt-4 flex flex-col justify-center gap-y-3">
               <a href="#" className="text-purple-600 hover:text-purple-500">
-                <span className="text-gray-400">Forgot password?</span>
+                <span className="text-gray-400 mr-2">Forgot password?</span>
                 <Link to="/authentication/request-password">Reset</Link>
               </a>
               <a href="#" className="text-purple-600 hover:text-purple-500">

@@ -4,8 +4,10 @@ import ImageUploading from "react-images-uploading";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import flowChangerLogo from "../../../../Assets/Images/flowchangerAINew.jpeg";
+import { useGlobalContext } from "../../../../Context/GlobalContext";
 
 const Step7 = () => {
+  const { baseUrl } = useGlobalContext();
   const [searchParams] = useSearchParams();
   const email = searchParams.get("email");
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ const Step7 = () => {
       infoData.append(key, extraInfo[key]);
     }
     try {
-      const response = await fetch("http://localhost:5000/api/admin/update", {
+      const response = await fetch(baseUrl + "admin/update", {
         method: "PUT",
         body: infoData,
       });
@@ -81,7 +83,7 @@ const Step7 = () => {
         <div className="bg-white rounded-lg p-8 border border-gray-300 shadow-2xl">
           <div className="flex flex-col justify-center items-center gap-y-0">
             <h2 className="text-3xl font-medium mb-3 text-center mt-5">
-              Upload your profile picture
+              Upload Your Company Logo
             </h2>
           </div>
 

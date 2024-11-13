@@ -3,7 +3,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
 
-export default function Login() {
+function LoginStaff() {
   const { baseUrl, openToast } = useGlobalContext();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
@@ -93,3 +93,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default LoginStaff;

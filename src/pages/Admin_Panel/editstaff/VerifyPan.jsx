@@ -9,27 +9,28 @@ const VerifyPan = () => {
     const { baseUrl, selectedStaff } = useGlobalContext();
 
 
+
+    
     async function submitPan() {
-        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.id + "/verify/pan", {
+        const newFormData = new FormData();
+        newFormData.append("pan_number", bgVerification);
+
+        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.staffDetails.id + "/verify/pan", {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/form-data",
-            },
-            body: JSON.stringify({ pan_number: bgVerification })
+            body: newFormData
         });
 
         console.log(response);
 
         if (response.status === 201) {
-            const result = await response.json()
+            const result = await response.json();
             console.log(result);
             closeModal2();
-            alert("PAN successfully updated");
+            alert("Pan successfully updated");
         } else {
             alert("An error occurred");
         }
     }
-
     let subtitle;
 
     const [modalIsOpen2, setIsOpen2] = React.useState(false);
@@ -49,7 +50,7 @@ const VerifyPan = () => {
     const fileInputRef = useRef(null);
 
     const handleUploadClick = () => {
-        fileInputRef.current.click(); 
+        fileInputRef.current.click();
     };
 
     // Function to handle file selection
@@ -109,7 +110,7 @@ const VerifyPan = () => {
                     <div className='modal-field field-modal p-[10px] border border-t'>
                         <label className='text-[13px] xl:text-[14px] font-medium'>PAN
                         </label><br />
-                        <input type='text' placeholder="Enter PAN" className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' value={bgVerification} onChange={(e) => setBgVerification(e.target.value)}/><br />
+                        <input type='text' placeholder="Enter PAN" className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' value={bgVerification} onChange={(e) => setBgVerification(e.target.value)} /><br />
 
 
                     </div>

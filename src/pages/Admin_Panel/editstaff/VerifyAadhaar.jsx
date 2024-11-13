@@ -14,18 +14,18 @@ const VerifyAadhaar = () => {
 
 
     async function submitAadhar() {
-        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.id + "/verify/aadhaar", {
+        const newFormData = new FormData();
+        newFormData.append("aadhaar_number", bgVerification);
+
+        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.staffDetails.id + "/verify/aadhaar", {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/form-data",
-            },
-            body: JSON.stringify({ aadhaar_number: bgVerification }) // send the formatted data
+            body: newFormData
         });
 
         console.log(response);
 
         if (response.status === 201) {
-            const result = await response.json()
+            const result = await response.json();
             console.log(result);
             closeModal2();
             alert("Aadhaar successfully updated");
@@ -33,6 +33,7 @@ const VerifyAadhaar = () => {
             alert("An error occurred");
         }
     }
+
 
     let subtitle;
 
@@ -115,7 +116,7 @@ const VerifyAadhaar = () => {
                     <div className='modal-field field-modal p-[10px] border border-t'>
                         <label className='text-[13px] xl:text-[14px] font-medium'>Aadhaar
                         </label><br />
-                        <input type='text' placeholder="0000-0000-0000" className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' value={bgVerification} onChange={(e) => setBgVerification(e.target.value)}/><br />
+                        <input type='text' placeholder="0000-0000-0000" className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' value={bgVerification} onChange={(e) => setBgVerification(e.target.value)} /><br />
 
 
                     </div>

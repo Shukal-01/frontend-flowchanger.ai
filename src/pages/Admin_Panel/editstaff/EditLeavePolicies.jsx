@@ -42,7 +42,7 @@ const EditLeavePolicies = () => {
         };
 
 
-        const response = await fetch(baseUrl + "leave-policy/" + selectedStaff?.id, {
+        const response = await fetch(baseUrl + "leave-policy/" + selectedStaff?.staffDetails.id, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -70,7 +70,6 @@ const EditLeavePolicies = () => {
 
         console.log(data);
 
-
         const response = await fetch(baseUrl + "leave-policy/" + editingRow, {
             method: "PUT",
             headers: {
@@ -93,9 +92,10 @@ const EditLeavePolicies = () => {
     }
 
     const [fetchAllLeaveRequest, setFetchAllLeaveRequest] = useState([]);
-
+    console.log(selectedStaff);
+    
     async function getAllLeaveRequest() {
-        const response = await fetch(baseUrl + "leave-request/" + selectedStaff?.id, {
+        const response = await fetch(baseUrl + "leave-request/" + selectedStaff?.staffDetails?.id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -105,6 +105,7 @@ const EditLeavePolicies = () => {
 
         const result = await response.json();
         if (response.status === 200) {
+            console.log(result);
             console.log(result);
             setFetchAllLeaveRequest(result);
             alert("Policy update Successfully");
@@ -392,7 +393,7 @@ const EditLeavePolicies = () => {
                                     <tbody>
 
                                         {
-                                            selectedStaff?.LeavePolicy?.map(({ id, carry_forward_leaves, allowed_leaves, name }) => <tr key={id}>
+                                            selectedStaff?.staffDetails?.LeavePolicy?.map(({ id, carry_forward_leaves, allowed_leaves, name }) => <tr key={id}>
                                                 <td onClick={() => {
                                                     setEditingRow(id);
                                                     setUpdatePolicy({ carry_forward_leaves, allowed_leaves })

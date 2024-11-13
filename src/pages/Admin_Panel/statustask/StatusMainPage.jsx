@@ -10,11 +10,11 @@ const StatusMainPage = () => {
   return (
     <div>
         <Edit_Task_Status />
-        {/* <TaskType /> */}
-        <ProjectStatus />
-        <ProjectType />
-        <ProjectPriority />
         <TaskPriority/>
+        <ProjectStatus />
+        <ProjectPriority />
+        {/* <ProjectType /> */}
+        {/* <TaskType /> */}
     </div>
   )
 }

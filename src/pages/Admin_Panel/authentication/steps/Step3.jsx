@@ -28,23 +28,19 @@ const Step3 = () => {
   const submitOtp = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/" + "admin/verify-otp",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ otp: code.join(""), email: adminInfo.email }),
-        }
-      );
+      const response = await fetch(baseUrl + "admin/verify-otp", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ otp: code.join(""), email: adminInfo.email }),
+      });
 
       if (response.status === 200) {
         setIsLoading(false);
         openToast("OTP verified successfully!", "success");
         nextStep();
         setSearchParams({ step: 4, email: email });
-        sessionStorage.clear();
       } else {
         const result = await response.json();
         openToast(result.message || "OTP verification failed.", "error");

@@ -8,20 +8,19 @@ const VerifyUan = () => {
 
     const { baseUrl, selectedStaff } = useGlobalContext();
 
-
     async function submitUan() {
-        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.id + "/verify/uan", {
+        const newFormData = new FormData();
+        newFormData.append("uan_number", bgVerification);
+
+        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.staffDetails.id + "/verify/uan", {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/form-data",
-            },
-            body: JSON.stringify({ uan_number: bgVerification })
+            body: newFormData
         });
 
-        // console.log(response);
+        console.log(response);
 
         if (response.status === 201) {
-            const result = await response.json()
+            const result = await response.json();
             console.log(result);
             closeModal2();
             alert("UAN successfully updated");
@@ -30,6 +29,7 @@ const VerifyUan = () => {
         }
     }
 
+   
     let subtitle;
 
     const [modalIsOpen2, setIsOpen2] = React.useState(false);

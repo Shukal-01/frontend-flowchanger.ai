@@ -10,7 +10,7 @@ const Step2 = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const email = searchParams.get("email");
 
-  const { openToast } = useGlobalContext();
+  const { openToast, baseUrl } = useGlobalContext();
   const { nextStep, adminInfo, updateAdminInfo } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,12 +23,7 @@ const Step2 = () => {
 
   // Set form values from adminInfo when the component mounts
   useEffect(() => {
-    if (
-      adminInfo.first_name ||
-      adminInfo.last_name ||
-      adminInfo.mobile ||
-      adminInfo.password
-    ) {
+    if (adminInfo) {
       setValue("first_name", adminInfo.first_name);
       setValue("last_name", adminInfo.last_name);
       setValue("mobile", adminInfo.mobile);
@@ -37,8 +32,9 @@ const Step2 = () => {
   }, [adminInfo, setValue]);
 
   const handleInfoSubmission = async (updatedAdminInfo) => {
+    console.log(baseUrl);
     try {
-      const response = await fetch("http://localhost:5000/api/admin", {
+      const response = await fetch(baseUrl + "admin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,6 +53,7 @@ const Step2 = () => {
         openToast(result.message || "Internal server error", "error");
       }
     } catch (error) {
+      console.log(error);
       openToast("Error while submitting data:", error);
     }
   };

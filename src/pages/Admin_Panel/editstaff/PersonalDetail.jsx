@@ -7,7 +7,7 @@ const PersonalDetail = () => {
 
     const { baseUrl, selectedStaff } = useGlobalContext();
 
-    const {id}= useParams();
+    const { id } = useParams();
     console.log(id)
     const formatDate = (date) => {
         const d = new Date(date);
@@ -21,6 +21,23 @@ const PersonalDetail = () => {
         return [year, month, day].join('-');
     };
 
+    const [basicDetail, setBasicDetail] = useState({
+        name: "", // or a default value
+        job_title: "",
+        branch: "",
+        mobile: "",
+        login_otp: "",
+        gender: "",
+        official_email: "",
+        date_of_joining: "",
+        date_of_birth: "",
+        current_address: "",
+        permanent_address: "",
+        emergency_contact_name: "",
+        emergency_contact_mobile: "",
+        emergency_contact_relation: "",
+        emergency_contact_address: "",
+    });
     useEffect(() => {
         console.log(selectedStaff)
     }, [])

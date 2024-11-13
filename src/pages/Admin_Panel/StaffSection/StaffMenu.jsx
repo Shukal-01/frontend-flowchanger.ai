@@ -18,7 +18,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 import PeopleIcon from '@mui/icons-material/People';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 
-const StaffMenu = () => {
+const   StaffMenu = () => {
   const {staffTab,setStaffTab} = useGlobalContext()
   return (
     <div className="staff-menu ">
@@ -26,7 +26,7 @@ const StaffMenu = () => {
 
       <div className="tab-section mt-[30px]">
       <Tabs selectedIndex={staffTab} onSelect={(index) => setStaffTab(index)}>
-          <TabList className="flex   w-[100%] overflow-x-scroll  bg-[#FFFFFF]  rounded-[12px]  p-[4px] pb-[4px]  set-shadow ">
+          <TabList className="flex   w-[100%] overflow-x-auto  bg-[#FFFFFF]  rounded-[12px]  p-[4px] pb-[4px]  set-shadow ">
             <Tab>
               <div className="flex items-center  whitespace-nowrap mr-[20px]">
                 {/* <img src={group} /> */}

@@ -1,237 +1,141 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CachedIcon from '@mui/icons-material/Cached';
 import SearchIcon from '@mui/icons-material/Search';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import { useGlobalContext } from "../../../Context/GlobalContext";
+
 
 const Projects = () => {
-    const [openIndex, setOpenIndex] = useState(null);
+  const [isOpen1, setIsOpen1] = useState(false);
+ 
 
-    // Function to handle accordion toggling
-    const handleToggle = (index) => {
-        if (openIndex === index) {
-            setOpenIndex(null); // Close the accordion if clicked again
-        } else {
-            setOpenIndex(index); // Open the accordion
-        }
-    };
-    //salary dropdown
-    const [isOpen1, setIsOpen1] = useState(false);
+  const toggleDropdown1 = () => setIsOpen1(!isOpen1);
 
+  
+  const { baseUrl } = useGlobalContext();
+const [isTableOpen, setIsTableOpen] = useState(false);
+const [projectDetails, setProjectDetails] = useState([]);
 
-
-    const toggleDropdown1 = () => {
-        setIsOpen1(!isOpen1);
-    };
-
-    //salary dropdown
-
-
-
-    // Array of accordion items
-    const accordionItems = [
-        {
-            title:
-                <div>
-                    <table className="w-full">
-                        <thead className="tablehead">
-                            <tr className="rounded-lg">
-
-                            <th className="text-[12px] font-medium p-[8px] border-r whitespace-nowrap"><button className="p-[6px] rounded-lg bg-[orange]  mr-[7px] text-[white] ">To Do</button><span className="six-north">6</span></th>
-
-
-                                <th className="text-[12px] border-r   font-medium p-[10px] ">#</th>
-
-
-                                <th className="text-[12px] w-[250px] p-[12px] border-r font-medium whitespace-nowrap">Project Name</th>
-
-
-                                <th className="text-[12px] font-medium p-[12px]  border-r whitespace-nowrap	">Start Date</th>
-
-
-                                <th className="text-[12px] font-medium p-[12px]  border-r whitespace-nowrap	">Deadline</th>
-
-
-
-                                <th className="text-[12px] font-medium p-[12px] border-r whitespace-nowrap	">Members</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>,
-            content: (
-                <table className="w-full " >
-                    <tbody>
-
-                        <tr className="border-b border text-[#e5e7eb]">
-                            
-
-                                <td className="p-[10px] w-[100px]"><Link className="text-[10px]  text-[#47cc00] " to="/">Complete</Link></td>
-
-                                <td className="text-[12px] w-[80px] font-medium p-[10px] text-[#8a25b0]">43</td>
-
-
-
-                                <td className="flex flex-col w-[218px] p-[10px] break-words"><Link className="text-[11px] text-[#8a25b0]" to="/project-overview">soul relation intro</Link> <Link className="text-[9px] text-[#000]" to="/">#12 - DIVINE HEALING-AUG-2024 - DIVINE HEALING</Link></td>
-
-
-
-
-                                <td className="text-[12px] p-[10px] text-[black] w-[173px] whitespace-nowrap	">13-08-2024</td>
-
-                                <td className="text-[12px] p-[10px]  w-[173px] text-[black]   whitespace-nowrap	">13-08-2024</td>
-                                <td className="text-[12px] p-[10px] w-[173px] whitespace-nowrap text-[black]	">19-08-2024</td>
-
-
-
-
-
-
-
-                 
-
-
-                        </tr>
-                        <tr className="border-b border text-[#e5e7eb]">
-                            
-
-                                <td className="p-[10px] w-[100px]"><Link className="text-[10px]  text-[#47cc00] " to="/">Complete</Link></td>
-
-                                <td className="text-[12px] w-[80px] font-medium p-[10px] text-[#8a25b0]">43</td>
-
-
-
-                                <td className="flex flex-col w-[218px] p-[10px] break-words"><Link className="text-[11px] text-[#8a25b0]" to="/project-overview">soul relation intro</Link> <Link className="text-[9px] text-[#000]" to="/">#12 - DIVINE HEALING-AUG-2024 - DIVINE HEALING</Link></td>
-
-
-
-
-                                <td className="text-[12px] p-[10px] text-[black] w-[173px] whitespace-nowrap	">13-08-2024</td>
-
-                                <td className="text-[12px] p-[10px]  w-[173px] text-[black]   whitespace-nowrap	">13-08-2024</td>
-                                <td className="text-[12px] p-[10px] w-[173px] whitespace-nowrap text-[black]	">19-08-2024</td>
-
-
-
-
-
-
-
-                      
-
-
-                        </tr>
-                    </tbody>
-
-
-
-
-
-                </table>
-
-            )
-        },
-
-        //   { title: "2", content: "This is the content for item 2" },
-        //     { title: "3", content: "This is the content for item 3" },
-
-    ];
-    return (
-        <div className="">
-
-            <div className="bg-[#fff] p-[10px] project-fear">
-                <div className="mb-[14px]">
-
-                    <Link to="/create-new-project " className="text-[#fff] text-[14px] bg-[#8a25b0] focus-visible:outline-none focus:shadow-none mb-[10px]  focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  p-[8px] text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <AddIcon className="newadd" /> New Project</Link>
-                </div>
-
-                <div className="p-[20px] summary-border rounded-lg w-full  bg-white shadow-cs">
-                    <h2 className="font-medium mb-[10px] flex gap-[6px] items-center"> <LibraryBooksIcon />Projects</h2>
-
-                  
-                    <div className="flex justify-between items-center mb-[10px] project-export">
-                        <div className="flex gap-[10px] system-project">
-                            <div className="relative inline-block text-left">
-                                {/* Button to open/close the dropdown */}
-                                <button
-                                    className=" items-center p-[6px] text-left text-[12px] text-sm font-normal text-[black] select-pe  rounded-md  focus:outline-none"
-                                    onClick={toggleDropdown1}
-                                >
-                                    25 <KeyboardArrowDownIcon className="newadd" />
-                                </button>
-
-                                {/* Dropdown menu */}
-                                {isOpen1 && (
-                                    <div className="absolute right-0 w-[100%] z-10 mt-2  origin-top-right left-[0px] bg-white border border-gray-200 rounded-md shadow-cs">
-                                        <div className="" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                            <a
-                                                href="#"
-                                                className="block p-[5px] text-center text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem"
-                                            >
-                                                30
-                                            </a>
-                                            <a
-                                                href="#"
-                                                className="block p-[5px] text-center text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem"
-                                            >
-                                                40
-                                            </a>
-                                            <a
-                                                href="#"
-                                                className="block p-[5px] text-center text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem"
-                                            >
-                                                50
-                                            </a>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                            <p className=" relative p-[7px] text-[12px] w-[88px] font-medium summary-border rounded-md  "> Export <CachedIcon className="absolute cursor-pointer right-[5px] top-[9px] newadd2" /> </p>
-
-                        </div>
-                        <div className="relative summ-project">
-                            <input className="p-[8px] pr-[24px] rounded-2xl outline-none  summary-border text-[13px] summ-project " type="text" placeholder=" Search......." />
-                            <SearchIcon className="absolute newadd2 right-[8px] top-[11px]" />
-                        </div>
-                    </div>
-
-
-                    {accordionItems.map((item, index) => (
-                        <div key={index} className="bg-white shadow-cs rounded-lg all-setup">
-                            {/* Accordion Header */}
-                            <button
-                                onClick={() => handleToggle(index)}
-                                className="flex justify-between items-center w-full text-left text-gray-800 bg-gray-100 hover:bg-gray-200 focus:outline-none"
-                            >
-                                <span className="w-full">{item.title}</span>
-
-                            </button>
-
-                            {/* Accordion Content */}
-                            {openIndex === index && (
-                                <div className="mb-[10px] text-gray-700 bg-white">
-                                    {item.content}
-
-                                </div>
-                            )}
-                        </div>
-                    ))}
-
-
-
-                </div>
-
-
-
-
-            </div>
-        </div>
-    );
-    
+const toggleTable = () => {
+  setIsTableOpen(!isTableOpen);
 };
-export default Projects
+
+async function fetchProjectDetails() {
+  const result = await fetch(baseUrl + "project");
+  if (result.status === 200) {
+    const res = await result.json();
+    setProjectDetails(res.data);
+  } else {
+    alert("An Error Occurred");
+  }
+}
+
+useEffect(() => {
+  fetchProjectDetails();
+}, []);
+
+return (
+  <div className="p-4 bg-white shadow-lg rounded-md">
+    <div className="mb-4">
+    <Link
+          to="/create-new-project"
+          className="text-white text-sm bg-purple-600 hover:bg-purple-700 rounded-lg px-4 py-2 flex items-center gap-2 w-[150px]"
+        >
+          <AddIcon /> New Project
+        </Link>
+    </div>
+
+    <div className="p-4 border rounded-lg bg-white shadow-sm">
+      <h2 className="font-medium mb-4 flex items-center gap-2">
+        <LibraryBooksIcon /> Projects
+      </h2>
+
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex gap-4">
+          <div className="relative">
+            <button
+              className="flex items-center text-sm font-normal text-black rounded-md p-2"
+              onClick={toggleDropdown1}
+            >
+              25 <KeyboardArrowDownIcon />
+            </button>
+            {isOpen1 && (
+              <div className="absolute left-0 w-20 mt-2 bg-white border rounded-md shadow-md z-10">
+                {[30, 40, 50].map((num) => (
+                  <a
+                    key={num}
+                    href="#"
+                    className="block p-2 text-sm text-center text-gray-700 hover:bg-gray-100"
+                  >
+                    {num}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+          <button className="relative p-2 text-sm font-medium border rounded-md flex items-center gap-1">
+            Export <CachedIcon />
+          </button>
+        </div>
+        <div className="relative">
+          <input
+            className="p-2 pr-8 rounded-2xl border border-gray-300 text-sm"
+            type="text"
+            placeholder="Search..."
+          />
+          <SearchIcon className="absolute right-3 top-2 text-gray-500" />
+        </div>
+      </div>
+
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-full">
+          <div className="mb-4 w-full">
+            <div className="w-full">
+              <table className="w-full border-collapse">
+                <thead className="bg-gray-200 cursor-pointer" onClick={toggleTable}>
+                  <tr>
+                    <th className="text-[12px] text-center p-2 border-r font-medium w-[5%]whitespace-nowrap">#</th>
+                    <th className="text-[12px] text-center p-2 border-r font-medium w-[20%]whitespace-nowrap">Project Name</th>
+                    <th className="text-[12px] text-center p-2 border-r font-medium w-[15%]whitespace-nowrap">Customer</th>
+                    <th className="text-[12px] text-center p-2 border-r font-medium w-[20%]">Tags</th>
+                    <th className="text-[12px] text-center p-2 border-r font-medium w-[15%]whitespace-nowrap">Start Date</th>
+                    <th className="text-[12px] text-center p-2 border-r font-medium w-[15%]whitespace-nowrap">Deadline</th>
+                    <th className="text-[12px] text-center p-2 border-r font-medium w-[10%]whitespace-nowrap">Members</th>
+                    <th className="text-[12px] text-center p-2 border-r font-medium w-[10%]whitespace-nowrap">Status</th>
+                  </tr>
+                </thead>
+                {isTableOpen && (
+                  <tbody>
+                    {projectDetails?.map((project, index) => (
+                      <tr key={index} className="border-b hover:bg-gray-50">
+                        <td className="text-center p-2 text-[12px] w-[5%] whitespace-nowrap">{index + 1}</td>
+                        <td className="text-center p-2 text-[12px] w-[20%]whitespace-nowrap">{project.project_name}</td>
+                        <td className="text-center p-2 text-[12px] w-[15%]whitespace-nowrap">Customer</td>
+                        <td className="text-center p-2 text-[12px] w-[20%]whitespace-nowrap">
+                          {project.tags.map((tag, i) => (
+                            <span key={i} className="border rounded-md p-1 mr-2 text-[12px] inline-block">
+                              {tag}
+                            </span>
+                          ))}
+                        </td>
+                        <td className="text-center p-2 text-[12px] w-[15%]whitespace-nowrap">{project.start_date}</td>
+                        <td className="text-center p-2 text-[12px] w-[15%]whitespace-nowrap">{project.deadline}</td>
+                        <td className="text-center p-2 text-[12px] w-[10%]whitespace-nowrap">Members</td>
+                        <td className="text-center p-2 text-[12px] w-[10%]whitespace-nowrap">{project.status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+}
+export default Projects;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import CloseIcon from '@mui/icons-material/Close';
@@ -25,14 +25,15 @@ const EditPenalty = () => {
 
     const { baseUrl, selectedStaff } = useGlobalContext();
 
+    console.log(selectedStaff);
 
     async function submitEarlyLeavePolicy() {
-        const response = await fetch(baseUrl + "policy/early-leave", {
+        const response = await fetch(baseUrl + "policy/early", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ fineType: fineType, gracePeriodMins: Number(gracePeriodMins), fineAmountMins: Number(fineAmountMins), waiveOffDays: Number(waiveOffDays), staffId: selectedStaff.id})
+            body: JSON.stringify({ fineType: fineType, gracePeriodMins: Number(gracePeriodMins), fineAmountMins: Number(fineAmountMins), waiveOffDays: Number(waiveOffDays), staffId: selectedStaff.staffDetails.id })
         });
 
         console.log(response);
@@ -48,12 +49,12 @@ const EditPenalty = () => {
     }
 
     async function submitLateComingPolicy() {
-        const response = await fetch(baseUrl + "policy/late-coming", {
+        const response = await fetch(baseUrl + "policy/late", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ fineType: lateFineType, gracePeriodMins: Number(lateGracePeriodMins), fineAmountMins: Number(lateFineAmountMins), waiveOffDays: Number(lateWaiveOffDays), staffId: selectedStaff.id})
+            body: JSON.stringify({ fineType: lateFineType, gracePeriodMins: Number(lateGracePeriodMins), fineAmountMins: Number(lateFineAmountMins), waiveOffDays: Number(lateWaiveOffDays), staffId: selectedStaff.staffDetails.id })
         });
 
         console.log(response);
@@ -74,7 +75,7 @@ const EditPenalty = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ gracePeriodMins: Number(overGracePeriodMins), extraHoursPay: Number(extraHourPay), publicHolidayPay: Number(publicHolidayPay), weekOffPay: Number(weekOffPay), staffId: selectedStaff.id})
+            body: JSON.stringify({ gracePeriodMins: Number(overGracePeriodMins), extraHoursPay: Number(extraHourPay), publicHolidayPay: Number(publicHolidayPay), weekOffPay: Number(weekOffPay), staffId: selectedStaff.staffDetails.id })
         });
 
         console.log(response);
@@ -144,6 +145,25 @@ const EditPenalty = () => {
     }
     // when on click update leave policy
 
+    useEffect(() => {
+        setFineType(selectedStaff?.staffDetails?.EarlyLeavePolicy?.[0]?.fineType ?? "DAILY");
+        setGracePeriodMins(selectedStaff?.staffDetails?.EarlyLeavePolicy?.[0]?.gracePeriodMins ?? 0);
+        setFineAmountMins(selectedStaff?.staffDetails?.EarlyLeavePolicy?.[0]?.fineAmountMins ?? 0);
+        setWaiveOffDays(selectedStaff?.staffDetails?.EarlyLeavePolicy?.[0]?.waiveOffDays ?? 0);
+
+        setLateFineType(selectedStaff?.staffDetails?.LateComingPolicy?.[0]?.fineType ?? "DAILY");
+        setLateGracePeriodMins(selectedStaff?.staffDetails?.LateComingPolicy?.[0]?.gracePeriodMins ?? 0);
+        setLateFineAmountMins(selectedStaff?.staffDetails?.LateComingPolicy?.[0]?.fineAmountMins ?? 0);
+        setLateWaiveOffDays(selectedStaff?.staffDetails?.LateComingPolicy?.[0]?.waiveOffDays ?? 0);
+
+        setOverGracePeriodMins(selectedStaff?.staffDetails?.OverLeavePolicy?.[0]?.gracePeriodMins ?? 0);
+        setExtraHourPay(selectedStaff?.staffDetails?.OverLeavePolicy?.[0]?.extraHoursPay ?? 0);
+        setPublicHolidayPay(selectedStaff?.staffDetails?.OverLeavePolicy?.[0]?.publicHolidayPay ?? 0);
+        setWeekOffPay(selectedStaff?.staffDetails?.OverLeavePolicy?.[0]?.weekOffPay ?? 0);
+
+
+    }, [])
+
     return (
         <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] p-[20px] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
@@ -190,7 +210,7 @@ const EditPenalty = () => {
                     <label className='text-[14px]'>Fine Type</label>
                     <div className=' flex justify-between gap-4'>
                         <div className='flex  cursor-pointer border border-1  rounded-md  items-center gap-[10px] p-[8px] pl-[15px] mt-1 mb-[10px] w-[48%]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
-                            <input type="radio" id="daily" name="fav_language" checked onChange={(e) => setFineType("DAILY")}/>
+                            <input type="radio" id="daily" name="fav_language" checked onChange={(e) => setFineType("DAILY")} />
                             <label for="daily">Daily</label><br />
                         </div>
                         <div className='border border-1 cursor-pointer rounded-md flex items-center gap-[10px] p-[8px] pl-[15px] mt-1 mb-[10px] w-[48%]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
@@ -201,14 +221,14 @@ const EditPenalty = () => {
 
                     <label className='text-[14px]'>Grace Period (mins)
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={gracePeriodMins} onChange={(e) => setGracePeriodMins(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={gracePeriodMins} onChange={(e) => setGracePeriodMins(e.target.value)} />
                     <label className='text-[14px]'>Fine Amount (mins)
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={fineAmountMins} onChange={(e) => setFineAmountMins(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={fineAmountMins} onChange={(e) => setFineAmountMins(e.target.value)} />
 
                     <label className='text-[14px]'>Waive Off Days
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={waiveOffDays} onChange={(e) => setWaiveOffDays(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={waiveOffDays} onChange={(e) => setWaiveOffDays(e.target.value)} />
 
                     <div className='text-center pt-4 pb-4'>
                         <button className='second-btn' onClick={submitEarlyLeavePolicy}>Save Early Leave Policy</button>
@@ -241,25 +261,25 @@ const EditPenalty = () => {
                     <label className='text-[14px]'>Fine Type</label>
                     <div className=' flex justify-between gap-4'>
                         <div className=' border border-1 cursor-pointer rounded-md  flex items-center gap-[10px] p-[8px] pl-[15px] mt-1 mb-[10px] w-[48%]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
-                            <input type="radio" id="daily" name="fav_language" checked value="daily" onChange={(e) => setLateFineType("DAILY")}/>
+                            <input type="radio" id="daily" name="fav_language" checked value="daily" onChange={(e) => setLateFineType("DAILY")} />
                             <label for="daily">Daily</label><br />
                         </div>
                         <div className=' border border-1 cursor-pointer rounded-md  flex items-center gap-[10px] p-[8px] pl-[15px] mt-1 mb-[10px] w-[48%]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
-                            <input type="radio" id="hourly" name="fav_language" value="hourly" onChange={(e) => setLateFineType("DAILY")}/>
+                            <input type="radio" id="hourly" name="fav_language" value="hourly" onChange={(e) => setLateFineType("DAILY")} />
                             <label for="hourly">Hourly</label><br />
                         </div>
                     </div>
 
                     <label className='text-[14px]'>Grace Period (mins)
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateGracePeriodMins} onChange={(e) => setLateGracePeriodMins(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateGracePeriodMins} onChange={(e) => setLateGracePeriodMins(e.target.value)} />
                     <label className='text-[14px]'>Fine Amount (mins)
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateFineAmountMins} onChange={(e) => setLateFineAmountMins(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateFineAmountMins} onChange={(e) => setLateFineAmountMins(e.target.value)} />
 
                     <label className='text-[14px]'>Waive Off Days
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateWaiveOffDays} onChange={(e) => setLateWaiveOffDays(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateWaiveOffDays} onChange={(e) => setLateWaiveOffDays(e.target.value)} />
 
                     <div className='text-center pt-4 pb-4'>
                         <button className='second-btn' onClick={submitLateComingPolicy}>Save Late Coming Policy</button>
@@ -290,19 +310,19 @@ const EditPenalty = () => {
 
                     <label className='text-[14px]'>Grace Period (mins)
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={overGracePeriodMins} onChange={(e) => setOverGracePeriodMins(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={overGracePeriodMins} onChange={(e) => setOverGracePeriodMins(e.target.value)} />
                     <label className='text-[14px]'>Extra Hours Pay
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={extraHourPay} onChange={(e) => setExtraHourPay(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={extraHourPay} onChange={(e) => setExtraHourPay(e.target.value)} />
 
                     <label className='text-[14px]'>Public Holiday Pay
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={publicHolidayPay} onChange={(e) => setPublicHolidayPay(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={publicHolidayPay} onChange={(e) => setPublicHolidayPay(e.target.value)} />
 
                     <label className='text-[14px]'>Week Off Pay
 
                     </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={weekOffPay} onChange={(e) => setWeekOffPay(e.target.value)}/>
+                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={weekOffPay} onChange={(e) => setWeekOffPay(e.target.value)} />
 
 
                     <div className='text-center pt-4 pb-4'>

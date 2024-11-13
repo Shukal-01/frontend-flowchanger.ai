@@ -39,7 +39,7 @@ const Step4 = () => {
 
         <div className="bg-white rounded-lg p-8 border border-gray-300 shadow-4xl">
           <div className="flex flex-col justify-center items-center gap-y-0">
-            <h2 className="text-3xl font-medium mb-3 text-center mt-5">Upload your company logo</h2>
+            <h2 className="text-3xl font-medium mb-3 text-center mt-5">Upload Your Profile Picture</h2>
           </div>
           
           {/* Image Preview */}

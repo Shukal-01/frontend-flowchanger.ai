@@ -3,7 +3,13 @@ import "./Assets/css/roledetail.css";
 import "../src/Assets/css/new.css";
 import "../src/Assets/css/customer.css";
 import "../src/Assets/css/subscribe.css";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  useNavigate,
+} from "react-router-dom";
 import NavBar from "./components/Admin_Panel/NavBar";
 import SideBar from "./components/Admin_Panel/SideBar";
 // import Project from "./pages/Admin_Panel/Projects/Project_Data";
@@ -87,9 +93,10 @@ import ResetPassword from "./pages/Admin_Panel/authentication/steps/ResetPasswor
 import LoginPage from "../src/pages/Admin_Panel/authentication/steps/login";
 import ProtectedRoute from "./ProtectedRoute";
 import DashBoard from "./pages/Admin_Panel/DashBoard";
-import Login from "./pages/Staff_Panel/login/Login";
-
+import LoginStaff from "./pages/Staff_Panel/login/Login";
+import ClientLogin from "./pages/Client_Panel/ClientLogin";
 // import StatusMainPage from "../src/pages/Admin_Panel/statustask/StatusMainPage";
+
 const App = () => {
   const [toggleSideBar, setToggleSideBar] = useState(true);
 
@@ -173,7 +180,7 @@ const App = () => {
   function Calender_Layout() {
     return (
       <>
-        <div className="flex w-full  flex-row">
+        <div className="flex  w-full  flex-row">
           <div className="flex min-h-screen ">
             <SideBar />
           </div>
@@ -214,11 +221,9 @@ const App = () => {
             <Route path="/" element={<DashBoard />} />
             <Route path="/project-overview" element={<ProjectsOverview />} />
             <Route path="/new-ticket" element={<NewTicket />} />
-            {/* this is changed on 04-11-2024*/}
-            <Route path="/staff-menu" element={<StaffMenu />} />
-            {/* end */}
             <Route path="/addnewclient" element={<AddNewClient />} />
             <Route path="/editclient" element={<EditClient />} />
+            <Route path="/staff-menu" element={<StaffMenu />} />
             <Route path="/addrole" element={<AddRole />} />
             {/* <Route path="/role" element={<Role_Details />} /> */}
             <Route path="/editrole" element={<EditRole />} />
@@ -244,7 +249,7 @@ const App = () => {
             {/* <Route path="/taskdata" element={<Task_Data />} /> */}
             <Route path="/task" element={<Task />} />
             <Route path="/adddepartment" element={<AddDepartment />} />
-            <Route path="/create-new-project" element={<Add_Project />}></Route>
+            <Route path="/create-new-project" element={<Add_Project />} />
             <Route
               path="/department-details"
               element={<Department_Details />}
@@ -252,8 +257,10 @@ const App = () => {
             <Route path="/taskstatus" element={<Task_Status />} />
             <Route path="chats/admin" element={<AdminChatInterface />} />
             <Route path="chats/client" element={<ClientChatInterface />} />
+            <Route path="chats/client/login" element={<ClientLogin />} />
+
             <Route path="chats/staff" element={<StaffChatInterface />} />
-            <Route path="chats/staff/login" element={<Login />} />
+            <Route path="chats/staff/login" element={<LoginStaff />} />
             <Route path="/status-main-page" element={<StatusMainPage />} />
             <Route path="/edittaskstatus" element={<Edit_Task_Status />} />
             <Route path="/edit-project" element={<Edit_Project />} />

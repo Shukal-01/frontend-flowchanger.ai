@@ -171,9 +171,8 @@ const AddOneStaff = () => {
 
             <div className='flex xl:flex-row flex-col w-[100%] gap-[10px] justify-between mb-[10px] '>
                 <div className='w-[100%]  xl:w-[48%] 2xl:w-[48%]'>
-                <label className='text-[14px]'>Login OTP</label><br/>
-                <input type='number' value={otp} placeholder='Enter OTP' onChange={(e)=>{setOtp(e.target.value)}} className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'/>
-
+                <label className='text-[14px]'>Login Token</label><br/>
+                <input type='number' value={otp} placeholder='Login Token' onChange={(e)=>{setOtp(e.target.value)}} className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'/>
                 </div>
 
                 <div className='w-[100%]  xl:w-[48%] 2xl:w-[48%] '>

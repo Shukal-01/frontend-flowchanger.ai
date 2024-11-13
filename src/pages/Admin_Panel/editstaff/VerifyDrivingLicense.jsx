@@ -7,21 +7,19 @@ const VerifyDrivingLicense = () => {
     const [bgVerification, setBgVerification] = useState("");
 
     const { baseUrl, selectedStaff } = useGlobalContext();
-
-
     async function submitDrivingLicense() {
-        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.id + "/verify/driving_license", {
+        const newFormData = new FormData();
+        newFormData.append("driving_license_number", bgVerification);
+
+        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.staffDetails.id + "/verify/driving_license", {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/form-data",
-            },
-            body: JSON.stringify({ driving_license_number: bgVerification })
+            body: newFormData
         });
 
-        // console.log(response);
+        console.log(response);
 
         if (response.status === 201) {
-            const result = await response.json()
+            const result = await response.json();
             console.log(result);
             closeModal2();
             alert("Driving License successfully updated");
@@ -30,6 +28,7 @@ const VerifyDrivingLicense = () => {
         }
     }
 
+   
     let subtitle;
 
     const [modalIsOpen2, setIsOpen2] = React.useState(false);

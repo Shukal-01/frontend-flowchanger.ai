@@ -12,6 +12,46 @@ import { State } from "country-state-city";
 
 const EditSalaryDetails = () => {
 
+  const statesLWF = [
+    { state: "Andaman and Nicobar Islands", employeelwf: 0, employerlwf: 0 },
+    { state: "Andhra Pradesh", employeelwf: 2.5, employerlwf: 5.83 },
+    { state: "Arunachal Pradesh", employeelwf: 0, employerlwf: 0 },
+    { state: "Assam", employeelwf: 0, employerlwf: 0 },
+    { state: "Bihar", employeelwf: 0, employerlwf: 0 },
+    { state: "Chandigarh", employeelwf: 5, employerlwf: 20 },
+    { state: "Chhattisgarh", employeelwf: 2.5, employerlwf: 7.5 },
+    { state: "Dadra and Nagar Haveli", employeelwf: 0, employerlwf: 0 },
+    { state: "Daman and Diu", employeelwf: 0, employerlwf: 0 },
+    { state: "Delhi", employeelwf: 0.13, employerlwf: 0.38 },
+    { state: "Goa", employeelwf: 10, employerlwf: 30 },
+    { state: "Gujarat", employeelwf: 1, employerlwf: 2 },
+    { state: "Haryana", employeelwf: 20, employerlwf: 40 },
+    { state: "Himachal Pradesh", employeelwf: 0, employerlwf: 0 },
+    { state: "Jammu and Kashmir", employeelwf: 0, employerlwf: 0 },
+    { state: "Jharkhand", employeelwf: 0, employerlwf: 0 },
+    { state: "Karnataka", employeelwf: 1.67, employerlwf: 3.33 },
+    { state: "Kerala", employeelwf: 50, employerlwf: 50 },
+    { state: "Ladakh", employeelwf: 0, employerlwf: 0 },
+    { state: "Lakshadweep", employeelwf: 0, employerlwf: 0 },
+    { state: "Madhya Pradesh", employeelwf: 1.67, employerlwf: 5 },
+    { state: "Maharashtra", employeelwf: 4.17, employerlwf: 12.5 },
+    { state: "Manipur", employeelwf: 0, employerlwf: 0 },
+    { state: "Meghalaya", employeelwf: 0, employerlwf: 0 },
+    { state: "Mizoram", employeelwf: 0, employerlwf: 0 },
+    { state: "Nagaland", employeelwf: 0, employerlwf: 0 },
+    { state: "Odisha", employeelwf: 1.67, employerlwf: 3.33 },
+    { state: "Puducherry", employeelwf: 0, employerlwf: 0 },
+    { state: "Punjab", employeelwf: 5, employerlwf: 20 },
+    { state: "Rajasthan", employeelwf: 0, employerlwf: 0 },
+    { state: "Sikkim", employeelwf: 0, employerlwf: 0 },
+    { state: "Tamil Nadu", employeelwf: 1.67, employerlwf: 3.33 },
+    { state: "Telangana", employeelwf: 0.17, employerlwf: 0.42 },
+    { state: "Tripura", employeelwf: 0, employerlwf: 0 },
+    { state: "Uttar Pradesh", employeelwf: 0, employerlwf: 0 },
+    { state: "Uttarakhand", employeelwf: 0, employerlwf: 0 },
+    { state: "West Bengal", employeelwf: .50, employerlwf: 2.5 },
+  ];
+
   const initialOptions = [
     { id: 1, label: 'None' },
     {
@@ -31,7 +71,7 @@ const EditSalaryDetails = () => {
       items: [
         { id: 'basic_var', label: 'BASIC', checked: false },
         { id: 'hra_var', label: 'HRA', checked: false },
-        { id: 'da_var', label: 'Dearness Allowance', checked: false },
+         { id: 'da_var', label: 'Dearness Allowance', checked: false },
         { id: 'overtime_var', label: 'Overtime', checked: false },
         { id: 'incentive_var', label: 'Incentive', checked: false },
       ]
@@ -71,17 +111,16 @@ const EditSalaryDetails = () => {
   const [isOpen3, setIsOpen3] = useState(false);
   const [isOpen4, setIsOpen4] = useState(false);
 
-  const [calEmployerPF, setCalEmployerPF] = useState();
-  const [calEmployeePF, setCalEmployeePF] = useState();
-  const [calEmployerESI, setCalEmployerESI] = useState();
-  const [calEmployeeESI, setCalEmployeeESI] = useState();
-  const [calEmployerPFEDLIAndAdminCharges, setEmployerPFEDLIAndAdminCharges] = useState();
+  const [calEmployerPF, setCalEmployerPF] = useState(0);
+  const [calEmployeePF, setCalEmployeePF] = useState(0);
+  const [calEmployerESI, setCalEmployerESI] = useState(0);
+  const [calEmployeeESI, setCalEmployeeESI] = useState(0);
+  const [calEmployerPFEDLIAndAdminCharges, setEmployerPFEDLIAndAdminCharges] = useState(0);
 
   const [includeEmployerPF, setIncludeEmployerPF] = useState(false);
   const [includeEmployerESI, setIncludeEmployerESI] = useState(false);
   const [includeEmployerLWF, setIncludeEmployerLWF] = useState(false);
 
-  console.log(includeEmployerESI, includeEmployerPF, includeEmployerLWF);
 
   const [options1, setOptions1] = useState(initialOptions);
   const [options2, setOptions2] = useState(initialOptions3);
@@ -111,7 +150,6 @@ const EditSalaryDetails = () => {
     e.stopPropagation(); // Prevent event bubbling
     setSelectedOption((prevSelected) => {
       if (!prevSelected || prevSelected.id !== selectedOption.id) return prevSelected;
-
       return {
         ...prevSelected,
         items: prevSelected.items.map((item) =>
@@ -121,6 +159,10 @@ const EditSalaryDetails = () => {
     });
   };
 
+
+  const updateSalaryDetails = async () => {
+    console.log(calEarning, calDeductions, calCompliances);
+  };
 
   // console.log(selectedOption1, selectedOption2, selectedOption3, selectedOption4);
 
@@ -181,7 +223,7 @@ const EditSalaryDetails = () => {
   const { baseUrl, selectedStaff } = useGlobalContext();
   // console.log(selectedStaff);
   const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectSalaryType, setSelectSalaryType] = useState("");
+  const [selectSalaryType, setSelectSalaryType] = useState("Per Month");
   const [selectSalaryStructure, setSelectSalaryStructure] = useState("");
   const [totalCTC, setTotalCTC] = useState(0);
 
@@ -458,31 +500,70 @@ const EditSalaryDetails = () => {
 
   console.log(selectedStaff);
 
-  // async function createORUpdateSalaryDetails(e) {
-  //   const data = {
-  //   };
-  //   try {
-  //     const response = await fetch(baseUrl + "salary", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data) // Send the formatted data
-  //     });
+  async function createORUpdateSalaryDetails(e) {
+    const data = {
+      salaryDetail: {
+        effective_date: selectedMonth,
+        salary_type: selectSalaryType,
+        ctc_amount: Number(totalCTC),
+        employer_pf: Number(calEmployerPF),
+        employer_esi: Number(calEmployerESI),
+        employee_pf: Number(calEmployeePF),
+        employee_esi: Number(calEmployeeESI),
+      },
+      earning: calEarning,
+      deduction: calDeductions,
+    };
+    console.log(data);
+  }
+  async function createNewEarningField(heads) {
 
-  //     const result = await response.json();
+    const data = {};
+    const response = await fetch(baseUrl + "earnings/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        staffId: selectedStaff?.staffDetails?.id,
+        heads: heads
+      }) // send the formatted data
+    });
 
-  //     if (response.ok) {
-  //       console.log("Task created successfully:", result);
-  //     } else {
-  //       console.error("Failed to create task:", result);
-  //       alert("An error occurred during task creation.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in fetch request:", error);
-  //     alert("An unexpected error occurred.");
-  //   }
-  // }
+    console.log(response);
+
+    if (response.status === 200) {
+      const result = await response.json()
+      console.log(result.data);
+      // alert("edit Custom Field Successfully");
+    } else {
+      // alert("An error occurred");
+    }
+  }
+  async function createNewDeductionField(heads) {
+
+    const data = {};
+    const response = await fetch(baseUrl + "deduction/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        staffId: selectedStaff?.staffDetails?.id,
+        heads: heads
+      }) // send the formatted data
+    });
+
+    console.log(response);
+
+    if (response.status === 200) {
+      const result = await response.json()
+      console.log(result.data);
+      // alert("edit Custom Field Successfully");
+    } else {
+      // alert("An error occurred");
+    }
+  }
 
 
   return (
@@ -493,7 +574,7 @@ const EditSalaryDetails = () => {
         </h1>
         <div className="mt-2 xl:mt-0">
 
-          <button className="second-btn">
+          <button onClick={() => { createORUpdateSalaryDetails() }} className="second-btn">
             Update
           </button>
         </div>
@@ -510,7 +591,7 @@ const EditSalaryDetails = () => {
             <option value={"Per Month"}>
               Per Month
             </option>
-            <option value={"Per Month"}>
+            <option value={"Per Day"}>
               Per Day
             </option>
             <option value={"Per Hour"}>
@@ -594,6 +675,7 @@ const EditSalaryDetails = () => {
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                           onClick={() => {
                             setIsOpenAllowance(false);
+                            createNewEarningField(allowance);
                             if (!selectedAllowance.includes(allowance)) {
                               setSelectedAllowance(prev => [...prev, allowance]);
                             }
@@ -1034,6 +1116,7 @@ const EditSalaryDetails = () => {
                           onClick={() => {
                             // console.log(`Selected: ${allowance}`);
                             setIsOpenDeduction(false);
+                            createNewDeductionField(deduction);
                             if (!selectedDeduction.includes(deduction)) {
                               setSelectedDeduction(prev => [...prev, deduction])
                             }

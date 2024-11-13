@@ -73,10 +73,12 @@ const UserList = ({ userType, fetchUrl, handleSelectedUser }) => {
             onClick={() => handleSelectedUser(user)}
           >
             <div className="flex justify-center items-center rounded-full py-2 px-4 border border-gray-300 shadow-lg bg-purple-400">
-              {user.name[0]}
+              {user && user.name ? user.name[0] : "N/A"}
             </div>
             <div className="flex justify-between items-center w-full">
-              <p className="text-sm font-normal text-black">{user.name}</p>
+              <p className="text-sm font-normal text-black">
+                {user.name ?? "Not Available"}
+              </p>
               {notifications.includes(user.id) && (
                 <span className="float-left text-green-400 text-sm">
                   New Message

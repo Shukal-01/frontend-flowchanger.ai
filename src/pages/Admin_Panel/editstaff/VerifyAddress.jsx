@@ -9,20 +9,20 @@ const VerifyAddress = () => {
 
     const { baseUrl, selectedStaff } = useGlobalContext();
 
-
     async function submitAddress() {
-        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.id + "/verify/address", {
+        const newFormData = new FormData();
+        newFormData.append("current_address", currentAddress);
+        newFormData.append("permanent_address", permanentAddress);
+
+        const response = await fetch(baseUrl + "bg-verification/" + selectedStaff.staffDetails.id + "/verify/address", {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/form-data",
-            },
-            body: JSON.stringify({ current_address: currentAddress, permanent_address: permanentAddress }),
+            body: newFormData
         });
 
         console.log(response);
 
         if (response.status === 201) {
-            const result = await response.json()
+            const result = await response.json();
             console.log(result);
             closeModal2();
             alert("Address successfully updated");
