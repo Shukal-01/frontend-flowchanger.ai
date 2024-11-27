@@ -56,11 +56,11 @@ const SalaryOverview = () => {
                 <button className='second-btn'>Update Details</button>
             </div>
             <div className='flex justify-center'>
-            {selectedStaff === null &&  <ClipLoader color="#4A90E2" size={40} /> }
+            {staff === null &&  <ClipLoader color="#4A90E2" size={40} /> }
             </div>
             {
                 
-                selectedStaff?.staffDetails?.SalaryDetails?.map((salary) =>
+                staff?.staffDetails?.SalaryDetails?.map((salary) =>
                     <div className='flex justify-between xl:items-center lg:items-center md:items-center gap-[10px] items-start  shadow bg-white flex-col xl:flex-row lg:flex-row md:flex-row w-full mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md '>
                         <div className='flex gap-[10px]'>
                             <CalendarMonthIcon className='calender-icon' />
