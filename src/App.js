@@ -40,7 +40,7 @@ import Overtime from "./pages/Admin_Panel/StaffSection/Attendance/Overtime";
 import Project_Summary from "./pages/Admin_Panel/Projects/Project_Summary";
 import ProjectsOverview from "./pages/Admin_Panel/Projects/Project_overview";
 import Projects from './pages/Admin_Panel/Projects/Projects';
-import Taskview from "./pages/Client_Panel/Tasks/Taskview";
+// import Taskview from "./pages/Client_Panel/Tasks/Taskview";
 import Clients from "../src/pages/Admin_Panel/Clients/Clients";
 import NewTicket from "./pages/Admin_Panel/Projects/NewTicketForm";
 import Add_Project from "./pages/Admin_Panel/Projects/Add_Project";
@@ -53,10 +53,9 @@ import StaffSalarySummry from "../src/pages/Admin_Panel/editstaff/StaffSalarySum
 import Calender from "./pages/Admin_Panel/Calender/Calender";
 import Editprofile from "../src/pages/Admin_Panel/profile/Editprofile";
 import Task_Status from "./pages/Admin_Panel/Projects/Task_Status";
-// import Client_Project from "../src/pages/Client_Panel/Client_Project";
 import Edit_Task_Status from "../src/pages/Admin_Panel/Tasks/Edit_Task_Status";
 import Edit_Project from "./pages/Admin_Panel/Projects/Edit_Project";
-import Project_Progress from "../src/pages/Client_Panel/Project_Progress";
+import Project_Progress from "./pages/Client_Panel/Projects/Project_Progress";
 import Meeting from "./pages/Admin_Panel/Calender/Meeting";
 import RequestPassword from "./pages/Admin_Panel/authentication/steps/RequestPassword";
 import CalenderDay from "./pages/Admin_Panel/Calender/CalenderDay";
@@ -93,24 +92,27 @@ import PastEmploymentDetail from "./pages/Admin_Panel/editstaff/PastEmploymentDe
 import ContactInformation from './pages/Admin_Panel/Clients/ContactInformation'
 import Documents from "./pages/Admin_Panel/editstaff/Documents";
 import TaskForm from "./pages/Admin_Panel/Tasks/Task_deatail/TaskForm";
-import ClientTaskview from "./pages/Client_Panel/Task/Taskview";
+import ClientTaskview from "./pages/Client_Panel/Task/ClientTaskview";
 // import StatusMainPage from "../src/pages/Admin_Panel/statustask/StatusMainPage";
-import Client_Project from "./pages/Client_Panel/Client_Project";
 import Project_Invoice from "./pages/Client_Panel/Projects/Project_Invoice";
+import Project from './pages/Client_Panel/Projects/ClientProject'
+import ClientTaskView from '../src/pages/Client_Panel/Task/ClientTaskview'
+import Client_Project from "./pages/Client_Panel/Projects/ClientProject";
+import ProjectSummary from "./pages/Client_Panel/Projects/ProjectSummary";
 
 const App = () => {
   const [toggleSideBar, setToggleSideBar] = useState(true);
   const [toggleEditSideBar, setToggleEditSideBar] = useState(false);
-  const [toggleRunTab , setToggleRunTab ] = useState(false);
-  const [selectedPayrollTab , setSelectedPayrollTab] = useState(null);
+  const [toggleRunTab, setToggleRunTab] = useState(false);
+  const [selectedPayrollTab, setSelectedPayrollTab] = useState(null);
 
   const handleToggleEditSideBar = () => {
     setToggleEditSideBar(toggleEditSideBar => !toggleEditSideBar)
   }
 
-useEffect(()=>{
-  console.log(selectedPayrollTab)
-},[selectedPayrollTab]);
+  useEffect(() => {
+    console.log(selectedPayrollTab)
+  }, [selectedPayrollTab]);
 
   const handleToggleSideBar = () => {
     setToggleSideBar(!toggleSideBar);
@@ -221,10 +223,10 @@ useEffect(()=>{
       <>
         <div className="flex max-w-screen box-border">
           <SideBar />
-          <div className={`${!toggleSideBar?"w-[calc(100%-20%)]":"w-full"}`}>
-            <NavBar className = "w-full" toggleRunTab = {toggleRunTab} setToggleRunTab = {setToggleRunTab} selectedPayrollTab = {selectedPayrollTab}/>
+          <div className={`${!toggleSideBar ? "w-[calc(100%-20%)]" : "w-full"}`}>
+            <NavBar className="w-full" toggleRunTab={toggleRunTab} setToggleRunTab={setToggleRunTab} selectedPayrollTab={selectedPayrollTab} />
             <div className=" pb-10 w-full h-lvh payroll-menu overflow-y-auto">
-              <PayrollMenu className = "w-full" toggleRunTab = {toggleRunTab} setToggleRunTab = {setToggleRunTab} setSelectedPayrollTab={setSelectedPayrollTab}/>
+              <PayrollMenu className="w-full" toggleRunTab={toggleRunTab} setToggleRunTab={setToggleRunTab} setSelectedPayrollTab={setSelectedPayrollTab} />
               {/* <Outlet /> */}
             </div>
 
@@ -259,9 +261,9 @@ useEffect(()=>{
             <Route path="/attendence_summary" element={<Attendence_summary />} />
             <Route path="/project_summary" element={<Project_Summary />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/overtime" element={<Overtime />} /> 
+            <Route path="/overtime" element={<Overtime />} />
             <Route path="/clients" element={<Clients />} />
-            <Route path="/projectprogress" element={<Project_Progress />} />
+            {/* <Route path="/projectprogress" element={<Project_Progress />} /> */}
             {/* <Route path="/addnewtask" element={<AddNewTask />} /> */}
             {/* <Route path="/taskdata" element={<Task_Data />} /> */}
             <Route path="/task" element={<Task />} />
@@ -279,9 +281,8 @@ useEffect(()=>{
             {/* <Route path="/task" element={<Task />} /> */}
             <Route path="/editprofile" element={<Editprofile />} />
             <Route path="/taskstatus" element={<Task_Status />} />
-          
+
             {/* <Route path="/projectprogress" element={<Project_Progress />} /> */}
-            <Route path="/note" element={<Note />} />
             <Route path="/expenseedit" element={<ExpenseEdit />} />
             <Route path="/expensepage" element={<ExpensePage />} />
             <Route path="/subscription-plan" element={<Subscription />} />
@@ -306,6 +307,12 @@ useEffect(()=>{
           <Route path="/salary-overview/:id" element={<SalaryOverview />} />
           <Route path="/staff-salary-summary" element={<StaffSalarySummry />} />
           <Route path="/documents" element={<Documents />} />
+          <Route
+            path="/background-verification"
+            element={<BackgroundVerification />}
+          />
+          <Route path="/verify-aadhar" element={<VerifyAadhaar />} />
+
 
           <Route
 
@@ -321,22 +328,16 @@ useEffect(()=>{
           <Route path="/past-employment-details" element={<PastEmploymentDetail />} />
           <Route path="/voter-id" element={<VerifyVoterID />} />
         </Route>
-        <Route element={<Client_Panel />}>
-          {/* <Route path="/sidebarclient" element={<SidebarClient />} /> */}
-         
-            <Route path="/clientproject" element={<Client_Project />} />
-            <Route path="/taskview" element={<Taskview />} />
-            <Route path="/project-invoice" element={<Project_Invoice />} />
-          
 
 
-          {/* <Route path="/sidebarclient" element={<SidebarClient />} /> */}
+        <Route element={<Client_Panel />}>          
+          <Route path="/project-invoice" element={<Project_Invoice />} />
+          <Route path="/project-progress" element={<Project_Progress />} />
+          <Route path="/client-project" element={<Client_Project />} />
+          <Route path="/client-task" element={<ClientTaskView/>} />
+          <Route path="/note" element={<Note />} />
+          <Route path="/project-summary" element={<ProjectSummary />} />
 
-          <Route
-            path="/background-verification"
-            element={<BackgroundVerification />}
-          />
-          <Route path="/verify-aadhar" element={<VerifyAadhaar />} />
 
         </Route>
 
