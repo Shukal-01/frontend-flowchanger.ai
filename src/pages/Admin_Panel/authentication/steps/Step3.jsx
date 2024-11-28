@@ -84,8 +84,12 @@ const Step3 = () => {
         <img className="h-[150px]" src={flowChangerLogo} alt="Flowchanger Logo" />
       </div>
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">Verify your Email</h2>
-        <p className="text-gray-600 text-center mb-2">We sent a confirmation code on</p>
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          Verify your Email
+        </h2>
+        <p className="text-gray-600 text-center mb-2">
+          We sent a confirmation code on
+        </p>
         <p className="text-center font-semibold mb-6">{adminInfo.email}</p>
         <div className="flex justify-center space-x-2 mb-6" onPaste={handlePaste}>
           {code.map((digit, index) => (

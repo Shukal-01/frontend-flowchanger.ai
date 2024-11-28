@@ -34,11 +34,14 @@ const Clients = () => {
   const [isOn3, setIsOn3] = useState(false);
 
   const toggleSwitch3 = () => {
-      setIsOn3(!isOn3);
+    setIsOn3(!isOn3);
   }
+  const [open8, setOpen8] = useState(false);
+
+  const onOpenModal8 = () => setOpen8(true);
+  const onCloseModal8 = () => setOpen8(false);
 
   const [allStaff, setAllStaff] = useState();
-
   const [isLoading, setIsLoading] = useState(true);
   const [departments, setDepartments] = useState([])
   const [companyName, setCompanyName] = useState("");
@@ -594,9 +597,10 @@ const Clients = () => {
                 onClick={toggleAccordion}
               >
                 <tr>
-                  <th className="border-r p-2 flex justify-center text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-2 flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
                     <IoMdArrowDropright className={`text-[20px] transition-transform duration-200 ${isOpen ? "rotate-90 text-[black]" : "rotate-0"}`}
                     />
+                    <button className="p-[6px] rounded-lg bg-[orange]  mr-[7px] text-[white] ">To Do</button><span className="six-north">6</span>
 
                   </th>
                   <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
@@ -644,24 +648,24 @@ const Clients = () => {
                   ) : searchedClients === null && clientData && clientData.length > 0 ? (
                     clientData?.map((item, index) => (
                       <tr key={item?.id} className="border-b border-gray-300">
-                        <td className="p-2 text-center">
+                        <td className="p-2 text-center border-r border-[#dbdbdb]">
                           <input type="checkbox" className="text-xs h-4" />
                         </td>
-                        <td className="p-2 whitespace-nowrap text-xs text-center">{index + 1}</td>
-                        <td className="p-2 whitespace-nowrap text-xs text-center">{item?.name}</td>
-                        <td className="p-2 whitespace-nowrap text-xs text-center">
+                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">{index + 1}</td>
+                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">{item?.name}</td>
+                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">
                           {item?.clientDetails?.company}
                         </td>
-                        <td className="p-2 whitespace-nowrap text-xs text-center">
+                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">
                           {item?.mobile}
                         </td>
-                        <td className="p-2 whitespace-nowrap text-xs text-center">
+                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">
                           {item?.email}
                         </td>
-                        <td className="p-2 text-xs text-center whitespace-nowrap ">
+                        <td className="p-2 text-xs text-center border-r border-[#dbdbdb] whitespace-nowrap ">
                           {item?.mobile}
                         </td>
-                        <td className="text-[11px] font-medium p-[10px] whitespace-nowrap">
+                        <td className="text-[11px] font-medium border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
                           <div className="flex items-center justify-center gap-[6px]">
                             <div
                               className={`${item?.status ? "bg-[#8a25b0]" : "bg-gray-300"} relative inline-block w-12 h-6 rounded-full transition-colors duration-300 ease-in-out cursor-pointer`}
@@ -674,21 +678,39 @@ const Clients = () => {
                             </div>
                           </div>
                         </td>
-                        <td className="p-2 text-xs text-center whitespace-nowrap ">
+                        <td className="p-2 text-xs text-center border-r border-[#dbdbdb] whitespace-nowrap ">
                           {item?.groups}
                         </td>
-                        <td className="p-2 text-xs text-center whitespace-nowrap ">
+                        <td className="p-2 text-xs border-r border-[#dbdbdb] text-center whitespace-nowrap ">
                           {new Date(item?.clientDetails?.created_at).toDateString()}
                         </td>
-                        <td className="p-2 flex justify-center gap-2">
+                        <td className="p-2  flex justify-center gap-2">
                           <BorderColorIcon
                             className="text-purple-600 cursor-pointer"
                             onClick={() => setSelectedClient(item)}
                           />
-                          <DeleteIcon
-                            className="text-red-500 cursor-pointer"
-                            onClick={() => { console.log("Client data for delete:", item.id); deleteData(item.id) }}
-                          />
+
+                          <div>
+                            <button onClick={() => {
+                              setDeleteClient(item.id)
+                              onOpenModal8()
+                            }}>
+                              <DeleteIcon
+                                className="text-red-500 cursor-pointer"
+                              />
+                            </button>
+                            <Modal open={open8} onClose={onCloseModal8} center>
+                              <div className="flex items-center justify-center h-[120px]">
+                                <h2 className="text-[18px] font-medium text-center text-[#27004a]">Are you sure want to delete this</h2>
+
+                              </div>
+                              <div className="flex items-center justify-around ">
+                                <button className="allcrm-btn" onClick={() => { deleteData(deleteClient) }}>Yes , Confirm</button>
+                                <button className="allcrm-btn">No , Cancel</button>
+                              </div>
+                            </Modal>
+                          </div>
+
                         </td>
                       </tr>
                     ))
@@ -696,7 +718,7 @@ const Clients = () => {
                     searchedClients?.map((client, index) => (
                       <tr key={client.id} className="border-b border-gray-300">
                         {/* Same structure as above, just using client instead of item */}
-                        <td className="p-2 text-center">
+                        <td className="p-2 text-center border-r">
                           <input type="checkbox" className="text-xs h-4" />
                         </td>
                         <td className="p-2 text-xs text-center whitespace-nowrap ">{index + 1}</td>
@@ -761,7 +783,7 @@ const Clients = () => {
           </div>
 
 
-          <div className='flex justify-between p-3 pt-5 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
+          <div className='flex justify-between p-[14px] pb-[0] w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
             <p className=' text-[#a5a1a1] text-[14px]'>Showing 1 to {rowsToShow} of {departments.length} entries</p>
             <div className='pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md'>
               <Link to="#" className='text-[12px]  pt-2 pb-[8px]'>Previous</Link>
@@ -776,7 +798,7 @@ const Clients = () => {
       </div>
 
       <Modal
-        
+
         isOpen={selectedClient ? true : false}
         onAfterOpen={afterOpenModal2}
         onRequestClose={closeModal2}

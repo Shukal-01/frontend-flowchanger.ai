@@ -77,7 +77,7 @@ const VerifyUan = () => {
 
 
     return (
-        <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]   flex flex-col '>
+        <div className='w-full pt-[10px] relative   flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] p-[20px]  pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>UAN Verification</h3>
                 <button className='second-btn' onClick={submitUan}>
@@ -86,7 +86,7 @@ const VerifyUan = () => {
 
             </div>
 
-            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#f0f8fd] rounded-md ' >
+            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#fff] shadow-cs rounded-lg' >
                 <h4 className='font-light'>UAN</h4>
                 <p className='font-light'>{uan?.number}</p>
                 <button className='second-btn' onClick={openModal2}  >
@@ -96,7 +96,7 @@ const VerifyUan = () => {
             </div>
 
 
-            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#f0f8fd] rounded-md ' >
+            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#fff] shadow-cs rounded-lg' >
                 <h4 className='font-light'>Verification Status
                 </h4>
                 <p className='font-light'>{uan?.status}</p>
@@ -104,7 +104,7 @@ const VerifyUan = () => {
             </div>
 
 
-            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#f0f8fd] rounded-md ' >
+            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#fff] shadow-cs rounded-lg' >
                 <h4 className='font-light'>Proofs</h4>
                 <input
                     type="file"
@@ -129,7 +129,7 @@ const VerifyUan = () => {
 
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b-1 p-3 text-[13px] xl:text-[15px] '>Add UAN</h2>
-                <button onClick={closeModal2} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#511992] rounded-full'><CloseIcon className='text-white' /></button>
+                <button onClick={closeModal2} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white' /></button>
                 <div className=''>
                     <div className='modal-field field-modal p-[10px] border border-t'>
                         <label className='text-[13px] xl:text-[14px] font-medium'>UAN

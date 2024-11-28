@@ -94,6 +94,44 @@ const ProjectPriority = () => {
         setIsOpen6(false);
     }
 
+    useEffect(() => {
+        fetchAllStaff();
+    }, [])
+   
+   
+ 
+
+   
+
+    async function submitProjectPriority() {
+        const result = await fetch(baseUrl + "project-Priority/", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body:JSON.stringify({Priority_name:prorityName,Priority_color:priorityColor,Priority_order:priorityOrder,default_filter:filter,is_hidden:selectStaffId,can_changed:canChanged})
+        })
+        if(result.status==201){
+            alert("Added Project Priority Sucessfully")
+        }
+        else{
+            alert("An Occor Error")
+        }
+    }
+
+
+
+    const[projectPriorityDetail,setProjectPriorityDetail]=useState();
+    async function fetchProjectPriority(){
+        const result= await fetch(baseUrl+"project-Priority/")
+        const data = await result.json();
+        console.log("+++++---",data)
+        setProjectPriorityDetail(data.data)
+    }
+
+    useEffect(()=>{
+        fetchProjectPriority();
+    },[])
 
     const fetchAllStaff = async () => {
         const response = await fetch(baseUrl + 'staff');
@@ -181,7 +219,7 @@ const ProjectPriority = () => {
 
 
 
-    const [projectPriorityDetail, setProjectPriorityDetail] = useState();
+   
     console.log("ProjectPriority Detail",projectPriorityDetail)
     async function fetchProjectPriority() {
         try{
@@ -310,7 +348,6 @@ const ProjectPriority = () => {
 
                                                     styles={customStyles}
                                                 />
-
 
                                             </div>
                                             <div className='w-[100%]  xl:[48%] mb-[20px]'>

@@ -413,7 +413,6 @@ const SideBar = ({ toggleSideBar }) => {
         {/* <div className="">
           <Link to="/status-main-page" className="flex items-center gap-[10px] text-white p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all	">
            
-=======
             <button
               onClick={toggleMenu8}
               className=" "

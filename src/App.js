@@ -39,7 +39,7 @@ import Reviewfine from "./pages/Admin_Panel/StaffSection/Attendance/Reviewfine";
 import Overtime from "./pages/Admin_Panel/StaffSection/Attendance/Overtime";
 import Project_Summary from "./pages/Admin_Panel/Projects/Project_Summary";
 import ProjectsOverview from "./pages/Admin_Panel/Projects/Project_overview";
-import Projects from './pages/Admin_Panel/Projects/Projects';
+import Projects from "./pages/Admin_Panel/Projects/Projects";
 import Taskview from "../src/pages/Admin_Panel/Tasks/Taskview";
 import Clients from "../src/pages/Admin_Panel/Clients/Clients";
 import NewTicket from "./pages/Admin_Panel/Projects/NewTicketForm";
@@ -79,13 +79,13 @@ import PayrollMenu from "../src/pages/Admin_Panel/payroll/PayrollMenu";
 import CalenderHeader from "./pages/Admin_Panel/Calender/CalenderHeader";
 import RunPayroll from "../src/pages/Admin_Panel/payroll/RunPayroll";
 import StatusMainPage from "../src/pages/Admin_Panel/statustask/StatusMainPage";
-import Department_Details from '../src/pages/Admin_Panel/Department/DepartmentDetails';
+import Department_Details from "../src/pages/Admin_Panel/Department/DepartmentDetails";
 import AdminChatInterface from "./pages/Admin_Panel/Chats/AdminChatInterFace";
 import StaffChatInterface from "./pages/Staff_Panel/StaffChatInterface";
 import ClientChatInterface from "./pages/Client_Panel/ClientChatInterFace";
 import ResetPassword from "./pages/Admin_Panel/authentication/steps/ResetPassword";
 import LoginPage from "../src/pages/Admin_Panel/authentication/steps/login";
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from "./ProtectedRoute";
 import DashBoard from "./pages/Admin_Panel/DashBoard";
 import { useAuthContext } from "./Context/AuthContext";
 import VerifyVoterID from "./pages/Admin_Panel/editstaff/VerfiyVoterID";
@@ -94,6 +94,8 @@ import ContactInformation from './pages/Admin_Panel/Clients/ContactInformation'
 import Documents from "./pages/Admin_Panel/editstaff/Documents";
 import TaskForm from "./pages/Admin_Panel/Tasks/Task_deatail/TaskForm";
 import ClientTaskview from "./pages/Client_Panel/Task/Taskview";
+import ClientLogin from "./pages/Client_Panel/ClientLogin";
+
 // import StatusMainPage from "../src/pages/Admin_Panel/statustask/StatusMainPage";
 
 const App = () => {
@@ -118,7 +120,6 @@ useEffect(()=>{
     return (
       <>
         <Outlet />
-
       </>
     );
   }
@@ -140,7 +141,6 @@ useEffect(()=>{
   }
 
   function Editstaff() {
-
     return (
       <>
         <div className="">
@@ -174,7 +174,6 @@ useEffect(()=>{
           <div className="">
             {toggleSideBar && <SidebarClient toggleSideBar={toggleSideBar} />}
           </div>
-
           {/* container for navbar and outlet */}
           <div className={`flex flex-col  flex-grow overflow-hidden`}>
             <ClientHeader
@@ -186,13 +185,11 @@ useEffect(()=>{
                 <Outlet />
               </div>
             </main>
-
           </div>
         </div>
       </>
     );
   }
-
 
   function Calender_Layout() {
     return (
@@ -207,7 +204,6 @@ useEffect(()=>{
               <CalenderHeader />
               <Outlet />
             </>
-
           </div>
         </div>
       </>
@@ -225,7 +221,6 @@ useEffect(()=>{
               <PayrollMenu className = "w-full" toggleRunTab = {toggleRunTab} setToggleRunTab = {setToggleRunTab} setSelectedPayrollTab={setSelectedPayrollTab} />
               {/* <Outlet /> */}
             </div>
-
           </div>
         </div>
       </>
@@ -254,7 +249,10 @@ useEffect(()=>{
             <Route path="/overtime" element={<Overtime />} />
             <Route path="/reviewfine" element={<Reviewfine />} />
             <Route path="/worktime" element={<Worktime />} />
-            <Route path="/attendence_summary" element={<Attendence_summary />} />
+            <Route
+              path="/attendence_summary"
+              element={<Attendence_summary />}
+            />
             <Route path="/project_summary" element={<Project_Summary />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/overtime" element={<Overtime />} />
@@ -270,6 +268,8 @@ useEffect(()=>{
             <Route path="/taskstatus" element={<Task_Status />} />
             <Route path="chats/admin" element={<AdminChatInterface />} />
             <Route path="chats/client" element={<ClientChatInterface />} />
+            <Route path="chats/client/login" element={<ClientLogin />} />
+
             <Route path="chats/staff" element={<StaffChatInterface />} />
             <Route path="/clienttaskview" element={<ClientTaskview />} />
             <Route path="/status-main-page" element={<StatusMainPage />} />
@@ -298,16 +298,21 @@ useEffect(()=>{
           <Route path="/attendance-detail/:id" element={<Editattendance />} />
           <Route path="/employee-detail/:id" element={<EmployementDetail />} />
           <Route path="/user-permission/:id" element={<UserPermission />} />
-          <Route path="/leavepolicy-detail/:id" element={<EditLeavePolicies />} />
+          <Route
+            path="/leavepolicy-detail/:id"
+            element={<EditLeavePolicies />}
+          />
           <Route path="/custom-detail/:id" element={<CustomDetail />} />
-          <Route path="/salary-details-edit/:id" element={<EditSalaryDetails />} />
+          <Route
+            path="/salary-details-edit/:id"
+            element={<EditSalaryDetails />}
+          />
           <Route path="/edit-penalty/:id" element={<EditPenalty />} />
           <Route path="/salary-overview/:id" element={<SalaryOverview />} />
           <Route path="/staff-salary-summary" element={<StaffSalarySummry />} />
           <Route path="/documents" element={<Documents />} />
 
           <Route
-
             path="/background-verification/:id"
             element={<BackgroundVerification />}
           />
@@ -330,7 +335,6 @@ useEffect(()=>{
             element={<BackgroundVerification />}
           />
           <Route path="/verify-aadhar" element={<VerifyAadhaar />} />
-
         </Route>
 
         <Route element={<Payroll_Summary />}>
@@ -349,16 +353,15 @@ useEffect(()=>{
           <Route path="/authentication" element={<MultiStepForm />} />
           <Route path="/authentication/login" element={<LoginPage />} />
           <Route path="/authentication/reset" element={<ResetPassword />} />
-          <Route path="/authentication/request-password" element={<RequestPassword />} />
+          <Route
+            path="/authentication/request-password"
+            element={<RequestPassword />}
+          />
         </Route>
 
         {/* <Route element={<CustomerPanel />}>
           <Route path="/customer-panel"></Route>
         </Route> */}
-
-
-
-
       </Routes>
     </BrowserRouter>
   );
