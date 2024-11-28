@@ -46,7 +46,7 @@ import Overtime from "./pages/Admin_Panel/StaffSection/Attendance/Overtime";
 import Project_Summary from "./pages/Admin_Panel/Projects/Project_Summary";
 import ProjectsOverview from "./pages/Admin_Panel/Projects/Project_overview";
 import Projects from "./pages/Admin_Panel/Projects/Projects";
-import Taskview from "../src/pages/Admin_Panel/Tasks/Taskview";
+import Taskview from "../src/pages/Admin_Panel/Tasks/All_Task";
 import Clients from "../src/pages/Admin_Panel/Clients/Clients";
 import NewTicket from "./pages/Admin_Panel/Projects/NewTicketForm";
 import Add_Project from "./pages/Admin_Panel/Projects/Add_Project";
@@ -162,7 +162,7 @@ const App = () => {
           <div className="flex">
             <SidebarEditStaff toggleEditSideBar={toggleEditSideBar} />
             <div
-              className={`w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    
+              className={`w-full p-[20px] pt-[80px] xl:pl-[20px] xl:p-[40px] relative xl:pt-[60px]    
         ${
           !toggleEditSideBar ? "xl:pl-[320px]" : "xl:pl-[0px]"
         } flex flex-col set-z`}
@@ -305,7 +305,7 @@ const App = () => {
             <Route path="/taskstatus" element={<Task_Status />} />
             <Route path="chats/admin" element={<AdminChatInterface />} />
             <Route path="chats/client" element={<ClientChatInterface />} />
-            <Route path="chats/client/login" element={<ClientLogin />} />
+            {/* <Route path="chats/client/login" element={<ClientLogin />} /> */}
 
             <Route path="chats/staff" element={<StaffChatInterface />} />
             <Route path="/clienttaskview" element={<ClientTaskview />} />

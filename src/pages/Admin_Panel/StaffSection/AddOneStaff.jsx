@@ -247,7 +247,7 @@ const AddOneStaff = () => {
             <div className='flex justify-end mt-4 p-3'>
            
             <div className='flex gap-[20px] items-center'>
-                <Link to ="/" className='first-btn flex items-center'>Cancel</Link>
+                <Link to ="/staff-menu" className='first-btn flex items-center'>Cancel</Link>
                 <button className='second-btn'>Save</button>
                 
             </div>

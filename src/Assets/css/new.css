@@ -237,6 +237,11 @@
     border-radius: 6px;
     padding: 6px;
 }
+ .css-0{
+    display: flex;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px;
+}
 .six-tasks{
     background: #d7b5e4;
     width: 18px;
@@ -647,6 +652,15 @@
     .staff-page-res{
         right: -99px !important;
 
+    }
+    .betwe-cent{
+        gap: 0;
+    }
+    .bulk-csv{
+        margin-bottom: 0;
+    }
+    .selcct-chng{
+        margin-bottom: 12px;
     }
 
 }

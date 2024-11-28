@@ -514,28 +514,36 @@ const Task = () => {
                   Name
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Company
+                  Status
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Contact
+                  Start Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Email
+                  End Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Phone
+                  Due Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Active
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Groups
+                Select Project
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Date Created
+                  Select Department
                 </th>
                 <th className="p-2 text-xs font-medium text-center">
-                  Action
+                  Priority
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                 Assignee
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                  Description
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                  Tag
                 </th>
               </tr>
             </thead>

@@ -177,7 +177,7 @@ const Add_Project = () => {
     })
     console.log(result);
     const data =await result.json()
-    if (result.status == 200) {
+    if (result.status == 201) {
      openToast(data.msg||"Add Project Successfully", "success")
     }
     else {

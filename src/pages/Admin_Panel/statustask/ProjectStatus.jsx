@@ -16,6 +16,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import ConfirmationModal from "../../../components/Staff/Modals/ConfirmationModal";
 
 
 
@@ -351,26 +352,25 @@ const ProjectStatus = () => {
             </div>
           </div>
 
-          <div className="main-table-status">
+          <div className="bg-white rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto">
             <table className="table-auto w-full  rounded-md table-status">
               <thead
                 onClick={toggleTable}
                 className="set-shadow  cursor-pointer"
               >
                 <tr>
-                  <th className="border-r p-2 flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
                     <IoMdArrowDropright className={`text-[20px] transition-transform duration-200 ${isOpen5 ? "rotate-90 text-[black]" : "rotate-0"}`}
                     />
-                    <button className="p-[6px] rounded-lg bg-[orange]  mr-[7px] text-[white] ">To Do</button><span className="six-north">6</span>
 
                   </th>
                   <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">ID</th>
-                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Status Name</th>
-                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Status Color</th>
-                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Status Order</th>
-                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Status Defaulter Filter</th>
-                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Status can be changed to</th>
-                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">action</th>
+                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Project Name</th>
+                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Project Color</th>
+                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Project Order</th>
+                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap"> Default Filter</th>
+                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Project can be changed to</th>
+                  <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap">Action</th>
                 </tr>
               </thead>
               {/* Add transition for tbody */}
@@ -403,28 +403,11 @@ const ProjectStatus = () => {
                                 className="text-red-500 cursor-pointer"
                               />
                             </button>
+                            {open11 && <ConfirmationModal setClose={onCloseModal11}/>}
 
 
                           </div>
-                          <Modal
-                            isOpen={open11}
-                            // onAfterOpen={}
-                            onRequestClose={() => {
-                              setOpen11(false);
-                            }}
-                            // style={customStyles}
-                            contentLabel="Example Modal"
-                            className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff]  shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
-                          >
-                            <div className="flex items-center justify-center h-[120px]">
-                              <h2 className="text-[18px] font-medium text-center text-[#27004a]">Are you sure want to delete this</h2>
-
-                            </div>
-                            <div className="flex items-center justify-around mb-[40px]">
-                              <button className="allcrm-btn" >Yes , Confirm</button>
-                              <button className="allcrm-btn" onClick={() => setOpen11(false)}>No , Cancel</button>
-                            </div>
-                          </Modal>
+                     
                         </div>
                       </td>
                     </tr>
