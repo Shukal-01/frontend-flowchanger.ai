@@ -219,10 +219,10 @@ useEffect(()=>{
       <>
         <div className="flex max-w-screen box-border">
           <SideBar />
-          <div className={`${!toggleSideBar?"w-[calc(100%-20%)]":"w-full"}`}>
+          <div className={`${!toggleSideBar?"w-[calc(100%-20%)]":"w-full"} flex-grow-0`}>
             <NavBar className = "w-full" toggleRunTab = {toggleRunTab} setToggleRunTab = {setToggleRunTab} selectedPayrollTab = {selectedPayrollTab}/>
             <div className=" pb-10 w-full h-lvh payroll-menu overflow-y-auto">
-              <PayrollMenu className = "w-full" toggleRunTab = {toggleRunTab} setToggleRunTab = {setToggleRunTab} setSelectedPayrollTab={setSelectedPayrollTab}/>
+              <PayrollMenu className = "w-full" toggleRunTab = {toggleRunTab} setToggleRunTab = {setToggleRunTab} setSelectedPayrollTab={setSelectedPayrollTab} />
               {/* <Outlet /> */}
             </div>
 

@@ -14,6 +14,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { SlCalender } from "react-icons/sl";
 
 const ClientTaskview = () => {
   //taskview dropdown
@@ -58,10 +59,15 @@ const ClientTaskview = () => {
     <>
       <div className="w-[100%] flex p[0] view-not">
         <div className="w-[60%] pl-[30px] pt-[20px] h-[100vh] main-sixty overflow-scroll ">
-          <div className="mb-[20px]">
+          <div className="mb-[20px] flex flex-row justify-between items-center">
             <p className="font-medium text-[22px] flex  items-center gap-[10px] short-video">
              Task Name
             </p>
+            <div className="mr-3">
+              <span>
+                Task priority
+              </span>
+            </div>
           </div>
           <div className="mb-[20px]">
             <div className="w-[60%] status-set2 mb-[10px] flex  justify-between items-center">
@@ -72,26 +78,29 @@ const ClientTaskview = () => {
             </div>
             <div className="w-[60%] status-set2 mb-[10px] flex  justify-between items-center">
               <p className="text-[#8c939f] text-[16px]">Task Type</p>
+              <div className="flex flex-row justify-between items-center">
+                <div className="text-[#000] flex hover:bg-[#f2f6f8] p-[10px] rounded-lg items-center gap-[8px] bg text-[14px] bg-green-500 h-[10px]"></div>
               <button className="text-[#000] text-[14px] p-[8px] rounded-lg hover:bg-[#f2f6f8]">
                 Graphic
               </button>
+              </div>
             </div>
             <div className="w-[60%] status-set2 mb-[10px] flex justify-between items-center">
               <p className="text-[#8c939f] text-[16px]">Start Date</p>
-              <p className="text-[#000] p-[8px] rounded-lg hover:bg-[#f2f6f8] text-[14px]">
-                07/01/24
+              <p className="text-[#000] p-[8px] rounded-lg hover:bg-[#f2f6f8] text-[14px] flex flex-row justify-between items-center">
+              <SlCalender className="text-green-400 mr-2 text-[15px]"/>07/01/24
               </p>
             </div>
             <div className="w-[60%] status-set2 mb-[10px] flex justify-between items-center">
               <p className="text-[#8c939f] text-[16px]">Due Date</p>
-              <p className="text-[#000] p-[8px] rounded-lg hover:bg-[#f2f6f8] text-[14px]">
-                07/01/2024
+              <p className="text-[#000] p-[8px] rounded-lg hover:bg-[#f2f6f8] text-[14px] flex flex-row justify-between items-center">
+              <SlCalender className="text-blue-950 mr-2 text-[15px]"/>07/01/2024
               </p>
             </div>
             <div className="w-[60%] status-set2 mb-[10px] flex justify-between items-center">
               <p className="text-[#8c939f] text-[16px]">End Date</p>
-              <p className="text-[#000] p-[8px] rounded-lg hover:bg-[#f2f6f8] text-[14px]">
-                07/01/2024
+              <p className="text-[#000] p-[8px] rounded-lg hover:bg-[#f2f6f8] text-[14px] flex flex-row justify-between items-center ">
+              <SlCalender className="text-red-600 mr-2 text-[15px]"/>07/01/2024
               </p>
             </div>
             <div className="w-[60%] status-set2 mb-[10px] flex justify-between items-center">
@@ -109,15 +118,17 @@ const ClientTaskview = () => {
 
             <div className="w-[60%] status-set2 mb-[10px] flex justify-between items-center">
               <p className="text-[#8c939f] text-[16px]">Assignee By</p>
-              <p className="text-[#000] hover:bg-[#f2f6f8] p-[8px] rounded-lg  text-[16px]">
-                Tej Partap Sir
+              <div className="flex flex-row justify-between items-center">
+              <div className="text-white flex justify-between hover:bg-[#f2f6f8] p-[10px] rounded-[100%] items-center gap-[8px] bg text-[14px] bg-blue-950 mr-2 h-[10px]">T</div>
+              <p className="text-[#000] hover:bg-[#f2f6f8] p-[8px] rounded-lg  text-[16px]">Tej Partap Sir
               </p>
+              </div>
             </div>
 
             <div className="w-[60%] status-set2 mb-[10px] flex justify-between items-center">
               <p className="text-[#8c939f] text-[16px]">Tag</p>
               <p className="text-[#000] flex hover:bg-[#f2f6f8] p-[8px] rounded-lg items-center gap-[8px] bg text-[14px]">
-                <span className="operational"></span>Demo
+                Demo
               </p>
             </div>
           </div>
@@ -210,13 +221,11 @@ const ClientTaskview = () => {
           <div>
             <div className="pb-[30px] border-b border-[#ebf1f5]">
               <button
-                className="rounded-2xl view-btns bg-[#e0e6eb] hover:text-[blue]  flex gap-[5px] items-center p-[6px] text-[14px] text-[#8c939f]"
+                className="rounded-2xl view-btns bg-[#e0e6eb] hover:text-[blue]  flex gap-[5px] items-center  text-[14px] text-[#8c939f] p-3"
                 type="submit"
               >
-                <NotificationsIcon className="newadd3" />
-                Following{" "}
-                <span className="h-[22px] w-[1px] bg-[#8c939f]"></span>{" "}
-                <span>1 Follower</span>
+                Task Activity
+         
               </button>
             </div>
             <div className="flex justify-end flex-col created-task h-[400px] ">
