@@ -6,7 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useGlobalContext } from '../../../../Context/GlobalContext';
 import TimePicker from 'rc-time-picker';
 import { pre } from 'framer-motion/client';
-
+import Select from 'react-select';
 
 const Reviewfine = () => {
     const { baseUrl, openToast } = useGlobalContext();
@@ -14,7 +14,8 @@ const Reviewfine = () => {
     const [fineType, setFineType] = useState("Fixed Amount Per Minute");
     const [fineDetail, setFineDetail] = useState([])
     const [staff, setStaff] = useState([]);
-    const [dailyShift, setDailyShift] = useState([]);
+    const [allshift, setAllShift] = useState([]);
+    const [selectShiftId, setSelectShiftId] = useState(null);
     const [staffPerMinSalary, setStaffPerMinSalary] = useState([]);
     const [updateDetail, setUpdateDetail] = useState([]);
     const [selectAllFine, setSelectAllFine] = useState(false);
@@ -22,11 +23,12 @@ const Reviewfine = () => {
 
     // console.log(fineType);
     // console.log(staff);
-    // console.log(updateDetail);
+    console.log(updateDetail);
 
     const toggleSwitch = () => {
         setIsOn(!isOn);
     }
+
 
     function updateStaffFinePerMinuteState(
         staffList,
@@ -97,7 +99,6 @@ const Reviewfine = () => {
                 const result = await response.json();
                 setStaff(result);
                 // console.log("Filtered data by ID:", filteredData);
-
                 // console.log("Data retrieved successfully:", result);
                 // navigate("/admin/staff");
             } else {
@@ -113,7 +114,10 @@ const Reviewfine = () => {
         const result = await fetch(baseUrl + "shift");
         if (result.status == 200) {
             const data = await result.json();
-            setDailyShift(data)
+            setAllShift(data.map((shift) => ({
+                value: shift.id,
+                label: `${shift.shiftName} (${shift.shiftStartTime} - ${shift.shiftEndTime})`,
+            })));
         }
         else {
             openToast("No Record Found")
@@ -191,6 +195,53 @@ const Reviewfine = () => {
                     totalAmount: Number(
                         (prevTotalAmount + fine.lateEntryFineAmount * fine.lateEntryAmount - prevLateEntryFineAmount).toFixed(2) || 0
                     ),
+                    shiftIds: fine?.shiftId
+                })
+            });
+
+            // Handle the response
+            if (result.ok) {
+                openToast("Update Fine Successfully", "success");
+                setFineDetail([]);
+                fetchFineDetails();
+            } else {
+                openToast("Something went wrong", "error");
+            }
+        } catch (error) {
+            console.error("Error updating fine:", error); // Log the actual error for debugging
+            openToast("Something went wrong", "error");
+        }
+    }
+    async function updateMultipleStaffSameFine() {
+        try {
+            const data = updateDetail.map((fine) => {
+                const { totalAmount: prevTotalAmount = 0, lateEntryFineAmount: prevLateEntryFineAmount = 0 } =
+                    fineDetail?.find(
+                        (value) => value?.id === fine?.id && value?.staffId === fine?.staffId
+                    ) || {}; // Use fallback to avoid destructuring undefined
+
+                return {
+                    id: fine?.id,
+                    staffId: fine?.staffId,
+                    punchRecordId: fine?.punchRecordId,
+                    lateEntryFineHoursTime: fine?.lateEntryFineHoursTime || "",
+                    lateEntryFineAmount: Number((fine?.lateEntryFineAmount * fine?.lateEntryAmount).toFixed(2) || 0),
+                    lateEntryAmount: Number(fine?.lateEntryAmount || 1),
+                    // shiftIds: fine.shiftId ? [fine?.shiftId] : [],
+                    totalAmount: Number(
+                        (prevTotalAmount + fine?.lateEntryFineAmount * fine?.lateEntryAmount - prevLateEntryFineAmount).toFixed(2) || 0
+                    ),
+                }
+            })
+            console.log(data, Array.isArray(data));
+            // Perform the update
+            const result = await fetch(baseUrl + `fine`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fineUpdates: data
                 })
             });
 
@@ -257,10 +308,172 @@ const Reviewfine = () => {
 
     }, [selectAllFine])
 
+    // useEffect(() => {
+    //     if (selectAllFine === true) {
+    //         let updatedDetails = [];
+    //         let updatedPerMinuteSalaries = [];
+
+    //         if (fineType === "Fixed Amount Per Minute" && fixedFine > 0) {
+    //             updatedPerMinuteSalaries = staffPerMinSalary?.map(staff => ({
+    //                 staffId: staff?.staffId,
+    //                 finePerMinute: fixedFine,
+    //             }));
+    //             setStaffPerMinSalary(updatedPerMinuteSalaries);
+    //         }
+
+    //         if (fineType === "Fixed Amount" && fixedFine > 0) {
+    //             updatedDetails = staffPerMinSalary?.map(staff => ({
+    //                 staffId: staff?.staffId,
+    //                 lateEntryFineAmount: Number(fixedFine),
+    //                 lateEntryAmount: 1, // Always 1 for fixed fine
+    //             }));
+    //         }
+
+    //         if (fineType === "Half Day") {
+    //             updatedDetails = staffPerMinSalary?.map(staff => ({
+    //                 staffId: staff?.staffId,
+    //                 lateEntryFineAmount: staff?.perMinuteSalary * 0.5 * 8 * 60, // Half day fine
+    //                 lateEntryAmount: 1, // Always 1
+    //             }));
+    //         }
+
+    //         if (fineType === "Full Day") {
+    //             updatedDetails = staffPerMinSalary?.map(staff => ({
+    //                 staffId: staff?.staffId,
+    //                 lateEntryFineAmount: staff?.perMinuteSalary * 8 * 60, // Full day fine
+    //                 lateEntryAmount: 1,
+    //             }));
+    //         }
+
+    //         if (fineType === "1.5 Salary") {
+    //             updatedDetails = staffPerMinSalary?.map(staff => ({
+    //                 staffId: staff?.staffId,
+    //                 lateEntryFineAmount: staff?.perMinuteSalary * 1.5 * 8 * 60, // 1.5x salary fine
+    //                 lateEntryAmount: 1,
+    //             }));
+    //         }
+
+    //         if (fineType === "2.5 Salary") {
+    //             updatedDetails = staffPerMinSalary?.map(staff => ({
+    //                 staffId: staff?.staffId,
+    //                 lateEntryFineAmount: staff?.perMinuteSalary * 2.5 * 8 * 60, // 2.5x salary fine
+    //                 lateEntryAmount: 1,
+    //             }));
+    //         }
+
+    //         if (fineType === "Regularize") {
+    //             updatedDetails = staffPerMinSalary?.map(staff => ({
+    //                 staffId: staff?.staffId,
+    //                 lateEntryFineAmount: 0, // No fine for regularization
+    //                 lateEntryAmount: 0, // No late entries
+    //             }));
+    //         }
+
+    //         setUpdateDetail(updatedDetails);
+    //     } else {
+    //         // Reset the states when `selectAllFine` is false
+    //         setFixedFine(0);
+    //         setStaffPerMinSalary([]);
+    //         updateStaffFinePerMinuteState(staff, setStaffPerMinSalary, workTimeDate.month, workTimeDate.year, 30, 8);
+    //     }
+    // }, [fineType, fixedFine, selectAllFine, staffPerMinSalary]);
+
+    // console.log(selectAllFine);
+    // console.log(fixedFine);
+    // console.log(fineType);
+    // console.log(staffPerMinSalary);
+
     useEffect(() => {
         if (fineType === "Fixed Amount Per Minute" && fixedFine > 0 && selectAllFine === true) {
             setStaffPerMinSalary([]);
             setStaffPerMinSalary(staffPerMinSalary?.map(fine => ({ staffId: fine?.staffId, finePerMinute: fixedFine })));
+        }
+        if (fineType == "Fixed Amount" && fixedFine > 0 && selectAllFine === true) {
+            setUpdateDetail(
+                fineDetail?.map(fine => ({ id: fine?.id, staffId: fine?.staffId, lateEntryFineAmount: Number(fixedFine), lateEntryAmount: 1, shiftId: fine.shiftIds, punchRecordId: fine.punchRecordId }))
+            );
+        }
+        if (fineType === "Half Day" && selectAllFine === true) {
+            setUpdateDetail(
+                fineDetail?.map(fine => ({
+                    id: fine?.id,
+                    staffId: fine?.staffId,
+                    lateEntryFineAmount: staffPerMinSalary?.find(staff => staff?.staffId === fine?.staffId)?.finePerMinute * 0.5 * 8 * 60, // Half-day fine logic
+                    lateEntryAmount: 1,
+                    shiftId: fine?.shiftIds ? [fine?.shiftIds] : [],
+                    lateEntryFineHoursTime: "04:00",
+                    punchRecordId: fine?.punchRecordId,
+                }))
+            );
+        }
+
+        if (fineType === "Full Day" && selectAllFine === true) {
+            setUpdateDetail(
+                fineDetail?.map(fine => ({
+                    id: fine?.id,
+                    staffId: fine?.staffId,
+                    lateEntryFineAmount: staffPerMinSalary?.find(staff => staff?.staffId === fine?.staffId)?.finePerMinute * 8 * 60, // Full-day fine logic
+                    lateEntryAmount: 1,
+                    lateEntryFineHoursTime: "08:00",
+                    shiftId: fine?.shiftIds ? [fine?.shiftIds] : [],
+                    punchRecordId: fine?.punchRecordId,
+                }))
+            );
+        }
+
+        if (fineType === "1x Salary" && selectAllFine === true) {
+            setUpdateDetail(
+                fineDetail?.map(fine => ({
+                    id: fine?.id,
+                    staffId: fine?.staffId,
+                    lateEntryFineAmount: staffPerMinSalary?.find(staff => staff?.staffId === fine?.staffId)?.finePerMinute * 1 * 8 * 60, // 1.5x salary fine logic
+                    lateEntryAmount: 1,
+                    shiftId: fine?.shiftIds ? [fine?.shiftIds] : [],
+                    lateEntryFineHoursTime: "08:00",
+                    punchRecordId: fine?.punchRecordId,
+                }))
+            );
+        }
+
+        if (fineType === "1.5x Salary" && selectAllFine === true) {
+            setUpdateDetail(
+                fineDetail?.map(fine => ({
+                    id: fine?.id,
+                    staffId: fine?.staffId,
+                    lateEntryFineAmount: staffPerMinSalary?.find(staff => staff?.staffId === fine?.staffId)?.finePerMinute * 8 * 60, // 2.5x salary fine logic
+                    lateEntryAmount: 1.5,
+                    lateEntryFineHoursTime: "08:00",
+                    shiftId: fine?.shiftIds ? [fine?.shiftIds] : [],
+                    punchRecordId: fine?.punchRecordId,
+                }))
+            );
+        }
+        if (fineType === "2x Salary" && selectAllFine === true) {
+            setUpdateDetail(
+                fineDetail?.map(fine => ({
+                    id: fine?.id,
+                    staffId: fine?.staffId,
+                    lateEntryFineAmount: staffPerMinSalary?.find(staff => staff?.staffId === fine?.staffId)?.finePerMinute * 8 * 60, // 2.5x salary fine logic
+                    lateEntryAmount: 2,
+                    lateEntryFineHoursTime: "08:00",
+                    shiftId: fine?.shiftIds ? [fine?.shiftIds] : [],
+                    punchRecordId: fine?.punchRecordId,
+                }))
+            );
+        }
+
+        if (fineType === "Regularize" && selectAllFine === true) {
+            setUpdateDetail(
+                fineDetail?.map(fine => ({
+                    id: fine?.id,
+                    staffId: fine?.staffId,
+                    lateEntryFineAmount: 0, // No fine for regularize
+                    lateEntryAmount: 0,
+                    lateEntryFineHoursTime: "00:00",
+                    shiftId: fine?.shiftIds ? [fine?.shiftIds] : [],
+                    punchRecordId: fine?.punchRecordId,
+                }))
+            );
         }
         if (selectAllFine === false) {
             setFixedFine(0);
@@ -268,18 +481,11 @@ const Reviewfine = () => {
             updateStaffFinePerMinuteState(staff, setStaffPerMinSalary, workTimeDate.month, workTimeDate.year, 30, 8);
         }
 
-        // if (fineType == "Fixed Amount") {
-        //     setStaffPerMinSalary(staffPerMinSalary.map(fine => ({ staffId: fine.staffId, finePerMinute: fixedFine })));
-        // }
 
-    }, [fineType, fixedFine]);
-
-    console.log(selectAllFine);
-    console.log(fixedFine);
+    }, [fineType, fixedFine, selectAllFine]);
     console.log(fineType);
-    console.log(staffPerMinSalary);
-
-
+    // console.log(allshift);
+    // console.log(selectShiftId);
     return (
         <div className='w-full p-[20px]'>
             <div className=''>
@@ -309,7 +515,9 @@ const Reviewfine = () => {
             </div>
             <div className='flex items-center gap-[10px] mb-[20px] '>
                 <div className='flex items-center gap-[10px]  rounded-md p-[6px] font-medium select-pe'>
-                    <input type="checkbox" checked={selectAllFine} onChange={() => setSelectAllFine(!selectAllFine)} />
+                    <input type="checkbox" checked={selectAllFine} onChange={() => {
+                        setSelectAllFine(!selectAllFine);
+                    }} />
                     <p className='text-[14px] whitespace-nowrap'>Select All</p>
                 </div>
                 <div className="relative inline-block text-left">
@@ -318,21 +526,26 @@ const Reviewfine = () => {
                     </select>
                 </div>
                 {
-                    (fineType === "Fixed Amount Per Minute" || fineType === "Fixed Amount") && <div className='flex items-center gap-[10px]  rounded-md p-[6px] font-medium select-pe'>
+                    (fineType === "Fixed Amount Per Minute" || fineType === "Fixed Amount") && selectAllFine && <div className='flex items-center gap-[10px]  rounded-md p-[6px] font-medium select-pe'>
                         <input disabled={fineType === "Fixed Amount Per Minute" && fineType === "Fixed Amount"} type="number" name="" id="" value={fixedFine} onChange={(e) => setFixedFine(e.target.value)} />
                     </div>
                 }
                 <div>
-                    <button className='p-2 pl-[20px] pr-[20px] border transition duration-200 bg-[#27004a] rounded-md text-[white] hover:bg-[#fff] hover:text-[#27004a] hover:border-[#27004a] hover:border' type='submit'>Apply</button>
+                    <button className='p-2 pl-[20px] pr-[20px] border transition duration-200 bg-[#27004a] rounded-md text-[white] hover:bg-[#fff] hover:text-[#27004a] hover:border-[#27004a] hover:border' type='submit' onClick={updateMultipleStaffSameFine}>Apply</button>
                 </div>
 
 
 
             </div>
-            <div className='flex gap-[10px] items-center mb-[20px]'>
-                <input type="checkbox" />
-                <p className='text-[14px]'>DAILY SHIFT I 10:00 AM - 6:30 PM</p>
-            </div>
+            {/* <div className=' w-32 flex gap-[10px] items-center mb-[20px]'>
+                <Select
+                    closeMenuOnSelect={false}
+                    onChange={
+                        handleChange
+                    }
+                    options={allshift}
+                />
+            </div> */}
             {
                 workTimeDate.year == "" &&
                 <div className="text-center">
@@ -344,6 +557,39 @@ const Reviewfine = () => {
             {
                 fineDetail?.map((item, index) => {
                     return <div className='shadow-md rounded-md p-[20px] mb-[20px]  '>
+                        <div className=' w-full flex gap-[10px] items-center mb-[20px]'>
+                            <p className='text-[14px] whitespace-nowrap'>Select Shift</p>
+                            <Select
+                                isMulti
+                                onChange={(selectedOptions) => {
+                                    setUpdateDetail((prev) => {
+                                        // Find the existing entry based on `id` and `staffId`
+                                        const exists = prev.find(
+                                            (value) => value?.id === item?.id && value?.staffId === item?.staffId
+                                        );
+
+                                        // Filter out the existing entry if it exists
+                                        const filteredPrev = prev.filter(
+                                            (value) => !(value?.id === item?.id && value?.staffId === item?.staffId)
+                                        );
+
+                                        console.log(exists);
+
+                                        // Prepare updated shifts
+                                        const updatedShifts = selectedOptions.map((option) => ({
+                                            ...exists, // Keep existing fields
+                                            shiftId: option?.value, // Update with new shiftId
+                                        }));
+
+                                        // Add the new or updated entries back to the state
+                                        return [...filteredPrev, { ...exists, shiftId:updatedShifts[0] } ];
+                                    });
+                                }}
+                                options={allshift}
+                                isClearable
+                                placeholder="Select multiple shifts"
+                            />
+                        </div>
                         <div className='flex items-center gap-[16px] w-full'>
                             <input checked={updateDetail?.some((value) => (value?.id === item?.id && value?.staffId === item?.staffId))} onClick={() => {
                                 setUpdateDetail((prev) => {
@@ -361,12 +607,27 @@ const Reviewfine = () => {
                             }} className='h-[12px]' type="checkbox" />
                             <div>
                                 <h5 className='text-[14px]'>{staff?.find((staff) => staff?.staffDetails?.id === item?.staffId)?.name || "N/A"}</h5>
-                                <p className='text-[12px] text-[#ad9f9f]' >in {new Date(item?.punchRecord?.punchIn?.punchInDate).toLocaleTimeString()} I Out {new Date(item?.punchRecord?.punchOut?.punchOutDate).toLocaleTimeString()}</p>
+                                <p className='text-[12px] text-[#ad9f9f]'>
+                                    In: {item?.punchRecord?.punchIn?.punchInDate
+                                        ? new Date(item.punchRecord.punchIn.punchInDate).toLocaleTimeString()
+                                        : "N/A"} |
+                                    Out: {item?.punchRecord?.punchOut?.punchOutDate
+                                        ? new Date(item.punchRecord.punchOut.punchOutDate).toLocaleTimeString()
+                                        : "N/A"}
+                                </p>
                             </div>
                             <div className='flex gap-[20px] ml-[50px]'>
                                 <div>
-                                    <h5 className='text-[12px] font-medium'>{item?.lateEntryFineHoursTime?.split(":")[1]} min late</h5>
-                                    <p className='text-[12px] text-[#ad9f9f]' >{item?.lateEntryFineHoursTime?.split(":")[1]} min</p>
+                                    <h5 className='text-[12px] font-medium'>
+                                        {item?.lateEntryFineHoursTime?.split(":")[0] !== "00"
+                                            ? `${item?.lateEntryFineHoursTime?.split(":")[0]} hr ${item?.lateEntryFineHoursTime?.split(":")[1]} min late`
+                                            : `${item?.lateEntryFineHoursTime?.split(":")[1]} min late`}
+                                    </h5>
+                                    <p className='text-[12px] text-[#ad9f9f]'>
+                                        {item?.lateEntryFineHoursTime?.split(":")[0] !== "00"
+                                            ? `${item?.lateEntryFineHoursTime?.split(":")[0]} hr ${item?.lateEntryFineHoursTime?.split(":")[1]} min`
+                                            : `${item?.lateEntryFineHoursTime?.split(":")[1]} min`}
+                                    </p>
                                 </div>
                                 <div>
                                     <h5 className='text-[12px] font-medium'>{formatDate(item?.createdAt)}</h5>
