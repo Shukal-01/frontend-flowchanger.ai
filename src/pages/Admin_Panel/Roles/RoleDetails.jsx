@@ -11,6 +11,7 @@ import jsPDF from 'jspdf';
 import Select from "react-select";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Modal } from 'react-responsive-modal';
+import ConfirmationModal from '../../../components/Staff/Modals/ConfirmationModal';
 
 
 const Main = () => {
@@ -303,7 +304,6 @@ const Main = () => {
                             <BorderColorIcon className="text-[#27004a] font-light cursor-pointer text-[10px]]" />
                           </Link>
                           <button onClick={() =>  {
-                        deleteRole(role.id)
 
                         onOpenModal10()
                       }}>
@@ -311,16 +311,8 @@ const Main = () => {
                           className="text-red-500 cursor-pointer"
                         />
                       </button>
-                      <Modal open={open10} onClose={onCloseModal10} center>
-                        <div className="flex items-center justify-center h-[120px]">
-                          <h2 className="text-[18px] font-medium text-center text-[#27004a]">Are you sure want to delete this</h2>
+                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={role.id} callback={deleteRole}/>}
 
-                        </div>
-                        <div className="flex items-center justify-around ">
-                          <button className="allcrm-btn">Yes , Confirm</button>
-                          <button className="allcrm-btn" onClick={() => setOpen10(false)}>No , Cancel</button>
-                        </div>
-                      </Modal>
                         </td>
                       </tr>
                     )

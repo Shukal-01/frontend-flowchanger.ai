@@ -11,6 +11,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Modal } from 'react-responsive-modal';
 import Select from "react-select";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ConfirmationModal from "../../../components/Staff/Modals/ConfirmationModal";
 
 const DepartmentDetail = () => {
   const [open10, setOpen10] = useState(false);
@@ -109,8 +110,8 @@ const DepartmentDetail = () => {
         // Use result.ok instead of checking the status directly
         openToast(result.message);
         setDepartments(result);
+        setOpen10(false)
       } else {
-        console.log(result.message);
         openToast(result.message);
       }
     } catch (error) {
@@ -343,17 +344,8 @@ const DepartmentDetail = () => {
                         <DeleteIcon
                           className="text-red-500 cursor-pointer"
                         />
-                      </button>
-                      <Modal open={open10} onClose={onCloseModal10} center>
-                        <div className="flex items-center justify-center h-[120px]">
-                          <h2 className="text-[18px] font-medium text-center text-[#27004a]">Are you sure want to delete this</h2>
-
-                        </div>
-                        <div className="flex items-center justify-around ">
-                          <button className="allcrm-btn">Yes , Confirm</button>
-                          <button className="allcrm-btn" onClick={() => setOpen10(false)}>No , Cancel</button>
-                        </div>
-                      </Modal>
+                      </button> 
+                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={dep.id} callback={deleteDepartments}/>}
                     </td>
                   </tr>
                 ))

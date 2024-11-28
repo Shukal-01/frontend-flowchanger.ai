@@ -231,7 +231,9 @@ const StaffTab = () => {
                 </div>
 
                 <div className='flex w-[50%] mx-auto justify-between text-center mt-2'>
-                  <button className='second-btn'>Close</button>
+                  <button onClick={()=>{
+                    setDropdownOpen(false)
+                  }} className='second-btn'>Close</button>
                   <button className='second-btn' onClick={handleFilterButtonClick}>filter</button>
                 </div>
               </div>

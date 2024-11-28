@@ -149,7 +149,7 @@ useEffect(()=>{
           <UpperHeader toggleEditSideBar={toggleEditSideBar} handleToggleEditSideBar={handleToggleEditSideBar} />
           <div className="flex">
             <SidebarEditStaff toggleEditSideBar={toggleEditSideBar} />
-            <div className={`w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    
+            <div className={`w-full p-[20px] pt-[80px] xl:pl-[20px] xl:p-[40px] relative xl:pt-[60px]    
         ${!toggleEditSideBar ? "xl:pl-[320px]" : "xl:pl-[0px]"} flex flex-col set-z`}>
               <Outlet />
             </div>

@@ -465,11 +465,11 @@ const Clients = () => {
           </h2>
 
           <div className="flex justify-between items-center mb-[14px] betwe-cent">
-            <div className="flex mb-4 pl-[0] justify-between p-3 flex-col gap-2  sm:flex-row sm:gap-0">
+            <div className="flex mb-4 pl-[0] bulk-csv justify-between p-3 flex-col gap-2  sm:flex-row sm:gap-0">
               <div className="left-side ">
                 <select
                   onChange={handleSelectChange}
-                  className=" border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm mr-2 rounded-md  focus:outline-none"
+                  className=" border border-[#e5e7eb] p-[7px] selcct-chng text-[14px]  shadow-sm mr-2 rounded-md  focus:outline-none"
                 >
                   <option value="25">25</option>
                   <option value="50">50</option>
@@ -600,8 +600,6 @@ const Clients = () => {
                   <th className="border-r p-2 flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
                     <IoMdArrowDropright className={`text-[20px] transition-transform duration-200 ${isOpen ? "rotate-90 text-[black]" : "rotate-0"}`}
                     />
-                    <button className="p-[6px] rounded-lg bg-[orange]  mr-[7px] text-[white] ">To Do</button><span className="six-north">6</span>
-
                   </th>
                   <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
                     #
@@ -706,7 +704,7 @@ const Clients = () => {
                               </div>
                               <div className="flex items-center justify-around ">
                                 <button className="allcrm-btn" onClick={() => { deleteData(deleteClient) }}>Yes , Confirm</button>
-                                <button className="allcrm-btn">No , Cancel</button>
+                                <button className="allcrm-btn" onClick={() => setOpen8(false)}>No , Cancel</button>
                               </div>
                             </Modal>
                           </div>
