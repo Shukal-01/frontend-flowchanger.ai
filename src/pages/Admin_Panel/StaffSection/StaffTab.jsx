@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Search from '../../../Assets/Images/search.svg'
 import Filter from '../../../Assets/Images/filter.svg'
 import { Link } from 'react-router-dom';
@@ -9,9 +9,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 const StaffTab = () => {
   const { baseUrl, setSelectedStaff } = useGlobalContext();
-  const [isOpen , setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleAccordion = () =>{
+  const toggleAccordion = () => {
     setIsOpen((isOpen) => (!isOpen));
   }
 
@@ -26,9 +26,13 @@ const StaffTab = () => {
   const [searchStaffName, setSearchStaffName] = useState("");
   const [departments, setDepartments] = useState([]);
   const [searchStaffMessage, setSearchStaffMessage] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const staffDropDown = useRef(null);
 
 
-// function to filter the staff
+
+  // function to filter the staff
   const FilterStaff = async () => {
     const queryParams = new URLSearchParams({
       status: staffStatus,
@@ -89,26 +93,27 @@ const StaffTab = () => {
       setIsLoading(false);
     }
   }
+
   //feature for searching the staff
 
 
   const fetchDepartments = async () => {
-    try{
+    try {
       const result = await fetch(baseUrl + "department")
       if (result.status == 200) {
         const res = await result.json();
         setDepartments(res.data)
-  
+
       }
       else {
-        console.log("failed to fetch department" , result.status)
+        console.log("failed to fetch department", result.status)
         setDepartments([]);
       }
     }
-   catch(error){
-    console.log("error while fetching department" , error)
-    setDepartments([]);
-   }
+    catch (error) {
+      console.log("error while fetching department", error)
+      setDepartments([]);
+    }
   }
   // handle search the staff
   const handleSearchStaff = async () => {
@@ -165,9 +170,26 @@ const StaffTab = () => {
     // Fetch all staff data
     fetchRoles();
   };
+
+
+  const handleOutsideClick = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setDropdownOpen(false);
+    }
+    if(staffDropDown.current && !staffDropDown.current.contains(e.target)){
+      setToggleDrop(false)
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
   return (
     <div className='staff-tab mt-[20px]'>
-          <div className='flex justify-between flex-col xl:flex-row lg:flex-col md:flex-col gap-[15px] lg:gap-[0px]'>
+      <div className='flex justify-between flex-col xl:flex-row lg:flex-col md:flex-col gap-[15px] lg:gap-[0px]'>
         <div className='flex lg:gap-[20px]  flex-col gap-[10px] lg:flex lg:flex-row '>
           <div className='searching-input relative'>
             <img src={Search} className='absolute left-2 top-3' />
@@ -190,38 +212,62 @@ const StaffTab = () => {
 
 
           <div className='relative'>
-            <button className='flex gap-[10px] whitespace-nowrap justify-end items-center cursor-pointer' onClick={toggleDropdown}>
-              <img src={Filter} className='w-[40px] h-[40px] bg-[#F4F5F9] rounded-full p-[10px]' />
-              <h2 className='text-[14px] font-normal	'>More Filters</h2>
+            <button
+              className="flex gap-[10px] whitespace-nowrap justify-end items-center cursor-pointer"
+              onClick={toggleDropdown}
+            >
+              <img
+                src={Filter}
+                className="w-[40px] h-[40px] bg-[#F4F5F9] rounded-full p-[10px]"
+              />
+              <h2 className="text-[14px] font-normal">More Filters</h2>
             </button>
             {isDropdownOpen && (
-              <div className="absolute w-[325px]  mt-2 md:w-[400px] xl:w-[400px] lg:w-[400px] lg:left-[0px] p-[20px] bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                <h2 className='border-b '>More Filters</h2>
-                <div className='flex gap-[10px] mt-2 items-center'>
-                  <label className='text-[13px] whitespace-nowrap w-[81px]'>Staff Status:</label>
-                  <select className='border rounded-md bg-[#F4F5F9] p-[8px]  w-[100%] focus-visible:outline-none text-sm' value={staffStatus}
-                    onChange={(e) => setStaffStatus(e.target.value)}>
+              <div
+                ref={dropdownRef}
+                className="absolute w-[325px] mt-2 md:w-[400px] xl:w-[400px] lg:w-[400px] lg:left-[0px] p-[20px] bg-white border border-gray-200 rounded-md shadow-lg z-10"
+              >
+                <h2 className="border-b">More Filters</h2>
+                <div className="flex gap-[10px] mt-2 items-center">
+                  <label className="text-[13px] whitespace-nowrap w-[81px]">
+                    Staff Status:
+                  </label>
+                  <select
+                    className="border rounded-md bg-[#F4F5F9] p-[8px]  w-[100%] focus-visible:outline-none text-sm"
+                    value={staffStatus}
+                    onChange={(e) => setStaffStatus(e.target.value)}
+                  >
                     <option>All Staff</option>
                     <option>Active</option>
                     <option>InActive</option>
                   </select>
                 </div>
-                <div className='flex gap-[10px] mt-2 items-center'>
-                  <label className='text-[13px] whitespace-nowrap w-[102px]'>Gender:</label>
-                  <select className='border rounded-md bg-[#F4F5F9] p-[8px] w-full  focus-visible:outline-none text-sm' value={gender}
-                    onChange={(e) => setGender(e.target.value)}>
+                <div className="flex gap-[10px] mt-2 items-center">
+                  <label className="text-[13px] whitespace-nowrap w-[102px]">
+                    Gender:
+                  </label>
+                  <select
+                    className="border rounded-md bg-[#F4F5F9] p-[8px] w-full  focus-visible:outline-none text-sm"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
                     <option>Male</option>
                     <option>Female</option>
                     <option>Others</option>
                   </select>
                 </div>
-                <div className='flex gap-[10px] mt-2 items-center'>
-                  <label className='text-[13px] whitespace-nowrap w-[102px]'>Employee<br /> Type:</label>
-                  <select className='border rounded-md bg-[#F4F5F9] p-[8px] w-full  focus-visible:outline-none text-sm' value={employeeType}
-                    onChange={(e) => setEmployeeType(e.target.value)}>
+                <div className="flex gap-[10px] mt-2 items-center">
+                  <label className="text-[13px] whitespace-nowrap w-[102px]">
+                    Employee<br /> Type:
+                  </label>
+                  <select
+                    className="border rounded-md bg-[#F4F5F9] p-[8px] w-full  focus-visible:outline-none text-sm"
+                    value={employeeType}
+                    onChange={(e) => setEmployeeType(e.target.value)}
+                  >
                     <option>All</option>
                     <option>Full Time</option>
-                    <option>Pemanent</option>
+                    <option>Permanent</option>
                     <option>Part Time</option>
                     <option>Consultant</option>
                     <option>Temporary</option>
@@ -230,9 +276,11 @@ const StaffTab = () => {
                   </select>
                 </div>
 
-                <div className='flex w-[50%] mx-auto justify-between text-center mt-2'>
-                  <button className='second-btn'>Close</button>
-                  <button className='second-btn' onClick={handleFilterButtonClick}>filter</button>
+                <div className="flex w-[50%] mx-auto justify-between text-center mt-2">
+                  <button className="second-btn" onClick={() => setDropdownOpen(false)}>Close</button>
+                  <button className="second-btn" onClick={handleFilterButtonClick}>
+                    Filter
+                  </button>
                 </div>
               </div>
             )}
@@ -252,8 +300,7 @@ const StaffTab = () => {
               </div>
               {
                 toggleDrop &&
-
-                <div className="absolute right-0 z-10 mt-2 w-56 staff-page-res origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <div ref={staffDropDown} className="absolute right-0 z-10 mt-2 w-56 staff-page-res origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                   <div className="py-1" role="none">
                     <Link to="/add-one-staff" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Add One Staff</Link>
                     <Link to="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">Add Mulitple Staff</Link>
@@ -271,7 +318,7 @@ const StaffTab = () => {
       <div className='w-[100%] p-0 h-[300px] overflow-y-auto flex rounded-md shadow overflow-x-auto border border-1 mt-4'>
         <div className='bg-white'>
           <table className='table-section w-full table-auto border border-[#dcdbdb] rounded-lg overflow-hidden border-collapse'>
-            <thead  onClick={toggleAccordion} className='sticky bg-white set-shadow top-[-1px]  className="cursor-pointer  border border-gray-300 shadow-md"
+            <thead onClick={toggleAccordion} className='sticky bg-white set-shadow top-[-1px]  className="cursor-pointer  border border-gray-300 shadow-md"
                
 '>
               <th className='border-r border-[#dbdbdb]'>#</th>
@@ -293,7 +340,7 @@ const StaffTab = () => {
 
 
             </thead>
-            <tbody  className='newtab-staff'>
+            <tbody className='newtab-staff'>
 
 
               {

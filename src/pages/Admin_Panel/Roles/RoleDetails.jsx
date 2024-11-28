@@ -273,7 +273,7 @@ const Main = () => {
             <thead className='bg-gray-300 shadow-cs'>
               <tr className="role-row"> 
                 <th className=' p-4 text-center roll-name font-medium text-[12px]'>Roll Name</th>
-                <th className='text-center p-4 text-sm font-medium text-[12px] '>Options</th>
+                <th className='text-center p-4 text-sm font-medium text-[12px] '>Actions</th>
               </tr>
             </thead>
             <tbody>

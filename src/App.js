@@ -99,6 +99,9 @@ import Project from './pages/Client_Panel/Projects/ClientProject'
 import ClientTaskView from '../src/pages/Client_Panel/Task/ClientTaskview'
 import Client_Project from "./pages/Client_Panel/Projects/ClientProject";
 import ProjectSummary from "./pages/Client_Panel/Projects/ProjectSummary";
+import BranchDetails from "./pages/Admin_Panel/Branch/BranchDetails";
+import AddBranch from "./pages/Admin_Panel/Branch/AddBranch";
+import UpdateBranch from "./pages/Admin_Panel/Branch/UpdateBranch";
 
 const App = () => {
   const [toggleSideBar, setToggleSideBar] = useState(true);
@@ -254,6 +257,9 @@ const App = () => {
             <Route path="/editdepartment" element={<EditDepartment />} />
             <Route path="/add-one-staff" element={<AddOneStaff />} />
             <Route path="/department-details" element={<DepartmentDetail />} />
+            <Route path="/branch-details" element={<BranchDetails />} />
+            <Route path="/add-branch" element={<AddBranch />} />
+            <Route path="/update-branch" element={<UpdateBranch />} />
             <Route path="/salary_Details" element={<Salary_Details />} />
             <Route path="/overtime" element={<Overtime />} />
             <Route path="/reviewfine" element={<Reviewfine />} />
@@ -333,7 +339,7 @@ const App = () => {
         <Route element={<Client_Panel />}>          
           <Route path="/project-invoice" element={<Project_Invoice />} />
           <Route path="/project-progress" element={<Project_Progress />} />
-          <Route path="/client-project" element={<Client_Project />} />
+          {/* <Route path="/client-project" element={<Client_Project />} /> */}
           <Route path="/client-task" element={<ClientTaskView/>} />
           <Route path="/note" element={<Note />} />
           <Route path="/project-summary" element={<ProjectSummary />} />

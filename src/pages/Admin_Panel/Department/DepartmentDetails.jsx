@@ -14,7 +14,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const DepartmentDetail = () => {
   const [open10, setOpen10] = useState(false);
-
   const onOpenModal10 = () => setOpen10(true);
   const onCloseModal10 = () => setOpen10(false);
   const { baseUrl, setDepId, setName, openToast } = useGlobalContext();
@@ -303,7 +302,7 @@ const DepartmentDetail = () => {
                 <th className="text-center p-4 border-b border-[#dbdbdb] roll-name text-sm font-medium ">
                   Department Name
                 </th>
-                <th className="text-center border-b border-[#dbdbdb]  p-4 text-sm font-medium ">Options</th>
+                <th className="text-center border-b border-[#dbdbdb]  p-4 text-sm font-medium ">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -317,6 +316,7 @@ const DepartmentDetail = () => {
                   </td>
                 </tr>
               ) : departments && departments.length > 0 ? (
+                
                 departments.slice(0, rowsToShow).map((dep) => (
                   <tr key={dep.id} className="border-b  border-[#dbdbdb] pb-2">
                     <td className="pt-4 pb-3 pl-3 border-r border-[#dbdbdb]">
@@ -357,6 +357,8 @@ const DepartmentDetail = () => {
                     </td>
                   </tr>
                 ))
+
+
               ) : (
                 <tr className="h-[70px]">
                   <td

@@ -51,6 +51,9 @@ const SideBar = ({ toggleSideBar }) => {
   const [isMenuOpen9, setIsMenuOpen9] = useState(false);
   const toggleMenu9 = () => setIsMenuOpen9(!isMenuOpen9);
 
+  const [isMenuOpen10, setIsMenuOpen10] = useState(false);
+  const toggleMenu10 = () => setIsMenuOpen10(!isMenuOpen9);
+
   //setup sidebar
 
   // State to manage sidebar visibility
@@ -334,21 +337,22 @@ const SideBar = ({ toggleSideBar }) => {
 
           </Link>
 
-          {/* <div
-            className={`overflow-hidden transition-max-height duration-300 ease-in-out mt-[5px] ${isMenuOpen6 ? 'max-h-screen' : 'max-h-0'
-              }`}
-          >
+        </div>
 
-            <Link to="#"
-              className="w-full ml-[40px] text-left py-[10px] flex items-center gap-[10px] pl-[0px] whitespace-nowrap  text-white   transition-all	rounded-md"
+
+        <div className="">
+          <Link to="/branch-details" onClick={() => { setSelectedTab("branch") }} className={`flex items-center gap-[10px] mt-[5px] p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all ${selectedTab === "branch" ? "bg-white text-[#8a25b0]" : "text-white"}`}>
+            {/* <img src={staff} alt="" /> */}
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-git-fork rotate-180	"><circle cx="12" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><circle cx="18" cy="6" r="3" /><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9" /><path d="M12 12v3" /></svg>
+            <button
+              onClick={toggleMenu10}
+              className=" "
             >
-              <ArrowForwardIosIcon className="arrow-icon-sidebar"/>
-              Sub Menu
-            </Link>
+              Branch
+            </button>
 
+          </Link>
 
-
-          </div> */}
         </div>
 
         <div className="mt-[5px] mb-[5px]">

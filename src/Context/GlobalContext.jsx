@@ -32,6 +32,7 @@ export const GlobalContext = ({ children }) => {
   const [roleName, setRoleName] = useState("");
   const [roleId, setRoleId] = useState("");
   const [selectedStaff, setSelectedStaff] = useState(null);
+  const [branchData,setBranchData]=useState("");
   // console.log(selectedStaff)
 
   const fetchDetails = async () => {
@@ -77,7 +78,7 @@ export const GlobalContext = ({ children }) => {
   }, [selectedTab, staffTab]);
 
   return (
-    <MainContext.Provider value={{ selectedTab, setSelectedTab, selectedSidebarTab, setSelectedSidebarTab, staffTab, openToast, setStaffTab, baseUrl, name, setName, depId, setDepId, roleName, setRoleName, roleId, setRoleId, editPermissions, setEditPermissions, selectedStaff, setSelectedStaff, fetchDetails, fetchStaff, staffDetail, activeSubmenu, setActiveSubmenu }}>
+    <MainContext.Provider value={{ selectedTab, setSelectedTab, selectedSidebarTab, setSelectedSidebarTab, staffTab, openToast, setStaffTab, baseUrl, name, setName, depId, setDepId, roleName, setRoleName, roleId, setRoleId, editPermissions, setEditPermissions, selectedStaff, setSelectedStaff, fetchDetails, fetchStaff, staffDetail, activeSubmenu, setActiveSubmenu,branchData,setBranchData }}>
       {children}
       <ToastContainer />
     </MainContext.Provider>
