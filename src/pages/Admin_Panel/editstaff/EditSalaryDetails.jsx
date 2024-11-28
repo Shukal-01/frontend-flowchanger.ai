@@ -72,7 +72,7 @@ const EditSalaryDetails = () => {
       items: [
         { id: 'basic_var', label: 'BASIC', checked: false },
         { id: 'hra_var', label: 'HRA', checked: false },
-        { id: 'da_var', label: 'Dearness Allowance', checked: false },
+         { id: 'da_var', label: 'Dearness Allowance', checked: false },
         { id: 'overtime_var', label: 'Overtime', checked: false },
         { id: 'incentive_var', label: 'Incentive', checked: false },
       ]
@@ -159,7 +159,6 @@ const EditSalaryDetails = () => {
       };
     });
   };
-
 
 
 

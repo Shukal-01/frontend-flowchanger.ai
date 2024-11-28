@@ -18,6 +18,8 @@ const VerifyPan = () => {
 
 
 
+
+    
     async function submitPan() {
         if (!pan?.number || !pan?.verificationFile) {
             openToast("Pan number and file are required", "error");

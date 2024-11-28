@@ -31,7 +31,7 @@ const PayrollMenu = ({toggleRunTab,setToggleRunTab,setSelectedPayrollTab}) => {
 
 
   return (
-    <div className="staff-menu payroll-menus py-[10px] px-[20px] ">
+    <div className="staff-menu payroll-menus py-[10px] px-[20px]">
       <h3 className="text-[20px]  font-[Nunito]">Pay Roll</h3>
 
       <div className="tab-section mt-[30px]">
