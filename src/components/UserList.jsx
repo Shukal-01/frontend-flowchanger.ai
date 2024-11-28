@@ -43,7 +43,7 @@ const UserList = ({ userType, fetchUrl, handleSelectedUser }) => {
 
   return (
     <>
-    <div className="flex flex-col h-full justify-between">
+    <div className="flex flex-col h-full ">
       {!users ? (
         <div className="flex justify-center items-center h-full">
           <div role="status">
@@ -70,7 +70,7 @@ const UserList = ({ userType, fetchUrl, handleSelectedUser }) => {
         sortedUsers.map((user) => (
           <div
             key={user.id}
-            className="flex justify-start space-x-5 ml-2 space-y-2 hover:bg-purple-600 p-2 border border-gray-300 mb-2 rounded-lg shadow-lg bg-white cursor-pointer"
+            className="flex justify-start space-x-5 ml-2  hover:bg-purple-600 p-2 border border-gray-300 mb-2 rounded-lg shadow-lg bg-white cursor-pointer"
             onClick={() => handleSelectedUser(user)}
           >
             <div className="flex justify-center items-center rounded-full py-2 px-4 border border-gray-300 shadow-lg bg-purple-400">

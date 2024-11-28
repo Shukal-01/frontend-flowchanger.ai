@@ -234,6 +234,10 @@ export const GlobalContext = ({ children }) => {
       showChatSection,
       isSendingMessage,
       setIsSendingMessage,
+      activeSubmenu, 
+      setActiveSubmenu,
+      selectedSidebarTab, 
+      setSelectedSidebarTab
     }}>
       {children}
       <ToastContainer />

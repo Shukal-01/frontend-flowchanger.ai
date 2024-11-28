@@ -93,7 +93,7 @@ const StaffChatInterface = () => {
         </div>
         {/* <!-- Right Section: Chat Window --> */}
 
-        <div class={`w-2/3 h-full md:flex flex-col flex-grow chat-section`}>
+        <div class={`w-2/3 h-full md:flex flex-col flex-grow ${showChatSection?"block":"hidden"} sm:block  chat-section`}>
           {!showChatSection && (
             <div className="flex justify-center items-center h-full">
               <p className="text-lg font-semibold text-gray-400">
@@ -136,8 +136,8 @@ const StaffChatInterface = () => {
                 </div>
               </div>
               <ChatComponent messages={messages} />
-              <div className="mt-4 flex items-center space-x-2 rounded-xl">
-                <div class="relative w-full">
+              <div className="mt-4 flex items-center  rounded-xl">
+                <div class="relative w-[96%]">
                   <input
                     type="text"
                     value={message}
@@ -152,7 +152,7 @@ const StaffChatInterface = () => {
                 <button
                   onClick={sendMessage}
                   disabled={isSendingMessage}
-                  className={`bg-blue-500 text-white p-2 rounded-xl ml-2 ${
+                  className={`bg-purple-500 text-white flex justify-center items-center p-2 py-3 rounded-xl w-[4%] ${
                     isSendingMessage && "opacity-50"
                   }`}
                 >

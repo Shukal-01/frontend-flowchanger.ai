@@ -61,7 +61,7 @@ const ClientChatInterFace = () => {
 
           {/* <!-- Member List --> */}
           <div className="flex flex-col justify-between h-full flex-grow overflow-y-auto px-3 mb-4">
-            <div class="mb-4 w-full md:w-[80%]   grid grid-cols-3  ">
+            <div class="mb-4  xs:w-[100%] md:w-[80%] flex flex-row justify-start space-x-2  ">
               <div
                 className="p-3 flex justify-start text-gray-400 items-center hover:text-black"
                 onClick={() => {
@@ -92,7 +92,7 @@ const ClientChatInterFace = () => {
         </div>
         {/* <!-- Right Section: Chat Window --> */}
 
-        <div class={`w-2/3 h-full md:flex flex-col flex-grow chat-section`}>
+        <div class={`w-2/3 h-full md:flex flex-col flex-grow ${showChatSection?"block":"hidden"} sm:block chat-section`}>
           {!showChatSection && (
             <div className="flex justify-center items-center h-full">
               <p className="text-lg font-semibold text-gray-400">
@@ -137,8 +137,8 @@ const ClientChatInterFace = () => {
                 </div>
               </div>
               <ChatComponent messages={messages} />
-              <div className="mt-4 flex items-center space-x-2 rounded-xl">
-                <div class="relative w-full">
+              <div className="mt-4 flex items-center  rounded-xl">
+                <div class="relative w-[96%]">
                   <input
                     type="text"
                     value={message}
@@ -153,7 +153,7 @@ const ClientChatInterFace = () => {
                 <button
                   onClick={sendMessage}
                   disabled={isSendingMessage}
-                  className={`bg-blue-500 text-white p-2 rounded-xl ml-2 ${
+                  className={`bg-purple-500 text-white flex justify-center items-center p-2 py-3 rounded-xl w-[4%] ${
                     isSendingMessage && "opacity-50"
                   }`}
                 >
