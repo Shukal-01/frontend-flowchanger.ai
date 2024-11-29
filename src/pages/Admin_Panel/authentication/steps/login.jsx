@@ -8,11 +8,12 @@ import { Link } from "react-router-dom";
 import flowChangerLogo from "../../../../Assets/Images/flowchangerAINew.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 import { useGlobalContext } from "../../../../Context/GlobalContext";
 
 const LoginPage = () => {
   const { loginWithRedirect } = useAuth0();
-
   const {
     register,
     handleSubmit,
@@ -20,19 +21,23 @@ const LoginPage = () => {
   } = useForm();
   const { isAuthenticated, setIsAuthenticated } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { openToast, baseUrl } = useGlobalContext();
   const navigate = useNavigate();
 
   const handleLoggedIn = async (loginInfo) => {
     console.log(loginInfo);
     try {
-      const response = await fetch(baseUrl + "admin/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginInfo),
-      });
+      const response = await fetch(
+        "https://fc-production-testing.onrender.com/api/admin/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginInfo),
+        }
+      );
       console.log(response);
       const result = await response.json();
       const { token } = result;
@@ -117,9 +122,9 @@ const LoginPage = () => {
                   <p className="text-red-500">{errors.email.message}</p>
                 )}
               </div>
-              <div className="mb-6">
+              <div className="mb-6 relative">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   aria-label="Password"
                   className="w-full px-3 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-100"
@@ -127,6 +132,17 @@ const LoginPage = () => {
                     required: "password is required",
                   })}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? (
+                    <AiOutlineEye size={20} />
+                  ) : (
+                    <AiOutlineEyeInvisible size={20} />
+                  )}
+                </button>
               </div>
               <button
                 type="submit"

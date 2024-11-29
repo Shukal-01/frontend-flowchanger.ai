@@ -43,9 +43,9 @@ const UserList = ({ userType, fetchUrl, handleSelectedUser }) => {
 
   return (
     <>
-    <div className="flex flex-col h-full ">
+    <div className="  overflow-y-scroll   flex-grow flex-shrink min-h-0">
       {!users ? (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center min-h-[90%] flex-grow">
           <div role="status">
             <svg
               aria-hidden="true"
@@ -89,12 +89,13 @@ const UserList = ({ userType, fetchUrl, handleSelectedUser }) => {
           </div>
         ))
       )}
-      
+  
     </div>
-    <div className="flex flex-row justify-between mt-15 p-2 rounded bg-gray-300 mb-4 ">
+    
+    <div className="flex flex-row justify-between mt-15 p-2 rounded bg-gray-300  flex-shrink-0">
     <div className="float-left text-left">Theme</div>
     <div className="float-left text-left">Settings</div>
-  </div>
+    </div>
   </>
   );
 };

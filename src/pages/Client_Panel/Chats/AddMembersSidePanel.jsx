@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { TiPlus } from "react-icons/ti";
 import { IoIosArrowForward } from "react-icons/io";
+import { useGlobalContext } from "../../../Context/GlobalContext";
 
 
 
-const AddMembersSidePanel = ({handleDeleteGroupClick,handleAddMembersModal}) =>{
+const AddMembersSidePanel = () =>{
 
+ const {handleDeleteGroupClick,handleAddMembersModal} = useGlobalContext(); 
  const [showSharedItemsMenu , setShowSharedItemsMenu] = useState(false);
  
 
@@ -16,7 +18,7 @@ const AddMembersSidePanel = ({handleDeleteGroupClick,handleAddMembersModal}) =>{
      return (
 
         <div className="w-72 bg-white border-l  border-gray-200 h-full flex flex-col ">
-          <div className="flex flex-row justify-between mb-2 mx-2">
+          <div className="flex flex-row justify-between mb-2 mx-2 mt-2">
             <button className = "flex flex-row items-center justify-between w-[60px] ml-1 border bg-purple-600 rounded p-1" onClick={handleAddMembersModal}>
           <TiPlus className="text-white"/>
           <span className="text-white">Ad</span>

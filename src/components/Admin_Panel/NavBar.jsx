@@ -42,7 +42,7 @@ const NavBar = ({toggleRunTab,setToggleRunTab}) => {
   const hideDropdown = () => setProfileDropDown(false);
 
   return (
-    <div className="w-[100%]  pt-[10px] pb-[10px] pr-[2px] flex items-center justify-between border-b shadow-sm pl-[14px] navbar">
+    <div className="w-[100%]  pt-[10px] h-[60px] pb-[10px] pr-[2px] flex items-center justify-between border-b shadow-sm pl-[14px] navbar">
       <button onClick={handleAddClass}>
 
         <MenuIcon className="menu-icon-navbar hidden " />

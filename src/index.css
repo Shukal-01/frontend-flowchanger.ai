@@ -24,3 +24,18 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #555; /* Thumb color on hover */
 }
+input::-ms-reveal {
+   display: none;
+ }
+ 
+ /* For Chrome, Edge (Chromium), Safari */
+ input::-webkit-password-toggle-button {
+   display: none;
+ }
+ 
+ /* Optional: Remove default appearance of input fields */
+ input[type="password"] {
+   appearance: none;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+ }
