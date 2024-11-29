@@ -43,7 +43,7 @@ const UserList = ({ userType, fetchUrl, handleSelectedUser }) => {
 
   return (
     <>
-    <div className="flex flex-col h-full ">
+    <div className="flex flex-col max-h-[90%] ">
       {!users ? (
         <div className="flex justify-center items-center h-full">
           <div role="status">
@@ -92,11 +92,11 @@ const UserList = ({ userType, fetchUrl, handleSelectedUser }) => {
       
     </div>
     
-  
-  <div className="flex flex-row justify-between mt-15 p-2 rounded bg-gray-300 mb-4 ">
+    <div className="flex flex-row justify-between mt-15 p-2 rounded bg-gray-300 mb-4 ">
   <div className="float-left text-left">Theme</div>
   <div className="float-left text-left">Settings</div>
   </div>
+  
   </>
   );
 };
