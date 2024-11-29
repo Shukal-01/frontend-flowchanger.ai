@@ -728,3 +728,7 @@ input[type=radio] {
     background: #27004a; ;
   }
   
+
+  .deltebranchmodal{
+    width: 300px !important;
+  }
