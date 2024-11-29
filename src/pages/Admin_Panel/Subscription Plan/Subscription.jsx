@@ -75,22 +75,22 @@ const Subscription = () => {
         </div>
 
         <div>
-          <Tabs className="shadow p-5 h-screen border rounded-lg subscription-tab max-[1100px]:mt-[230px] max-[823px]:mt-[254px] max-[600px]:mt-[225px] ">
+          <Tabs className="shadow p-5 h-[100%] border rounded-lg subscription-tab max-[1100px]:mt-[230px] max-[823px]:mt-[254px] max-[600px]:mt-[225px] ">
             <TabList className="flex items-center text-[15px] font-medium text-[#566a7f] gap-4 rounded-md m-2 max-[600px]:text-[10px]">
-              <Tab className="hover:bg-[#eceef1] cursor-pointer  px-3 py-2 rounded-lg">
+              <Tab className="hover:bg-[#eceef1] cursor-pointer focus-visible:outline-none px-3 py-2 rounded-lg">
                 <AssignmentIcon className="mr-1" />
                 Subscription History
               </Tab>
-              <Tab className="hover:bg-[#eceef1] cursor-pointer  px-3 py-2 rounded-lg">
+              <Tab className="hover:bg-[#eceef1] cursor-pointer focus-visible:outline-none px-3 py-2 rounded-lg">
                 <PaidIcon className="mr-1" />
                 Transactions
               </Tab>
             </TabList>
 
-            <TabPanel className="overflow-auto">
+            <TabPanel>
               <Subscription_History />
             </TabPanel>
-            <TabPanel  className="overflow-auto" >
+            <TabPanel>
               <Transctions />
             </TabPanel>
           </Tabs>

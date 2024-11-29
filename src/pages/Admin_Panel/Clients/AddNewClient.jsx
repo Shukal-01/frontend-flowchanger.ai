@@ -18,7 +18,7 @@ const AddNewClient = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleCloseForm() {
-    navigate("/task")
+    navigate("/clients")
   }
   const navigate = useNavigate();
 

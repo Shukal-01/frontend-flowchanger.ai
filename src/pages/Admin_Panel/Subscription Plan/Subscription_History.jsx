@@ -5,122 +5,81 @@ import { FiSearch } from "react-icons/fi";
 
 const Subscription_History = () => {
   return (
-    <div className="m-4 ">
-      <div className="flex items-center gap-2 justify-end">
-        <div className="relative client-add">
-        <input
-          className="p-[6px] client-add  rounded-2xl pl-[10px] pr-[24px] focus-visible:outline-none  summary-border text-[13px] py-2.5"
+    <> 
+      <div div className="m-4  ">
+     
+      </div>
+      <div>
+    
+        <div className="w-full p-[10px] shadow-cs rounded-lg border border-[#dbdbdb]  ">
 
-          type="text"
-          placeholder="Search"
-        />
-        <FiSearch  className="absolute newadd2 right-[8px] top-[14px] text-gray-500"/>
+        <div className="flex items-center gap-2 justify-end mt-[10px]">
+          <div className="relative client-add">
+            <input
+              className="p-[6px] client-add  rounded-3xl pl-[10px] pr-[24px] focus-visible:outline-none  summary-border text-[13px] py-2.5"
+              type="text"
+              placeholder="Search"
+            />
+            <FiSearch className="absolute newadd2 right-[8px] top-[14px] text-gray-500" />
+          </div>
+
+          <div className="bg-[#27004a] text-white px-7 py-[8px] rounded-md space-x-6 max-[463px]:flex max-[463px]:h-[40px]">
+            <button>
+              <CachedIcon />
+            </button>
+            <button>
+              <KeyboardArrowDownIcon />
+            </button>
+          </div>
         </div>
+        <div className=" overflow-x-auto w-full" >
+          <table className="mt-8 w-full">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border-t border-r border-l border-[#DBDBDB] max-[600px]:text-[10px]">
+                  ID
+                </th>
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  User Name
+                </th>
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  Plan Name
+                </th>
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  Payment method
+                </th>
 
-        <div className="bg-[#8592a3] text-white px-7 py-[8px] rounded-md space-x-6 max-[463px]:flex max-[463px]:h-[40px]">
-          <button>
-            <CachedIcon />
-          </button>
-          <button>
-            <KeyboardArrowDownIcon />
-          </button>
+                <th className="px-4 py-2 font-semibold text-[#27004a]  whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  Status
+                </th>
+
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  Charging Price
+                </th>
+
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  Features
+                </th>
+
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  Tenure
+                </th>
+
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  Started at
+                </th>
+                <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+                  End Date
+                </th>
+              </tr>
+            </thead>
+
+            <tbody></tbody>
+          </table>
+          </div>
         </div>
       </div>
-
-      <table className="mt-8 w-full">
-        <thead>
-          <tr>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border-t border-r border-l border-[#DBDBDB] max-[600px]:text-[10px]">
-              ID
-            </th>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              User Name
-            </th>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              Plan Name
-            </th>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              Payment method
-            </th>
-
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              Status
-            </th>
-
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              Charging Price
-            </th>
-
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              Features
-            </th>
-
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              Tenure
-            </th>
-
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              Started at
-            </th>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-              End Date
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-            <tr>
-                <td className="px-4 py-20 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >668</td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >Sid gor</td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >Standard Plan</td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >Paypal</td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#71dd37]  border-[#DBDBDB] max-[600px]:text-[10px]" >Active</td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >₹ 500.0</td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >
-                    <ul className="flex flex-col items-start max-[600px]:text-[10px]">
-                        <li>
-                            <strong>Max Projects: </strong>
-                            10
-                        </li>
-
-                        <li>
-                            <strong>Max Team Members: </strong>
-                            10
-                        </li>
-
-                        <li>
-                            <strong>Max Workspaces: </strong>
-                            10
-                        </li>
-
-                        <li>
-                            <strong>Max Clients: </strong>
-                            10
-                        </li>
-
-                        <li>
-                            <strong>Modules: </strong>
-                        </li>
-                    </ul>
-
-                    <ul className="flex flex-col items-start max-[600px]:text-[10px]">
-                        <li>Tasks</li>
-                        <li>Notes</li>
-                        <li>Meetings</li>
-                        <li>Chat</li>
-                        <li>Todos</li>
-                        <li>Contracts</li>
-                        <li>Payslips</li>
-                        <li>Finance</li>
-                    </ul>
-                </td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >Monthly</td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >2024-04-05</td>
-                <td className="px-4 py-4 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >2024-05-05</td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
+    </>
   );
 };
 

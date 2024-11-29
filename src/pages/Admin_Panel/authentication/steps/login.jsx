@@ -26,7 +26,7 @@ const LoginPage = () => {
   const handleLoggedIn = async (loginInfo) => {
     console.log(loginInfo);
     try {
-      const response = await fetch(`${baseUrl}admin/login`, {
+      const response = await fetch(baseUrl + "admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

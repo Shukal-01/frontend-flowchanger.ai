@@ -542,6 +542,16 @@ input[type=radio] {
     align-items: center;
 
 }
+.table-sectionpolicy thead th{
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 10px 10px;
+    border-right: 1px solid #dbdbdb;
+    background: #fff !important;
+
+    
+}
 
 .calender-div table tbody button {
     width: 155px;
@@ -727,4 +737,5 @@ input[type=radio] {
   .scroll-bar-design::-webkit-scrollbar-thumb:hover {
     background: #27004a; ;
   }
+
   
