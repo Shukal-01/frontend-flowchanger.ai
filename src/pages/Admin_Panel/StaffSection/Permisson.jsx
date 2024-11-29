@@ -41,7 +41,7 @@ const Permission = () => {
       </div>
 
 
-      <div className='w-[100%] p-0 h-[300px] overflow-y-auto flex rounded-md shadow overflow-scroll border border-1 mt-4 '>
+      <div className='w-[100%] p-0 h-[100%] overflow-y-auto flex rounded-md shadow overflow-scroll border border-1 mt-4 '>
       <div className='w-full   '>
         <table className='table-section  w-full'>
           <thead className='border border-1 '>
@@ -49,6 +49,7 @@ const Permission = () => {
             <th>Name</th>
             <th>Job Title</th>
             <th>Role</th>
+          
 
 
           </thead>
@@ -66,6 +67,9 @@ const Permission = () => {
             <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items?.name}</td>
             <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items?.staffDetails?.job_title}</td>
             <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items?.staffDetails?.role?.role_name}</td>
+           
+            
+
             </tr>
           })
         )

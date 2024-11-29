@@ -1,81 +1,84 @@
-import React from 'react'
+import React from "react";
 import CachedIcon from "@mui/icons-material/Cached";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { FiSearch } from "react-icons/fi";
+
 
 const Transctions = () => {
   return (
     <div className="m-4">
-      <div className="flex items-center gap-2 justify-end">
+     <div>
+    
+    <div className=" p-[10px] shadow-cs rounded-lg border border-[#dbdbdb]  ">
+
+    <div className="flex items-center gap-2 justify-end mt-[10px]">
+      <div className="relative client-add">
         <input
-          className="h-[40px] rounded-md border border-[#d9dee3] pl-2 max-[600px]:text-[10px]"
+          className="p-[6px] client-add  rounded-2xl pl-[10px] pr-[24px] focus-visible:outline-none  summary-border text-[13px] py-2.5"
           type="text"
           placeholder="Search"
         />
-
-        <div className="bg-[#8592a3] text-white px-7 py-[8px] rounded-md space-x-6 max-[463px]:flex max-[463px]:h-[40px]">
-          <button>
-            <CachedIcon />
-          </button>
-          <button>
-            <KeyboardArrowDownIcon />
-          </button>
-        </div>
+        <FiSearch className="absolute newadd2 right-[8px] top-[14px] text-gray-500" />
       </div>
 
-      <table className="mt-8 overflow-x-auto w-full">
+      <div className="bg-[#27004a] text-white px-7 py-[8px] rounded-md space-x-6 max-[463px]:flex max-[463px]:h-[40px]">
+        <button>
+          <CachedIcon />
+        </button>
+        <button>
+          <KeyboardArrowDownIcon />
+        </button>
+      </div>
+    </div>
+    <div className="overflow-x-auto w-full">
+      <table className="mt-8 w-full">
         <thead>
           <tr>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border-t border-r border-l border-[#DBDBDB] max-[600px]:text-[10px]">
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border-t border-r border-l border-[#DBDBDB] max-[600px]:text-[10px]">
               ID
             </th>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
               User Name
             </th>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
               Plan Name
             </th>
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
               Payment method
             </th>
 
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+            <th className="px-4 py-2 font-semibold text-[#27004a]  whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
               Status
             </th>
 
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-            Amount
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+              Charging Price
             </th>
 
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-            Charging Currency
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+              Features
             </th>
 
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-            Transaction ID
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+              Tenure
             </th>
 
-            <th className="px-4 py-2 font-semibold text-[#566a7f] text-[16px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
-            Created Date
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+              Started at
+            </th>
+            <th className="px-4 py-2 font-semibold text-[#27004a] whitespace-nowrap text-[12px] border-b text-center border border-[#DBDBDB] max-[600px]:text-[10px]">
+              End Date
             </th>
           </tr>
         </thead>
 
-        <tbody>
-            <tr>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >668</td>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >Sid gor</td>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >Basic Plan</td>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >Paypal</td>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#ffb827]  border-[#DBDBDB] max-[600px]:text-[10px]" >Pending</td>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >₹ 100.0</td>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >₹</td>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >660ea0ff95c3a</td>
-                <td className="px-4 py-2 text-center border text-[15px] text-[#566a7f]  border-[#DBDBDB] max-[600px]:text-[10px]" >04-04-2024</td>
-             </tr>
-        </tbody>
+        <tbody></tbody>
       </table>
+      </div>
     </div>
-  )
-}
+  </div>
+    </div>
+  );
+};
 
-export default Transctions
+export default Transctions;

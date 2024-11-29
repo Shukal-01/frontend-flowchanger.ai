@@ -141,7 +141,7 @@ const PayrollIncentives = () => {
                     Import Incentives
                 </button>
                 </div>
-                <div className="bg-white rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto min-h-[300px]">
+                <div className="bg-white rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto h-[100%]">
             <table className="w-full table-auto border border-[#dcdbdb] rounded-lg overflow-hidden border-collapse">
               {/* Header with Toggle */}
               <thead
@@ -150,12 +150,12 @@ const PayrollIncentives = () => {
               >
                <tr>     
 
-               <th className="border-r p-2 flex justify-center text-xs font-medium whitespace-nowrap text-center">
+               <th className="border-r p-[10px] flex justify-center text-xs font-medium whitespace-nowrap text-center">
                    #
 
                   </th>                
 
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                             <div className='flex justify-center items-center'>
                                 Name
@@ -175,7 +175,7 @@ const PayrollIncentives = () => {
                                 </div>
                             </div>
                         </th>
-                        <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                        <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                             <div className='flex justify-center items-center'>
                                 Job Title
@@ -195,7 +195,7 @@ const PayrollIncentives = () => {
                                 </div>
                             </div>
                         </th>
-                        <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                        <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                             <div className='flex justify-center items-center'>
                                 CTC
@@ -216,7 +216,7 @@ const PayrollIncentives = () => {
                             </div>
                         </th>
                         
-                        <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                        <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                             <div className='flex justify-center items-center'>
                                 Payroll Finalized
@@ -225,7 +225,7 @@ const PayrollIncentives = () => {
 
                         </th>
 
-                        <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                        <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                             <div className='flex justify-center items-center'>
                                 Total Incentives
@@ -247,7 +247,7 @@ const PayrollIncentives = () => {
 
                         </th>
 
-                        <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                        <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                             <div className='flex justify-center items-center'>
                                 Action
@@ -261,23 +261,23 @@ const PayrollIncentives = () => {
                     <tbody className='w-full'>
 
                     <tr className="border">
-                      <td className="p-2 whitespace-nowrap text-xs text-center"><input type="checkbox" className="border border-1 rounded-md" /></td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"><input type="checkbox" className="border border-1 rounded-md" /></td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
                       
                     </tr>
                     <tr className="border">
-                      <td className="p-2 whitespace-nowrap text-xs text-center"><input type="checkbox" className="border border-1 rounded-md" /></td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"><input type="checkbox" className="border border-1 rounded-md" /></td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
                       
                     </tr>
 

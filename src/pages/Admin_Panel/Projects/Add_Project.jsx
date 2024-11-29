@@ -221,7 +221,7 @@ const Add_Project = () => {
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">* Project Name</label>
             <input  
-              className="h-[35px] w-[100%] border border-[#DBDCDE]  rounded-md pl-2 "
+              className="h-[35px] w-[100%] border border-[#DBDCDE] focus-visible:outline-none  rounded-md pl-2 "
               type="text"
               onChange={(e) => { setProjectName(e.target.value) }}
              name = "projectname"
@@ -234,7 +234,7 @@ const Add_Project = () => {
             <label className="text-sm font-medium text-gray-700">* Customer</label>
             <select
   onChange={(e) => setSelectClient(e.target.value)}
-  className="w-[100%]  bg-white border border-[#DBDCDE] rounded-md pl-5 h-[35px]"
+  className="w-[100%]  bg-white border border-[#DBDCDE] focus-visible:outline-none rounded-md pl-5 h-[35px]"
 >
   {clientData?.map((clientInformation, index) => {
     console.log(clientInformation?.name, clientInformation.clientDetails?.id); // Logs name and clientDetails.id
@@ -255,13 +255,13 @@ const Add_Project = () => {
 
           <div className="space-y-2">
             <h1 className="text-sm font-medium text-gray-700">Progress 0%</h1>
-            <div className="h-7 bg-[#FBFBFB] border border-[#D9D9D9] rounded-md"></div>
+            <div className="h-[6px] bg-[#27004a] border border-[#D9D9D9] rounded-md"></div>
           </div>
 
           <div className="flex w-[100%] gap-10">
             <div className="w-[50%] space-y-2">
               <label className="text-sm font-medium text-gray-700">* Billing Type</label>
-              <select onChange={(e) => { setBillingType(e.target.value) }} className="h-[40px] w-[100%] bg-white border border-[#DBDCDE] rounded-md pl-5" name = "billingType" required>
+              <select onChange={(e) => { setBillingType(e.target.value) }} className="h-[40px] w-[100%] focus-visible:outline-none bg-white border border-[#DBDCDE] rounded-md pl-5" name = "billingType" required>
                 <option value="Fixed Rate">Fixed rate</option>
                 <option value="Project Hours">Project Hours</option>
                 <option value="Task Hours Based on task hourly rate">Task Hours Based on task hourly rate</option>
@@ -270,7 +270,7 @@ const Add_Project = () => {
 
             <div className="w-[50%] space-y-2">
               <label className="text-sm font-medium text-gray-700">Status</label>
-              <select className="h-[40px] w-[100%] bg-white border border-[#DBDCDE] rounded-md pl-5" name = "status" required>
+              <select className="h-[40px] w-[100%] focus-visible:outline-none bg-white border border-[#DBDCDE] rounded-md pl-5" name = "status" required>
                 <option value="">In Progress</option>
                 {
                   fetchProjectStatus?.map((s) => {
@@ -287,7 +287,7 @@ const Add_Project = () => {
             <label className="text-sm font-medium text-gray-700">Total Rate</label>
             <input
             name = "totalRate"
-              className="h-[35px] w-[100%] border border-[#DBDCDE] rounded-md pl-2"
+              className="h-[35px] w-[100%] border border-[#DBDCDE] focus-visible:outline-none rounded-md pl-2"
               type="number"
               onChange={(e) => { setRate(parseInt(e.target.value) || 0) }}
                 required
@@ -300,7 +300,7 @@ const Add_Project = () => {
               <div className="w-[50%] space-y-2">
                 <label className="text-sm font-medium text-gray-700">Estimated Hours</label>
                 <input
-                  className="h-[40px] w-[100%] border border-[#DBDCDE] rounded-md pl-2"
+                  className="h-[40px] w-[100%] focus-visible:outline-none border border-[#DBDCDE] rounded-md pl-2"
                   type="number"
                   name = "estimatedHours"
                   onChange={(e) => { setHours(parseInt(e.target.value) || 0) }}
@@ -316,7 +316,7 @@ const Add_Project = () => {
                   options={options}
                   onChange={(op) => { setMembers(op.map(o => o.value)) }}
                   placeholder="Select Members..."
-                  className=""
+                  className="focus-visible:outline-none"
                   name = "membersF"
                   styles={{
                     control: (provided) => ({
@@ -406,7 +406,7 @@ const Add_Project = () => {
             />
           </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Description</label>
             <ReactQuill
               value={editorData}
@@ -414,7 +414,7 @@ const Add_Project = () => {
               modules={modules}
               formats={formats}
             />
-          </div>
+          </div> */}
 
           <div className="space-x-3 border-b border-t border-[#B1B1B1] py-4">
             <input type="checkbox" onChange={(e) => setSendEmail(e.target.checked)} />
