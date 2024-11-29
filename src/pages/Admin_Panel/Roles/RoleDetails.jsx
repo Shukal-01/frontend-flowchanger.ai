@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteIcon from "@mui/icons-material/Delete";
 import CachedIcon from '@mui/icons-material/Cached';
 import SearchIcon from '@mui/icons-material/Search';
 import { useGlobalContext } from '../../../Context/GlobalContext';
@@ -11,9 +11,14 @@ import jsPDF from 'jspdf';
 import Select from "react-select";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Modal } from 'react-responsive-modal';
+import ConfirmationModal from '../../../components/Staff/Modals/ConfirmationModal';
 
 
 const Main = () => {
+  const [open10, setOpen10] = useState(false);
+
+  const onOpenModal10 = () => setOpen10(true);
+  const onCloseModal10 = () => setOpen10(false);
 
   const { baseUrl, setRoleName, setRoleId, setEditPermissions, openToast } = useGlobalContext();
   const [roles, setRoles] = useState([])
@@ -269,7 +274,7 @@ const Main = () => {
             <thead className='bg-gray-300 shadow-cs'>
               <tr className="role-row"> 
                 <th className=' p-4 text-center roll-name font-medium text-[12px]'>Roll Name</th>
-                <th className='text-center p-4 text-sm font-medium text-[12px] '>Options</th>
+                <th className='text-center p-4 text-sm font-medium text-[12px] '>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -298,7 +303,16 @@ const Main = () => {
                           }}>
                             <BorderColorIcon className="text-[#27004a] font-light cursor-pointer text-[10px]]" />
                           </Link>
-                          <DeleteOutlineIcon className="text-red-500 font-light cursor-pointer text-[10px]]" onClick={() => { deleteRole(role.id) }} />
+                          <button onClick={() =>  {
+
+                        onOpenModal10()
+                      }}>
+                        <DeleteIcon
+                          className="text-red-500 cursor-pointer"
+                        />
+                      </button>
+                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={role.id} callback={deleteRole}/>}
+
                         </td>
                       </tr>
                     )

@@ -18,6 +18,8 @@ const VerifyPan = () => {
 
 
 
+
+    
     async function submitPan() {
         if (!pan?.number || !pan?.verificationFile) {
             openToast("Pan number and file are required", "error");
@@ -79,8 +81,8 @@ const VerifyPan = () => {
     };
 
     return (
-        <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]   flex flex-col '>
-            <div className='flex justify-between items-center  w-[100%] p-[20px] pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
+        <div className='w-full  pt-[10px]  relative    flex flex-col '>
+            <div className='flex justify-between items-center  w-[100%] pb-[14px] p-[20px] pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>PAN Verification</h3>
                 <button className='second-btn' onClick={submitPan}>
                     Update Pan

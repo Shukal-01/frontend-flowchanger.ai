@@ -81,7 +81,7 @@ const VerifyDrivingLicense = () => {
 
 
     return (
-        <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]   flex flex-col '>
+        <div className='w-full  relative xl:pt-[10px]   flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] p-[20px] pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>Driving License Verification</h3>
                 <button className='second-btn' onClick={submitDrivingLicense}>

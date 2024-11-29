@@ -295,31 +295,42 @@ const Projects = () => {
                   #
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Name
+                  Project Name
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Company
+                  Customer
+                </th>
+             
+                <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  Progress
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Contact
+                  Billing Type
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Email
+                  Status
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Phone
+                  Total Rate
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Active
+                  Estimated Hours
                 </th>
-                <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Groups
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Members
                 </th>
-                <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Date Created
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Tags
                 </th>
-                <th className="p-2 text-xs font-medium text-center">
-                  Action
+
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Start Date
+                </th>
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Deadline
+                </th>
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Description
                 </th>
               </tr>
             </thead>
@@ -336,20 +347,32 @@ const Projects = () => {
                   ) : projectDetails?.length > 0 ? (
                     projectDetails.map((project, index) => (
                       <tr key={index} className="border-b hover:bg-gray-50">
+                        <td className="text-center p-2 text-[12px]  border-r border-[#dbdbdb] whitespace-nowrap"><input type="checkbox" /></td>
+
                         <td className="text-center p-2 text-[12px]  border-r border-[#dbdbdb] whitespace-nowrap">{index + 1}</td>
                         <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">{project.project_name}</td>
                         <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">Customer</td>
+                  
+                        <td className="text-center p-2 text-[12px] border-r border-[#dbdbdb] whitespace-nowrap">0%</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">Project Hours</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">Flowchanger</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">1</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">1</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">NA</td>
+
+
                         <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">
+                         
                           {project.tags.map((tag, i) => (
                             <span key={i} className="border rounded-md p-1 mr-2 text-[12px] inline-block">
                               {tag}
                             </span>
                           ))}
                         </td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">{project.start_date}</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">{project.deadline}</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">Members</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">{project.status}</td>
+                        <td className="text-center p-2 text-[12px] border-r border-[#dbdbdb]  whitespace-nowrap">{project.start_date}</td>
+                        <td className="text-center p-2 text-[12px] border-r border-[#dbdbdb]  whitespace-nowrap">{project.deadline}</td>
+                        <td className="text-center p-2 text-[12px] border-r border-[#dbdbdb]  whitespace-nowrap">111</td>
+                        {/* <td className="text-center p-2 text-[12px]  border-r border-[#dbdbdb] whitespace-nowrap">{project.status}</td> */}
                       </tr>
                     ))
                   ) : (

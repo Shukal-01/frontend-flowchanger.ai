@@ -505,7 +505,7 @@ const StaffSalarySummry = () => {
 
     console.log(perMinSalary);
     return (
-        <div className='  w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[100px]    xl:pl-[320px] flex flex-col '>
+        <div className='  w-full  xl:p-[20px] relative xl:pt-[20px]    xl:pl-[20px] flex flex-col '>
             <div className='flex  justify-between  '>
                 <div className='flex gap-[10px] items-center'>
                     <h1 className='font-medium capitalize '>{selectedStaff?.name} <span>#136</span></h1>

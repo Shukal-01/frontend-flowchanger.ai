@@ -29,6 +29,7 @@ const EditPenalty = () => {
 
     console.log(selectedStaff);
 
+    console.log(selectedStaff);
 
     async function submitEarlyLeavePolicy() {
         try {
@@ -197,7 +198,7 @@ const EditPenalty = () => {
     return (
         <>
             {/* // <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
-            <div className='flex justify-between items-center  w-[100%] p-[20px] pt-[80px]  pr-0  pl-[0] top-0 bg-white'>
+            <div className='flex justify-between items-center  w-[100%] p-[20px] pt-[30px]  pr-0  pl-[0] top-0 bg-white'>
 
                 <h3 className='font-medium'>Penalty & Overtime Details
 
@@ -207,9 +208,9 @@ const EditPenalty = () => {
 
 
             <div className='mt-5'>
-                <button className='shadow bg-white w-full mb-4 flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal12}>Early Leave Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
-                <button className='shadow bg-white w-full mb-4 flex items-center justify-between  text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal13}>Late Coming Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
-                <button className='shadow bg-white w-full mb-4  flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal14}> Overtime Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
+                <button className='shadow-cs bg-white w-full mb-4 flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal12}>Early Leave Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
+                <button className='shadow-cs bg-white w-full mb-4 flex items-center justify-between  text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal13}>Late Coming Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
+                <button className='shadow-cs bg-white w-full mb-4  flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal14}> Overtime Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
             </div>
             {/* when onclick leave policies
              */}

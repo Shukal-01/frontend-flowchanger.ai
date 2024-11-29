@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useGlobalContext } from '../../../Context/GlobalContext';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 const EditLeavePolicies = () => {
@@ -306,10 +307,10 @@ const EditLeavePolicies = () => {
     function openModal12() {
         setIsOpen12(true);
     }
-    function afterOpenModal12() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#000';
-    }
+    // function afterOpenModal12() {
+    //     // references are now sync'd and can be accessed.
+    //     subtitle.style.color = '#000';
+    // }
 
     function closeModal12() {
         setIsOpen12(false);
@@ -370,8 +371,8 @@ const EditLeavePolicies = () => {
     ])
 
     return (
-        <div className='w-full xl:pt-[40px] xl:pl-[0] xl:pr-[0] relative   pl-[0] flex flex-col '>
-            <div className='flex justify-between items-center  w-[100%] p-[20px] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
+        <div className='w-full xl:pt-[20px] xl:pl-[0] xl:pr-[0] relative   pl-[0] flex flex-col '>
+            <div className='flex justify-between items-center  w-[100%] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
 
                 <h3 className='font-medium'>Leave & Balance Details
                 </h3>
@@ -397,7 +398,7 @@ const EditLeavePolicies = () => {
 
             <Modal
                 isOpen={modalIsOpen10}
-                onAfterOpen={afterOpenModal12}
+                // onAfterOpen={afterOpenModal12}
                 onRequestClose={closeModal10}
                 // style={customStyles}
                 contentLabel="Example Modal"
@@ -473,7 +474,7 @@ const EditLeavePolicies = () => {
              */}
             <Modal
                 isOpen={modalIsOpen12}
-                onAfterOpen={afterOpenModal12}
+                // onAfterOpen={afterOpenModal12}
                 onRequestClose={closeModal12}
                 contentLabel="Example Modal"
                 className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
@@ -604,9 +605,9 @@ const EditLeavePolicies = () => {
                                                 </td>
                                             </tr>)}
                                         <tr>
-                                            <td><input className=' py-2 text-center placeholder:text-center  outline-none focus:outline-none border mx-2 border-slate-400' placeholder='New Policy Type' value={leavePolicyType} onChange={(e) => setLeavePolicyType(e.target.value)} type='text' /></td>
-                                            <td><input className=' py-2 text-center placeholder:text-center  outline-none focus:outline-none border mx-2 border-slate-400' placeholder='Set Allowed Leaves' value={allowedLeavesPerYear} onChange={(e) => setAllowedLeavePerYear(e.target.value)} type='text' /></td>
-                                            <td><input className=' py-2 w-2/3 text-center placeholder:text-center  outline-none focus:outline-none border mx-2 border-slate-400' placeholder='Set Carry Forward Leaves' value={carryForwardLeaves} onChange={(e) => setCarryForwardLeaves(e.target.value)} type='text' /></td>
+                                            <td><input className=' py-2 text-center placeholder:text-center rounded-md outline-none focus:outline-none border border-[#dbdbdb] mx-2 ' placeholder='New Policy Type' value={leavePolicyType} onChange={(e) => setLeavePolicyType(e.target.value)} type='text' /></td>
+                                            <td><input className=' py-2 text-center placeholder:text-center rounded-md  outline-none focus:outline-none border border-[#dbdbdb] mx-2 ' placeholder='Set Allowed Leaves' value={allowedLeavesPerYear} onChange={(e) => setAllowedLeavePerYear(e.target.value)} type='text' /></td>
+                                            <td><input className=' py-2 w-2/3 text-center placeholder:text-center rounded-md  outline-none focus:outline-none border border-[#dbdbdb] mx-2 ' placeholder='Set Carry Forward Leaves' value={carryForwardLeaves} onChange={(e) => setCarryForwardLeaves(e.target.value)} type='text' /></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -674,18 +675,20 @@ const EditLeavePolicies = () => {
                                         History
                                     </button>
                                 </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-5 gap-1 mb-4">
-                                    <div className="col-span-1 md:col-span-2 relative">
-                                        <input
+                                <div className="col-span-1 md:col-span-2 relative">
+                                        <input 
                                             type="text"
                                             placeholder="Search staff by name"
-                                            className="w-full pl-10 pr-4 py-2 border rounded-md"
+                                            className="w-full pl-2 pr-4 py-2 border rounded-md mb-[16px] focus-visible:outline-none"
+                                            
                                         />
-                                        {/* <SearchIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" /> */}
+                                        <SearchIcon className="absolute right-[8px] top-[10px]  cursor-pointer" />
                                     </div>
+
+                                <div className=" flex w-[100%] gap-[14px] mb-2">
+                                 
                                     <div className="relative">
-                                        <select className="  w-full appearance-none border rounded-md py-2 pl-4 pr-10">
+                                        <select className="  w-full appearance-none border rounded-md focus-visible:outline-none py-2 pl-4 pr-10">
                                             <option>Branch</option>
                                             <option>Branch 1</option>
                                             <option>Branch 2</option>
@@ -693,7 +696,7 @@ const EditLeavePolicies = () => {
                                         {/* <ChevronDownIcon className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" /> */}
                                     </div>
                                     <div className="relative">
-                                        <select className="w-full appearance-none border rounded-md py-2 pl-4 pr-10">
+                                        <select className="w-full appearance-none border rounded-md focus-visible:outline-none py-2 pl-4 pr-10">
                                             <option>Department</option>
                                             <option>HR</option>
                                             <option>IT</option>
@@ -701,7 +704,7 @@ const EditLeavePolicies = () => {
                                         {/* <ChevronDownIcon className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" /> */}
                                     </div>
                                     <div className="flex justify-end mb-4">
-                                        <input type="date" placeholder='Select Month' className=" w-full px-2 appearance-none border rounded-md py-2 text-gray-700"></input>
+                                        <input type="date" placeholder='Select Month' className=" w-full focus-visible:outline-none px-2 text-[15px] appearance-none border rounded-md py-2 text-gray-700"></input>
                                     </div>
                                 </div>
                                 <table className=' w-full table-section mt-4'>

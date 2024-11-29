@@ -114,6 +114,7 @@ const LeaveBalance = () => {
         const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, 'LeaveBalancePolicy.csv');
     };
+    
     const [selectedId, setSelectedId] = useState([]);
     console.log("selec", selectedId)
     const [leaveName, setLeaveName] = useState();

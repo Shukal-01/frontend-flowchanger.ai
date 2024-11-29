@@ -144,6 +144,23 @@ const PersonalDetail = () => {
         }
     };
 
+    const [basicDetail, setBasicDetail] = useState({
+        name: "", // or a default value
+        job_title: "",
+        branch: "",
+        mobile: "",
+        login_otp: "",
+        gender: "",
+        official_email: "",
+        date_of_joining: "",
+        date_of_birth: "",
+        current_address: "",
+        permanent_address: "",
+        emergency_contact_name: "",
+        emergency_contact_mobile: "",
+        emergency_contact_relation: "",
+        emergency_contact_address: "",
+    });
     useEffect(() => {
         getData();
     }, []);
@@ -225,11 +242,11 @@ const PersonalDetail = () => {
     return (
         <>
          {/* <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col set-z  '> */}
-            <div className='flex justify-between items-center  w-[100%] p-[20px] pr-0 xl:pr-[0px] pl-[0] top-0 bg-white'>
-                <h3 className='font-medium ml-5'>Personal Details</h3>
+            <div className='flex justify-between items-center  w-[100%] p-[30px] pr-0 xl:pr-[0px] pl-[0] top-0 bg-white'>
+                <h3 className='font-medium '>Personal Details</h3>
             </div>
 
-            <h2 className='bg-[#f6f9fa] pt-[10px] pb-[10px] pl-[14px] rounded-md font-normal shadow'>Basic Details</h2>
+            <h2 className='bg-[#fff]  pt-[10px] pb-[10px] pl-[14px] rounded-md font-normal shadow-cs'>Basic Details</h2>
             <form className=' w-[100%] xl:w-[100%] m-auto mt-[30px] shadow-md  xl:p-[24px] p-[12px] border rounded-md  border-1' >
                 <div className='flex w-[100%] gap-[10px] justify-between  xl:mb-4 mb-[6px] xl:flex-row flex-col'>
                     <div className='w-[100%] xl:w-[48%] 2xl:w-[48%]  '>
@@ -242,7 +259,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
                         />
                     </div>
@@ -256,7 +273,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -277,7 +294,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
                         />
                     </div>
@@ -296,7 +313,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -319,7 +336,7 @@ const PersonalDetail = () => {
                             className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '1px solid #F4F5F9'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         >
@@ -338,7 +355,7 @@ const PersonalDetail = () => {
                             className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '1px solid #F4F5F9'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         >
@@ -359,7 +376,7 @@ const PersonalDetail = () => {
                             className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '1px solid #F4F5F9'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         >
@@ -379,7 +396,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -399,7 +416,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -415,7 +432,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -436,7 +453,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -458,7 +475,7 @@ const PersonalDetail = () => {
                         readOnly={!isEditable} // Input readOnly rahega jab tak isEditable false hai
                         style={{
                             backgroundColor: isEditable ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                            border: isEditable ? "1px solid #F4F5F9" : '#000'
+                            border: isEditable ? "1px solid #F4F5F9" : ''
                         }}
                     />
                 </div>
@@ -502,7 +519,7 @@ const PersonalDetail = () => {
                             aria-readonly={!isEditable6 ? 'true' : 'false'} // Added for accessibility
                             style={{
                                 backgroundColor: isEditable6 ? "#F4F5F9" : "#fff",
-                                border: isEditable6 ? "1px solid #F4F5F9" : '#000',
+                                border: isEditable6 ? "1px solid #F4F5F9" : '',
                             }}
                         />
 
@@ -515,7 +532,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable6} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable6 ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable6 ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable6 ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -535,7 +552,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable6} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable6 ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable6 ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable6 ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -549,7 +566,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable6} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable6 ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable6 ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable6 ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -570,7 +587,7 @@ const PersonalDetail = () => {
                             readOnly={!isEditable6} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable6 ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable6 ? "1px solid #F4F5F9" : '#000'
+                                border: isEditable6 ? "1px solid #F4F5F9" : ''
                             }}
 
                         />
@@ -615,11 +632,11 @@ const PersonalDetail = () => {
                         <textarea type='text'
                             value={personalDetailsUpdate.current_address}
                             onChange={(e) => setPersonalDetailsUpdate({ ...personalDetailsUpdate, current_address: e.target.value })}
-                            rows="2" className=' rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
+                            rows="2" className=' rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] border border-1 focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
                             readOnly={!isEditable7} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable7 ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable7 ? "1px solid #F4F5F9" : "1px solid #F4F5F9"
+                                border: isEditable7 ? "1px solid #F4F5F9" : ""
                             }}
 
                         />
@@ -630,11 +647,11 @@ const PersonalDetail = () => {
                         </label><br />
                         <textarea type='text' rows="2"
                             value={personalDetailsUpdate.permanent_address} onChange={(e) => setPersonalDetailsUpdate({ ...personalDetailsUpdate, permanent_address: e.target.value })}
-                            className=' rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
+                            className=' rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none border border-1 text-[#000] placeholder:font-font-normal text-[14px]'
                             readOnly={!isEditable7} // Input readOnly rahega jab tak isEditable false hai
                             style={{
                                 backgroundColor: isEditable7 ? "#f4f5f9" : "#fff", // Background color bhi change hoga
-                                border: isEditable7 ? "1px solid #F4F5F9" : '1px solid #F4F5F9'
+                                border: isEditable7 ? "1px solid #F4F5F9" : ''
                             }}
 
                         />

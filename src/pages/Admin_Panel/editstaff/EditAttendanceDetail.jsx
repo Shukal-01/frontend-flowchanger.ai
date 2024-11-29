@@ -206,7 +206,7 @@ const EditAttendanceDetail = () => {
 
 
 
-    // console.log(dayWiseWeekOff);
+    // console.log(dayWiseWeekOff); 
     async function fetchShiftDetails() {
         const result = await fetch(baseUrl + "shift");
         if (result.status == 200) {
@@ -787,24 +787,24 @@ const EditAttendanceDetail = () => {
     return (
         <>
             {/* <div className='w-full p-[20px] pt-[100px] xl:p-[40px] relative xl:pt-[100px]    xl:pl-[320px] flex flex-col '> */}
-            <h2 className='bg-[#fff] pt-[10px] mt-[60px] pb-[10px] pl-[14px] rounded-lg font-normal shadow-cs'>Attendance Details</h2>
+            <h2 className='bg-[#fff] pt-[10px] mt-[20px] pb-[10px]  rounded-lg font-normal'>Attendance Details</h2>
 
             <div className='mt-5'>
-                <button type="button" onClick={openModal} className=" shadow bg-white w-full flex items-center justify-between mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md " id="menu-button" aria-expanded="true" aria-haspopup="true">
+                <button type="button" onClick={openModal} className=" shadow-cs bg-white w-full flex items-center justify-between mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md " id="menu-button" aria-expanded="true" aria-haspopup="true">
                     Update Work Timings <ArrowForwardIosIcon className='allarrow-verify'/>
 
                 </button>
 
-                <button type="button" onClick={openModal5} className=" shadow bg-white w-full flex items-center justify-between mb-4  text-start  text-[14px] text-[#000] p-4 rounded-md" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                <button type="button" onClick={openModal5} className=" shadow-cs bg-white w-full flex items-center justify-between mb-4  text-start  text-[14px] text-[#000] p-4 rounded-md" id="menu-button" aria-expanded="true" aria-haspopup="true">
                     Update Attendance Modes <ArrowForwardIosIcon className='allarrow-verify'/>
 
                 </button>
-                <button type="button" onClick={openModal7} className="  shadow bg-white w-full flex items-center justify-between mb-4  text-start  text-[14px] text-[#000] p-4 rounded-md" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                <button type="button" onClick={openModal7} className="  shadow-cs bg-white w-full flex items-center justify-between mb-4  text-start  text-[14px] text-[#000] p-4 rounded-md" id="menu-button" aria-expanded="true" aria-haspopup="true">
                     Update Automation Rules <ArrowForwardIosIcon className='allarrow-verify'/>
 
                 </button>
 
-                <div className='  shadow bg-white w-full mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md flex justify-between'>
+                <div className='  shadow-cs bg-white w-full mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md flex justify-between'>
                     <div className='flex gap-[12px] items-center '>
                         <h4 className='m-0'>Staff Can View Own Attendance</h4>
                     </div>
@@ -832,12 +832,12 @@ const EditAttendanceDetail = () => {
                 onRequestClose={closeModal}
                 // style={customStyles}
                 contentLabel="Example Modal"
-                className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
+                className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff]  shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b p-3   border-[#000] text-[14px]'> Update Work Timings</h2>
                 <button onClick={closeModal} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white' /></button>
                 <Tabs className="p-[s0px] fixed-tab-section">
-                    <TabList className="flex justify-around items-center mt-3 m-2 xl:m-2 mb-2 bg-[#F4F5F9] pt-[10px] pb-[10px] rounded-md">
+                    <TabList className="flex justify-around items-center mt-3 m-2 xl:m-2 mb-2 bg-[#fff] pt-[10px] pb-[10px] rounded-md">
                         <label className='text-[14px]'>Select Type</label>
                         <Tab className="cursor-pointer flex items-center gap-[10px]">
                             <input checked={shiftType === 'fixed'} type="radio" id="fixed" name='fixed' onChange={() => setShiftType('fixed')} className='rounded-full ' />
@@ -874,7 +874,7 @@ const EditAttendanceDetail = () => {
                                             <td className='pr-5 flex items-center '>
                                                 <div className='w-[94%] flex flex-col gap-1 p-[5px]'>
                                                     {hasWeekOff.MonWeekOff === true && (
-                                                        <div className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        <div className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >{getWeekOffSummaryForDay("Mon")}</div>
                                                     )} 
                                                     <Select
@@ -884,7 +884,7 @@ const EditAttendanceDetail = () => {
                                                         value={selectMonShift}
                                                         onChange={(selected) => setSelectMonShift(selected)}
                                                         onMenuOpen={() => selectedShift.length === 0 && openModal1()}
-                                                        className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         styles={{
                                                             control: (base) => ({
                                                                 ...base,
@@ -936,7 +936,7 @@ const EditAttendanceDetail = () => {
                                             <td className='pr-5 flex items-center'>
                                                 <div className='w-[94%] flex flex-col gap-1 p-[5px]'>
                                                     {hasWeekOff.TueWeekOff === true && (
-                                                        <div className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        <div className="w-full rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >{getWeekOffSummaryForDay("Tue")}</div>
 
                                                     )}
@@ -947,7 +947,7 @@ const EditAttendanceDetail = () => {
                                                         value={selectTueShift}
                                                         onChange={(selected) => setSelectTueShift(selected)}
                                                         onMenuOpen={() => selectedShift.length === 0 && openModal1()}
-                                                        className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         styles={{
                                                             control: (base) => ({
                                                                 ...base,
@@ -989,7 +989,7 @@ const EditAttendanceDetail = () => {
                                             <td className='pr-5 flex items-center'>
                                                 <div className='w-[94%] flex flex-col gap-1 p-[5px]'>
                                                     {hasWeekOff.WedWeekOff === true && (
-                                                        <div className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        <div className="w-full rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >{getWeekOffSummaryForDay("Wed")}</div>
 
                                                     )}
@@ -1000,7 +1000,7 @@ const EditAttendanceDetail = () => {
                                                         value={selectWedShift}
                                                         onChange={(selected) => setSelectWedShift(selected)}
                                                         onMenuOpen={() => selectedShift.length === 0 && openModal1()}
-                                                        className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         styles={{
                                                             control: (base) => ({
                                                                 ...base,
@@ -1042,7 +1042,7 @@ const EditAttendanceDetail = () => {
                                             <td className='pr-5 flex items-center'>
                                                 <div className='w-[94%] flex flex-col gap-1 p-[5px]'>
                                                     {hasWeekOff.ThuWeekOff === true && (
-                                                        <div className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        <div className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >{getWeekOffSummaryForDay("Thu")}</div>
 
                                                     )}
@@ -1053,7 +1053,7 @@ const EditAttendanceDetail = () => {
                                                         value={selectThuShift}
                                                         onChange={(selected) => setSelectThuShift(selected)}
                                                         onMenuOpen={() => selectedShift.length === 0 && openModal1()}
-                                                        className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        className="w-full rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         styles={{
                                                             control: (base) => ({
                                                                 ...base,
@@ -1095,7 +1095,7 @@ const EditAttendanceDetail = () => {
                                             <td className='pr-5 flex items-center'>
                                                 <div className='w-[94%] flex flex-col gap-1 p-[5px]'>
                                                     {hasWeekOff.FriWeekOff === true && (
-                                                        <div className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        <div className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >{getWeekOffSummaryForDay("Fri")}</div>
 
                                                     )}
@@ -1106,7 +1106,7 @@ const EditAttendanceDetail = () => {
                                                         value={selectFriShift}
                                                         onChange={(selected) => setSelectFriShift(selected)}
                                                         onMenuOpen={() => selectedShift.length === 0 && openModal1()}
-                                                        className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         styles={{
                                                             control: (base) => ({
                                                                 ...base,
@@ -1148,7 +1148,7 @@ const EditAttendanceDetail = () => {
                                             <td className='pr-5 flex items-center'>
                                                 <div className='w-[94%] flex flex-col gap-1 p-[5px]'>
                                                     {hasWeekOff.SatWeekOff === true && (
-                                                        <div className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        <div className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >{getWeekOffSummaryForDay("Sat")}</div>
                                                     )}
                                                     <Select
@@ -1158,7 +1158,7 @@ const EditAttendanceDetail = () => {
                                                         value={selectSatShift}
                                                         onChange={(selected) => setSelectSatShift(selected)}
                                                         onMenuOpen={() => selectedShift.length === 0 && openModal1()}
-                                                        className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         styles={{
                                                             control: (base) => ({
                                                                 ...base,
@@ -1199,7 +1199,7 @@ const EditAttendanceDetail = () => {
                                             <td className='pr-5 flex items-center'>
                                                 <div className='w-[94%] flex flex-col gap-1 p-[5px]'>
                                                     {hasWeekOff.SunWeekOff === true && (
-                                                        <div className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        <div className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >{getWeekOffSummaryForDay("Sun")}</div>
                                                     )}
                                                     <Select
@@ -1209,7 +1209,7 @@ const EditAttendanceDetail = () => {
                                                         value={selectSunShift}
                                                         onChange={(selected) => setSelectSunShift(selected)}
                                                         onMenuOpen={() => selectedShift.length === 0 && openModal1()}
-                                                        className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         styles={{
                                                             control: (base) => ({
                                                                 ...base,
@@ -1249,6 +1249,8 @@ const EditAttendanceDetail = () => {
 
                     <TabPanel>
                         <div className='first-panel'>
+                        
+                            <div className="overflow-y-scroll h-[50vh]">
                             <div className="relative w-full h-fit flex justify-center items-center gap-2">
                                 <p>Select Month</p>
                                 <button
@@ -1302,7 +1304,6 @@ const EditAttendanceDetail = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className="overflow-y-scroll h-[50vh]">
                                 <table className="w-full">
                                     <thead className="border-b border-[#000]">
                                         <tr>
@@ -1332,7 +1333,7 @@ const EditAttendanceDetail = () => {
                                                         }} type="checkbox" />
                                                     </td>
                                                     <td className="pr-5">
-                                                        {updateWeekOff.length > 0 && updateWeekOff[0].weekOff ? <div className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                        {updateWeekOff.length > 0 && updateWeekOff[0].weekOff ? <div className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >Week Off</div> : <Select
                                                             isDisabled={updateWeekOff.weekOff}
                                                             options={options}
@@ -1348,7 +1349,7 @@ const EditAttendanceDetail = () => {
                                                                 }
                                                             }}
                                                             onMenuOpen={() => selectedShift.length === 0 && openModal1()}
-                                                            className="w-full bg-[#F4F5F9] border border-1 rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
+                                                            className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                             styles={{
                                                                 control: (base) => ({
                                                                     ...base,
@@ -1498,7 +1499,7 @@ const EditAttendanceDetail = () => {
                             </div>
                         ))}
                     </div>
-                    <Link to="" className='text-[#8A25B0] p-4 font-medium mt-3 w-full flex items-center text-[16px] xl:text-[15px]' onClick={openModal2} ><AddIcon /> Add Shift</Link><br />
+                    <Link to="" className='text-[#27004a] p-4 font-medium mt-3 w-full flex items-center text-[16px] xl:text-[15px]' onClick={openModal2} ><AddIcon /> Add Shift</Link><br />
                     <div className='text-end  flex pr-4 pb-3 gap-[10px] justify-end items-center' >
                         <button className='first-btn' onClick={closeModal1}>Cancel</button>
                         <button className='second-btn' onClick={closeModal1}>Confirm</button>

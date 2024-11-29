@@ -514,28 +514,36 @@ const Task = () => {
                   Name
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Company
+                  Status
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Contact
+                  Start Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Email
+                  End Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Phone
+                  Due Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Active
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Groups
+                Select Project
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Date Created
+                  Select Department
                 </th>
                 <th className="p-2 text-xs font-medium text-center">
-                  Action
+                  Priority
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                 Assignee
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                  Description
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                  Tag
                 </th>
               </tr>
             </thead>
@@ -577,24 +585,7 @@ const Task = () => {
                           setSelectedTaskData(s);
                           openModal2(); // Call the function here
                         }}><BorderColorIcon /></button>
-                         <button onClick={() => {
-                            
-                              onOpenModal10()
-                            }}>
-                              <DeleteIcon
-                                className="text-red-500 cursor-pointer"
-                              />
-                            </button>
-                            <Modal open={open10} onClose={onCloseModal10} center>
-                              <div className="flex items-center justify-center h-[120px]">
-                                <h2 className="text-[18px] font-medium text-center text-[#27004a]">Are you sure want to delete this</h2>
-
-                              </div>
-                              <div className="flex items-center justify-around ">
-                                <button className="allcrm-btn">Yes , Confirm</button>
-                                <button className="allcrm-btn">No , Cancel</button>
-                              </div>
-                            </Modal>
+                     
                       </div>
                     </td>
                   </tr>

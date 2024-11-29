@@ -12,13 +12,19 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteIcon from "@mui/icons-material/Delete";
 import { IoMdArrowDropright } from "react-icons/io";
+import ConfirmationModal from "../../../components/Staff/Modals/ConfirmationModal";
 
 
 
 
 const TaskPriority = () => {
+    
+  const [open11, setOpen11] = useState(false);
+
+  const onOpenModal11 = () => setOpen11(true);
+  const onCloseModal11 = () => setOpen11(false);
     const [openIndex, setOpenIndex] = useState(null);
     const { baseUrl, openToast } = useGlobalContext();
 
@@ -97,55 +103,55 @@ const TaskPriority = () => {
 
     const [priorityName, setPriorityName] = useState();
     async function submitPriority() {
-        try{
-        const result = await fetch(baseUrl + "task/priority", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({ taskPriorityName: priorityName })
-        })
-        if (result.status == 201) {
-            const data = await result.json();
-            openToast(data.message, "success");
-            toggleModal();
-        }
-        else {
-            const error = await result.json();
-            openToast(error.message || "internal server error", "error")
-        }
+        try {
+            const result = await fetch(baseUrl + "task/priority", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({ taskPriorityName: priorityName })
+            })
+            if (result.status == 201) {
+                const data = await result.json();
+                openToast(data.message, "success");
+                toggleModal();
+            }
+            else {
+                const error = await result.json();
+                openToast(error.message || "internal server error", "error")
+            }
         }
         catch (error) {
             console.error("Error in POST request:", error);
-        
+
             // Specific handling for "Failed to fetch"
             if (error.message === "Failed to fetch") {
-              openToast("Network error: Unable to connect to the server", "error");
+                openToast("Network error: Unable to connect to the server", "error");
             } else {
-              openToast(error.message || "An unexpected error occurred", "error");
+                openToast(error.message || "An unexpected error occurred", "error");
             }
-          }
+        }
     }
 
 
     const [priorityHeading, setPriorityHeading] = useState([]);
     console.log("priority", priorityHeading)
     async function fetchPriority() {
-        try{
-          const result = await fetch(baseUrl + "task/priority");
-        if (result.status == 200) {
-            const res = await result.json()
-            console.log("---", res)
-            setPriorityHeading(res.taskPriority);
+        try {
+            const result = await fetch(baseUrl + "task/priority");
+            if (result.status == 200) {
+                const res = await result.json()
+                console.log("---", res)
+                setPriorityHeading(res.taskPriority);
 
-        } else {
-             const error = await result.json()
-           throw new Error(error.message||"Internal Server Error", "error")
+            } else {
+                const error = await result.json()
+                throw new Error(error.message || "Internal Server Error", "error")
+            }
         }
+        catch (error) {
+            console.log(error);
         }
-       catch (error){
-        console.log(error);
-       }
 
     }
 
@@ -205,37 +211,42 @@ const TaskPriority = () => {
     console.log(selectedPriority)
     const handlePrioritySelect = (opt) => {
         console.log(opt)
-        setSelectedPriority(opt );
+        setSelectedPriority(opt);
         openModal6();
     };
 
-    const[updatePriority,setUpdatePriority]=useState("");
+    const [updatePriority, setUpdatePriority] = useState("");
     console.log(updatePriority)
-    async function updateTaskPriority(){
-        const taskPriorityId=selectedPriority.id;
+    async function updateTaskPriority() {
+        const taskPriorityId = selectedPriority.id;
         console.log(taskPriorityId)
-        try{
-          const result=await fetch(baseUrl+`task/priority/${taskPriorityId}`,{
-            method:"PUT",
-            headers:{
-                "Content-type":"application/json"   
-            },
-            body:JSON.stringify({taskPriorityName:updatePriority})
-        });
-        const data=await result.json();
-        console.log(data)
-        if(result.status==200){
-            openToast("Update Task Name Successfully","success")
+        try {
+            const result = await fetch(baseUrl + `task/priority/${taskPriorityId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({ taskPriorityName: updatePriority })
+            });
+            const data = await result.json();
+            console.log(data)
+            if (result.status == 200) {
+                openToast("Update Task Name Successfully", "success")
+            }
+            else {
+                const error = await result.json();
+                throw new Error(error.message || `HTTP Error: ${result.status}`);
+            }
         }
-        else{
-           const error = await result.json();
-      throw new Error(error.message || `HTTP Error: ${result.status}`);
+        catch (error) {
+            console.error("Error fetching task status:", error);
         }
-        }
-       catch(error){
-         console.error("Error fetching task status:", error);
-       }   
     }
+
+    const [open8, setOpen8] = useState(false);
+
+    const onOpenModal8 = () => setOpen8(true);
+    const onCloseModal8 = () => setOpen8(false);
 
     return (
         <div className=" w-full  ">
@@ -354,17 +365,17 @@ const TaskPriority = () => {
                         </div>
                     </div>
 
-                    <div className="main-table-status">
-                        <table className="table-auto w-full border border-gray-300 rounded-md table-status">
+                    <div className="bg-white rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto">
+                        <table className="table-auto w-full  rounded-md table-status">
                             <thead onClick={toggleTable} className="set-shadow cursor-pointer">
                                 <tr>
-                                <th className="border-r p-2 flex justify-left items-center text-xs font-medium whitespace-nowrap text-center">
-                    <IoMdArrowDropright className={`text-[20px] transition-transform duration-200 ${isOpen5 ? "rotate-90 text-[black]" : "rotate-0"}`}
-                    />
-                    <button className="p-[6px] rounded-lg bg-[orange]  mr-[7px] text-[white] ">To Do</button><span className="six-north">6</span>
+                                    <th className="border-r p-3 flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
+                                        <IoMdArrowDropright className={`text-[20px] transition-transform duration-200 ${isOpen5 ? "rotate-90 text-[black]" : "rotate-0"}`}
+                                        />
 
-                  </th> 
-                                    <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap ">#</th>
+
+                                    </th>
+                                    <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap ">ID</th>
                                     <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap ">Priority Name</th>
                                     <th className="p-3 text-center border-r border-[#dbdbdb] whitespace-nowrap ">Action</th>
                                 </tr>
@@ -385,9 +396,20 @@ const TaskPriority = () => {
                                                 >
                                                     <BorderColorIcon className="text-[#27004a]" />
                                                 </button>
-                                                <button className="rounded-md text-white">
-                                                    <DeleteOutlineIcon className="text-[#ff0000]" />
-                                                </button>
+                                                <div>
+                            <button onClick={() => {
+                              setOpen11(true);
+                            }}>
+                              <DeleteIcon
+                                className="text-red-500 cursor-pointer"
+                              />
+                            </button>
+                            {open11 && <ConfirmationModal setClose={onCloseModal11}/>}
+
+
+
+                          </div>
+                    
                                             </div>
                                         </td>
                                     </tr>
@@ -396,7 +418,9 @@ const TaskPriority = () => {
                         </table>
 
 
-                        <div className='flex justify-between p-3 pt-5 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
+                    
+                    </div>
+                    <div className='flex justify-between p-3 pt-5 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
                             <p className=' text-[#a5a1a1] text-[14px]'>Showing 1 to {rowsToShow} of {priorityHeading?.length} entries</p>
                             <div className='pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md'>
                                 <Link to="#" className='text-[12px]  pt-2 pb-[8px]'>Previous</Link>
@@ -405,7 +429,6 @@ const TaskPriority = () => {
 
                             </div>
                         </div>
-                    </div>
 
                 </div>
             </div>
@@ -426,7 +449,7 @@ const TaskPriority = () => {
                     <div className="p-4">
                         <div className='w-[100%] xl:[48%] mb-[10px] '>
                             <label className='text-[14px]'>*Task Priority Name</label><br />
-                            <input type='text' placeholder='' onChange={(e)=>setUpdatePriority(e.target.value)} defaultValue={selectedPriority?.taskPriorityName} className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#fff] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' />
+                            <input type='text' placeholder='' onChange={(e) => setUpdatePriority(e.target.value)} defaultValue={selectedPriority?.taskPriorityName} className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#fff] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' />
 
                         </div>
                     </div>
@@ -446,4 +469,4 @@ const TaskPriority = () => {
     )
 }
 
-export default TaskPriority
+export default TaskPriority;

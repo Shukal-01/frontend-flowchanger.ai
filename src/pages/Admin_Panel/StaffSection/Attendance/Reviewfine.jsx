@@ -511,7 +511,7 @@ const Reviewfine = () => {
             </div>
             <div className='p-[8px] shadow-md rounded-md flex items-center justify-between mb-[20px]'>
                 <input className='text-[14px]' type="date" defaultValue={defaultDate} onChange={handleDateChange} />
-                <p className='bg-[#edd0ca] p-[5px] text-[12px] border border-b border-[#e07964] text-[black] rounded-md'> <WarningIcon className='warning-icon text-[14px] text-[red] ' /> Approval pending for other  <Link className='text-[blue] ml-[10px]' to="/">View</Link> </p>
+                {/* <p className='bg-[#edd0ca] p-[5px] text-[12px] border border-b border-[#e07964] text-[black] rounded-md'> <WarningIcon className='warning-icon text-[14px] text-[red] ' /> Approval pending for other  <Link className='text-[blue] ml-[10px]' to="/">View</Link> </p> */}
             </div>
             <div className='flex items-center gap-[10px] mb-[20px] '>
                 <div className='flex items-center gap-[10px]  rounded-md p-[6px] font-medium select-pe'>

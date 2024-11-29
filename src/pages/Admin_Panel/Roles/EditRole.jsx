@@ -362,7 +362,7 @@ const EditRole = () => {
 
                     <div className='flex justify-end mt-3 gap-2'>
                     <Link to="/role-detail" className='first-btn flex items-center' >Cancel</Link>
-                        <button className='second-btn' onClick={updateRole}>Save</button>
+                        <button className='second-btn' onClick={updateRole}>Update</button>
                     </div>
                 </div>
             </div>
@@ -405,18 +405,18 @@ const EditRole = () => {
                     </div>
 
                     <div className=''>
-                        <h2 className='p-2 bg-[#fff] shadow-cs rounded-lg border border-l-0 mb-2 border-r-0 border-t-1 border-b-1 '>Full Name</h2>
+                        <h2 className='p-2 bg-[#fff] shadow-cs rounded-md border border-l-0 mb-2 border-r-0 border-t-1 border-b-1 '>Full Name</h2>
 
                         <div className='title flex gap-2 items-center'>
                             <img src={titleimg} className='rounded-3xl h-[32px] w-[32px]' />
-                            <p className='text-[#511992]'>Divanshi Gupta</p>
+                            <p className='text-[#27004a]'>Divanshi Gupta</p>
                         </div>
 
                         <div className='flex justify-between p-3 pt-5 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
                             <p className=' text-[#a5a1a1] text-[14px]'>Showing 1 to 7 of 7 entries </p>
                             <div className='pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md'>
                                 <Link to="#" className='text-[12px]  pt-2 pb-[8px]'>Previous</Link>
-                                <span className='text-[12px] bg-[#511992] flex items-center  text-white pl-3 pr-3 '>1</span>
+                                <span className='text-[12px] bg-[#27004a] flex items-center  text-white pl-3 pr-3 '>1</span>
                                 <Link to="#" className='text-[12px]  pt-2 pb-[8px] '>Next</Link>
 
                             </div>
