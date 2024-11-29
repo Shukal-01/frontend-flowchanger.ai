@@ -16,29 +16,39 @@ const BranchDetails = () => {
     const { baseUrl, openToast, setBranchData } = useGlobalContext();
     const [id, setId] = useState(null);
     const [branchDetail, setBranchDetail] = useState([]);
-    const [exportFormat, setExportFormat] = useState("");
     const [rowsToShow, setRowsToShow] = useState(25);
+    const [exportFormat, setExportFormat] = useState("CSV");
+
 
 
     async function fetchBranchDetails() {
-        const result = await fetch(baseUrl + "branch");
-        if (result.status == 200) {
-            const res = await result.json();
-            setBranchDetail(res);
+        try {
+            const result = await fetch(baseUrl + "branch");
+            if (result.status == 200) {
+                const res = await result.json();
+                setBranchDetail(res);
+            }
+        }
+        catch (error) {
+            console.log("error", error)
         }
     }
 
     async function deleteBranchDetails(id) {
-        const result = await fetch(baseUrl + `branch/${id}`, {
-            method: "DELETE"
-        });
-        if (result.status == 200) {
-            openToast("Delete Branch Successfully", "success");
-            setId(null);
-            fetchBranchDetails();
-        }
-        else {
-            openToast("Something went wrong", "error");
+        try {
+            const result = await fetch(baseUrl + `branch/${id}`, {
+                method: "DELETE"
+            });
+            if (result.status == 200) {
+                openToast("Delete Branch Successfully", "success");
+                setId(null);
+                fetchBranchDetails();
+            }
+            else {
+                openToast("Something went wrong", "error");
+            }
+        } catch (error) {
+            console.log("error", error)
         }
 
     }
@@ -51,42 +61,69 @@ const BranchDetails = () => {
         if (exportFormat === "CSV") exportCSV();
         else if (exportFormat === "PDF") exportPDF();
         else if (exportFormat === "Print") printBranch();
-      };
-      const exportCSV = () => {
-        const csvData = branchDetail
-          .map((dep) => `${dep.branchName}, Total Users: 1`)
-          .join("\n");
+    };
+
+    const exportCSV = () => {
+        const headers = ["Branch Name", "Total Users"];
+        const csvData = [
+            headers.join(","), // Add headers
+            ...branchDetail.map((dep) => `${dep.branchName}`),
+        ].join("\n");
         const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
-        saveAs(blob, "branchDetail.csv");
-      };
-    
-      const exportPDF = () => {
+        saveAs(blob, "BranchDetail.csv");
+    };
+
+
+    const exportPDF = () => {
         const doc = new jsPDF();
-        doc.text("Department List", 20, 10);
+        doc.text("Branch Details", 20, 10);
         branchDetail.forEach((dep, index) => {
-          doc.text(
-            `${index + 1}. ${dep.branchName} (Total Users: 1)`,
-            10,
-            20 + index * 10
-          );
+            doc.text(
+                `${index + 1}. ${dep.branchName} `,
+                10,
+                20 + index * 10
+            );
         });
         doc.save("BranchDetail.pdf");
-      };
-    
-      const printBranch = () => {
-        const printContent = branchDetail
-          .map((dep) => `${dep.branchName} (Total Users: 1)`)
-          .join("\n");
-        const newWindow = window.open();
-        newWindow.document.write(`<pre>${printContent}</pre>`);
-        newWindow.document.close();
-        newWindow.print();
-      };
-      const handleSelectChange = (event) => {
+    };
+
+    const printBranch = () => {
+        const printWindow = window.open("", "_blank");
+        const printContent = `
+            <html>
+                <head><title>Print Branch Details</title></head>
+                <body>
+                    <h3>Branch Details</h3>
+                    <table border="1" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>Branch Name</th>
+                                <th>Total Users</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${branchDetail
+                                .map(
+                                    (row) =>
+                                        `<tr><td>${row.branchName}</td><td>${row.totalUsers}</td></tr>`
+                                )
+                                .join("")}
+                        </tbody>
+                    </table>
+                </body>
+            </html>
+        `;
+        printWindow.document.write(printContent);
+        printWindow.document.close();
+        printWindow.print();
+    };
+
+
+    const handleSelectChange = (event) => {
         setRowsToShow(Number(event.target.value));
-      };
-     
-    
+    };
+
+
 
 
     return (
@@ -103,7 +140,7 @@ const BranchDetails = () => {
                 <div className="flex mb-4 justify-between flex-col gap-2  sm:flex-row sm:gap-0">
                     <div className="left-side ">
                         <select
-                             onChange={handleSelectChange}
+                            onChange={handleSelectChange}
                             className=" border border-[#e5e7eb] p-[7px]  shadow-sm mr-2 rounded-md text-[14px]  pr-3 focus:outline-none"
                         >
                             <option value="25">25</option>
@@ -170,9 +207,9 @@ const BranchDetails = () => {
                                     branchDetail?.map((item, index) => {
                                         return <tr className="border-b  border-[#dbdbdb] pb-2">
                                             <td className="pt-4 pb-3 pl-3 border-r border-[#dbdbdb]">
-                                                <Link to="/" className="text-[#27004a] text-[14px]">
+                                                <div  className="text-[#27004a] text-[14px]">
                                                     {item?.branchName}
-                                                </Link>
+                                                </div>
 
                                             </td>
                                             <td className="flex pt-4 gap-2 justify-center">

@@ -417,6 +417,9 @@ const StaffTab = () => {
                       N/A
                     </td>
                     <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
+                      N/A
+                    </td>
+                    <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
                       {staff?.staffDetails?.date_of_joining
                         ? new Date(
                             staff?.staffDetails?.date_of_joining
@@ -455,12 +458,7 @@ const StaffTab = () => {
                     <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
                       {"N/A"}
                     </td>
-                    <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
-                      {"N/A"}
-                    </td>
-                    <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
-                      {"N/A"}
-                    </td>
+                    
                   </tr>
                 ))
               ) : (
