@@ -186,7 +186,7 @@ const LeaveBalance = () => {
                         </div>
 
 
-                        <div className='w-[100%] p-0 h-[300px] overflow-y-auto flex rounded-md shadow overflow-scroll border border-1 mt-4 '>
+                        <div className='w-[100%] p-0 h-[100%] overflow-y-auto flex rounded-md shadow overflow-scroll border border-1 mt-4 '>
                             <div className='w-full   '>
                                 <table className='table-section w-full'>
                                     <thead className='border border-1 '>
@@ -291,7 +291,7 @@ const LeaveBalance = () => {
                         </div>
 
 
-                        <div className='w-[100%] p-0 h-[300px] overflow-y-auto flex rounded-md shadow overflow-scroll border border-1 mt-4 '>
+                        <div className='w-[100%] p-0 h-[100%] overflow-y-auto flex rounded-md shadow overflow-scroll border border-1 mt-4 '>
                             <div className='w-full   '>
                                 <table className='table-section  w-full'>
                                     <thead className='border border-1 '>

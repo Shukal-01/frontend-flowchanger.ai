@@ -109,9 +109,7 @@ const   StaffMenu = () => {
 
           <TabPanel>
             <Penalty_Overtime />
-          </TabPanel>
-        
-          
+          </TabPanel>   
           <TabPanel>
             <Permission />
           </TabPanel>

@@ -292,14 +292,14 @@ const RunPayroll = ({ toggleRunTab }) => {
       <div className=" mt-5  p-4 py-2">
         {/* <div className="mt-5"> */}
 
-        <div className="bg-white  rounded-lg  shadow-cs border border-[#dcdbdb] overflow-x-auto  min-h-[300px]">
+        <div className="bg-white  rounded-lg  shadow-cs border border-[#dcdbdb] overflow-x-auto  h[100%]">
           <table className="w-full table-auto border border-[#dcdbdb] rounded-lg overflow-hidden border-collapse">
             <thead className="cursor-pointer  border border-gray-300 shadow-md">
-              <th className="border-r p-2 flex justify-center text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] flex justify-center text-xs font-medium whitespace-nowrap text-center">
                 #
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Name
                   <div className="relative dropdown-container">
@@ -340,7 +340,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                   </div>
                 </div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Job Title
                   <div className="relative dropdown-container">
@@ -381,7 +381,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                   </div>
                 </div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Payroll Finalized
                   <div className="relative dropdown-container">
@@ -422,7 +422,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                   </div>
                 </div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   CTC
                   <div className="relative dropdown-container">
@@ -464,7 +464,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                 </div>
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Payables
                   <div className="relative dropdown-container">
@@ -506,7 +506,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                 </div>
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Total Salary
                   <div className="relative dropdown-container">
@@ -548,7 +548,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                 </div>
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Paid
                   <div className="relative dropdown-container">
@@ -590,7 +590,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                 </div>
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Pending
                   <div className="relative dropdown-container">
@@ -632,7 +632,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                 </div>
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Slip Shared
                   <div className="relative dropdown-container">
@@ -674,7 +674,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                 </div>
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Bank/UPI Verified
                   <div className="relative dropdown-container">
@@ -718,7 +718,7 @@ const RunPayroll = ({ toggleRunTab }) => {
 
               {toggleDrop11 && (
                 <>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Total Earnings
                       <div className="relative dropdown-container">
@@ -760,7 +760,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                     </div>
                   </th>
 
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Basic Salary
                       <div className="relative dropdown-container">
@@ -802,7 +802,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                     </div>
                   </th>
 
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Work Basis Payment
                       <div className="relative dropdown-container">
@@ -844,7 +844,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                     </div>
                   </th>
 
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Incentives
                       <div className="relative dropdown-container">
@@ -885,7 +885,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Reimbrusments
                       <div className="relative dropdown-container">
@@ -926,7 +926,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Bonus
                       <div className="relative dropdown-container">
@@ -967,7 +967,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Overtime Pay
                       <div className="relative dropdown-container">
@@ -1008,7 +1008,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Other Earnings
                       <div className="relative dropdown-container">
@@ -1049,7 +1049,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Employee PF
                       <div className="relative dropdown-container">
@@ -1090,7 +1090,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Employee ESI
                       <div className="relative dropdown-container">
@@ -1131,7 +1131,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       PF EDLI & Admin Charges
                       <div className="relative dropdown-container">
@@ -1172,7 +1172,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Employee LWF
                       <div className="relative dropdown-container">
@@ -1213,7 +1213,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Professional Tax
                       <div className="relative dropdown-container">
@@ -1254,7 +1254,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Late Fine
                       <div className="relative dropdown-container">
@@ -1295,7 +1295,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Early Fine
                       <div className="relative dropdown-container">
@@ -1336,7 +1336,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Other Deductions
                       <div className="relative dropdown-container">
@@ -1377,7 +1377,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Loan Payment
                       <div className="relative dropdown-container">
@@ -1418,7 +1418,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       </div>
                     </div>
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                     <div className="flex">
                       Pending
                       <div className="relative dropdown-container">
@@ -1464,41 +1464,41 @@ const RunPayroll = ({ toggleRunTab }) => {
             </thead>
             <tbody>
               <tr className="border">
-                <td className="p-2 whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   <input
                     type="checkbox"
                     className="border border-1 rounded-md"
                   />
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   N/A
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   N/A
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   {" "}
                   N/A
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   N/A
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   N/A
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   {" "}
                   N/A
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   {" "}
                   N/A
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   {" "}
                   N/A
                 </td>
-                <td className="p-2 whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">
+                <td className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                   {" "}
                   N/A
                 </td>

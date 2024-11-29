@@ -354,7 +354,7 @@ const StaffTab = () => {
         </div>
       </div>
 
-      <div className="w-[100%] p-0 h-[300px] overflow-y-auto flex rounded-md shadow overflow-x-auto border border-1 mt-4">
+      <div className="w-[100%] p-0 h-[100%] overflow-y-auto flex rounded-md shadow overflow-x-auto border border-1 mt-4">
         <div className="bg-white">
           <table className="table-section w-full table-auto border border-[#dcdbdb] rounded-lg overflow-hidden border-collapse">
             <thead
@@ -382,7 +382,7 @@ const StaffTab = () => {
                 Emergency Contact Name
               </th>
             </thead>
-            <tbody className="newtab-staff">
+            <tbody>
               {isLoading && staffDetail?.length === 0 ? (
                 <tr className="h-[100px]">
                   <td
@@ -412,6 +412,9 @@ const StaffTab = () => {
                     </td>
                     <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
                       {staff?.staffDetails?.job_title || "N/A"}
+                    </td>
+                    <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
+                      N/A
                     </td>
                     <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
                       N/A
@@ -455,12 +458,7 @@ const StaffTab = () => {
                     <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
                       {"N/A"}
                     </td>
-                    <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
-                      {"N/A"}
-                    </td>
-                    <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
-                      {"N/A"}
-                    </td>
+                    
                   </tr>
                 ))
               ) : (

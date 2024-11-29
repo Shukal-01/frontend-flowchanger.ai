@@ -35,14 +35,16 @@ const StaffChatInterface = () => {
   const [chatTab, setChatTab] = useState("admins");
 
   return (
-    <div class="  h-[calc(100vh-6rem)] ">
+    <div class=" overflow-hidden ">
       {/* <!-- Container for Chat Section --> */}
-      <div class="flex   shadow-lg rounded-lg  h-full parent-container bg-white">
+      <div class="flex   shadow-lg rounded-lg  h-[calc(100vh-50px)] parent-container bg-white">
         {/* <!-- Left Section: Members List --> */}
-        <div
-          class={`w-full ${
-            showChatSection ? "hidden" : "block"
-          } md:w-1/3 flex flex-col border-r-2  h-full bg-white`}
+        
+           <div
+           className={`w-full ${
+             showChatSection ? "hidden sm:block" : "block"
+           } md:w-1/3 flex flex-col border-r-2 h-full bg-white overflow-hidden`}
+             
         >
           <div className="flex flex-row justify-start items-center space-x-3 border-b  pb-5 mb-2">
             <div className="border rounded-full border-green-500">
@@ -80,20 +82,22 @@ const StaffChatInterface = () => {
                 Groups
               </div>
             </div>
-            <div className="w-full h-full flex-grow flex flex-col justify-between ">
+            
               {chatTab === "admins" ? (
                 <Admin handleSelectedUser={handleSelectedUser} />
               ) : (
                 <Groups />
               )}
-            </div>
+        
 
             {/* member column in ChatSection */}
           </div>
         </div>
         {/* <!-- Right Section: Chat Window --> */}
 
-        <div class={`w-2/3 h-full md:flex flex-col flex-grow ${showChatSection?"block":"hidden"} sm:block  chat-section`}>
+       <div className={`md:w-2/3  md:flex flex-col flex-grow ${
+    showChatSection ? "block sm:block" : "hidden sm:block"
+  } chat-section`}>
           {!showChatSection && (
             <div className="flex justify-center items-center h-full">
               <p className="text-lg font-semibold text-gray-400">
@@ -103,7 +107,7 @@ const StaffChatInterface = () => {
           )}
           {showChatSection && (
             <div className="h-full flex flex-col">
-              <div className="flex items-center justify-between mt-5 md:mt-0 mb-4 border-b pb-6">
+              <div className="flex items-center justify-between mt-5 md:mt-0 mb-4 border-b pb-[6px]">
                 <div className="flex flex-row justify-start items-center w-[70%] md:w-[50%] space-x-3 relative rounded-[100%]">
                   <div
                     className="float-left"

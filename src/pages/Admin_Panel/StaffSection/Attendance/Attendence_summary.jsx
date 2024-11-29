@@ -19,7 +19,6 @@ import { set } from 'react-hook-form';
 const Attendence_summary = () => {
     const { baseUrl, openToast, fetchStaff, staffDetail } = useGlobalContext();
     const [isOpen, setIsOpen] = useState(false);
-
     const [lateEntryHours, setLateEntryHours] = useState();
     const [lateEntrySalaryTime, setLateEntrySalaryTime] = useState(0);
     const [lateEntryAmount, setLateEntryAmount] = useState(0);
@@ -44,18 +43,8 @@ const Attendence_summary = () => {
     const [overTimeEarlyHour, setOverTimeEarlyHour] = useState();
     const [overTimeEarlySalaryTime, setOverTimeEarlySalaryTime] = useState();
     const [overTimeEarlyOutAmount, setOverTimeEarlyAmount] = useState(0)
-
-    console.log("OverTimeLateHours", overTimelateHour)
-    console.log("overTimeSalaryTime", overTimeSalaryTime)
-    console.log("overTimeLateOutAmount", overTimeLateOutAmount)
-
-
-    console.log("overTimeEarlyHour", overTimeEarlyHour)
-    console.log("overTimeEarlySalaryTime", overTimeEarlySalaryTime)
-    console.log("overTimeEarlyOutAmount", overTimeEarlyOutAmount)
-
-
-
+    const [applyPunchRecordId, setApplyPunchRecordId] = useState();
+    const [applyOvertimePunchRecordId, setApplyOvertimePunchRecordId] = useState();
 
 
     function calculateTotalMinutes(timeString) {
@@ -67,8 +56,6 @@ const Attendence_summary = () => {
         const finePerMinute = monthlySalary / (workingDays * workingHoursPerDay * 60);
         return finePerMinute.toFixed(2);
     }
-
-
 
     // Function to open the modal
     const openModal = () => {
@@ -206,7 +193,7 @@ const Attendence_summary = () => {
         const year = date.getFullYear();
 
         const formattedDate = `${day}/${month}/${year}`;
-        const result = await fetch(baseUrl + `attendance/summary?type=day&date=${formattedDate}`,{ cache:"no-store" });
+        const result = await fetch(baseUrl + `attendance/summary?type=day&date=${formattedDate}`, { cache: "no-store" });
         console.log(result)
         if (result.status == 200) {
             const res = await result.json();
@@ -290,8 +277,10 @@ const Attendence_summary = () => {
 
     async function overTimeId(id) {
         const staffSalary = staffDetail?.filter((item) => item.staffDetails.id === id)[0];
-        console.log(staffSalary?.staffDetails?.SalaryDetails[0]?.ctc_amount);
+        // console.log(staffSalary?.staffDetails?.SalaryDetails[0]?.ctc_amount);
         openModal12();
+        const staffname = staffDetail?.filter((item) => item.staffDetails.id === id)[0]?.name;
+        setStaffName(staffname)
         setSendOverTimeStaffId(id);
         setSelectedStaffSalary(staffSalary?.staffDetails?.SalaryDetails[0]?.ctc_amount)
     }
@@ -341,33 +330,83 @@ const Attendence_summary = () => {
 
     const calculateTotalFineHours = (records) => {
         let totalMinutes = 0;
-    
+        console.log(records)
+
+
         records.forEach(({ punchRecord }) => {
             const { fine } = punchRecord;
-    
+
             if (fine) {
-                // Helper function to convert HH:mm to minutes
                 const timeToMinutes = (time) => {
                     if (!time) return 0; // Null or undefined time
                     const [hours, minutes] = time.split(":").map(Number);
                     return hours * 60 + minutes;
                 };
-    
-                // Add all fine times
                 console.log(fine.lateEntryFineHoursTime, fine.earlyOutFineHoursTime, fine.excessBreakFineHoursTime);
                 totalMinutes += timeToMinutes(fine.lateEntryFineHoursTime);
                 totalMinutes += timeToMinutes(fine.earlyOutFineHoursTime);
                 totalMinutes += timeToMinutes(fine.excessBreakFineHoursTime);
             }
         });
-    
+
         // Convert total minutes back to HH:mm format
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
-    
+
         return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
     };
-    
+
+
+    const calculateTotalOvertimeHours = (records) => {
+        let totalMinutes = 0;
+        console.log(records, "Received Records");
+
+        records.forEach((record) => {
+            const punchRecord = record.punchRecord || {};
+            const Overtime = punchRecord.Overtime || null;
+
+            if (Overtime) {
+                // Helper function to convert time to minutes
+                const timeToMinutes = (time) => {
+                    if (!time || typeof time !== "string") {
+                        console.warn("Invalid or missing time:", time);
+                        return 0; // Handle null, undefined, or invalid time
+                    }
+                    if (time.includes(":")) {
+                        const [hours, minutes] = time.split(":").map(Number);
+                        return hours * 60 + minutes;
+                    }
+                    if (time.includes(".")) {
+                        const [hours, fractional] = time.split(".").map(Number);
+                        const minutes = Math.round((fractional / 10) * 60);
+                        return hours * 60 + minutes;
+                    }
+                    console.warn("Unexpected time format:", time);
+                    return 0;
+                };
+
+                // Safely convert overtime times to minutes
+                const earlyTime = timeToMinutes(Overtime.earlyCommingEntryHoursTime);
+                const lateTime = timeToMinutes(Overtime.lateOutOvertimeHoursTime);
+
+                console.log("Converted Times:", { earlyTime, lateTime });
+
+                totalMinutes += earlyTime + lateTime;
+            }
+        });
+
+        // Convert total minutes back to HH:mm format
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+
+        const totalOvertime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+        console.log(`Total Overtime: ${totalOvertime}`);
+        return totalOvertime;
+    };
+
+
+
+
 
     useEffect(() => {
         const totalSalary = (Number(lateEntryAmount) + Number(excessBreakAmount) + Number(earlyOutAmount)) || 0;
@@ -393,24 +432,27 @@ const Attendence_summary = () => {
     }, [selectedStaffSalary])
 
     async function applyFine() {
+        console.log(applyPunchRecordId)
+        const data = {
+            lateEntryFineHoursTime: lateEntryHours,
+            lateEntryFineAmount: Number(lateEntrySalaryTime),
+            lateEntryAmount: lateEntryAmount,
+            excessBreakFineHoursTime: excessBreakHours,
+            excessBreakFineAmount: Number(excessBreakTime),
+            excessBreakAmount: excessBreakAmount,
+            earlyOutFineHoursTime: earlyOutHours,
+            earlyOutFineAmount: Number(earlyOutTime),
+            earlyOutAmount: earlyOutAmount,
+            totalAmount: fineTotalAmount,
+            staffId: sendStaffId,
+            punchRecordId: applyPunchRecordId
+        }
         const result = await fetch(baseUrl + `fine/create`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({
-                lateEntryFineHoursTime: lateEntryHours,
-                lateEntryFineAmount: Number(lateEntrySalaryTime),
-                lateEntryAmount: lateEntryAmount,
-                excessBreakFineHoursTime: excessBreakHours,
-                excessBreakFineAmount: Number(excessBreakTime),
-                excessBreakAmount: excessBreakAmount,
-                earlyOutFineHoursTime: earlyOutHours,
-                earlyOutFineAmount: Number(earlyOutTime),
-                earlyOutAmount: earlyOutAmount,
-                totalAmount: fineTotalAmount,
-                staffId: sendStaffId
-            })
+            body: JSON.stringify(data)
         })
         if (result.ok) {
             openToast("Fine Applied Successfully", "success");
@@ -421,25 +463,29 @@ const Attendence_summary = () => {
         }
     }
 
+
     async function applyOverTime() {
+        const data = {
+            earlyCommingEntryHoursTime: overTimeEarlyHour,
+            lateOutOvertimeHoursTime: overTimelateHour,
+            earlyCommingEntryAmount: Number(overTimeEarlyOutAmount),
+            earlyEntryAmount: Number(overTimeEarlySalaryTime),
+            lateOutOvertimeAmount: Number(overTimeLateOutAmount),
+            lateOutAmount: Number(overTimeSalaryTime),
+            totalAmount: Number((overTimeLateOutAmount * overTimeSalaryTime) + (overTimeEarlyOutAmount * overTimeEarlySalaryTime)),
+            staffId: sendOverTimeStaffId,
+            punchRecordId: applyOvertimePunchRecordId
+        }
         const result = await fetch(baseUrl + `overtime/create`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({
-                earlyCommingEntryHoursTime: overTimeEarlyHour,
-                lateOutOvertimeHoursTime: overTimelateHour,
-                earlyCommingEntryAmount: Number(overTimeEarlyOutAmount),
-                earlyEntryAmount: Number(overTimeEarlySalaryTime),
-                lateOutOvertimeAmount: Number(overTimeLateOutAmount),
-                lateOutAmount: Number(overTimeSalaryTime),
-                totalAmount: Number((overTimeLateOutAmount * overTimeSalaryTime) + (overTimeEarlyOutAmount * overTimeEarlySalaryTime)),
-                staffId: sendOverTimeStaffId
-            })
+            body: JSON.stringify(data)
         })
         if (result.ok) {
-            openToast("OverTime Applied Successfully", "success")
+            openToast("OverTime Applied Successfully", "success");
+            closeModal12();
         }
         else {
             openToast("Something went wrong", "error")
@@ -447,8 +493,8 @@ const Attendence_summary = () => {
     }
 
     const [fine, setFine] = useState();
-    console.log(fine)
-
+    const [overtime, setOverTime] = useState();
+    console.log(overtime)
 
     async function fetchFineDetails() {
         try {
@@ -465,8 +511,23 @@ const Attendence_summary = () => {
         }
     }
 
+    async function fetchOverTimeDetails() {
+        try {
+            const result = await fetch(baseUrl + "overtime");
+            if (result.status == 200) {
+                const res = await result.json();
+                console.log("res", res)
+                setOverTime(res.data)
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         fetchFineDetails()
+        fetchOverTimeDetails()
     }, [])
 
     const [others, setOthers] = useState([])
@@ -487,9 +548,9 @@ const Attendence_summary = () => {
                     <h1 className='font-semibold'>Attendence Summary</h1>
                 </div>
                 <div className='flex gap-[10px] summary-bold2'>
-                    <Link className=' text-[#8e54c2] text-[14px] font-semibold' to="/">Unprocessed Logs <FilterListIcon className='icon-filter' /></Link>
-                    <Link className=' text-[#8e54c2] text-[14px] font-semibold' to="/">Daily Report <DownloadIcon className='icon-filter' /></Link>
-                    <Link className=' text-[#8e54c2] text-[14px] font-semibold ' to="/">Setting <SettingsIcon className='icon-filter' /></Link>
+                    <Link className=' text-[#8e54c2] text-[14px] font-semibold' to="#">Unprocessed Logs <FilterListIcon className='icon-filter' /></Link>
+                    <Link className=' text-[#8e54c2] text-[14px] font-semibold' to="#">Daily Report <DownloadIcon className='icon-filter' /></Link>
+                    <Link className=' text-[#8e54c2] text-[14px] font-semibold ' to="#">Setting <SettingsIcon className='icon-filter' /></Link>
                 </div>
             </div>
 
@@ -501,14 +562,15 @@ const Attendence_summary = () => {
                             type="date"
                             value={summaryDate} // Set value in YYYY-MM-DD
                             onChange={handleChange} // Update state on change
-                        />                    </div>
+                        />                 
+                   </div>
                     <div className='flex items-center justify-between gap-[14px] approval-new '>
                         <h2 className='text-[14px] font-medium'>Total Pending for Approval :
                             {
                                 attendance && attendance?.filter((item) => !item?.punchRecord?.isApproved).length
                             }
                         </h2>
-                        <Link className='bg-[#27004a] text-[white] review-btn rounded-md' to="/">Review</Link>
+                        <Link className='bg-[#27004a] text-[white] review-btn rounded-md' to="#">Review</Link>
                     </div>
                 </div>
                 <div className='mt-[16px] flex gap-[30px] summary-bold1'>
@@ -530,7 +592,11 @@ const Attendence_summary = () => {
                     </div>
                     <div className='total-staff w-[15%] new-staff3'>
                         <h2 className='text-[14px] font-normal whitespace-nowrap text-[#000000bf]'>Overtime Hours</h2>
-                        <p className='text-[14px] font-semibold'>00.00</p>
+                        <p className='text-[14px] font-semibold'>
+                            {
+                                attendance.length ? calculateTotalOvertimeHours(attendance) : 0
+                            }
+                        </p>
                     </div>
                     <div className='total-staff w-[15%] new-staff3'>
                         <h2 className='text-[14px] font-normal text-[#000000bf]'>Fine Hours</h2>
@@ -557,12 +623,12 @@ const Attendence_summary = () => {
                 <input className='bg-[#ffff] shadow-cs w-full pr-[38px] mt-[24px] p-[10px] rounded-md search-staff ' type="text" placeholder='Search Staff by Name , Phone Number or Employee ID' />
             </div>
             {departments.length && attendance.length && departments.map(d => {
-                const rec = attendance?.filter(a => a.punchRecord?.staff?.departmentId == d.id)
+                const rec = attendance?.filter(a => a.punchRecord?.staff?.departmentId == d.id);
                 return <div className='flex flex-col gap-[10px] mt-[0px]'>
-                    <h1 className='pb-2'>{d.department_name} ({rec.length})</h1>
+                    <h1 className='pt-2'>{d.department_name} ({rec.length})</h1>
                     {rec.map((item, index) => {
                         return <>
-                            <div className='shadow p-[20px] mt-[10px] rounded-md shadow-cs'>
+                            <div className='shadow p-[20px]  rounded-md shadow-cs'>
                                 <div className='flex items-start justify-between  flex-col xl:flex-row lg:flex-row md:flex-row xl:items-center lg:items-center md:items-center gap-4 xl:gap-0 lg:gap-0 md:gap-0'>
                                     <div>
                                         <p className='text-[16px]'>{item?.punchRecord?.staff?.User?.name}</p>
@@ -616,6 +682,7 @@ const Attendence_summary = () => {
                                                 <button
                                                     onClick={() => {
                                                         fineId(item?.staffId)
+                                                        setApplyPunchRecordId(item?.punchRecord?.id)
                                                     }}
                                                     className=" btns px-6 py-3 text-[14px] text-[#27004a] font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
                                                 >
@@ -775,7 +842,10 @@ const Attendence_summary = () => {
 
                                                             <div className="flex flex-col gap-[10px] ">
                                                                 <button
-                                                                    onClick={applyFine}
+                                                                    onClick={() => {
+                                                                        console.log(item.punchRecord)
+                                                                        applyFine()
+                                                                    }}
                                                                     className="px-4 py-2 bg-[#27004a] border border-[#27004a] transition-all text-white rounded-md hover:text-[#27004a] hover:bg-[#ffff] "
                                                                 >
                                                                     Apply Fine
@@ -799,7 +869,9 @@ const Attendence_summary = () => {
                                                 <button
                                                     // onClick={openModal12}
                                                     onClick={() => {
+                                                        console.log(item?.punchRecord?.id, "ggfjjhgjgjhg798----")
                                                         overTimeId(item?.staffId)
+                                                        setApplyPunchRecordId(item?.punchRecord?.id)
                                                     }}
                                                     className=" btns px-6 py-3 text-[14px] text-black font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
                                                 >
@@ -1035,7 +1107,7 @@ const Attendence_summary = () => {
 
             {
                 others.length > 0 && <div>
-                    <div className="mt-0">Other Departments ({others.length})</div>
+                    <div className="mt-0 pt-4">Other Departments ({others.length})</div>
 
                     {others.map((item, index) => {
                         return <>

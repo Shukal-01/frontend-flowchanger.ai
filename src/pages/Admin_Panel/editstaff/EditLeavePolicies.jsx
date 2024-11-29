@@ -421,7 +421,7 @@ const EditLeavePolicies = () => {
                     </div>
 
 
-                    <div className="border border-[#dbdbdb] shadow-cs rounded-md bg-[#fff] p-[8px] mb-6">
+                    <div className="border border-[#dbdbdb] shadow-cs rounded-md bg-[#fff] p-[8px] mb-3">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="text-gray-700 text-[14px] font-medium">Leave Type</div>
                             <div className="text-gray-700 font-medium text-[14px]">Remaining Balance</div>
@@ -477,7 +477,7 @@ const EditLeavePolicies = () => {
                 // onAfterOpen={afterOpenModal12}
                 onRequestClose={closeModal12}
                 contentLabel="Example Modal"
-                className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
+                className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-cs rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b p-3     text-[14px]   rounded-t-lg rounded-r-lg rounded-b-none'>Update Leave Policy for all staff</h2>
                 <button onClick={closeModal12} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white bg-[#27004a] rounded-2xl' /></button>
@@ -496,7 +496,7 @@ const EditLeavePolicies = () => {
                             </Tab>
                         </TabList>
                         <TabPanel>
-                            <div className='w-[100%] flex rounded-md shadow overflow-scroll border border-1 mt-4 pl-3 pr-3'>
+                            <div className='w-[100%] flex rounded-md shadow overflow-x-scroll border border-1 mt-4 pl-3 pr-3'>
                                 <table className='table-section mt-4'>
                                     <thead className='border border-1 '>
                                         <th>Leave Type</th>
@@ -626,7 +626,7 @@ const EditLeavePolicies = () => {
                 onRequestClose={closeOpenLeaveRequestModal}
                 // style={customStyles}
                 contentLabel="Example Modal"
-                className="w-[96%] xl:w-[55%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
+                className="w-[96%] xl:w-[45%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b p-3     text-[14px] text-left bg-[#fff] rounded-t-lg  rounded-r-lg rounded-b-none'>Pending Requests</h2>
                 <button onClick={closeOpenLeaveRequestModal} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white' /></button>
@@ -707,7 +707,7 @@ const EditLeavePolicies = () => {
                                         <input type="date" placeholder='Select Month' className=" w-full focus-visible:outline-none px-2 text-[15px] appearance-none border rounded-md py-2 text-gray-700"></input>
                                     </div>
                                 </div>
-                                <table className=' w-full table-section mt-4'>
+                                <table className=' w-full table-sectionpolicy mt-4'>
                                     <thead className='border border-1'>
                                         <tr> {/* Wrap header cells in a <tr> */}
                                             <th>Leave Type</th>

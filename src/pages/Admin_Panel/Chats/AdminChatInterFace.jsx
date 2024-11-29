@@ -35,13 +35,13 @@ const AdminChatInterface = () => {
   const [chatTab, setChatTab] = useState("staff");
 
   return (
-    <div class=" h-[calc(100vh-6rem)]">
+    <div class=" overflow-hidden ">
       {/* <!-- Container for Chat Section --> */}
-      <div class="flex   shadow-lg rounded-lg h-full parent-container bg-white">
+      <div class="flex   shadow-lg rounded-lg h-[calc(100vh-50px)] parent-container bg-white">
         {/* <!-- Left Section: Members List --> */}
         <div
           class={`w-full ${
-            showChatSection ? "hidden" : "block"
+            showChatSection ? "hidden sm:block" : "block"
           } md:w-1/3 flex flex-col border-r-2  h-full bg-white`}
         >
           <div className="flex flex-row justify-start items-center space-x-3 border-b  pb-5 mb-2">
@@ -61,7 +61,7 @@ const AdminChatInterface = () => {
           </div>
 
           {/* <!-- Member List --> */}
-          <div className="flex flex-col h-full flex-grow overflow-y-auto px-3 mb-4">
+          <div className="flex flex-col h-full overflow-y-auto flex-grow  px-3 mb-4">
             <div class="mb-4 w-full md:w-[80%]   grid grid-cols-3  ">
               <div
                 className="p-3 flex justify-start text-gray-400 items-center hover:text-black"
@@ -88,7 +88,8 @@ const AdminChatInterface = () => {
                 Clients
               </div>
             </div>
-            <div className="w-full h-full flex-grow flex flex-col justify-start space-y-2">
+          
+
               {chatTab === "staff" ? (
                 <Staff handleSelectedUser={handleSelectedUser} />
               ) : chatTab === "clients" ? (
@@ -96,14 +97,14 @@ const AdminChatInterface = () => {
               ) : (
                 <Groups />
               )}
-            </div>
+           
 
             {/* member column in ChatSection */}
           </div>
         </div>
 
         {/* <!-- Right Section: Chat Window --> */}
-        <div class={`w-2/3 h-full md:flex flex-col flex-grow chat-section ${showChatSection?"block":"hidden"} sm:block`}>
+        <div class={`w-2/3 h-full md:flex flex-col flex-grow chat-section ${showChatSection?"block sm:block" : "hidden sm:block"} sm:block`}>
           {!showChatSection && (
             <div className="flex justify-center items-center h-full">
               <p className="text-lg font-semibold text-gray-400">
@@ -113,7 +114,7 @@ const AdminChatInterface = () => {
           )}
           {showChatSection && (
             <div className="h-full flex flex-col">
-              <div className="flex items-center justify-between mt-5 md:mt-0 mb-4 border-b pb-6">
+              <div className="flex items-center justify-between mt-5 md:mt-0 mb-4 border-b pb-4">
                 <div className="flex flex-row justify-start items-center w-[70%] md:w-[50%] space-x-3 relative rounded-[100%]">
                   <div
                     className="float-left cursor-pointer"

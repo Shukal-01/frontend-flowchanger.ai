@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
 import { timeSince, formatMessageDate } from "../utils/helper"; // formatMessageDate is a new helper to format dates
 import { useGlobalContext } from "../Context/GlobalContext";
+import AddMembersSidePanel from "../pages/Client_Panel/Chats/AddMembersSidePanel";
 
 function MessagesDisplay({ messages }) {
   const { id } = useGlobalContext();
   const chatContainerRef = useRef(null);
+ 
 
   // Helper to determine the date grouping for messages
   const groupMessagesByDate = (messages) => {
@@ -122,10 +124,15 @@ function MessageBubble({ message, isSender }) {
 }
 
 function ChatComponent({ messages }) {
+  const {AddMembersPanel , setShowAddMembersPanel} = useGlobalContext(); 
+
+  useEffect(()=>{
+    console.log(AddMembersPanel);
+  })
   if (!messages) {
     console.log("loading...");
     return (
-      <div className="p-4 rounded-lg flex flex-col flex-grow overflow-y-scroll custom-scrollbar h-[400px]">
+      <div className="p-4 pt-0 rounded-lg flex flex-row justify-between flex-grow overflow-y-scroll custom-scrollbar h-[400px]">
         <div className="flex justify-center items-center h-full">
           <div role="status">
             <svg
@@ -140,6 +147,9 @@ function ChatComponent({ messages }) {
             <span className="sr-only">Loading...</span>
           </div>
         </div>
+        {AddMembersPanel && 
+       <AddMembersSidePanel />
+  }
       </div>
     );
   } else {
