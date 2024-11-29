@@ -85,4 +85,3 @@ const NavBar = ({toggleRunTab,setToggleRunTab}) => {
 
 export default NavBar;
 
-

@@ -362,7 +362,7 @@ const EditRole = () => {
 
                     <div className='flex justify-end mt-3 gap-2'>
                     <Link to="/role-detail" className='first-btn flex items-center' >Cancel</Link>
-                        <button className='second-btn' onClick={updateRole}>Save</button>
+                        <button className='second-btn' onClick={updateRole}>Update</button>
                     </div>
                 </div>
             </div>

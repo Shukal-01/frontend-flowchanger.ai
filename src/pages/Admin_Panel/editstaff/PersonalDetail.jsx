@@ -144,6 +144,23 @@ const PersonalDetail = () => {
         }
     };
 
+    const [basicDetail, setBasicDetail] = useState({
+        name: "", // or a default value
+        job_title: "",
+        branch: "",
+        mobile: "",
+        login_otp: "",
+        gender: "",
+        official_email: "",
+        date_of_joining: "",
+        date_of_birth: "",
+        current_address: "",
+        permanent_address: "",
+        emergency_contact_name: "",
+        emergency_contact_mobile: "",
+        emergency_contact_relation: "",
+        emergency_contact_address: "",
+    });
     useEffect(() => {
         getData();
     }, []);

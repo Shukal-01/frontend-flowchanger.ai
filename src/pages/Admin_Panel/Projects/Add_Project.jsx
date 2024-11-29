@@ -8,7 +8,7 @@ import PrintIcon from '@mui/icons-material/Print';
 import { FaGalacticSenate } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Quill styling
+// import 'react-quill/dist/quill.snow.css'; // Quill styling
 import { useGlobalContext } from "../../../Context/GlobalContext";
 import CreatableSelect from "react-select/creatable";
 import Select from 'react-select';

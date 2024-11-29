@@ -469,4 +469,4 @@ const TaskPriority = () => {
     )
 }
 
-export default TaskPriority
+export default TaskPriority;

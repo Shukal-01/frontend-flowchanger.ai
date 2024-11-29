@@ -176,7 +176,7 @@ const EditDepartment = () => {
                         <Link to="/department-details " className='first-btn flex items-center '>
                             Cancel
                         </Link>
-                        <button className='second-btn ' onClick={updateDepartment}>Save</button>
+                        <button className='second-btn ' onClick={updateDepartment}>Update</button>
                     </div>
                 </div>
             </div>
