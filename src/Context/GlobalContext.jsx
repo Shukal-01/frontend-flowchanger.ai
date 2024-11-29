@@ -76,39 +76,36 @@ export const GlobalContext = ({ children }) => {
   const [showChatSection, setShowChatSection] = useState(false);
   const [showAnnouncementsModal, setShowAnnouncementsModal] = useState(false);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
-  const [AddMembersPanel , setShowAddMembersPanel] = useState(false);
-  const [showDeleteGroupModal , setShowDeleteGroupModal] = useState(false);
-  const [showAddMemberModal , setShowAddMemberModal] = useState(false);
-  const [toggleSettings , setToggleSettings] = useState(false);
+  const [AddMembersPanel, setShowAddMembersPanel] = useState(false);
+  const [showDeleteGroupModal, setShowDeleteGroupModal] = useState(false);
+  const [showAddMemberModal, setShowAddMemberModal] = useState(false);
+  const [toggleSettings, setToggleSettings] = useState(false);
   const [isSendingMessage, setIsSendingMessage] = useState(false);
 
-//  handling the modals in clientchatInterface
-const handleToggleSettings = () =>{
-  setToggleSettings((toggleSettings)=> !toggleSettings)
-}
+  //  handling the modals in clientchatInterface
+  const handleToggleSettings = () => {
+    setToggleSettings((toggleSettings) => !toggleSettings);
+  };
 
-const handleAddMembersPanel = () =>{
-  setShowAddMembersPanel(AddMembersPanel => !AddMembersPanel)
-}
-const handleAddMembersModal = () =>{
-  setShowAddMemberModal(showAddMemberModal => !showAddMemberModal)
-}
+  const handleAddMembersPanel = () => {
+    setShowAddMembersPanel((AddMembersPanel) => !AddMembersPanel);
+  };
+  const handleAddMembersModal = () => {
+    setShowAddMemberModal((showAddMemberModal) => !showAddMemberModal);
+  };
 
-const handleAnnouncementsClick = () => {
- 
-  setShowAnnouncementsModal(true);
-  setToggleSettings(false); // Close the settings menu when opening modal
-};
-const handleCreateGroupClick = () => {
-  
-  setShowCreateGroupModal(true);
-  setToggleSettings(false); // Close the settings menu when opening modal
-};
-const handleDeleteGroupClick = () => {
-  
-  setShowDeleteGroupModal(true);
-   // Close the settings menu when opening modal
-};
+  const handleAnnouncementsClick = () => {
+    setShowAnnouncementsModal(true);
+    setToggleSettings(false); // Close the settings menu when opening modal
+  };
+  const handleCreateGroupClick = () => {
+    setShowCreateGroupModal(true);
+    setToggleSettings(false); // Close the settings menu when opening modal
+  };
+  const handleDeleteGroupClick = () => {
+    setShowDeleteGroupModal(true);
+    // Close the settings menu when opening modal
+  };
 
   useEffect(() => {
     if (Cookies.get("flowChangerAuthToken")) {
@@ -256,66 +253,69 @@ const handleDeleteGroupClick = () => {
   }, [selectedTab, staffTab]);
 
   return (
-    <MainContext.Provider value={{
-      selectedTab,
-      setSelectedTab,
-      staffTab,
-      openToast,
-      setStaffTab,
-      baseUrl,
-      name,
-      setName,
-      depId,
-      setDepId,
-      roleName,
-      setRoleName,
-      roleId,
-      setRoleId,
-      editPermissions,
-      setEditPermissions,
-      selectedStaff,
-      setSelectedStaff,
-      fetchDetails,
-      socket,
-      messages,
-      setSelectedUser,
-      selectedUser,
-      setMessages,
-      fetchOneOnOneChat,
-      message,
-      setMessage,
-      sendMessage,
-      setId,
-      id,
-      notifications,
-      setNotifications,
-      handleSelectedUser,
-      setShowChatSection,
-      showChatSection,
-      isSendingMessage,
-      setIsSendingMessage,
-      activeSubmenu, 
-      setActiveSubmenu,
-      selectedSidebarTab, 
-      setSelectedSidebarTab,
-      showAnnouncementsModal, 
-      setShowAnnouncementsModal,
-      showCreateGroupModal, 
-      setShowCreateGroupModal,
-      AddMembersPanel , 
-      setShowAddMembersPanel,
-      showDeleteGroupModal , 
-      setShowDeleteGroupModal,
-      showAddMemberModal , 
-      setShowAddMemberModal,
-      handleAddMembersModal,
-      handleAddMembersPanel,
-      handleAnnouncementsClick,
-      handleCreateGroupClick,
-      handleDeleteGroupClick,
-      toggleSettings,
-      handleToggleSettings
-    }}>
+    <MainContext.Provider
+      value={{
+        selectedTab,
+        setSelectedTab,
+        staffTab,
+        openToast,
+        setStaffTab,
+        baseUrl,
+        name,
+        setName,
+        fetchStaff,
+        depId,
+        setDepId,
+        roleName,
+        setRoleName,
+        roleId,
+        setRoleId,
+        editPermissions,
+        setEditPermissions,
+        selectedStaff,
+        setSelectedStaff,
+        fetchDetails,
+        socket,
+        messages,
+        setSelectedUser,
+        selectedUser,
+        setMessages,
+        fetchOneOnOneChat,
+        message,
+        setMessage,
+        sendMessage,
+        setId,
+        id,
+        notifications,
+        setNotifications,
+        handleSelectedUser,
+        setShowChatSection,
+        showChatSection,
+        isSendingMessage,
+        setIsSendingMessage,
+        activeSubmenu,
+        setActiveSubmenu,
+        selectedSidebarTab,
+        setSelectedSidebarTab,
+        showAnnouncementsModal,
+        setShowAnnouncementsModal,
+        showCreateGroupModal,
+        setShowCreateGroupModal,
+        AddMembersPanel,
+        setShowAddMembersPanel,
+        showDeleteGroupModal,
+        setShowDeleteGroupModal,
+        showAddMemberModal,
+        setShowAddMemberModal,
+        handleAddMembersModal,
+        handleAddMembersPanel,
+        handleAnnouncementsClick,
+        handleCreateGroupClick,
+        handleDeleteGroupClick,
+        toggleSettings,
+        handleToggleSettings,
+      }}
+    >
       {children}
       <ToastContainer />
     </MainContext.Provider>
