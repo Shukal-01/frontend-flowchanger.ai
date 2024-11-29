@@ -4,12 +4,10 @@ export default function ConfirmationModal({id,callback,loading,setClose}) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
       <div className="bg-white rounded-lg shadow-cs max-w-lg w-full h-[200px] p-6">
-        <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-          Sure You Want To Delete ?{" "}
+        <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[28px] ">
+          Are you sure want to Delete this ?{" "}
         </h2>
-        <p className="text-center mb-[16px] text-[14px]">
-          Are you sure you want to Delete this ??
-        </p>
+    
 
         <div className="flex justify-around ">
           <button
