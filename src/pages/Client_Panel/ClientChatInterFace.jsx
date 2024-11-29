@@ -13,6 +13,13 @@ import ChatComponent from "../../components/ChatComponent";
 import Loader from "../../components/Loader";
 import Groups from "../Staff_Panel/ChatTabs/Group";
 import Admin from "../Staff_Panel/ChatTabs/Admin";
+import ChatAnnouncementsModal from "./Chats/ChatAnnouncements";
+import NewGroupChatModal from "./Chats/NewGroupModal";
+import AddMembersSidePanel from "./Chats/AddMembersSidePanel";
+import DeleteGroup from "./Chats/DeleteGroup";
+import AddMembers from "./Chats/AddMembersModal";
+import { MdGroups2 } from "react-icons/md";
+import { TfiAnnouncement } from "react-icons/tfi";
 
 const ClientChatInterFace = () => {
   const {
@@ -29,9 +36,29 @@ const ClientChatInterFace = () => {
     id,
     setId,
     handleSelectedUser,
+    toggleSettings,
+    showAnnouncementsModal, 
+    setShowAnnouncementsModal,
+    showCreateGroupModal, 
+    setShowCreateGroupModal,
+    AddMembersPanel , 
+    setShowAddMembersPanel,
+    showDeleteGroupModal , 
+    setShowDeleteGroupModal,
+    showAddMemberModal , 
+    setShowAddMemberModal,
+    handleAddMembersModal,
+    handleAddMembersPanel,
+    handleAnnouncementsClick,
+    handleCreateGroupClick,
+    handleDeleteGroupClick,
+    handleToggleSettings,
     isSendingMessage,
   } = useGlobalContext();
   const [chatTab, setChatTab] = useState("admins");
+ 
+
+ 
 
   return (
     <div class="  h-[calc(100vh-6rem)] ">
@@ -39,9 +66,9 @@ const ClientChatInterFace = () => {
       <div class="flex   shadow-lg rounded-lg  h-full parent-container bg-white">
         {/* <!-- Left Section: Members List --> */}
         <div
-          class={`w-full ${
-            showChatSection ? "hidden" : "block"
-          } md:w-1/3 flex flex-col border-r-2  h-full bg-white`}
+      className={`w-full ${
+        showChatSection ? "hidden sm:block" : "block"
+      } md:w-1/3 flex flex-col border-r-2 h-full bg-white`}
         >
           <div className="flex flex-row justify-start items-center space-x-3 border-b  pb-5 mb-2">
             <div className="border rounded-full border-green-500">
@@ -50,15 +77,28 @@ const ClientChatInterFace = () => {
             <p className="text-xl font-medium">Kanika Arora</p>
           </div>
           {/* <!-- Search Bar --> */}
-          <div class="flex items-center bg-white rounded-full shadow-lg  mb-2 border border-gray-300  mx-3 mt-3">
+          <div className="flex flex-row justify-between items-center space-x-2 mx-4">
+          <div class="flex items-center bg-white rounded-full shadow-lg  mb-2 border border-gray-300   mt-3 w-[90%]">
             <input
               type="text"
               placeholder="Search members..."
-              class="bg-transparent outline-none w-full pl-2 py-1 text-sm font-normal   "
+              class="bg-transparent outline-none w-full pl-2 py-2 text-sm font-normal   "
             />
             <IoSearch className="text-[30px] pr-2 mt-1 text-gray-400" />
           </div>
-
+          <div className="relative mt-1">
+            <div className="bg-purple-600 text-white p-1 rounded-lg">
+          <IoSettingsOutline className="text-white text-[30px] mt-1" onClick={handleToggleSettings}/>
+          </div>
+          {toggleSettings && <div class="absolute  z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none -right-20" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+    <div class="py-1" role="none">
+    <a href="#" class=" px-4 py-2 text-sm text-gray-700 flex flex-row items-center" role="menuitem" tabindex="-1" id="menu-item-0" onClick={handleAnnouncementsClick}><TfiAnnouncement className="mr-2"/>Announcements</a>
+      <a href="#" class=" px-4 py-2 text-sm text-gray-700 flex flex-row items-center" role="menuitem" tabindex="-1" id="menu-item-1" onClick={handleCreateGroupClick}><MdGroups2 className="mr-2"/>Create Group</a>
+    
+    </div>
+  </div>}
+          </div>
+          </div>
           {/* <!-- Member List --> */}
           <div className="flex flex-col justify-between h-full flex-grow overflow-y-auto px-3 mb-4">
             <div class="mb-4  xs:w-[100%] md:w-[80%] flex flex-row justify-start space-x-2  ">
@@ -92,7 +132,9 @@ const ClientChatInterFace = () => {
         </div>
         {/* <!-- Right Section: Chat Window --> */}
 
-        <div class={`w-2/3 h-full md:flex flex-col flex-grow ${showChatSection?"block":"hidden"} sm:block chat-section`}>
+        <div className={`md:w-2/3 h-full md:flex flex-col flex-grow ${
+        showChatSection ? "block sm:block" : "hidden sm:block"
+      } chat-section`}>
           {!showChatSection && (
             <div className="flex justify-center items-center h-full">
               <p className="text-lg font-semibold text-gray-400">
@@ -102,7 +144,7 @@ const ClientChatInterFace = () => {
           )}
           {showChatSection && (
             <div className="h-full flex flex-col">
-              <div className="flex items-center justify-between mt-5 md:mt-0 mb-4 border-b pb-6">
+              <div className="flex items-center justify-between mt-5 md:mt-0 mb-4 border-b pb-[6px]">
                 <div className="flex flex-row justify-start items-center w-[70%] md:w-[50%] space-x-3 relative rounded-[100%]">
                   <div
                     className="float-left"
@@ -134,6 +176,7 @@ const ClientChatInterFace = () => {
                 <div className="flex space-x-2">
                   <HiOutlineSpeakerWave className=" text-purple-600 h-[30px] w-[30px]" />
                   <IoCall className="  text-purple-600 h-[30px] w-[25px]" />
+                  <IoSettingsOutline className="  text-purple-600 h-[33px] w-[25px]" />
                 </div>
               </div>
               <ChatComponent messages={messages} />
@@ -164,6 +207,26 @@ const ClientChatInterFace = () => {
           )}
         </div>
       </div>
+      {showAnnouncementsModal && (
+        <ChatAnnouncementsModal 
+          onClose={() => setShowAnnouncementsModal(false)} 
+        />
+      )}
+{showCreateGroupModal && (
+        <NewGroupChatModal 
+          onClose={() => setShowCreateGroupModal(false)} 
+        />
+      )}
+{showDeleteGroupModal && (
+        <DeleteGroup
+          onClose={() => setShowDeleteGroupModal(false)} 
+        />
+      )}
+{showAddMemberModal && (
+        <AddMembers
+          onClose={() => setShowAddMemberModal(false)} 
+        />
+      )}
     </div>
   );
 };

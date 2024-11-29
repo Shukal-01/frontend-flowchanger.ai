@@ -5,11 +5,13 @@ import { useSearchParams } from "react-router-dom";
 import { useGlobalContext } from "../../../../Context/GlobalContext";
 import { useAuthContext } from "../../../../Context/AuthContext";
 import flowChangerLogo from "../../../../Assets/Images/flowchangerAINew.jpeg";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 
 const Step2 = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const email = searchParams.get("email");
-
+  const [showPassword, setShowPassword] = useState(false);
   const { openToast , baseUrl} = useGlobalContext();
   const { nextStep, adminInfo, updateAdminInfo } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -140,14 +142,23 @@ const Step2 = () => {
             </div>
             <div className="mb-6">
               <label htmlFor="password">Password</label>
+              <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Enter a password"
                 aria-label="password"
                 className="w-full px-3 py-3 rounded-md focus:outline-none bg-gray-200"
                 {...register("password", { required: "Create your password" })}
               />
+                      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+      >
+        {showPassword ? <AiOutlineEye size={20} /> : <AiOutlineEyeInvisible size={20} />}
+      </button>
+      </div>
               {errors.password && (
                 <p className="text-red-500">{errors.password.message}</p>
               )}

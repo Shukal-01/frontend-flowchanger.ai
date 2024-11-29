@@ -91,9 +91,11 @@ const UserList = ({ userType, fetchUrl, handleSelectedUser }) => {
       )}
       
     </div>
-    <div className="flex flex-row justify-between mt-15 p-2 rounded bg-gray-300 mb-4 ">
-    <div className="float-left text-left">Theme</div>
-    <div className="float-left text-left">Settings</div>
+    
+  
+  <div className="flex flex-row justify-between mt-15 p-2 rounded bg-gray-300 mb-4 ">
+  <div className="float-left text-left">Theme</div>
+  <div className="float-left text-left">Settings</div>
   </div>
   </>
   );

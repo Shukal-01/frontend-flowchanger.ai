@@ -131,7 +131,7 @@ useEffect(()=>{
           <SideBar />
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set">
             <NavBar />
-            <div className="p-[10px]  w-full ">
+            <div className="p-[10px]  w-full min-h-screen">
               <Outlet />
             </div>
           </div>
