@@ -108,6 +108,7 @@ import ProjectSummary from "./pages/Client_Panel/Projects/ProjectSummary";
 import BranchDetails from "./pages/Admin_Panel/Branch/BranchDetails";
 import AddBranch from "./pages/Admin_Panel/Branch/AddBranch";
 import UpdateBranch from "./pages/Admin_Panel/Branch/UpdateBranch";
+import Setting_panel from "./pages/Admin_Panel/StaffSection/Attendance/Setting_panel";
 
 const App = () => {
   const [toggleSideBar, setToggleSideBar] = useState(true);
@@ -288,6 +289,8 @@ const App = () => {
               path="/attendence_summary"
               element={<Attendence_summary />}
             />
+             <Route path="/setting-panel" element={<Setting_panel />} />
+
             <Route path="/project_summary" element={<Project_Summary />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/overtime" element={<Overtime />} />
