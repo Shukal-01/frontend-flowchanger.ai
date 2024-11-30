@@ -9,9 +9,10 @@ const UpdateBranch = ({ id, item }) => {
     console.log(branchData)
     const navigate = useNavigate()
     const [branchName, setBranchName] = useState("")
-
+    const [isLoading, setIsLoading] = useState(false); 
     async function updateBranchDetails() {
         try {
+            setIsLoading(true)
             const result = await fetch(baseUrl + `branch/${branchData?.id}`, {
                 method: "PUT",
                 headers: {
@@ -28,6 +29,9 @@ const UpdateBranch = ({ id, item }) => {
             }
         } catch (error) {
             openToast("Something went wrong", "error")
+        }
+        finally{
+            setIsLoading(false)
         }
      
     }
@@ -47,7 +51,9 @@ const UpdateBranch = ({ id, item }) => {
                         <Link to="/branch-details" className='first-btn flex items-center pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1]'>
                             Cancel
                         </Link>
-                        <button className="second-btn pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1] " onClick={updateBranchDetails}>Update</button>
+                        <button className={`second-btn pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1] 
+                            ${isLoading==true ? 'opacity-50 cursor-not-allowed' : ''}
+                            `} onClick={updateBranchDetails}>Update</button>
                     </div>
                 </div>
             </div>

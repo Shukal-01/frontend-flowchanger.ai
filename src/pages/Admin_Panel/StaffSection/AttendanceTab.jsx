@@ -1079,7 +1079,7 @@ const AttendanceTab = () => {
                     {/* <th>Biometric</th> */}
                   </thead>
                   <tbody className="">
-                    {isLoading && staffDetail.length === 0 ? (
+                    {isLoading && staffDetail?.length === 0 ? (
                       <tr className="h-[100px]">
                         <td 
                           colSpan="9"
@@ -1088,7 +1088,7 @@ const AttendanceTab = () => {
                           <ClipLoader color="#4A90E2" size={50} />
                         </td>
                       </tr>
-                    ) : staffDetail && staffDetail.length > 0 ? (
+                    ) : staffDetail && staffDetail?.length > 0 ? (
                       staffDetail?.map((item, index) => {
                         return (
                           <>
@@ -1212,7 +1212,7 @@ const AttendanceTab = () => {
                     <th>Mandatory Full Day Hours</th>
                   </thead>
                   <tbody className="">
-                    {isLoading && staffDetail.length === 0 ? (
+                    {isLoading && staffDetail?.length === 0 ? (
                       <tr className="h-[100px]">
                         <td
                           colSpan="9"
@@ -1221,7 +1221,7 @@ const AttendanceTab = () => {
                           <ClipLoader color="#4A90E2" size={50} />
                         </td>
                       </tr>
-                    ) : staffDetail && staffDetail.length > 0 ? (
+                    ) : staffDetail && staffDetail?.length > 0 ? (
                       staffDetail?.map((item, index) => {
                         return (
                           <>

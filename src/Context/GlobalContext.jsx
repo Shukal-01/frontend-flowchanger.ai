@@ -62,6 +62,7 @@ export const GlobalContext = ({ children }) => {
   const [roleName, setRoleName] = useState("");
   const [roleId, setRoleId] = useState("");
   const [selectedStaff, setSelectedStaff] = useState(null);
+  const [shift, setShift] = useState([]);
   const [branchData, setBranchData] = useState("");
   // console.log(selectedStaff)
 
@@ -221,6 +222,16 @@ export const GlobalContext = ({ children }) => {
     }
   };
 
+  const fetchShifts = async () => {
+    const response = await fetch(baseUrl + "/shift");
+
+    if (response.status == 200) {
+      const data = await response.json();
+      setShift(data);
+    }
+  };
+
+
   const openToast = (msg, flag) => {
     toast(msg, { type: flag });
   };
@@ -246,6 +257,7 @@ export const GlobalContext = ({ children }) => {
 
   useEffect(() => {
     fetchStaff();
+    fetchShifts();
   }, []);
   useEffect(() => {
     console.log(staffTab);
@@ -314,6 +326,10 @@ export const GlobalContext = ({ children }) => {
         handleDeleteGroupClick,
         toggleSettings,
         handleToggleSettings,
+        fetchShifts,
+        shift,
+        setBranchData,
+        branchData
       }}
     >
       {children}

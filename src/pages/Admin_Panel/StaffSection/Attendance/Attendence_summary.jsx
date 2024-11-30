@@ -14,6 +14,8 @@ import { useGlobalContext } from '../../../../Context/GlobalContext';
 import TimePicker from "rc-time-picker";
 import "rc-time-picker/assets/index.css";
 import { set } from 'react-hook-form';
+import PresentModal from '../../../../components/Admin_Panel/AttendanceSummary/PresentModal';
+import HalfDay from '../../../../components/Admin_Panel/AttendanceSummary/HalfDayModal';
 
 
 const Attendence_summary = () => {
@@ -45,6 +47,7 @@ const Attendence_summary = () => {
     const [overTimeEarlyOutAmount, setOverTimeEarlyAmount] = useState(0)
     const [applyPunchRecordId, setApplyPunchRecordId] = useState();
     const [applyOvertimePunchRecordId, setApplyOvertimePunchRecordId] = useState();
+    const [id, setId] = useState(null);
 
 
     function calculateTotalMinutes(timeString) {
@@ -413,7 +416,6 @@ const Attendence_summary = () => {
         setFineTotalAmount(totalSalary)
     }, [lateEntryAmount, excessBreakAmount, earlyOutAmount])
 
-
     const handleChangeTimeEarlyIn = (value, amount) => {
         const formattedTime = value?.format("HH:mm");
         const totalMinutes = calculateTotalMinutes(formattedTime);
@@ -543,6 +545,11 @@ const Attendence_summary = () => {
 
     return (
         <div className='p-[20px] w-full work-fine'>
+
+           { selectedStatus == "PRESENT" && <PresentModal id={selectedStatus} setStatus={setSelectedStatus}  />}
+           { selectedStatus == "HALFDAY" && <HalfDay id={selectedStatus} setStatus={setSelectedStatus}  />}
+
+
             <div className='flex  justify-between satisfy-summary  '>
                 <div className='flex gap-[10px] summary-bold'>
                     <h1 className='font-semibold'>Attendence Summary</h1>
@@ -562,8 +569,8 @@ const Attendence_summary = () => {
                             type="date"
                             value={summaryDate} // Set value in YYYY-MM-DD
                             onChange={handleChange} // Update state on change
-                        />                 
-                   </div>
+                        />
+                    </div>
                     <div className='flex items-center justify-between gap-[14px] approval-new '>
                         <h2 className='text-[14px] font-medium'>Total Pending for Approval :
                             {
@@ -647,7 +654,7 @@ const Attendence_summary = () => {
                                                 <button
                                                     onClick={() => {
                                                         setSelectedStatus("PRESENT")
-                                                        openModal()
+
                                                     }}
                                                     className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
@@ -665,7 +672,6 @@ const Attendence_summary = () => {
                                                 <button
                                                     onClick={() => {
                                                         setSelectedStatus("HALFDAY")
-                                                        openModal()
                                                     }}
                                                     className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 

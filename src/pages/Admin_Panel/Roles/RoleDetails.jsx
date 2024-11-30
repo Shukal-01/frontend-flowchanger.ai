@@ -96,6 +96,7 @@ const Main = () => {
 
 
   const deleteRole = async (id) => {
+    setIsLoading(true);
     try {
       const result = await fetch(`${baseUrl}role/${id}`, {
         method: "DELETE",
@@ -106,12 +107,17 @@ const Main = () => {
       const res = await result.json();
       if (result.ok) { // Use result.ok instead of checking the status directly
         openToast(res.messsage);
+        onCloseModal10()
         fetchRoles()
+
       } else {
         openToast(res.message);
       }
     } catch (error) {
       console.error("Error deleting department:", error);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -311,7 +317,7 @@ const Main = () => {
                           className="text-red-500 cursor-pointer"
                         />
                       </button>
-                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={role.id} callback={deleteRole}/>}
+                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={role.id} isLoading={isLoading} callback={deleteRole}/>}
 
                         </td>
                       </tr>
