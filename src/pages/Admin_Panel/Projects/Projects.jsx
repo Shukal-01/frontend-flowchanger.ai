@@ -23,7 +23,7 @@ const Projects = () => {
     setIsOpen(!isOpen);
   };
   const [isOpen, setIsOpen] = useState(false);
- 
+
 
   const [isOpen15, setIsOpen15] = useState(false);
 
@@ -192,7 +192,7 @@ const Projects = () => {
         </Link>
       </div>
 
-      <div className="p-4 border rounded-lg bg-white shadow-cs">
+      <div className="p-[20px] border rounded-lg bg-white shadow-cs">
         <h2 className="font-medium mb-[10px] flex gap-[6px] items-center"> <LibraryBooksIcon />Projects</h2>
 
 
@@ -285,40 +285,52 @@ const Projects = () => {
               onClick={toggleAccordion}
             >
               <tr>
-                <th className="border-r p-2 flex justify-center text-xs font-medium whitespace-nowrap text-center">
+                <th className="border-r p-2 flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
                   <IoMdArrowDropright className={`text-[20px] transition-transform duration-200 ${isOpen ? "rotate-90 text-[black]" : "rotate-0"}`}
                   />
+                  <button className="p-[6px] rounded-lg bg-[orange]  mr-[7px] text-[white] ">To Do</button><span className="six-north">6</span>
 
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
                   #
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Name
+                  Project Name
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Company
+                  Customer
+                </th>
+             
+                <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  Progress
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Contact
+                  Billing Type
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Email
+                  Status
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Phone
+                  Total Rate
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Active
+                  Estimated Hours
                 </th>
-                <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Groups
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Members
                 </th>
-                <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Date Created
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Tags
                 </th>
-                <th className="p-2 text-xs font-medium text-center">
-                  Action
+
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Start Date
+                </th>
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Deadline
+                </th>
+                <th className="p-2 border-r text-xs font-medium text-center whitespace-nowrap">
+                  Description
                 </th>
               </tr>
             </thead>
@@ -335,20 +347,32 @@ const Projects = () => {
                   ) : projectDetails?.length > 0 ? (
                     projectDetails.map((project, index) => (
                       <tr key={index} className="border-b hover:bg-gray-50">
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">{index + 1}</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">{project.project_name}</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">Customer</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">
+                        <td className="text-center p-2 text-[12px]  border-r border-[#dbdbdb] whitespace-nowrap"><input type="checkbox" /></td>
+
+                        <td className="text-center p-2 text-[12px]  border-r border-[#dbdbdb] whitespace-nowrap">{index + 1}</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">{project.project_name}</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">Customer</td>
+                  
+                        <td className="text-center p-2 text-[12px] border-r border-[#dbdbdb] whitespace-nowrap">0%</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">Project Hours</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">Flowchanger</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">1</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">1</td>
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">NA</td>
+
+
+                        <td className="text-center p-2 text-[12px]   border-r border-[#dbdbdb] whitespace-nowrap">
+                         
                           {project.tags.map((tag, i) => (
                             <span key={i} className="border rounded-md p-1 mr-2 text-[12px] inline-block">
                               {tag}
                             </span>
                           ))}
                         </td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">{project.start_date}</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">{project.deadline}</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">Members</td>
-                        <td className="text-center p-2 text-[12px]  whitespace-nowrap">{project.status}</td>
+                        <td className="text-center p-2 text-[12px] border-r border-[#dbdbdb]  whitespace-nowrap">{project.start_date}</td>
+                        <td className="text-center p-2 text-[12px] border-r border-[#dbdbdb]  whitespace-nowrap">{project.deadline}</td>
+                        <td className="text-center p-2 text-[12px] border-r border-[#dbdbdb]  whitespace-nowrap">111</td>
+                        {/* <td className="text-center p-2 text-[12px]  border-r border-[#dbdbdb] whitespace-nowrap">{project.status}</td> */}
                       </tr>
                     ))
                   ) : (
@@ -364,17 +388,17 @@ const Projects = () => {
 
 
 
-       
-        </div>
-        <div className='flex justify-between p-3 pt-5 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
-            <p className=' text-[#a5a1a1] text-[14px]'>Showing 1 to {rowsToShow} of {departments.length} entries</p>
-            <div className='pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md'>
-              <Link to="#" className='text-[12px]  pt-2 pb-[8px]'>Previous</Link>
-              <span className='text-[12px] bg-[#27004a] flex items-center  text-white pl-3 pr-3 '>1</span>
-              <Link to="#" className='text-[12px]  pt-2 pb-[8px] '>Next</Link>
 
-            </div>
+        </div>
+        <div className='flex justify-between p-[14px] pb-[0] w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
+          <p className=' text-[#a5a1a1] text-[14px]'>Showing 1 to {rowsToShow} of {departments.length} entries</p>
+          <div className='pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md'>
+            <Link to="#" className='text-[12px]  pt-2 pb-[8px]'>Previous</Link>
+            <span className='text-[12px] bg-[#27004a] flex items-center  text-white pl-3 pr-3 '>1</span>
+            <Link to="#" className='text-[12px]  pt-2 pb-[8px] '>Next</Link>
+
           </div>
+        </div>
       </div>
     </div>
   );

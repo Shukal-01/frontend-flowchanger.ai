@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveIcon from '@mui/icons-material/Remove';
 import SellIcon from '@mui/icons-material/Sell';
 import { useGlobalContext } from "../../../Context/GlobalContext";
@@ -20,6 +20,8 @@ import jsPDF from 'jspdf';
 import { IoMdArrowDropright } from "react-icons/io";
 
 const Task = () => {
+
+ 
   const handleExport = () => {
     if (exportFormat === 'CSV') exportCSV();
     else if (exportFormat === 'PDF') exportPDF();
@@ -127,6 +129,11 @@ const Task = () => {
   const removeDiv = (indexToRemove) => {
     setDivs(divs.filter((_, index) => index !== indexToRemove)); // Filter out the div with the given index
   };
+  const [open10, setOpen10] = useState(false);
+
+  const onOpenModal10 = () => setOpen10(true);
+  const onCloseModal10 = () => setOpen10(false);
+
 
   function closeModal15() {
     setIsOpen15(false);
@@ -341,62 +348,6 @@ const Task = () => {
     }
   }, [selectedTaskData])
 
-  const accordionItems = [
-    {
-      title:
-        <div>
-          <table className="w-full">
-            <thead className="tablehead">
-              <tr className="rounded-lg">
-
-                <th className="text-[12px] font-medium p-[8px] w-[100px] border-r whitespace-nowrap"><button className="p-[6px] rounded-lg bg-[orange]  mr-[7px] text-[white] ">To Do</button><span className="six-north">6</span></th>
-                <th className="text-[12px] border-r w-[60px]  font-medium p-[8px] ">#</th>
-                <th className="text-[12px] w-[220px] p-[8px] border-r font-medium whitespace-nowrap">Task Name</th>
-                <th className="text-[12px] font-medium p-[8px] w-[120px] border-r whitespace-nowrap	">Start Date</th>
-                <th className="text-[12px] font-medium p-[8px] w-[120px] border-r whitespace-nowrap	">Due Date</th>
-                <th className="text-[12px] font-medium p-[8px] w-[120px] border-r whitespace-nowrap	">End Date</th>
-                <th className="text-[12px] font-medium p-[8px] w-[100px] border-r whitespace-nowrap	">Assigned to</th>
-                <th className="text-[12px] font-medium p-[8px] w-[80px] border-r whitespace-nowrap	">Tags</th>
-                <th className="text-[12px] font-medium p-[8px] w-[100px] border-r whitespace-nowrap	">Priority</th>
-                <th className="text-[12px] font-medium p-[8px] w-[100px] border-r whitespace-nowrap	">Actions</th>
-              </tr>
-            </thead>
-          </table>
-        </div>,
-      content: (
-        <table className="w-full " >
-          <tbody>
-            {
-              fetchTaskData?.map((s, index) => {
-                return <tr className="rounded-lg border-b border-[#e5e7eb]">
-
-                  <td className="text-[12px] font-medium p-[8px] w-[100px] text-left  whitespace-nowrap"><Link className="textcomplete">N/A</Link></td>
-                  <td className="text-[12px]  w-[60px]  font-medium p-[8px] text-left ">{index + 1}</td>
-                  <td className="text-[12px] w-[220px] p-[8px]  text-left font-medium whitespace-nowrap"><Link to="/taskview" className="textcomplete">{s?.taskName}</Link></td>
-                  <td className="text-[12px] font-medium p-[8px] text-left w-[120px]  whitespace-nowrap	">{s?.startDate}</td>
-                  <td className="text-[12px] font-medium p-[8px] text-left w-[120px]  whitespace-nowrap	">{s?.endDate}</td>
-                  <td className="text-[12px] font-medium p-[8px] text-left w-[120px]  whitespace-nowrap	">13-08-2024</td>
-                  <td className="text-[12px] font-medium p-[8px] w-[100px] text-left  whitespace-nowrap	">N/A</td>
-                  <td className="text-[12px] font-medium p-[8px] w-[80px] text-left whitespace-nowrap	">N/A</td>
-                  <td className="text-[12px] font-medium p-[8px] w-[100px] text-left whitespace-nowrap	"><Link className="highred">N/A</Link></td>
-                  <td className="flex gap-[10px]">
-                    <button onClick={() => {
-                      setSelectedTaskData(s);
-                      openModal2(); // Call the function here
-                    }}><BorderColorIcon /></button>
-                    <button className="text-red-600"><DeleteOutlineIcon /></button>
-
-                  </td>
-
-                </tr>
-              })
-            }
-
-          </tbody>
-        </table>
-      )
-    },
-  ];
 
 
   const [updateTaskName, setUpdateTaskName] = useState();
@@ -466,7 +417,7 @@ const Task = () => {
       </div>
 
 
-      <div className="bg-white border border-[#e5e7eb] shadow-cs rounded-lg p-[14px] ">
+      <div className="bg-white border border-[#e5e7eb] shadow-cs rounded-lg p-[20px] ">
 
         <h2 className="font-medium mb-[10px] flex gap-[6px] items-center"> <LibraryBooksIcon />Task</h2>
         <div className='flex mb-4 justify-between p-3 flex-col gap-2 pl-[0] sm:flex-row sm:gap-0'>
@@ -550,9 +501,10 @@ const Task = () => {
             <thead className=" cursor-pointer border border-gray-300 shadow-md " onClick={toggleAccordion}
             >
               <tr>
-                <th className="border-r p-2 flex justify-center text-xs font-medium whitespace-nowrap text-center">
+                <th className="border-r p-2   flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
                   <IoMdArrowDropright className={`text-[20px] transition-transform duration-200 ${isOpen ? "rotate-90 text-[black]" : "rotate-0"}`}
                   />
+                  <button className="p-[6px] rounded-lg bg-[orange]  mr-[7px] text-[white] ">To Do</button><span className="six-north">6</span>
 
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
@@ -562,28 +514,36 @@ const Task = () => {
                   Name
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Company
+                  Status
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Contact
+                  Start Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Primary Email
+                  End Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Phone
+                  Due Date
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Active
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Groups
+                Select Project
                 </th>
                 <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
-                  Date Created
+                  Select Department
                 </th>
                 <th className="p-2 text-xs font-medium text-center">
-                  Action
+                  Priority
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                 Assignee
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                  Description
+                </th>
+                <th className="p-2 text-xs font-medium text-center">
+                  Tag
                 </th>
               </tr>
             </thead>
@@ -592,44 +552,44 @@ const Task = () => {
 
             {isOpen && (
               <tbody className={`transition-body ${isOpen ? "open" : ""}`}  >
-                {/* {fetchTaskData?.map((s, index) => (
+                {fetchTaskData?.map((s, index) => (
                   <tr key={index} className="rounded-lg border-b border-[#e5e7eb]">
-                    <td className="text-[12px] font-medium p-2 min-w-[100px] text-left whitespace-nowrap">
+                    <td className="text-[12px] border-r border-[#dbdbdb] font-medium p-2 min-w-[100px] text-left whitespace-nowrap">
                       <Link className="textcomplete">N/A</Link>
                     </td>
-                    <td className="text-[12px] font-medium p-2 min-w-[60px] text-left">{index + 1}</td>
-                    <td className="text-[12px] font-medium p-2 min-w-[150px] text-left whitespace-nowrap">
+                    <td className="text-[12px]  border-r border-[#dbdbdb] font-medium p-2 min-w-[60px] text-left">{index + 1}</td>
+                    <td className="text-[12px]  border-r border-[#dbdbdb] font-medium p-2 min-w-[150px] text-left whitespace-nowrap">
                       <Link to="/taskview" className="textcomplete">{s.taskName}</Link>
                     </td>
-                    <td className="text-[12px] font-medium p-2 min-w-[120px] text-left whitespace-nowrap">
+                    <td className="text-[12px]  border-r border-[#dbdbdb] font-medium p-2 min-w-[120px] text-left whitespace-nowrap">
                       {s.startDate}
                     </td>
-                    <td className="text-[12px] font-medium p-2 min-w-[120px] text-left whitespace-nowrap">
+                    <td className="text-[12px]  border-r border-[#dbdbdb] font-medium p-2 min-w-[120px] text-left whitespace-nowrap">
                       {s.endDate}
                     </td>
-                    <td className="text-[12px] font-medium p-2 min-w-[120px] text-left whitespace-nowrap">
+                    <td className="text-[12px]  border-r border-[#dbdbdb] font-medium p-2 min-w-[120px] text-left whitespace-nowrap">
                       13-08-2024
                     </td>
-                    <td className="text-[12px] font-medium p-2 min-w-[100px] text-left whitespace-nowrap">
-                      <button className="bg-[#c4bfbf] text-white rounded-lg p-[6px]">N/A</button>
+                    <td className="text-[12px]  border-r border-[#dbdbdb] font-medium p-2 min-w-[100px] text-left whitespace-nowrap">
+                      <button className="bg-[#c4bfbf]  border-r border-[#dbdbdb] text-white rounded-lg p-[6px]">N/A</button>
                     </td>
-                    <td className="text-[12px] font-medium p-2 min-w-[80px] text-left">N/A</td>
-                    <td className="text-[12px] font-medium p-2 min-w-[100px] text-left whitespace-nowrap">
+                    <td className="text-[12px] font-medium  border-r border-[#dbdbdb] p-2 min-w-[80px] text-left">N/A</td>
+                    <td className="text-[12px] font-medium  border-r border-[#dbdbdb] p-2 min-w-[100px] text-left whitespace-nowrap">
                       <Link className="highred">
                         N/A
                       </Link>
                     </td>
-                    <td className="text-[12px] font-medium p-2 min-w-[100px] text-left whitespace-nowrap">
+                    <td className="text-[12px] font-medium  border-r border-[#dbdbdb] p-2 min-w-[100px] text-left whitespace-nowrap">
                       <div className="flexjustify-center">
                         <button onClick={() => {
                           setSelectedTaskData(s);
                           openModal2(); // Call the function here
                         }}><BorderColorIcon /></button>
-                        <button className="text-red-600"><DeleteOutlineIcon /></button>
+                     
                       </div>
                     </td>
                   </tr>
-                ))} */}
+                ))} 
                 {/* <tr>
                   <td>Hello</td>
                   <td>Hello</td>
@@ -655,7 +615,7 @@ const Task = () => {
 
 
         </div>
-        <div className='flex justify-between p-3 pt-5 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
+        <div className='flex justify-between p-[10px] pb-[0] w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
             <p className=' text-[#a5a1a1] text-[14px]'>Showing 1 to {rowsToShow} of {departments.length} entries</p>
             <div className='pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md'>
               <Link to="#" className='text-[12px]  pt-2 pb-[8px]'>Previous</Link>

@@ -997,7 +997,7 @@ const AttendanceTab = () => {
                     {staffDetail?.map((item) => {
                       return (
                         <tr className="border">
-                          <td>
+                          <td className="border-r border-[#dbdbdb]">
                             <input
                               onChange={(e) =>
                                 setSelectedId([
@@ -1009,8 +1009,8 @@ const AttendanceTab = () => {
                               className="border border-1 rounded-md "
                             />
                           </td>
-                          <td>{item?.name}</td>
-                          <td>{item?.staffDetails?.job_title}</td>
+                          <td className="border-r border-[#dbdbdb]" >{item?.name}</td>
+                          <td className="border-r border-[#dbdbdb]">{item?.staffDetails?.job_title}</td>
                           {/* <td>Demo</td> */}
                         </tr>
                       );
@@ -1081,7 +1081,7 @@ const AttendanceTab = () => {
                   <tbody className="">
                     {isLoading && staffDetail.length === 0 ? (
                       <tr className="h-[100px]">
-                        <td
+                        <td 
                           colSpan="9"
                           className="text-center text-gray-600 text-xl font-semibold py-4"
                         >
@@ -1094,7 +1094,7 @@ const AttendanceTab = () => {
                           <>
                             {" "}
                             <tr className="border">
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap" >
                                 <input
                                   onChange={(e) =>
                                     setSelectedId([
@@ -1106,27 +1106,27 @@ const AttendanceTab = () => {
                                   className="border border-1 rounded-md "
                                 />
                               </td>
-                              <td>{item?.name}</td>
-                              <td>{item?.staffDetails?.job_title}</td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">{item?.name}</td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">{item?.staffDetails?.job_title}</td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {item?.staffDetails?.AttendenceMode
                                   ?.allow_punch_in_for_mobile
                                   ? "Active"
                                   : "InActive"}
                               </td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {item?.staffDetails?.AttendenceMode
                                   ?.selfie_attendance
                                   ? "Active"
                                   : "InActive"}
                               </td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {item?.staffDetails?.AttendenceMode
                                   ?.qr_attendance
                                   ? "Active"
                                   : "InActive"}
                               </td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {
                                   item?.staffDetails?.AttendenceMode
                                     ?.mark_attendance
@@ -1227,7 +1227,7 @@ const AttendanceTab = () => {
                           <>
                             {" "}
                             <tr className="border">
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 <input
                                   onChange={(e) =>
                                     setSelectedId([
@@ -1239,29 +1239,29 @@ const AttendanceTab = () => {
                                   className="border border-1 rounded-md "
                                 />
                               </td>
-                              <td>{item?.name}</td>
-                              <td>{item?.staffDetails?.job_title}</td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">{item?.name}</td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">{item?.staffDetails?.job_title}</td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {item?.staffDetails?.attendanceAutomationRule
                                   ?.auto_absent
                                   ? "Active"
                                   : "InActive"}
                               </td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {item?.staffDetails?.attendanceAutomationRule
                                   ?.present_on_punch
                                   ? "Active"
                                   : "InActive"}
                               </td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {item?.staffDetails?.attendanceAutomationRule
                                   ?.auto_half_day ?? "N/A"}
                               </td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {item?.staffDetails?.attendanceAutomationRule
                                   ?.manadatory_half_day ?? "N/A"}
                               </td>
-                              <td>
+                              <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                                 {item?.staffDetails?.attendanceAutomationRule
                                   ?.manadatory_full_day ?? "N/A"}
                               </td>

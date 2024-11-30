@@ -191,7 +191,7 @@ const Early_Leaving_Policy = () => {
               {
 
                 isLoading && staffDetail.length === 0 ? (<tr className="h-[100px]">
-                  <td colSpan="9" className="text-center text-gray-600 text-xl font-semibold py-4">
+                  <td colSpan="9" className="text-center text-gray-600  text-xl font-semibold py-4">
                     <ClipLoader color="#4A90E2" size={50} />
                   </td>
                 </tr>
@@ -201,15 +201,15 @@ const Early_Leaving_Policy = () => {
                   staffDetail?.map((items) => {
                     const overTime = items?.staffDetails?.EarlyLeavePolicy[0]
                     return <tr className="border">
-                      <td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                         <input type="checkbox" className="border border-1 rounded-md " />
                       </td>
-                      <td>{items.name}</td>
-                      <td>{items?.staffDetails?.job_title}</td>
-                      <td>{overTime?.waiveOffDays ?? "N/A"}</td>
-                      <td>{overTime?.gracePeriodMins ?? "N/A"}</td>
-                      <td>{overTime?.fineAmountMins ?? "N/A"}</td>
-                      <td>{overTime?.fineType ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items.name}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items?.staffDetails?.job_title}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.waiveOffDays ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.gracePeriodMins ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.fineAmountMins ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.fineType ?? "N/A"}</td>
 
                     </tr>
                   })

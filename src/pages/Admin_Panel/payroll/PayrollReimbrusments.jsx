@@ -91,7 +91,7 @@ const PayrollReimbrusments = () => {
         {
             toggleDrop11 &&
             <div className=''>
-                <Link to="#" className='text-[#1890ff] font-normal'>Reset</Link>
+                <Link to="#" className='text-[#27004a] font-normal'>Reset</Link>
             </div>
         }
 
@@ -104,7 +104,7 @@ const PayrollReimbrusments = () => {
                 <SearchIcon className='absolute right-[10px] top-[10px] text-gray-500' />
             </div>
 
-            <div className='mr-2'>
+            <div className='mr-2 flex items-center gap-[5px]'>
                 <input type="checkbox" onClick={handledrop11} id="breakdown" name="breakdown" value="breakdown" />
                 <label for="breakdown " > Show Incentive Staff</label>
             </div>

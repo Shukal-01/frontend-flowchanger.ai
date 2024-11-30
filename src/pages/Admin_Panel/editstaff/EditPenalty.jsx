@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import CloseIcon from '@mui/icons-material/Close';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useGlobalContext } from '../../../Context/GlobalContext';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 
 
 const EditPenalty = () => {
@@ -89,7 +91,7 @@ const EditPenalty = () => {
             if (response.status === 201) {
                 const result = await response.json();
                 console.log(result);
-                
+
                 openToast("Late Coming Policy created Successfully", "success");
                 closeModal13();
             }
@@ -123,7 +125,7 @@ const EditPenalty = () => {
             if (response.status === 201) {
                 const result = await response.json();
                 console.log(result);
-                
+
                 openToast("Overtime Policy created Successfully", "success");
                 closeModal14();
             }
@@ -195,8 +197,8 @@ const EditPenalty = () => {
 
     return (
         <>
-        {/* // <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
-            <div className='flex justify-between items-center  w-[100%] p-[20px] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
+            {/* // <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
+            <div className='flex justify-between items-center  w-[100%] p-[20px] pt-[30px]  pr-0  pl-[0] top-0 bg-white'>
 
                 <h3 className='font-medium'>Penalty & Overtime Details
 
@@ -206,11 +208,11 @@ const EditPenalty = () => {
 
 
             <div className='mt-5'>
-                <button className='shadow bg-white w-full mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal12}>Early Leave Policy</button>
-                <button className='shadow bg-white w-full mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal13}>Late Coming Policy</button>
-                <button className='shadow bg-white w-full mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal14}> Overtime Policy</button>
-</div>
-{/* when onclick leave policies
+                <button className='shadow-cs bg-white w-full mb-4 flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal12}>Early Leave Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
+                <button className='shadow-cs bg-white w-full mb-4 flex items-center justify-between  text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal13}>Late Coming Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
+                <button className='shadow-cs bg-white w-full mb-4  flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-md ' onClick={openModal14}> Overtime Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
+            </div>
+            {/* when onclick leave policies
              */}
 
             <Modal
@@ -222,7 +224,7 @@ const EditPenalty = () => {
                 className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b p-3     text-[14px]   rounded-t-lg rounded-r-lg rounded-b-none'>Early Leaving Policy</h2>
-                <button onClick={closeModal12} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#511992] rounded-full'><CloseIcon className='text-white' /></button>
+                <button onClick={closeModal12} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white bg-[#27004a] rounded-2xl' /></button>
                 <div className='pb-2 pl-3 pr-3 pt-[20px]'>
 
                     <label className='text-[14px]'>Fine Type</label>
@@ -273,40 +275,40 @@ const EditPenalty = () => {
                 className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b p-3     text-[14px]   rounded-t-lg rounded-r-lg rounded-b-none'>Late Coming Policy</h2>
-                <button onClick={closeModal13} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#511992] rounded-full'><CloseIcon className='text-white' /></button>
-          
-               <form action="" onSubmit = {submitLateComingPolicy}>
-                <div className='pb-2 pl-3 pr-3 pt-[20px]'>
+                <button onClick={closeModal13} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white' /></button>
 
-                    <label className='text-[14px]'>Fine Type</label>
-                    <div className=' flex justify-between gap-4'>
-                        <div className=' border border-1 cursor-pointer rounded-md  flex items-center gap-[10px] p-[8px] pl-[15px] mt-1 mb-[10px] w-[48%]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
-                            <input type="radio" id="daily" name="fav_language" checked={lateFineType === "DAILY"} value="daily"  onChange={(e) => setLateFineType("DAILY")} required/>
-                            <label for="daily">Daily</label><br />
+                <form action="" onSubmit={submitLateComingPolicy}>
+                    <div className='pb-2 pl-3 pr-3 pt-[20px]'>
+
+                        <label className='text-[14px]'>Fine Type</label>
+                        <div className=' flex justify-between gap-4'>
+                            <div className=' border border-1 cursor-pointer rounded-md  flex items-center gap-[10px] p-[8px] pl-[15px] mt-1 mb-[10px] w-[48%]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
+                                <input type="radio" id="daily" name="fav_language" checked={lateFineType === "DAILY"} value="daily" onChange={(e) => setLateFineType("DAILY")} required />
+                                <label for="daily">Daily</label><br />
+                            </div>
+                            <div className=' border border-1 cursor-pointer rounded-md  flex items-center gap-[10px] p-[8px] pl-[15px] mt-1 mb-[10px] w-[48%]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
+                                <input type="radio" id="hourly" name="fav_language" checked={lateFineType === "HOURLY"} value="hourly" onChange={(e) => setLateFineType("HOURLY")} required />
+                                <label for="hourly">Hourly</label><br />
+                            </div>
                         </div>
-                        <div className=' border border-1 cursor-pointer rounded-md  flex items-center gap-[10px] p-[8px] pl-[15px] mt-1 mb-[10px] w-[48%]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
-                            <input type="radio" id="hourly" name="fav_language" checked={lateFineType === "HOURLY"} value="hourly" onChange={(e) => setLateFineType("HOURLY")} required/>
-                            <label for="hourly">Hourly</label><br />
+
+                        <label className='text-[14px]'>Grace Period (mins)
+                        </label>
+                        <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateGracePeriodMins} onChange={(e) => setLateGracePeriodMins(e.target.value)} required />
+                        <label className='text-[14px]'>Fine Amount (mins)
+                        </label>
+                        <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateFineAmountMins} onChange={(e) => setLateFineAmountMins(e.target.value)} required />
+
+                        <label className='text-[14px]'>Waive Off Days
+                        </label>
+                        <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateWaiveOffDays} onChange={(e) => setLateWaiveOffDays(e.target.value)} required />
+
+                        <div className='text-center pt-4 pb-4'>
+                            <button className='second-btn'>Save Late Coming Policy</button>
                         </div>
+
+
                     </div>
-
-                    <label className='text-[14px]'>Grace Period (mins)
-                    </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateGracePeriodMins} onChange={(e) => setLateGracePeriodMins(e.target.value)} required/>
-                    <label className='text-[14px]'>Fine Amount (mins)
-                    </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateFineAmountMins} onChange={(e) => setLateFineAmountMins(e.target.value)} required/>
-
-                    <label className='text-[14px]'>Waive Off Days
-                    </label>
-                    <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateWaiveOffDays} onChange={(e) => setLateWaiveOffDays(e.target.value)} required/>
-
-                    <div className='text-center pt-4 pb-4'>
-                        <button className='second-btn'>Save Late Coming Policy</button>
-                    </div>
-
-
-                </div>
                 </form>
             </Modal>
             {/* when onclick leave policies
@@ -324,7 +326,7 @@ const EditPenalty = () => {
                 className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b p-3     text-[14px]   rounded-t-lg rounded-r-lg rounded-b-none'>Overtime Policy</h2>
-                <button onClick={closeModal14} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#511992] rounded-full'><CloseIcon className='text-white' /></button>
+                <button onClick={closeModal14} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white' /></button>
                 <div className='pb-2 pl-3 pr-3 pt-[20px]'>
 
 
@@ -358,7 +360,7 @@ const EditPenalty = () => {
 
 
 
-        {/* </div> */}
+            {/* </div> */}
         </>
     )
 }

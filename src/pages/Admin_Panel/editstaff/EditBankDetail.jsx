@@ -148,7 +148,7 @@ const PersonalDetail = () => {
                 <button className='second-btn'>Update Details</button>
             </div>
 
-            <h2 className='bg-[#f6f9fa] pt-[10px] pb-[10px] pl-[14px] rounded-md font-normal shadow'>Bank Details</h2>
+            <h2 className='bg-[#fff] pt-[10px] pb-[10px] pl-[14px] rounded-lg font-normal shadow-cs'>Bank Details</h2>
             <form className=' w-[100%] xl:w-[100%] m-auto mt-[30px] shadow-md  xl:p-[24px] p-[12px] border rounded-md  border-1' onSubmit={handleEditClick}>
                 <div className='flex w-[100%] gap-[10px] justify-between  xl:mb-4 mb-[6px] xl:flex-row flex-col'>
                     <div className='w-[100%] xl:w-[48%] 2xl:w-[48%]  '>

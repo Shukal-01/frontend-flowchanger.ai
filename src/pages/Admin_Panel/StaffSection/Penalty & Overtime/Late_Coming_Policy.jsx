@@ -197,15 +197,15 @@ const Late_Coming_Policy = () => {
                   staffDetail?.map((items) => {
                     const overTime = items?.staffDetails?.LateComingPolicy[0]
                     return <tr className="border">
-                      <td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                         <input type="checkbox" className="border border-1 rounded-md " />
                       </td>
-                      <td>{items.name}</td>
-                      <td>{items?.staffDetails?.job_title}</td>
-                      <td>{overTime?.waiveOffDays ?? "N/A"}</td>
-                      <td>{overTime?.gracePeriodMins ?? "N/A"}</td>
-                      <td>{overTime?.fineAmountMins ?? "N/A"}</td>
-                      <td>{overTime?.fineType ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items.name}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items?.staffDetails?.job_title}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.waiveOffDays ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.gracePeriodMins ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.fineAmountMins ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.fineType ?? "N/A"}</td>
 
                     </tr>
                   })

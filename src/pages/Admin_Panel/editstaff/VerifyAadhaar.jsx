@@ -105,15 +105,15 @@ const VerifyAadhaar = () => {
     };
 
     return (
-        <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    flex flex-col '>
-            <div className='flex justify-between items-center  w-[100%] p-[20px]  pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
+        <div className='w-full  relative xl:pt-[30px]    flex flex-col '>
+            <div className='flex justify-between items-center  w-[100%] pb-[10px] pr-0 xl:pr-[0px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>Aadhaar Verification</h3>
                 <button className='second-btn' onClick={submitAadhar}>
                     Update Aadhaar
                 </button>
             </div>
 
-            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#f0f8fd] rounded-md ' >
+            <div className='flex justify-between items-center mb-3 p-4 border border-1 shadow-cs bg-[#fff] rounded-lg ' >
                 <h4 className='font-light'>Aadhaar</h4>
                 <p className='font-light'>{aadhaar?.number}</p>
                 <button className='second-btn' onClick={openModal2}  >
@@ -123,14 +123,14 @@ const VerifyAadhaar = () => {
             </div>
 
 
-            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#f0f8fd] rounded-md ' >
-                <h4 className='font-light'>Verification Status
+            <div className='flex justify-between items-center mb-3 p-4 border border-1 shadow-cs bg-[#fff] rounded-lg ' >
+                <h4 className='font-light'>Verification Status 
                 </h4>
                 <p className='font-light'>{aadhaar?.status}</p>
             </div>
 
 
-            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#f0f8fd] rounded-md ' >
+            <div className='flex justify-between items-center mb-3 p-4 border border-1 shadow-cs bg-[#fff] rounded-lg ' >
                 <h4 className='font-light'>Proofs</h4>
                 <input
                     type="file"
@@ -157,7 +157,7 @@ const VerifyAadhaar = () => {
 
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b-1 p-3 text-[13px] xl:text-[15px] '>Add Aadhaar</h2>
-                <button onClick={closeModal2} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#511992] rounded-full'><CloseIcon className='text-white' /></button>
+                <button onClick={closeModal2} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white' /></button>
                 <div className=''>
                     <div className='modal-field field-modal p-[10px] border border-t'>
                         <label className='text-[13px] xl:text-[14px] font-medium'>Aadhaar

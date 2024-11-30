@@ -20,6 +20,8 @@ import DeleteGroup from "./Chats/DeleteGroup";
 import AddMembers from "./Chats/AddMembersModal";
 import { MdGroups2 } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
+import GroupChat from "./GroupChat";
+
 
 const ClientChatInterFace = () => {
   const {
@@ -61,14 +63,14 @@ const ClientChatInterFace = () => {
  
 
   return (
-    <div class="  h-[calc(100vh-6rem)] ">
+    <div class=" overflow-hidden">
       {/* <!-- Container for Chat Section --> */}
-      <div class="flex   shadow-lg rounded-lg  h-full parent-container bg-white">
+      <div class="flex   shadow-lg rounded-lg  h-[calc(100vh-50px)] parent-container bg-white">
         {/* <!-- Left Section: Members List --> */}
         <div
       className={`w-full ${
         showChatSection ? "hidden sm:block" : "block"
-      } md:w-1/3 flex flex-col border-r-2 h-full bg-white`}
+      } md:w-1/3 flex flex-col border-r-2 h-full bg-white overflow-hidden `}
         >
           <div className="flex flex-row justify-start items-center space-x-3 border-b  pb-5 mb-2">
             <div className="border rounded-full border-green-500">
@@ -100,7 +102,7 @@ const ClientChatInterFace = () => {
           </div>
           </div>
           {/* <!-- Member List --> */}
-          <div className="flex flex-col justify-between h-full flex-grow overflow-y-auto px-3 mb-4">
+          <div className="flex flex-col  overflow-y-auto  flex-grow  px-3 mb-4">
             <div class="mb-4  xs:w-[100%] md:w-[80%] flex flex-row justify-start space-x-2  ">
               <div
                 className="p-3 flex justify-start text-gray-400 items-center hover:text-black"
@@ -119,93 +121,97 @@ const ClientChatInterFace = () => {
                 Groups
               </div>
             </div>
-            <div className="w-full h-full flex-grow flex flex-col justify-between space-y-2">
+            
               {chatTab === "admins" ? (
+                <>
                 <Admin handleSelectedUser={handleSelectedUser} />
+                </>
               ) : (
                 <Groups />
               )}
-            </div>
+            
 
             {/* member column in ChatSection */}
           </div>
         </div>
         {/* <!-- Right Section: Chat Window --> */}
 
-        <div className={`md:w-2/3 h-full md:flex flex-col flex-grow ${
-        showChatSection ? "block sm:block" : "hidden sm:block"
-      } chat-section`}>
-          {!showChatSection && (
-            <div className="flex justify-center items-center h-full">
-              <p className="text-lg font-semibold text-gray-400">
-                Select a user to start chatting
-              </p>
+        <div
+  className={`md:w-2/3  md:flex flex-col flex-grow ${
+    showChatSection ? "block sm:block" : "hidden sm:block"
+  } chat-section`}
+>
+  {chatTab === "admins" ? (
+    !showChatSection ? (
+      <div className="flex justify-center items-center h-full">
+        <p className="text-lg font-semibold text-gray-400">
+          Select a user to start chatting
+        </p>
+      </div>
+    ) : (
+      <div className="h-full flex flex-col ">
+        {/* Chat Header */}
+        <div className="flex items-center justify-between mt-5 md:mt-0 border-b pb-[6px]">
+          <div className="flex flex-row justify-start items-center w-[70%] md:w-[50%] space-x-3 relative rounded-[100%]">
+            <div
+              className="float-left cursor-pointer"
+              onClick={() => setShowChatSection(false)}
+            >
+              <GoArrowLeft className="size-5" />
             </div>
-          )}
-          {showChatSection && (
-            <div className="h-full flex flex-col">
-              <div className="flex items-center justify-between mt-5 md:mt-0 mb-4 border-b pb-[6px]">
-                <div className="flex flex-row justify-start items-center w-[70%] md:w-[50%] space-x-3 relative rounded-[100%]">
-                  <div
-                    className="float-left"
-                    onClick={() => {
-                      setShowChatSection(false);
-                    }}
-                  >
-                    <GoArrowLeft className="size-5" />
-                  </div>
-                  <div className="flex justify-center items-center rounded-full  py-2 px-4 border border-gray-300 shadow-lg bg-purple-400">
-                    {/* <img
-                    src={staff.imgSrc}
-                    className="w-10 h-10"
-                    alt={staff.name}
-                  /> */}
-                    {selectedUser && selectedUser.name
-                      ? selectedUser.name[0]
-                      : "N/A"}
-                  </div>
-                  <div className="flex flex-col">
-                    <h2 className="text-md font-normal mt-2">
-                      {selectedUser.name ?? "Not available"}
-                    </h2>
-                    <p className="text-sm text-gray-300">
-                      last seen 3 hours ago
-                    </p>
-                  </div>
-                </div>
-                <div className="flex space-x-2">
-                  <HiOutlineSpeakerWave className=" text-purple-600 h-[30px] w-[30px]" />
-                  <IoCall className="  text-purple-600 h-[30px] w-[25px]" />
-                  <IoSettingsOutline className="  text-purple-600 h-[33px] w-[25px]" />
-                </div>
-              </div>
-              <ChatComponent messages={messages} />
-              <div className="mt-4 flex items-center  rounded-xl">
-                <div class="relative w-[96%]">
-                  <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Send Message..."
-                    class="w-full border rounded-lg p-2 pr-10"
-                  />
-                  <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <IoSettingsOutline className="text-gray-500 text-2xl" />
-                  </div>
-                </div>
-                <button
-                  onClick={sendMessage}
-                  disabled={isSendingMessage}
-                  className={`bg-purple-500 text-white flex justify-center items-center p-2 py-3 rounded-xl w-[4%] ${
-                    isSendingMessage && "opacity-50"
-                  }`}
-                >
-                  <BsSendFill />
-                </button>
-              </div>
+            <div className="flex justify-center items-center rounded-full py-2 px-4 border border-gray-300 shadow-lg bg-purple-400">
+              {selectedUser && selectedUser.name
+                ? selectedUser.name[0]
+                : "N/A"}
             </div>
-          )}
+            <div className="flex flex-col">
+              <h2 className="text-md font-normal mt-2">
+                {selectedUser.name ?? "Not available"}
+              </h2>
+              <p className="text-sm text-gray-300">last seen 3 hours ago</p>
+            </div>
+          </div>
+          <div className="flex space-x-2">
+            <HiOutlineSpeakerWave className="text-purple-600 h-[30px] w-[30px]" />
+            <IoCall className="text-purple-600 h-[30px] w-[25px]" />
+            
+          </div>
         </div>
+        {/* Chat Component */}
+        <div className="flex flex-col justify-between h-full">
+        <ChatComponent messages={messages} />
+        {/* Message Input */}
+        <div className="mt-4 flex items-center rounded-xl">
+          <div className="relative w-[96%]">
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Send Message..."
+              className="w-full border rounded-lg p-2 pr-10"
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+              <IoSettingsOutline className="text-gray-500 text-2xl" />
+            </div>
+          </div>
+          <button
+            onClick={sendMessage}
+            disabled={isSendingMessage}
+            className={`bg-purple-500 text-white flex justify-center items-center p-2 py-3 rounded-xl w-[4%] ${
+              isSendingMessage && "opacity-50"
+            }`}
+          >
+            <BsSendFill />
+          </button>
+        </div>
+        </div>
+      </div>
+    )
+  ) : (
+    <GroupChat />
+  )}
+</div>
+
       </div>
       {showAnnouncementsModal && (
         <ChatAnnouncementsModal 

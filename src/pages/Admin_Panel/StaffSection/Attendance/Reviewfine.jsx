@@ -41,10 +41,14 @@ const Reviewfine = () => {
     };
 
     //salary2 dropdown
+    const today = new Date();
+    const defaultDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+    // Initialize state with today's year, month, and date
     const [workTimeDate, setWorkTimeDate] = useState({
-        year: "",
-        month: "",
-        date: "",
+        year: today.getFullYear(),
+        month: today.getMonth() + 1,
+        date: today.getDate(),
     });
 
     const handleDateChange = (e) => {
@@ -55,6 +59,7 @@ const Reviewfine = () => {
             date: selectedDate.getDate(),
         });
     };
+
     const [fineDetail, setFineDetail] = useState([])
     console.log(fineDetail)
 
@@ -105,7 +110,7 @@ const Reviewfine = () => {
 
             </div>
             <div className='p-[8px] shadow-md rounded-md flex items-center justify-between mb-[20px]'>
-                <input className='text-[14px]' type="date" onChange={handleDateChange} />
+                <input className='text-[14px]' type="date"     defaultValue={defaultDate} onChange={handleDateChange} />
                 <p className='bg-[#edd0ca] p-[5px] text-[12px] border border-b border-[#e07964] text-[black] rounded-md'> <WarningIcon className='warning-icon text-[14px] text-[red] ' /> Approval pending for other  <Link className='text-[blue] ml-[10px]' to="/">View</Link> </p>
             </div>
             <div className='flex items-center gap-[10px] mb-[20px] '>
@@ -137,7 +142,7 @@ const Reviewfine = () => {
             </div>
 
             {
-                workTimeDate.year ==""  &&
+                workTimeDate.year == "" &&
                 <div className="text-center">
                     <h2 className='text-[#ff0000] font-medium py-9 text-[20px]'>Please Select Date</h2>
                 </div>
@@ -212,10 +217,10 @@ const Reviewfine = () => {
                 })
             }
 
-                
+
 
             <div>
-                    </div>
+            </div>
         </div>
 
     );

@@ -2,16 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteIcon from "@mui/icons-material/Delete";
 import CachedIcon from '@mui/icons-material/Cached';
 import SearchIcon from '@mui/icons-material/Search';
 import { useGlobalContext } from '../../../Context/GlobalContext';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
+import Select from "react-select";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Modal } from 'react-responsive-modal';
+import ConfirmationModal from '../../../components/Staff/Modals/ConfirmationModal';
 
 
 const Main = () => {
+  const [open10, setOpen10] = useState(false);
+
+  const onOpenModal10 = () => setOpen10(true);
+  const onCloseModal10 = () => setOpen10(false);
 
   const { baseUrl, setRoleName, setRoleId, setEditPermissions, openToast } = useGlobalContext();
   const [roles, setRoles] = useState([])
@@ -19,6 +26,12 @@ const Main = () => {
   const [rowsToShow, setRowsToShow] = useState(25);
   const [searchRoleName, setSearchRoleName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [allStaff, setAllStaff] = useState();
+
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
 
   const handleSelectChange = (event) => {
     setRowsToShow(Number(event.target.value));
@@ -130,6 +143,39 @@ const Main = () => {
     }
   };
 
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: '#F4F5F9',
+      borderColor: '#E2E8F0',
+      minHeight: '38px',
+    }),
+    multiValue: (provided) => ({
+      ...provided,
+      backgroundColor: '#E2E8F0',
+    }),
+    multiValueLabel: (provided) => ({
+      ...provided,
+      fontSize: '14px',
+    }),
+    multiValueRemove: (provided) => ({
+      ...provided,
+      color: '#4A5568',
+      ':hover': {
+        backgroundColor: '#CBD5E0',
+        color: '#2D3748',
+      },
+    }),
+  };
+  const [taskStatus, setTaskStatus] = useState({
+    name: "",
+    color: "#000000",
+    order: "",
+    isHiddenFor: [],
+    canBeChangedTo: [],
+  })
+
   // Debounced search effect
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -145,13 +191,13 @@ const Main = () => {
 
   return (
     <div className=' pl-[10px] w-[100%] pr-2 mb-3 pb-4 pt-[10px]'>
-      <Link to="/addrole" className='bg-[#27004a]  p-2 pr-3 rounded-lg text-white '> <AddIcon /> New Role</Link>
+      <Link to="/addrole" className='allcrm-btn'> <AddIcon className='addicon-all' /> New Role</Link>
 
-      <div className='table-section mt-5 bg-white shadow-cs p-[14px]  rounded-sm '>
+      <div className='table-section mt-5 bg-white shadow-cs p-[20px]  rounded-lg '>
 
         <div className='flex mb-4 justify-between  flex-col gap-2  sm:flex-row sm:gap-0'>
           <div className='left-side '>
-            <select onChange={handleSelectChange} className=' border border-[#e5e7eb] p-[8px]  shadow-sm mr-2 rounded-md pl-0 pr-3 focus:outline-none'>
+            <select onChange={handleSelectChange} className=' border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm mr-2 rounded-md  pr-3 focus:outline-none'>
               <option value="25">25</option>
               <option value="50">50</option>
               <option value="100">100</option>
@@ -159,7 +205,7 @@ const Main = () => {
 
             </select>
 
-            <select onChange={(e) => setExportFormat(e.target.value)} className=' border border-[#e5e7eb]  p-[8px] shadow-sm rounded-md pl-0 pr-3 focus:outline-none'>
+            <select onChange={(e) => setExportFormat(e.target.value)} className=' border border-[#e5e7eb]  p-[7px] shadow-sm rounded-md text-[14px] pr-3 focus:outline-none'>
               <option value="CSV">CSV</option>
               <option value="PDF">PDF</option>
               <option value="Print">Print</option>
@@ -167,11 +213,50 @@ const Main = () => {
 
             <button
               onClick={handleExport}
-              className='ml-2 bg-[#27004a] text-white p-2 rounded-md cursor-pointer'
+              className='ml-2 bg-[#27004a] text-[14px] text-white p-2 rounded-md cursor-pointer'
             >
               Export File
             </button>
-            <CachedIcon className='border border-[#e5e7eb] shadow-sm ml-2 rounded-md cursor-pointer refresh' />
+            <button className="border border-[#e5e7eb] text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] " onClick={onOpenModal} >Bulk Action  <CachedIcon className="newsidebar-icon" /> </button>
+            <Modal open={open} onClose={onCloseModal} center>
+              <div className="border-b border-[#dbdbdb] pb-[20px]">
+                <h2>Bulk Actions</h2>
+              </div>
+              <div className="flex items-center gap-[8px] mt-[32px] mb-[32px]">
+                <input type="checkbox" />
+                <p className="text-[14px]">Mass Delete</p>
+              </div>
+              <div className="w-[100%]">
+
+
+
+
+
+                <Select
+                  isMulti
+                  name="isHiddenFor"
+                  options={allStaff?.map(({ id, label }) => ({ label: label, value: id }))}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  value={taskStatus.isHiddenFor || []}
+                  onChange={(selectedOptions) =>
+                    setTaskStatus((prev) => ({
+                      ...prev,
+                      isHiddenFor: selectedOptions || [] // ensures an array even if no options are selected
+                    }))
+                  }
+                  styles={customStyles}
+                />
+              </div>
+              <p className="text-[red] text-[14px] mt-[10px]">if you do not select any groups assigned to the selected customers will be removed.</p>
+
+              <div className='pr-[10px] pb-3 flex gap-[10px] justify-end mt-[24px]'>
+                {/* Button to close the modal */}
+
+                <button className='second-btn'>Confirm </button>
+              </div>
+
+            </Modal>
 
 
 
@@ -188,8 +273,8 @@ const Main = () => {
           <table class="table-auto w-[100%] ">
             <thead className='bg-gray-300 shadow-cs'>
               <tr className="role-row"> 
-                <th className=' p-4 text-center font-medium text-[12px]'>Roll Name</th>
-                <th className='text-center p-4 text-sm font-medium text-[12px] shadow-cs'>Options</th>
+                <th className=' p-4 text-center roll-name font-medium text-[12px]'>Roll Name</th>
+                <th className='text-center p-4 text-sm font-medium text-[12px] '>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -205,8 +290,8 @@ const Main = () => {
                 ) : roles.length > 0 ? (
                   roles.slice(0, rowsToShow).map((role, index) => {
                     return (
-                      <tr key={role.id} className="border-b pb-2 border-[#f1f5f9]">
-                        <td className="pt-4 pb-3 pl-3">
+                      <tr key={role.id} className="border-b pb-2 border-[#dbdbdb]">
+                        <td className="pt-4 pb-3 border-r border-[#dbdbdb] pl-3">
                           <Link to="/" className="text-[#27004a] text-[14px]">{role.role_name}</Link>
                           {/* <h6 className="text-[13px] pt-2 text-[#a5a1a1]">Total Users: <span>1</span></h6> */}
                         </td>
@@ -218,7 +303,16 @@ const Main = () => {
                           }}>
                             <BorderColorIcon className="text-[#27004a] font-light cursor-pointer text-[10px]]" />
                           </Link>
-                          <DeleteOutlineIcon className="text-red-500 font-light cursor-pointer text-[10px]]" onClick={() => { deleteRole(role.id) }} />
+                          <button onClick={() =>  {
+
+                        onOpenModal10()
+                      }}>
+                        <DeleteIcon
+                          className="text-red-500 cursor-pointer"
+                        />
+                      </button>
+                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={role.id} callback={deleteRole}/>}
+
                         </td>
                       </tr>
                     )
@@ -236,7 +330,7 @@ const Main = () => {
           </table>
         </div>
 
-        <div className='flex justify-between p-3 pt-5 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
+        <div className='flex justify-between p-[10px] pl-0 pr-0 pb-[0] w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
           <p className=' text-[#a5a1a1] text-[14px]'>Showing 1 to {rowsToShow} of {roles.length} entries </p>
           <div className='pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md'>
             <Link to="#" className='text-[12px]  pt-2 pb-[8px]'>Previous</Link>

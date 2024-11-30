@@ -187,7 +187,7 @@ const PastEmploymentDetail = () => {
                 <h3 className='font-medium'>Past Employment Detail</h3>
             </div>
 
-            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#f0f8fd] rounded-md ' >
+            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#fff] shadow-cs rounded-lg' >
                 <h4 className='font-light'>Past Employment</h4>
                 <p className='font-light'></p>
                 <button className='second-btn' onClick={openModal2}  >
@@ -197,7 +197,7 @@ const PastEmploymentDetail = () => {
             </div>
 
 
-            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#f0f8fd] rounded-md ' >
+            <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#fff] shadow-cs rounded-lg' >
                 <h4 className='font-light'>Verification Status
                 </h4>
                 <p className='font-light'>{pastEmploymentStatus}</p>
@@ -216,7 +216,7 @@ const PastEmploymentDetail = () => {
             >
 
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b-1 p-3 text-[13px] xl:text-[15px] '>Add Past Employment</h2>
-                <button onClick={closeModal2} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#511992] rounded-full'><CloseIcon className='text-white' /></button>
+                <button onClick={closeModal2} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white' /></button>
                 <div className='border-t p-2'>
                     <div className="mb-4">
                         <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">

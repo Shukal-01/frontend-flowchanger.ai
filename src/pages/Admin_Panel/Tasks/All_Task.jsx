@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "../../../Assets/Images/image.png";
-
+import { Add } from "@mui/icons-material";
 
 const All_Task = () => {
   const [tasks, setTasks] = useState([]);
@@ -20,7 +20,7 @@ const All_Task = () => {
 
   // const Accordion = () => {
   //   const [openIndex, setOpenIndex] = useState(null);
-  
+
   //   // Function to handle accordion toggling
   //   const handleToggle = (index) => {
   //     if (openIndex === index) {
@@ -29,8 +29,6 @@ const All_Task = () => {
   //       setOpenIndex(index); // Open the accordion
   //     }
   //   };
-
-  
 
   return (
     <div>
@@ -132,11 +130,11 @@ const All_Task = () => {
             <tbody className="text-[13px]">
               {tasks.map((task, index) => (
                 <tr key={index} className="border-t">
-                  <td className="text-green-600 px-4 py-8">{task.taskStatus}</td>
-                  <td className="px-4 py-2 text-[#2568EC]">{task.taskTag}</td>
-                  <td className="px-4 py-2 text-blue-600">
-                    {task.taskName}
+                  <td className="text-green-600 px-4 py-8">
+                    {task.taskStatus}
                   </td>
+                  <td className="px-4 py-2 text-[#2568EC]">{task.taskTag}</td>
+                  <td className="px-4 py-2 text-blue-600">{task.taskName}</td>
                   <td className="px-4 py-2 text-[#B1B1B1]">{task.startDate}</td>
                   <td className="px-4 py-2 text-[#B1B1B1]">{task.dueDate}</td>
                   <td className="px-4 py-2 text-[#B1B1B1]">{task.endDate}</td>
@@ -154,13 +152,13 @@ const All_Task = () => {
                       tag
                     </span>
                   </td>
-                  <td className="text-red-600 px-4 py-2">{task.taskPriority}</td>
+                  <td className="text-red-600 px-4 py-2">
+                    {task.taskPriority}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-            
-          
         </div>
       </div>
 

@@ -237,6 +237,11 @@
     border-radius: 6px;
     padding: 6px;
 }
+ .css-0{
+    display: flex;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px;
+}
 .six-tasks{
     background: #d7b5e4;
     width: 18px;
@@ -278,8 +283,14 @@
     transition: all 0.3s linear;
     border: 1px solid #27004a;
     padding: 7px;
-    border-radius: 7px;
+    border-radius: 10px;
     font-size: 14px;
+}
+.roll-name{
+    border-right: 1px solid #dbdbbd !important;
+}
+.allarrow-verify{
+    font-size: 18px !important;
 }
 .allcrm-btn:hover{  
     transition: all 0.3s linear;
@@ -324,12 +335,17 @@
     color: white;
     border-radius: 50px;
     padding: 4px 8px;
+    height: 24px;
+}
+.newtab-staff{
+    border-bottom: 2px solid #dbdbdb !important;
 }
 
 .preferences{
     border-bottom: 1px solid #ebf1f5 !important;
     padding: 10px !important;
 }
+
 
 
 .tablehead{
@@ -633,7 +649,22 @@
     .set-workd{
         justify-content: center;
     }
+    .staff-page-res{
+        right: -99px !important;
+
+    }
+    .betwe-cent{
+        gap: 0;
+    }
+    .bulk-csv{
+        margin-bottom: 0;
+    }
+    .selcct-chng{
+        margin-bottom: 12px;
+    }
+
 }
+
 
 
 .transition-body {
@@ -648,3 +679,7 @@
 .all-btns-crm{
     transition: all 0.5s linear !important;
 }  
+
+.custom-border{
+    border: #000 1px solid !important;
+}

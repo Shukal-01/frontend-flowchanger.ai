@@ -114,6 +114,7 @@ const LeaveBalance = () => {
         const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, 'LeaveBalancePolicy.csv');
     };
+    
     const [selectedId, setSelectedId] = useState([]);
     console.log("selec", selectedId)
     const [leaveName, setLeaveName] = useState();
@@ -221,9 +222,9 @@ const LeaveBalance = () => {
 
                                                 staffDetail?.map((items, index) => {
                                                     return <tr className="border">
-                                                        <td><input type='checkbox' className='border border-1 rounded-md ' /></td>
-                                                        <td>{items?.name}</td>
-                                                        <td>{items?.staffDetails?.job_title}</td>
+                                                        <td className='border-r border-[#dbdbdb] whitespace-nowrap' ><input type='checkbox' className='border border-1 rounded-md ' /></td>
+                                                        <td className='border-r border-[#dbdbdb] whitespace-nowrap' >{items?.name}</td>
+                                                        <td className='border-r border-[#dbdbdb] whitespace-nowrap'>{items?.staffDetails?.job_title}</td>
                                                         {
                                                             staffDetail?.map((items, index) => {
                                                                 { console.log(items?.staffDetails?.LeavePolicy) }
@@ -323,7 +324,7 @@ const LeaveBalance = () => {
 
                                                 staffDetail?.map((items, index) => {
                                                     return <tr className="border">
-                                                        <td><input type='checkbox' className='border border-1 rounded-md '
+                                                        <td className='border-r border-[#dbdbdb] '><input type='checkbox' className='border border-1 rounded-md '
                                                             onChange={(e) => setSelectedId([...selectedId, items.staffDetails.id])}
                                                         /></td>
                                                         <td>{items?.name}</td>
@@ -382,7 +383,7 @@ const LeaveBalance = () => {
                 className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b p-3     text-[14px] text-center bg-[#F0F6FE] rounded-t-lg rounded-r-lg rounded-b-none'>Update Leave Balances for all Staff</h2>
-                <button onClick={closeModal10} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#511992] rounded-full'><CloseIcon className='text-white' /></button>
+                <button onClick={closeModal10} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#27004a] rounded-full'><CloseIcon className='text-white' /></button>
                 <div className='pb-2'>
 
 
@@ -429,7 +430,7 @@ const LeaveBalance = () => {
                 className="w-[96%] xl:w-[40%] absolute top-[50%] left-[50%] bottom-auto p-0 bg-[#fff] shadow-md rounded-[10px] translate-x-[-50%] translate-y-[-50%]"
             >
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)} className='border-b p-3     text-[14px]   rounded-t-lg rounded-r-lg rounded-b-none'>Update Leave Policy for all staff</h2>
-                <button onClick={closeModal12} className='absolute right-[5px] top-[3px] font-semibold	  bg-[#511992] rounded-full'><CloseIcon className='text-white' /></button>
+                <button onClick={closeModal12} className='absolute right-[5px] top-[3px] font-semibold	  bg-[##27004a] rounded-full'><CloseIcon className='text-white' /></button>
                 <div className='pb-2'>
 
                     <div className='flex py-[15px] gap-[20px] pl-[20px]'>

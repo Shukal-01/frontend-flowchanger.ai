@@ -54,7 +54,7 @@ const Add_Project = () => {
   })
 
   function handleCloseForm() {
-    navigate("/project_summary")
+    navigate("/projects")
   }
   const [clientData, setClientData] = useState([]);
 
@@ -177,7 +177,7 @@ const Add_Project = () => {
     })
     console.log(result);
     const data =await result.json()
-    if (result.status == 200) {
+    if (result.status == 201) {
      openToast(data.msg||"Add Project Successfully", "success")
     }
     else {
@@ -202,10 +202,10 @@ const Add_Project = () => {
     <div className="max-w-[80%] mx-auto">
       
     <Tabs className="m-5 shadow-cs rounded-lg">
-      <div className="pt-[20px] pl-[20px]">
-    <Link to = "/clients"><FaArrowLeft /></Link>
+      <div className="">
+    {/* <Link to = "/clients"><FaArrowLeft /></Link> */}
     </div>
-      <TabList className="flex p-5 pb-[10px] gap-4 text-[16px] font-medium border-b border-[#B1B1B1] cursor-pointer ">
+      <TabList className="flex p-[14px] gap-4 text-[16px] font-medium border-b border-[#B1B1B1] cursor-pointer ">
         <Tab className="py-2 hover:border-b-1 hover:border-[#27004a] text-md font-medium">
           Project
         </Tab>
@@ -421,9 +421,9 @@ const Add_Project = () => {
             <span className="text-sm font-medium text-gray-700">Send project created email</span>
           </div>
 
-          <div className="flex justify-end gap-5 pb-10">
+          <div className="flex justify-end gap-5  pb-[20px] ">
             <button onClick={handleCloseForm} className="bg-white text-[#27004a] border border-[#27004a] h-10 w-20 rounded-md">Cancel</button>
-            <button type= "submit" className="allcrm-btn" >Save</button>
+            <button type= "submit" className="second-btn" >Save</button>
           </div>
         </div>
         </form>

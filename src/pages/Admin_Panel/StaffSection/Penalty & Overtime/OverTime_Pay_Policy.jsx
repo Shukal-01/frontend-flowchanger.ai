@@ -194,15 +194,15 @@ const OverTime_Pay_Policy = () => {
                   staffDetail?.map((items) => {
                     const overTime = items?.staffDetails?.OverLeavePolicy[0]
                     return <tr className="border">
-                      <td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                         <input type="checkbox" className="border border-1 rounded-md " />
                       </td>
-                      <td>{items.name}</td>
-                      <td>{items?.staffDetails?.job_title}</td>
-                      <td>{overTime?.extraHoursPay ?? "N/A"}</td>
-                      <td>{overTime?.gracePeriodMins ?? "N/A"}</td>
-                      <td>{overTime?.publicHolidayPay ?? "N/A"}</td>
-                      <td>{overTime?.weekOffPay ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items.name}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{items?.staffDetails?.job_title}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.extraHoursPay ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.gracePeriodMins ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.publicHolidayPay ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{overTime?.weekOffPay ?? "N/A"}</td>
 
                     </tr>
                   })

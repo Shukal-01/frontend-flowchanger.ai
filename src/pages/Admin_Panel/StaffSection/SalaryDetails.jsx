@@ -165,21 +165,21 @@ const SalaryDetails = () => {
                     const salaryDetail = item?.staffDetails.SalaryDetails[item.staffDetails?.SalaryDetails?.length - 1]
                     console.log(salaryDetail)
                     return <tr className='border'>
-                      <td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">
                         <input type="checkbox" className="border border-1 rounded-md " />
                       </td>
-                      <td>{item?.name}</td>
-                      <td>{item?.staffDetails?.job_title}</td>
-                      <td>₹ {salaryDetail?.ctc_amount ?? "N/A"}</td>
-                      <td>Basic</td>
-                      <td>₹ {salaryDetail?.employee_pf ?? "N/A"}</td>
-                      <td>₹ {salaryDetail?.employer_esi ?? "N/A"}</td>
-                      <td>N/A</td>
-                      <td>₹ {salaryDetail?.employer_lwf ?? "N/A"}</td>
-                      <td>₹ {salaryDetail?.employee_pf ?? "N/A"}</td>
-                      <td>₹ {salaryDetail?.employee_esi ?? "N/A"}</td>
-                      <td>₹ {salaryDetail?.tds ?? "N/A"}</td>
-                      <td>₹ {salaryDetail?.employee_pf ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{item?.name}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">{item?.staffDetails?.job_title}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">₹ {salaryDetail?.ctc_amount ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">Basic</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">₹ {salaryDetail?.employee_pf ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">₹ {salaryDetail?.employer_esi ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">N/A</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">₹ {salaryDetail?.employer_lwf ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">₹ {salaryDetail?.employee_pf ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">₹ {salaryDetail?.employee_esi ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">₹ {salaryDetail?.tds ?? "N/A"}</td>
+                      <td className="border-r border-[#dbdbdb] whitespace-nowrap">₹ {salaryDetail?.employee_pf ?? "N/A"}</td>
 
 
                     </tr>

@@ -60,7 +60,7 @@ const AdvancePayroll = () => {
 
                 </div>
                 <div className=''>
-                    <Link to="#" className='text-[#1890ff] font-normal'>Reset</Link>
+                    <Link to="#" className='text-[#27004a] font-normal'>Reset</Link>
                 </div>
             </div>
 
@@ -199,7 +199,7 @@ const AdvancePayroll = () => {
                       <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
                       <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
                     </tr>
-                    <tr className=" border-b">
+                    <tr className=" border-b border-1">
                       <td className="p-2 whitespace-nowrap text-xs text-center"><input type="checkbox" className="border border-1 rounded-md" /></td>
                       <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
                       <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
@@ -208,6 +208,7 @@ const AdvancePayroll = () => {
                       <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
                       <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
                     </tr>
+                 
 
 
                     </tbody>

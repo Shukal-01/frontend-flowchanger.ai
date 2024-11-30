@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CachedIcon from "@mui/icons-material/Cached";
 import SearchIcon from "@mui/icons-material/Search";
 import { useGlobalContext } from "../../../Context/GlobalContext";
@@ -11,8 +10,13 @@ import jsPDF from "jspdf";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Modal } from 'react-responsive-modal';
 import Select from "react-select";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ConfirmationModal from "../../../components/Staff/Modals/ConfirmationModal";
 
 const DepartmentDetail = () => {
+  const [open10, setOpen10] = useState(false);
+  const onOpenModal10 = () => setOpen10(true);
+  const onCloseModal10 = () => setOpen10(false);
   const { baseUrl, setDepId, setName, openToast } = useGlobalContext();
   const [departments, setDepartments] = useState([]);
   const [searchDepartment, setSearchDepartMent] = useState("");
@@ -25,6 +29,15 @@ const DepartmentDetail = () => {
     setRowsToShow(Number(event.target.value));
   };
 
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Handles export of departments to CSV, PDF, or prints.
+   * The export format is determined by the value of `exportFormat` state.
+   * If `exportFormat` is "CSV", it calls `exportCSV` function.
+   * If `exportFormat` is "PDF", it calls `exportPDF` function.
+   * If `exportFormat` is "Print", it calls `printDepartments` function.
+   */
+  /******  9a1f1a9d-de41-45b2-8122-961faca24166  *******/
   const handleExport = () => {
     if (exportFormat === "CSV") exportCSV();
     else if (exportFormat === "PDF") exportPDF();
@@ -96,8 +109,8 @@ const DepartmentDetail = () => {
         // Use result.ok instead of checking the status directly
         openToast(result.message);
         setDepartments(result);
+        setOpen10(false)
       } else {
-        console.log(result.message);
         openToast(result.message);
       }
     } catch (error) {
@@ -190,18 +203,18 @@ const DepartmentDetail = () => {
     <div className="p-[10px] top-[95px] pl-[10px] w-[100%] pr-2 mb-3 pb-4">
       <Link
         to="/adddepartment"
-        className="bg-[#27004a]  p-2 pr-3 rounded-lg text-white "
+        className="allcrm-btn "
       >
         {" "}
-        <AddIcon /> New Department
+        <AddIcon className="addicon-all" /> New Department
       </Link>
 
-      <div className="table-section mt-5 bg-white shadow-cs p-[14px]  rounded-sm ">
+      <div className="table-section mt-5 bg-white shadow-cs p-[20px]  rounded-lg ">
         <div className="flex mb-4 justify-between flex-col gap-2  sm:flex-row sm:gap-0">
           <div className="left-side ">
             <select
               onChange={handleSelectChange}
-              className=" border border-[#e5e7eb] p-[8px]  shadow-sm mr-2 rounded-md pl-0 pr-3 focus:outline-none"
+              className=" border border-[#e5e7eb] p-[7px]  shadow-sm mr-2 rounded-md text-[14px]  pr-3 focus:outline-none"
             >
               <option value="25">25</option>
               <option value="50">50</option>
@@ -210,7 +223,7 @@ const DepartmentDetail = () => {
             </select>
             <select
               onChange={(e) => setExportFormat(e.target.value)}
-              className="border border-[#e5e7eb] p-[8px] shadow-sm rounded-md pl-0 pr-3 focus:outline-none"
+              className="border border-[#e5e7eb] p-[7px] shadow-sm rounded-md text-[14px] pr-3 focus:outline-none"
             >
               <option value="CSV">CSV</option>
               <option value="PDF">PDF</option>
@@ -219,7 +232,7 @@ const DepartmentDetail = () => {
 
             <button
               onClick={handleExport}
-              className="ml-2 bg-[#27004a] text-white p-2 rounded-md cursor-pointer"
+              className="ml-2 bg-[#27004a] text-[14px] text-white p-2 rounded-md cursor-pointer"
             >
               Export File
             </button>
@@ -269,7 +282,7 @@ const DepartmentDetail = () => {
             <input
               type="text"
               placeholder="Search"
-              className="border rounded-2xl border-1 pl-3 h-[40px] pr-7
+              className="border rounded-3xl border-1 pl-3 h-[38px] pr-7
     ] focus:outline-none w-[100%] text-[15px] text-[#aeabab]"
               name="searchDepartment"
               value={searchDepartment}
@@ -287,10 +300,10 @@ const DepartmentDetail = () => {
           <table class="table-auto w-[100%] p-[10px]">
             <thead className="bg-[#ffff] ">
               <tr>
-                <th className="text-center p-4  shadow-cs text-sm font-medium ">
+                <th className="text-center p-4 border-b border-[#dbdbdb] roll-name text-sm font-medium ">
                   Department Name
                 </th>
-                <th className="text-center shadow-cs p-4 text-sm font-medium ">Options</th>
+                <th className="text-center border-b border-[#dbdbdb]  p-4 text-sm font-medium ">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -300,13 +313,14 @@ const DepartmentDetail = () => {
                     colSpan="9"
                     className="text-center text-gray-600 text-xl font-semibold py-4"
                   >
-                    <ClipLoader color="#4A90E2" size={50} />
+                    <ClipLoader color="#4A90E2" size={40} />
                   </td>
                 </tr>
               ) : departments && departments.length > 0 ? (
+                
                 departments.slice(0, rowsToShow).map((dep) => (
-                  <tr key={dep.id} className="border-b pb-2 border-[#f1f5f9]">
-                    <td className="pt-4 pb-3 pl-3">
+                  <tr key={dep.id} className="border-b  border-[#dbdbdb] pb-2">
+                    <td className="pt-4 pb-3 pl-3 border-r border-[#dbdbdb]">
                       <Link to="/" className="text-[#27004a] text-[14px]">
                         {dep.department_name}
                       </Link>
@@ -322,13 +336,21 @@ const DepartmentDetail = () => {
                       >
                         <BorderColorIcon className="text-[#27004a] font-light cursor-pointer text-[10px]]" />
                       </Link>
-                      <DeleteOutlineIcon
-                        className="text-red-500 font-light cursor-pointer text-[10px]"
-                        onClick={() => deleteDepartments(dep.id)}
-                      />
+                      <button onClick={() =>  {
+                         deleteDepartments(dep.id)
+
+                        onOpenModal10()
+                      }}>
+                        <DeleteIcon
+                          className="text-red-500 cursor-pointer"
+                        />
+                      </button> 
+                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={dep.id} callback={deleteDepartments}/>}
                     </td>
                   </tr>
                 ))
+
+
               ) : (
                 <tr className="h-[70px]">
                   <td
@@ -343,7 +365,7 @@ const DepartmentDetail = () => {
           </table>
         </div>
 
-        <div className="flex justify-between p-3 pt-5 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0">
+        <div className="flex justify-between p-[16px] pb-[0] pl-0 pr-0 w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0">
           <p className=" text-[#a5a1a1] text-[14px]">
             Showing 1 to {rowsToShow} of {departments.length} entries
           </p>
