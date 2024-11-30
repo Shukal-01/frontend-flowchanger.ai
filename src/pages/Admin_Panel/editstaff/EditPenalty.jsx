@@ -29,6 +29,7 @@ const EditPenalty = () => {
 
     console.log(selectedStaff);
 
+    console.log(selectedStaff);
 
     async function submitEarlyLeavePolicy() {
         try {
