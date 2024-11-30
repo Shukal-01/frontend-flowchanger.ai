@@ -67,8 +67,8 @@ const PaymentHistory = () => {
   return (
     <div className="mt-[20px]">
       <div className="flex justify-between items-end flex-col xl:flex-row lg:flex-row md:flex-col gap-[15px] lg:gap-[0px]">
-        <div className="flex lg:gap-[20px] flex-col gap-[10px] lg:flex lg:flex-row w-full">
-          <div className="xl:w-[240px]">
+        <div className=" w-full flex  items-center gap-[44px] justify-normal ">
+          <div className="xl:w-[200px]">
             <label htmlFor="" className="text-[14px] font-medium">
               Payroll Month
             </label>
@@ -77,7 +77,7 @@ const PaymentHistory = () => {
               className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm"
             />
           </div>
-          <div className="xl:w-[240px]">
+          <div className="xl:w-[200px]">
             <label htmlFor="" className="text-[14px] font-medium">
               Company Branches
             </label>
@@ -87,7 +87,7 @@ const PaymentHistory = () => {
             </select>
           </div>
 
-          <div className="xl:w-[240px]">
+          <div className="xl:w-[200px]">
             <label htmlFor="" className="text-[14px] font-medium">
               Departments
             </label>
@@ -97,7 +97,7 @@ const PaymentHistory = () => {
             </select>
           </div>
 
-          <div className="xl:w-[240px]">
+          <div className="xl:w-[200px]">
             <label htmlFor="" className="text-[14px] font-medium">
               Payment Mode
             </label>
@@ -136,7 +136,7 @@ const PaymentHistory = () => {
           Import Reimbursements
         </button>
       </div>
-      <div className="bg-white min-h-[300px] rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto">
+      <div className="bg-white h-[100%] rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto">
 
         <table className="w-full table-auto border border-[#dcdbdb] rounded-lg overflow-hidden border-collapse">
           {/* Header with Toggle */}
@@ -145,11 +145,11 @@ const PaymentHistory = () => {
             onClick={toggleAccordion}
           >
             <tr>
-              <th className="border-r p-2 flex justify-center text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] flex justify-center text-xs font-medium whitespace-nowrap text-center">
               #
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                 <div className="flex">
                   Name
@@ -191,7 +191,7 @@ const PaymentHistory = () => {
                   </div>
                 </div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                 <div className="flex">
                   Payment Date
@@ -233,7 +233,7 @@ const PaymentHistory = () => {
                   </div>
                 </div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                 <div className="flex">
                   Payment Type
@@ -275,7 +275,7 @@ const PaymentHistory = () => {
                   </div>
                 </div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                 <div className="flex">
                   Status
@@ -317,7 +317,7 @@ const PaymentHistory = () => {
                   </div>
                 </div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                 <div className="flex">
                   Amount Paid
@@ -359,20 +359,20 @@ const PaymentHistory = () => {
                   </div>
                 </div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
 
                 <div className="flex">Transaction ID</div>
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">UTR Number</div>
               </th>
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
               
                 <div className="flex">Paid By</div>
               </th>
 
-              <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">Notes</div>
               </th>
             </tr>
@@ -380,28 +380,28 @@ const PaymentHistory = () => {
 
           <tbody className="w-full">
           <tr className="border">
-                      <td className="p-2 whitespace-nowrap text-xs text-center"><input type="checkbox" className="border border-1 rounded-md" /></td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"><input type="checkbox" className="border border-1 rounded-md" /></td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
                     </tr>
           <tr className="border">
-                      <td className="p-2 whitespace-nowrap text-xs text-center"><input type="checkbox" className="border border-1 rounded-md" /></td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center">N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
-                      <td className="p-2 whitespace-nowrap text-xs text-center"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"><input type="checkbox" className="border border-1 rounded-md" /></td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]">N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
+                      <td className="p-[10px] whitespace-nowrap text-xs text-center border-r border-[#dbdbdb]"> N/A</td>
                     </tr>
           </tbody>
 {/* 

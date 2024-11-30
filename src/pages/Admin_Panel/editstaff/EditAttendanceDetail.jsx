@@ -206,7 +206,7 @@ const EditAttendanceDetail = () => {
 
 
 
-    // console.log(dayWiseWeekOff);
+    // console.log(dayWiseWeekOff); 
     async function fetchShiftDetails() {
         const result = await fetch(baseUrl + "shift");
         if (result.status == 200) {

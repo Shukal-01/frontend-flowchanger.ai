@@ -365,7 +365,7 @@ const TaskForm = () => {
                             </div>
                             {/* <DescriptionEditer /> */}
 
-                            <div className='pr-[10px] pb-3 flex gap-[10px] items-center justify-end border-t pt-3'>
+                            <div className='pr-[10px] pb-[0] flex gap-[10px] items-center justify-end border-t pt-3'>
 
                             <button onClick={handleCloseForm} className="bg-white text-[#27004a] border border-[#27004a] h-10 w-20 rounded-md">Cancel</button>
                                 

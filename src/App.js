@@ -231,7 +231,7 @@ const App = () => {
   function Payroll_Summary() {
     return (
       <>
-        <div className="flex max-w-screen box-border">
+        <div className="flex box-border overflow-hidden ">
           <SideBar />
           <div
             className={`${
