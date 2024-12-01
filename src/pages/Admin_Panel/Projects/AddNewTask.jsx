@@ -61,7 +61,7 @@ const AddNewTask = ({ onClose, onSave }) => {
           className="2xl:fixed xl:fixed lg:fixed md:fixed sm:fixed inset-0 z-50 flex justify-center items-center"
         >
 
-          <div className="bg-white p-8 rounded-lg shadow-lg w-[65%] h-[70%] overflow-auto">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-[65%] h-[70%] overflow-auto ">
             <h1 className="text-[20px] font-semibold border-b border-[#B1B1B1] pb-8">
               Add New Task
             </h1>

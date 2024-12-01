@@ -9,10 +9,11 @@
 
 
 /* Custom scrollbar */
-/* body{
+body{
+ 
   max-height: 100vh;
   overflow: hidden;
-} */
+}
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px; /* Set the width of the scrollbar */
 }

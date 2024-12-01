@@ -184,7 +184,7 @@ const TaskForm = () => {
 
  
     return (
-        <div className='w-[100%] flex justify-center mt-[30px] mb-[30px] items-center h-[100%]'>
+        <div className='w-[100%] flex justify-center mt-[30px] mb-[30px] items-center min-h-screen'>
            
                 <div className="bg-white p-6 rounded-lg shadow-cs w-[80%] relative h-[100%]  ">
                     <h2 className="text-lg font-semibold mb-[16px]">Add new Task</h2>

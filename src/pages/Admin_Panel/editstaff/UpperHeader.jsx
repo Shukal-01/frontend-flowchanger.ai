@@ -36,7 +36,7 @@ const UpperHeader = ({handleToggleEditSideBar,toggleEditSideBar}) => {
     }
   
     return (
-        <div className='flex justify-between p-3 border-b shadow-md fixed top-0 w-full z-[1]	 bg-white'>
+        <div className='flex justify-between p-3 border-b shadow-md fixed top-0 w-full z-[1] bg-white'>
             <div className='flex gap-2 items-center'>
             <Link to='/staff-menu'>
                 <ArrowBackIcon />
