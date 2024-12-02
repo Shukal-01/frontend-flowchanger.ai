@@ -582,7 +582,7 @@ const Reviewfine = () => {
                                         }));
 
                                         // Add the new or updated entries back to the state
-                                        return [...filteredPrev, { ...exists, shiftId:updatedShifts[0] } ];
+                                        return [...filteredPrev, { ...exists, shiftId: updatedShifts[0] }];
                                     });
                                 }}
                                 options={allshift}
@@ -683,9 +683,10 @@ const Reviewfine = () => {
                                                 const detail = updateDetail?.find(
                                                     (value) => value?.id === item?.id && value?.staffId === item?.staffId
                                                 );
-                                                const fineAmount = detail?.lateEntryFineAmount || item?.lateEntryFineAmount || 0;
-                                                const entryAmount = detail?.lateEntryAmount || 1;
-                                                return (fineAmount * entryAmount).toFixed(2);
+                                                const entryAmount = detail?.lateOutAmount || 1;
+                                                const fineAmount = detail?.lateOutOvertimeAmount || item?.lateOutOvertimeAmount || 0;
+                                                if (overTimeType === "Fixed Amount" && fixedOverTime > 0) return fixedFine * entryAmount || 0;
+                                                else return (fineAmount * entryAmount).toFixed(2);
                                             })()}
                                         </p>
                                     </div>

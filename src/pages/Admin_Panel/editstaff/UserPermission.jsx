@@ -6,12 +6,39 @@ const UserPermission = () => {
     const [allDepartments, setAllDepartments] = useState([]);
     const { selectedStaff } = useGlobalContext();
 
-    const { baseUrl,openToast } = useGlobalContext();
+    const { baseUrl, openToast } = useGlobalContext();
     const [role, setRole] = useState("");
     const [department, setDepartment] = useState("");
     const [departmentID, setDepartmentID] = useState("");
     const [roleID, setRoleID] = useState("");
     console.log(selectedStaff);
+    const [allBranch, setAllBranch] = useState();
+    const [branch, setBranch] = useState("");
+    const [branchID, setBranchID] = useState("");
+    const fetchBranch = async (e) => {
+        try {
+            const response = await fetch(baseUrl + "branch/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.status === 200) {
+                const result = await response.json();
+                setAllBranch(result);
+                console.log("Filtered data by ID:", result);
+
+                console.log("Data retrieved successfully:", result);
+                // navigate("/admin/staff");
+            } else {
+                console.error("Failed to retrieve data:", response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+        }
+    };
+
     const fetchDepartments = async () => {
         const result = await fetch(baseUrl + "department")
         if (result.status == 200) {
@@ -22,9 +49,7 @@ const UserPermission = () => {
             alert("An Error Occured")
         }
     }
-    useEffect(() => {
-        console.log(selectedStaff);
-    }, [])
+
 
     const fetchRoles = async () => {
         const result = await fetch(baseUrl + "role")
@@ -39,9 +64,11 @@ const UserPermission = () => {
 
     }
 
+    console.log(allBranch);
     useEffect(() => {
         fetchDepartments();
         fetchRoles();
+        fetchBranch();
         setRoleID(selectedStaff?.roleId);
         setDepartmentID(selectedStaff?.departmentId);
     }, [])
@@ -49,7 +76,8 @@ const UserPermission = () => {
         e.preventDefault();
         const data = {
             roleId: roleID,
-            departmentId: departmentID
+            departmentId: departmentID,
+            branchId:branchID
         };
 
         try {
@@ -78,7 +106,7 @@ const UserPermission = () => {
 
     return (
         <>
-        {/* <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
+            {/* <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
             <div className='flex justify-between items-center  w-[100%] p-[20px] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
 
                 <h3 className='font-medium'>User Permission</h3>
@@ -126,6 +154,24 @@ const UserPermission = () => {
                             ))}
                         </select>
                     </div>
+                    <div className='w-[100%]  xl:w-[48%] 2xl:w-[48%] '>
+                        <label className='text-[14px]'>Branch</label><br />
+                        <select defaultValue={branchID} value={branchID} onChange={(e) => {
+                            const selectedBranch = allBranch?.find(
+                                (branch) => branch?.id === e.target?.value
+                            );
+                            if (selectedBranch) {
+                                setBranch(selectedBranch?.branchName);
+                                setBranchID(selectedBranch?.id);
+                            }
+                        }} className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
+                            {allBranch?.map((branchValue) => (
+                                <option key={branchValue?.id} value={branchValue?.id}>
+                                    {branchValue?.branchName}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
 
                 </div>
@@ -139,7 +185,7 @@ const UserPermission = () => {
 
 
             </form>
-        {/* </div> */}
+            {/* </div> */}
         </>
     )
 }
