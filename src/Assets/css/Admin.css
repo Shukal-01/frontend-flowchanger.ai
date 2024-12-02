@@ -1,0 +1,9 @@
+.content-container{
+    -ms-overflow-style: none; /* Hides scrollbar in Internet Explorer and Edge */
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+}
+
+.content-container::-webkit-scrollbar {
+   display: none; /* Hides scrollbar in Chrome, Safari, and Edge */
+      
+}

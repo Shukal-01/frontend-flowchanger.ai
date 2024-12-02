@@ -7,128 +7,89 @@ import client from "../../Assets/Images/client.png";
 import report from "../../Assets/Images/report.png";
 import staff from "../../Assets/Images/staff.png";
 import setting from "../../Assets/Images/setting.png";
-import { Link } from "react-router-dom";
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Link } from "react-router-dom";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useGlobalContext } from "../../Context/GlobalContext";
 const SidebarClient = ({ toggleSideBar }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
- 
-   const [isMenuOpen1, setIsMenuOpen1] = useState(false);
-   const toggleMenu1 = () => setIsMenuOpen1(!isMenuOpen1);
-  
-   const [isMenuOpen2, setIsMenuOpen2] = useState(false);
-   const toggleMenu2 = () => setIsMenuOpen2(!isMenuOpen2);
+  const { activeSubmenu, setActiveSubmenu, selectedSidebarTab, setSelectedSidebarTab } = useGlobalContext();
 
-   const [isMenuOpen3, setIsMenuOpen3] = useState(false);
-   const toggleMenu3 = () => setIsMenuOpen3(!isMenuOpen3);
-
-   const [isMenuOpen4, setIsMenuOpen4] = useState(false);
-   const toggleMenu4 = () => setIsMenuOpen4(!isMenuOpen4);
-
-   const [isMenuOpen5, setIsMenuOpen5] = useState(false);
-   const toggleMenu5 = () => setIsMenuOpen5(!isMenuOpen5);
-
-   const [isMenuOpen6, setIsMenuOpen6] = useState(false);
-   const toggleMenu6 = () => setIsMenuOpen6(!isMenuOpen6);
-   
-   const [isMenuOpen7, setIsMenuOpen7] = useState(false);
-   const toggleMenu7 = () => setIsMenuOpen7(!isMenuOpen7);
-   
-   const [isMenuOpen8, setIsMenuOpen8] = useState(false);
-   const toggleMenu8 = () => setIsMenuOpen8(!isMenuOpen8);
-
-   const [isMenuOpen9, setIsMenuOpen9] = useState(false);
-   const toggleMenu9 = () => setIsMenuOpen9(!isMenuOpen9);
 
    
 
   return (
-    <div className="sidebar w-[250px] xl:w-[200px] lg:w-[300px] md:w-[300px] bg-[#27004a] h-[100vh] p-[10px] ">
+    <div className="sidebar w-[250px]  lg:w-[300px] md:w-[300px] bg-[#27004a] h-[100vh] p-[10px] flex-shrink-0">
 
  
       <div className="flex xl:justify-center lg:justify-center  p-[20px]">
         <img src={logo} alt="" className="w-[120px]" />
       </div>
       <ul className="pl-[2px] pr-[2px] pt-[0px] pb-[20px]">
-        <li className="flex items-center gap-[10px] text-white p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all	">
+        <Link to="/clientpanel" onClick={() => { setSelectedSidebarTab("dashboard") }} className={`flex items-center gap-[10px] hover:bg-[#fff] mb-[5px] hover:text-[#8a25b0] p-[10px]   rounded-md  transition-all ${selectedSidebarTab === "dashboard" ? "bg-white text-[#8a25b0]" : "text-white"}`} >
           <img src={home} />
-          <Link to="/" className="">Dashboard</Link>
-        </li>
-        <li className="flex items-center gap-[10px] text-white p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all	">
+          <button  className="">Dashboard</button>
+        </Link>
+        <Link to="/clientpanel/chats" onClick={() => { setSelectedSidebarTab("chat") }} className={`flex items-center gap-[10px] hover:bg-[#fff] mb-[5px] hover:text-[#8a25b0] p-[10px]   rounded-md  transition-all ${selectedSidebarTab === "chat" ? "bg-white text-[#8a25b0]" : "text-white"}`}>
           <img src={home} />
-          <Link to="/" className="">Chat</Link>
-        </li>
+          <button  className="">Chat</button>
+        </Link>
 
 
         <div className="">
-          <div className="flex items-center gap-[10px] text-white p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all	">
+          <Link to = "/clientpanel/projects" onClick={() => { setSelectedSidebarTab("projects") }} className={`flex items-center gap-[10px] hover:bg-[#fff] mb-[5px] hover:text-[#8a25b0] p-[10px]   rounded-md  transition-all ${selectedSidebarTab === "projects" ? "bg-white text-[#8a25b0]" : "text-white"}`}>
             <img src={project} alt="" />
-            <button
-              onClick={toggleMenu}
-              className=" "
-            >
+            <button >
               Projects
             </button>
 
-          </div>
+          </Link>
 
-          <div
-            className={`overflow-hidden transition-max-height duration-300 ease-in-out mt-[5px] ${isMenuOpen ? 'max-h-screen' : 'max-h-0'
-              }`}
+          {/* <div
+            className={`overflow-hidden transition-max-height duration-300 ease-in-out mt-[5px] `}
           >
 
-            <Link to="#"
+            <button to="#"
               className="w-full ml-[40px] text-left py-[10px] flex items-center gap-[10px] pl-[0px] whitespace-nowrap  text-white   transition-all	rounded-md"
             >
               <ArrowForwardIosIcon className="arrow-icon-sidebar"/>
               Task
-            </Link>
-
-
-
-          </div>
+            </button>
+</div> */}
         </div>
 
         <div className="">
-          <div className="flex items-center gap-[10px] text-white p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all	">
+          <Link to="/clientpanel/taskview" onClick={() => { setSelectedSidebarTab("task") }} className={`flex items-center gap-[10px] hover:bg-[#fff] mb-[5px] hover:text-[#8a25b0] p-[10px]   rounded-md  transition-all ${selectedSidebarTab === "task" ? "bg-white text-[#8a25b0]" : "text-white"}`}>
             <img src={task} alt="" />
-            <button
-              onClick={toggleMenu1}
-              className=" "
+            <button 
             >
               Task
             </button>
 
-          </div>
+          </Link>
 
       
         </div>
         <div className="">
-          <div className="flex items-center gap-[10px] text-white p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all	">
+          <Link to = "/clientpanel/notes" onClick={() => { setSelectedSidebarTab("notes") }} className={`flex items-center gap-[10px] hover:bg-[#fff] mb-[5px] hover:text-[#8a25b0] p-[10px]   rounded-md  transition-all ${selectedSidebarTab === "notes" ? "bg-white text-[#8a25b0]" : "text-white"}`}>
             <img src={task} alt="" />
-            <button
-              onClick={toggleMenu1}
-              className=" "
+            <button 
             >
               Notes
             </button>
 
-          </div>
+          </Link>
 
       
         </div>
         <div className="">
-          <div className="flex items-center gap-[10px] text-white p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all	">
+          <Link  to = "/clientpanel/project_invoice" onClick={() => { setSelectedSidebarTab("invoice") }} className={`flex items-center gap-[10px] hover:bg-[#fff] mb-[5px] hover:text-[#8a25b0] p-[10px]   rounded-md  transition-all ${selectedSidebarTab === "invoice" ? "bg-white text-[#8a25b0]" : "text-white"}`}>
             <img src={task} alt="" />
             <button
-              onClick={toggleMenu1}
-              className=" "
             >
               Invoice
             </button>
 
-          </div>
+          </Link>
 
       
         </div>

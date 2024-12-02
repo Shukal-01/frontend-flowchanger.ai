@@ -11,8 +11,8 @@ const Project_Invoice = () => {
         <div className="p-4 border rounded-lg bg-white shadow-cs">
             <h2 className="font-medium mb-[20px] flex gap-[6px] items-center"> <LibraryBooksIcon />Projects Invoice</h2>
 
-            <div className="flex items-center justify-between w-[80%]" >
-                <div className="w-[40%] space-y-2">
+            <div className="flex items-center justify-start space-x-2 w-[50%]" >
+                <div className="w-[30%] space-y-2">
                     <label className="text-sm font-medium text-gray-700">Filter by Invoice</label>
                     <select className="h-[40px] w-[100%] focus-visible:outline-none bg-white border border-[#DBDCDE] rounded-md pl-3" name="billingType" required>
                         <option value="Fixed Rate">Select Invoice</option>
@@ -20,7 +20,7 @@ const Project_Invoice = () => {
                         <option value="Task Hours Based on task hourly rate">Bill invoice</option>
                     </select>
                 </div>
-                <div className="w-[40%] space-y-2">
+                <div className="w-[30%] space-y-2">
                     <label className="text-sm font-medium text-gray-700">Filter by status </label>
                     <select className="h-[40px] w-[100%] bg-white border border-[#DBDCDE] focus-visible:outline-none rounded-md pl-3" name="billingType" required>
                         <option value="Fixed Rate">Select Status</option>
@@ -34,7 +34,7 @@ const Project_Invoice = () => {
                 <div className='right-side relative  w-[180px]'>
                     <input type='text' placeholder='Search' className='border border-1  pl-3 h-[38px]  pr-7
 ] rounded-3xl focus:outline-none w-[100%] text-[15px] text-[#000]' />
-                    <SearchIcon className='absolute right-[10px] search-icon top-[12px]    text-[#000]  font-thin text-[#dddddd;
+                    <SearchIcon className='absolute right-[10px] search-icon top-[12px]    text-gray-400  font-thin text-[#dddddd;
 ]'/>
                 </div>
             </div>

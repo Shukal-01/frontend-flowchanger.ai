@@ -139,7 +139,7 @@ const Add_Project = () => {
 
 
   const options = staffDetail?.map((staff) => ({
-    value: staff.staffDetails.id,
+    value: staff.staffDetails?.id,
     label: staff.name,
   }));
 

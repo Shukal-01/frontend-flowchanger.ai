@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Assets/css/roledetail.css";
+import "./Assets/css/Admin.css";
 import "../src/Assets/css/new.css";
 import "../src/Assets/css/customer.css";
 import "../src/Assets/css/subscribe.css";
@@ -66,7 +67,7 @@ import Meeting from "./pages/Admin_Panel/Calender/Meeting";
 import RequestPassword from "./pages/Admin_Panel/authentication/steps/RequestPassword";
 import CalenderDay from "./pages/Admin_Panel/Calender/CalenderDay";
 import CalenderYear from "./pages/Admin_Panel/Calender/CalenderYear";
-import Note from "../src/Notes/Note";
+import Notes from "./pages/Client_Panel/Notes/Notes";
 import ExpenseEdit from "./pages/Admin_Panel/ExpensesClient/ExpenseEdit";
 import ExpensePage from "./pages/Admin_Panel/ExpensesClient/ExpensePage";
 import AddNewClient from "../src/pages/Admin_Panel/Clients/AddNewClient";
@@ -101,7 +102,6 @@ import TaskForm from "./pages/Admin_Panel/Tasks/Task_deatail/TaskForm";
 import ClientTaskview from "./pages/Client_Panel/Task/ClientTaskview";
 // import StatusMainPage from "../src/pages/Admin_Panel/statustask/StatusMainPage";
 import Project_Invoice from "./pages/Client_Panel/Projects/Project_Invoice";
-import Project from "./pages/Client_Panel/Projects/ClientProject";
 import ClientTaskView from "../src/pages/Client_Panel/Task/ClientTaskview";
 import Client_Project from "./pages/Client_Panel/Projects/ClientProject";
 import ProjectSummary from "./pages/Client_Panel/Projects/ProjectSummary";
@@ -109,6 +109,7 @@ import BranchDetails from "./pages/Admin_Panel/Branch/BranchDetails";
 import AddBranch from "./pages/Admin_Panel/Branch/AddBranch";
 import UpdateBranch from "./pages/Admin_Panel/Branch/UpdateBranch";
 import Setting_panel from "./pages/Admin_Panel/StaffSection/Attendance/Setting_panel";
+import ClientDashBoard from "./pages/Client_Panel/ClientDashBoard";
 
 const App = () => {
   const [toggleSideBar, setToggleSideBar] = useState(true);
@@ -139,11 +140,11 @@ const App = () => {
   function AdminLayout() {
     return (
       <>
-        <div className="flex ">
+        <div className="flex max-h-screen">
           <SideBar />
-          <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set ">
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set max-h-screen ">
             <NavBar />
-            <div className="p-[10px]  w-full ">
+            <div className="p-[10px]  w-full h-[90%] overflow-y-scroll content-container">
               <Outlet />
             </div>
           </div>
@@ -155,15 +156,15 @@ const App = () => {
   function Editstaff() {
     return (
       <>
-        <div className="">
+        <div className=" ">
           <UpperHeader
             toggleEditSideBar={toggleEditSideBar}
             handleToggleEditSideBar={handleToggleEditSideBar}
           />
-          <div className="flex">
+          <div className="flex min-h-screen overflow-y-scroll content-container">
             <SidebarEditStaff toggleEditSideBar={toggleEditSideBar} />
             <div
-              className={`w-full p-[20px] pt-[80px] xl:pl-[20px] xl:p-[40px] relative xl:pt-[60px]    
+              className={`w-full p-[20px] pt-[80px] xl:pl-[20px] xl:p-[40px] relative xl:pt-[60px] h-screen   
         ${
           !toggleEditSideBar ? "xl:pl-[320px]" : "xl:pl-[0px]"
         } flex flex-col set-z`}
@@ -189,18 +190,19 @@ const App = () => {
   function Client_Panel() {
     return (
       <>
-        <div className="flex">
-          <div className="">
-            {toggleSideBar && <SidebarClient toggleSideBar={toggleSideBar} />}
-          </div>
+        <div className="flex max-h-screen ">
+          {toggleSideBar && <SidebarClient toggleSideBar={toggleSideBar} />}
+
           {/* container for navbar and outlet */}
-          <div className={`flex flex-col  flex-grow overflow-hidden`}>
+          <div
+            className={`flex flex-col  flex-grow overflow-hidden max-h-screen`}
+          >
             <ClientHeader
               handleToggleSideBar={handleToggleSideBar}
               toggleSideBar={toggleSideBar}
             />
-            <main className={`flex-1 z-[1]  m-[15px] xl:m-[30px]  `}>
-              <div className="mx-auto px-4 pl-3 pr-3 py-8 lg:px-4 view-not">
+            <main className="flex-1 z-[1]    h-[90%] overflow-y-scroll content-container">
+              <div className="mx-auto px-4 pl-3 pr-3 py-8 lg:px-4 view-not  ">
                 <Outlet />
               </div>
             </main>
@@ -274,6 +276,7 @@ const App = () => {
             <Route path="/addrole" element={<AddRole />} />
             {/* <Route path="/role" element={<Role_Details />} /> */}
             <Route path="/editrole" element={<EditRole />} />
+            <Route path="/notes" element={<Notes />} />
             <Route path="/role-detail" element={<Role_Details />} />
             <Route path="/editdepartment" element={<EditDepartment />} />
             <Route path="/add-one-staff" element={<AddOneStaff />} />
@@ -289,7 +292,7 @@ const App = () => {
               path="/attendence_summary"
               element={<Attendence_summary />}
             />
-             <Route path="/setting-panel" element={<Setting_panel />} />
+            <Route path="/setting-panel" element={<Setting_panel />} />
 
             <Route path="/project_summary" element={<Project_Summary />} />
             <Route path="/projects" element={<Projects />} />
@@ -307,11 +310,11 @@ const App = () => {
             />
             <Route path="/taskstatus" element={<Task_Status />} />
             <Route path="chats/admin" element={<AdminChatInterface />} />
-            <Route path="chats/client" element={<ClientChatInterface />} />
+
             {/* <Route path="chats/client/login" element={<ClientLogin />} /> */}
 
             <Route path="chats/staff" element={<StaffChatInterface />} />
-            <Route path="/clienttaskview" element={<ClientTaskview />} />
+
             <Route path="/status-main-page" element={<StatusMainPage />} />
             <Route path="/edittaskstatus" element={<Edit_Task_Status />} />
             <Route path="/edit-project" element={<Edit_Project />} />
@@ -401,6 +404,15 @@ const App = () => {
             path="/authentication/request-password"
             element={<RequestPassword />}
           />
+        </Route>
+        <Route path="/clientpanel" element={<Client_Panel />}>
+          <Route index element={<ClientDashBoard />} />
+          <Route path="chats" element={<ClientChatInterface />} />
+          <Route path="taskview" element={<ClientTaskView />} />
+          <Route path="project_summary" element={<ProjectSummary />} />
+          <Route path="projects" element={<Client_Project />} />
+          <Route path="project_invoice" element={<Project_Invoice />} />
+          <Route path="notes" element={<Notes />} />
         </Route>
 
         {/* <Route element={<CustomerPanel />}>

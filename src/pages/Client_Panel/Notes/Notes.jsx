@@ -3,7 +3,8 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Link } from "react-router-dom";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
-const Note = () => {
+import { GrEdit } from "react-icons/gr";
+const Notes = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
@@ -21,7 +22,7 @@ const Note = () => {
           <KeyboardArrowRightIcon />
           <p>Notes</p>
         </div>
-        <div className="flex justify-end w-[100%]">
+        <div className="flex justify-end w-[100%] mb-2">
           <button
             className="px-4 py-2 bg-[#8a25b0] text-white rounded-md"
             onClick={handleOpen}
@@ -77,9 +78,9 @@ const Note = () => {
 
 
           <div className="bg-[#ffffcc] p-[14px] rounded-lg interview-card">
-            <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+            <div className="flex justify-end items-center gap-[3px]">
+              <button className=" h-[30px] flex items-center justify-center w-[30px]  rounded-md"><GrEdit className=" edit-icon text-[#8a25b0]"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px]  rounded-md"><DeleteIcon className="text-[red] edit-icon"/></button>
             </div>
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px]">wretwre</p>
@@ -91,8 +92,8 @@ const Note = () => {
 
           <div className="bg-[#ffffcc] p-[14px] rounded-lg interview-card">
             <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><GrEdit className="text-[#8a25b0] edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-[red] edit-icon"/></button>
             </div>
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px]">wretwre</p>
@@ -104,8 +105,8 @@ const Note = () => {
 
           <div className="bg-[#ccffcc] p-[14px] rounded-lg interview-card">
             <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><GrEdit className="text-[#8a25b0] edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-[red] edit-icon"/></button>
             </div>
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px]">wretwre</p>
@@ -117,8 +118,8 @@ const Note = () => {
 
           <div className="bg-[#ccffcc] p-[14px] rounded-lg interview-card">
             <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><GrEdit className="text-[#8a25b0] edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-[red] edit-icon"/></button>
             </div> 
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px] ">wretwre</p>
@@ -130,8 +131,8 @@ const Note = () => {
 
           <div className="bg-[#9dffb4] p-[14px] rounded-lg interview-card">
             <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px]  rounded-md"><GrEdit className="text-purple-500 edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px]  rounded-md"><DeleteIcon className="text-[red] edit-icon"/></button>
             </div>
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px]">wretwre</p>
@@ -143,8 +144,8 @@ const Note = () => {
 
           <div className="bg-[#9dffb4] p-[14px] rounded-lg interview-card">
             <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><GrEdit className="text-[#8a25b0] edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-[red] edit-icon"/></button>
             </div>
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px]">wretwre</p>
@@ -156,8 +157,8 @@ const Note = () => {
 
           <div className="bg-[#9dffb4] p-[14px] rounded-lg interview-card">
             <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><GrEdit className="text-[#8a25b0] edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-[red] edit-icon"/></button>
             </div>
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px]">wretwre</p>
@@ -169,8 +170,8 @@ const Note = () => {
 
           <div className="bg-[#9dffb4] p-[14px] rounded-lg interview-card">
             <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><GrEdit className="text-[#8a25b0] edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-[red]  edit-icon"/></button>
             </div>
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px]">wretwre</p>
@@ -182,8 +183,8 @@ const Note = () => {
 
           <div className="bg-[#ffffcc] p-[14px] rounded-lg interview-card">
             <div className="flex justify-end items-center gap-[5px]">
-              <button className="bg-[#8a25b0] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><EditNoteIcon className="text-white edit-icon"/></button>
-              <button className="bg-[red] h-[30px] flex items-center justify-center w-[30px] p-[4px] rounded-md"><DeleteIcon className="text-white edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px]  rounded-md"><GrEdit className="text-[#8a25b0] edit-icon"/></button>
+              <button className=" h-[30px] flex items-center justify-center w-[30px]  rounded-md"><DeleteIcon className="text-[red] edit-icon"/></button>
             </div>
             <h4 className="font-medium mb-[10px] text-[20px] text-[#8a25b0] interview-heading">Interview</h4>
             <p className="mb-[10px]">wretwre</p>
@@ -201,7 +202,7 @@ const Note = () => {
   )
 }
 
-export default Note
+export default Notes;
 
 
 

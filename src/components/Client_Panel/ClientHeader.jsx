@@ -19,6 +19,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from "react-router-dom";
 import parker from "../../Assets/Images/parker.jpg";
+import { useGlobalContext } from "../../Context/GlobalContext";
 
 
 const ClientHeader = ({ handleToggleSideBar, toggleSideBar }) => {
@@ -37,9 +38,9 @@ const ClientHeader = ({ handleToggleSideBar, toggleSideBar }) => {
      //ClientHeader dropdown
 
   return (
-    <div className="w-[100%] bg-white pt-[10px] pb-[10px] xl:pl-[31px]  lg:pl-[31px] pr-[2px] flex items-center justify-between border-b shadow-lg pl-[14px]">
+    <div className="w-[100%] bg-white pt-[10px] pb-[10px] xl:pl-[31px]  lg:pl-[31px] pr-[2px] flex items-center justify-between border-b shadow-lg pl-[14px] h-[10%]">
       <button onClick={handleAddClass}        >
-        <MenuIcon className="menu-icon"/>
+        <MenuIcon className="menu-icon-navbar hidden"/>
         <CloseIcon className="cancel-icon"/>
       </button>
 

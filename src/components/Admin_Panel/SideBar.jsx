@@ -19,8 +19,7 @@ import { useGlobalContext } from "../../Context/GlobalContext";
 const SideBar = ({ toggleSideBar }) => {
   const { activeSubmenu, setActiveSubmenu, selectedSidebarTab, setSelectedSidebarTab } = useGlobalContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isStaffSubmenuOpen, setIsStaffSubmenuOpen] = useState(false);
-  const [selectedSubmenuItem, setSelectedSubmenuItem] = useState(null);
+ 
   const [selectedTab, setSelectedTab] = useState(null);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -77,25 +76,14 @@ const SideBar = ({ toggleSideBar }) => {
 
   const [selectedPage, setSelectedPage] = useState(""); // Track active page
 
-  const handleArrowClick = () => {
-    setIsStaffSubmenuOpen(!isStaffSubmenuOpen);
-  };
-  useEffect(() => {
-    if (selectedSidebarTab === "staff") {
-      setIsStaffSubmenuOpen(true);
-    }
-  }, [selectedSidebarTab]);
+ 
 
-  const handleStaffClick = () => {
-    setSelectedSidebarTab("staff");
-    setIsStaffSubmenuOpen(!isStaffSubmenuOpen);
-  };
 
   return (
     // <div className="sidebar w-[250px] xl:w-[244px] lg:w-[300px] md:w-[300px] bg-[#27004a] h-full p-[10px] ">
 
 
-    <div className="sidebar flex-shrink-0 w-[100%] xl:w-[20%] lg:w-[20%] md:w-[300px] bg-[#27004a] h-full p-[10px]">
+    <div className="sidebar flex-shrink-0 w-[100%] xl:w-[20%] lg:w-[20%] md:w-[300px] bg-[#27004a]  p-[10px] h-[90vh] ">
 
 
       <div className="flex xl:justify-center lg:justify-center  p-[20px]">

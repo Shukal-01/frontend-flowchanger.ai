@@ -119,7 +119,7 @@ const ClientTaskview = () => {
             <div className="w-[60%] status-set2 mb-[10px] flex justify-between items-center">
               <p className="text-[#8c939f] text-[16px]">Assignee By</p>
               <div className="flex flex-row justify-between items-center">
-              <div className="text-white flex justify-between hover:bg-[#f2f6f8] p-[10px] rounded-[100%] items-center gap-[8px] bg text-[14px] bg-blue-950 mr-2 h-[10px]">T</div>
+              <div className="text-white flex justify-between hover:bg-[#f2f6f8] p-[10px] rounded-[100%] items-center gap-[8px] bg text-[14px] bg-blue-950 mr-2 h-[15px]">T</div>
               <p className="text-[#000] hover:bg-[#f2f6f8] p-[8px] rounded-lg  text-[16px]">Tej Partap Sir
               </p>
               </div>
