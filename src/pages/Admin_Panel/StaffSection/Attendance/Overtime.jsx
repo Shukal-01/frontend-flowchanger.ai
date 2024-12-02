@@ -278,7 +278,7 @@ const Overtime = () => {
         }
 
         if (overTimeType == "Fixed Amount" && fixedOverTime > 0 && selectAllOverTime === true) {
-            setOverTimeDetail(
+            setUpdateDetail(
                 overTimeDetail?.map(overtime => ({
                     id: overtime?.id,
                     staffId: overtime?.staffId,
@@ -291,7 +291,7 @@ const Overtime = () => {
         }
 
         if (overTimeType === "Half Day" && selectAllOverTime === true) {
-            setOverTimeDetail(
+            setUpdateDetail(
                 overTimeDetail?.map(overtime => ({
                     id: overtime?.id,
                     staffId: overtime?.staffId,
@@ -614,9 +614,10 @@ const Overtime = () => {
                                                 const detail = updateDetail?.find(
                                                     (value) => value?.id === item?.id && value?.staffId === item?.staffId
                                                 );
-                                                const fineAmount = detail?.lateOutOvertimeAmount || item?.lateOutOvertimeAmount || 0;
                                                 const entryAmount = detail?.lateOutAmount || 1;
-                                                return (fineAmount * entryAmount).toFixed(2);
+                                                const fineAmount = detail?.lateOutOvertimeAmount || item?.lateOutOvertimeAmount || 0;
+                                                if (overTimeType === "Fixed Amount" && fixedOverTime > 0) return fixedOverTime * entryAmount|| 0;
+                                                else return (fineAmount * entryAmount).toFixed(2);
                                             })()}
                                         </p>
                                     </div>
