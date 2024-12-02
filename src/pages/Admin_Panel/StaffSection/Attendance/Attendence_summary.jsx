@@ -16,7 +16,8 @@ import "rc-time-picker/assets/index.css";
 import { set } from "react-hook-form";
 import PresentModal from "../../../../components/Admin_Panel/AttendanceSummary/PresentModal";
 import HalfDay from "../../../../components/Admin_Panel/AttendanceSummary/HalfDayModal";
-
+import PaidLeaveModal from "../../../../components/Admin_Panel/AttendanceSummary/PaidLeaveModal";
+import AbsentModal from "../../../../components/Admin_Panel/AttendanceSummary/AbsentModal"
 const Attendence_summary = () => {
   const { baseUrl, openToast, fetchStaff, staffDetail } = useGlobalContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -213,6 +214,7 @@ const Attendence_summary = () => {
     }
   }, [summaryDate]);
   const [selectedStatus, setSelectedStatus] = useState("");
+
   async function confirmation(item) {
     setLoading(true);
     try {
@@ -429,8 +431,8 @@ const Attendence_summary = () => {
   useEffect(() => {
     const totalSalary =
       Number(lateEntryAmount) +
-        Number(excessBreakAmount) +
-        Number(earlyOutAmount) || 0;
+      Number(excessBreakAmount) +
+      Number(earlyOutAmount) || 0;
     setFineTotalAmount(totalSalary);
   }, [lateEntryAmount, excessBreakAmount, earlyOutAmount]);
 
@@ -495,7 +497,7 @@ const Attendence_summary = () => {
       lateOutAmount: Number(overTimeSalaryTime),
       totalAmount: Number(
         overTimeLateOutAmount * overTimeSalaryTime +
-          overTimeEarlyOutAmount * overTimeEarlySalaryTime
+        overTimeEarlyOutAmount * overTimeEarlySalaryTime
       ),
       staffId: sendOverTimeStaffId,
       punchRecordId: applyOvertimePunchRecordId,
@@ -517,7 +519,6 @@ const Attendence_summary = () => {
 
   const [fine, setFine] = useState();
   const [overtime, setOverTime] = useState();
-  console.log(overtime);
 
   async function fetchFineDetails() {
     try {
@@ -554,7 +555,7 @@ const Attendence_summary = () => {
   const [others, setOthers] = useState([]);
 
   useEffect(() => {
-    if (departments.length && attendance.length) {
+    if (departments?.length && attendance?.length) {
       setOthers(
         attendance?.filter((a) => a.punchRecord?.staff?.departmentId == null)
       );
@@ -562,15 +563,30 @@ const Attendence_summary = () => {
     }
   }, [departments, attendance]);
 
+  console.log(applyPunchRecordId)
+
   return (
     <div className="p-[20px] w-full work-fine">
       {selectedStatus == "PRESENT" && (
-        <PresentModal id={selectedStatus} setStatus={setSelectedStatus} />
+        <PresentModal id={applyPunchRecordId} status={selectedStatus} setStatus={setSelectedStatus} selecteddate={summaryDate}
+          attendance={fetchAttendanceDetail}
+        />
       )}
       {selectedStatus == "HALFDAY" && (
-        <HalfDay id={selectedStatus} setStatus={setSelectedStatus} />
+        <HalfDay id={applyPunchRecordId} status={selectedStatus} setStatus={setSelectedStatus} selecteddate={summaryDate}
+          attendance={fetchAttendanceDetail}
+        />
       )}
-
+      {selectedStatus == "PAIDLEAVE" && (
+        <PaidLeaveModal id={applyPunchRecordId} status={selectedStatus} setStatus={setSelectedStatus} selecteddate={summaryDate}
+          attendance={fetchAttendanceDetail}
+        />
+      )}
+      {selectedStatus == "ABSENT" && (
+        <AbsentModal id={applyPunchRecordId} status={selectedStatus} setStatus={setSelectedStatus} selecteddate={summaryDate}
+          attendance={fetchAttendanceDetail}
+        />
+      )}
       <div className="flex  justify-between satisfy-summary  ">
         <div className="flex gap-[10px] summary-bold">
           <h1 className="font-semibold">Attendence Summary</h1>
@@ -613,14 +629,14 @@ const Attendence_summary = () => {
             </Link>
           </div>
         </div>
-        <div className="mt-[16px] flex gap-[30px] summary-bold1">
-          <div className="total-staff w-[15%] new-staff3">
+        <div className="mt-[16px] flex gap-[30px] flex-wrap	whitespace-nowrap summaryrecord">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Total Staff
             </h2>
             <p className="text-[14px] font-semibold">{attendance?.length}</p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Present
             </h2>
@@ -632,7 +648,7 @@ const Attendence_summary = () => {
               }
             </p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">Absent</h2>
             <p className="text-[14px] font-semibold">
               {
@@ -642,7 +658,7 @@ const Attendence_summary = () => {
               }
             </p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Half Day
             </h2>
@@ -654,23 +670,23 @@ const Attendence_summary = () => {
               }
             </p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
-            <h2 className="text-[14px] font-normal whitespace-nowrap text-[#000000bf]">
-              Overtime Hours
+          <div className="total-staff ">
+            <h2 className="text-[14px] pr-0 font-normal whitespace-nowrap text-[#000000bf]">
+              Overtime <br/> Hours
             </h2>
             <p className="text-[14px] font-semibold">
-              {attendance.length ? calculateTotalOvertimeHours(attendance) : 0}
+              {attendance?.length ? calculateTotalOvertimeHours(attendance) : 0}
             </p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Fine Hours
             </h2>
             <p className="text-[14px] font-semibold">
-              {attendance.length ? calculateTotalFineHours(attendance) : 0}
+              {attendance?.length ? calculateTotalFineHours(attendance) : 0}
             </p>
           </div>
-          <div className="total-staff1 w-[15%]">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Paid Leave
             </h2>
@@ -684,22 +700,22 @@ const Attendence_summary = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[#ffff] shadow-cs p-[20px] rounded-md mt-[24px] flex gap-[10px] over-new">
+      <div className="bg-[#ffff] shadow-cs p-[20px] rounded-md mt-[24px]  flex gap-[10px] over-new">
         <Link
           to="/worktime"
-          className="total-staff text-[#27004a]  text-[14px] font-medium  transition hover:text-[#8e54c2]"
+          className=" text-[#27004a] border-r pr-2 whitespace-nowrap text-[14px] font-medium  transition hover:text-[#8e54c2]"
         >
           Daily Work Entry
         </Link>
         <Link
           to="/reviewfine"
-          className="total-staff  text-[#27004a]  text-[14px] font-medium transition hover:text-[#8e54c2]"
+          className=" text-[#27004a] border-r  pr-2 whitespace-nowrap text-[14px] font-medium transition hover:text-[#8e54c2]"
         >
           Fine
         </Link>
         <Link
           to="/overtime"
-          className=" total-staff  text-[#27004a] text-[14px] font-medium  transition hover:text-[#8e54c2]"
+          className="  text-[#27004a] border-r  pr-2 whitespace-nowrap text-[14px] font-medium  transition hover:text-[#8e54c2]"
         >
           Overtime
         </Link>
@@ -712,18 +728,37 @@ const Attendence_summary = () => {
           placeholder="Search Staff by Name , Phone Number or Employee ID"
         />
       </div>
-      {departments.length &&
-        attendance.length &&
-        departments.map((d) => {
+
+
+      {!summaryDate && attendance?.length === 0 && (
+        <div className="text-center">
+          <h2 className="text-[#ff0000] font-medium py-9 text-[20px]">
+            Please Select Date
+          </h2>
+        </div>
+
+        
+
+      )}
+
+      {departments?.length &&
+        attendance?.length &&
+        departments?.map((d) => {
+          console.log(d);
           const rec = attendance?.filter(
-            (a) => a.punchRecord?.staff?.departmentId == d.id
+            (a) => a?.punchRecord?.staff?.departmentId == d?.id
           );
           return (
             <div className="flex flex-col gap-[10px] mt-[0px]">
               <h1 className="pt-2">
-                {d.department_name} ({rec.length})
+                {rec &&  rec?.length > 0 && (
+                
+                  <span>
+                    {d?.department_name} ({rec?.length})
+                  </span>
+                )}
               </h1>
-              {rec.map((item, index) => {
+              {rec?.map((item, index) => {
                 return (
                   <>
                     <div className="shadow p-[20px]  rounded-md shadow-cs">
@@ -750,15 +785,15 @@ const Attendence_summary = () => {
                               <button
                                 onClick={() => {
                                   setSelectedStatus("PRESENT");
+                                  setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "PRESENT"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                                    ${item?.punchRecord
+                                    ?.status === "PRESENT"
+                                    ? "bg-[#008000] text-white"
+                                    : "bg-[#fff] text-[#000]"
+                                  }`}
                               >
                                 P I Present
                               </button>
@@ -769,15 +804,15 @@ const Attendence_summary = () => {
                               <button
                                 onClick={() => {
                                   setSelectedStatus("HALFDAY");
+                                  setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "HALFDAY"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                                    ${item?.punchRecord
+                                    ?.status === "HALFDAY"
+                                    ? "bg-[#008000] text-white"
+                                    : "bg-[#fff] text-[#000]"
+                                  }`}
                               >
                                 HD I HalfDay
                               </button>
@@ -1034,10 +1069,6 @@ const Attendence_summary = () => {
                               <button
                                 // onClick={openModal12}
                                 onClick={() => {
-                                  console.log(
-                                    item?.punchRecord?.id,
-                                    "ggfjjhgjgjhg798----"
-                                  );
                                   overTimeId(item?.staffId);
                                   setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
@@ -1196,9 +1227,9 @@ const Attendence_summary = () => {
                                       <p className="text-[14px]">
                                         {(
                                           overTimeLateOutAmount *
-                                            overTimeSalaryTime +
+                                          overTimeSalaryTime +
                                           overTimeEarlyOutAmount *
-                                            overTimeEarlySalaryTime
+                                          overTimeEarlySalaryTime
                                         ).toFixed(2)}
                                       </p>
                                     </div>
@@ -1232,100 +1263,41 @@ const Attendence_summary = () => {
                               <button
                                 onClick={() => {
                                   setSelectedStatus("PAIDLEAVE");
-                                  openModal();
+                                  setApplyPunchRecordId(item?.punchRecord?.id);
+
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "PAIDLEAVE"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                                    ${item?.punchRecord
+                                    ?.status === "PAIDLEAVE"
+                                    ? "bg-[#008000] text-white"
+                                    : "bg-[#fff] text-[#000]"
+                                  }`}
                               >
                                 L I Paid Leave
                               </button>
 
-                              {/* Modal overlay and content */}
-                              {isOpen14 && (
-                                <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                                  <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-[200px] p-6">
-                                    <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-                                      Sure You Want To Accept ?{" "}
-                                    </h2>
-                                    <p className="text-center mb-[16px] text-[14px]">
-                                      Are you sure you want to accept this ??
-                                    </p>
-
-                                    <div className="flex justify-around ">
-                                      <button className="px-4 py-2 bg-[#27004a] text-white rounded-md">
-                                        Yes , Confirm
-                                      </button>
-                                      <button
-                                        onClick={closeModal14}
-                                        className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                      >
-                                        No , Cancel
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
                             </div>
                             <div className="flex xl:justify-center lg:justify-center md:justify-center items-center justify-end">
                               {/* Button to open modal */}
                               <button
                                 onClick={() => {
                                   setSelectedStatus("ABSENT");
-                                  openModal();
+                                  setApplyPunchRecordId(item?.punchRecord?.id);
+
+
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "ABSENT"
-                                                        ? "bg-[#d62727] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                                    ${item?.punchRecord
+                                    ?.status === "ABSENT"
+                                    ? "bg-[#d62727] text-white"
+                                    : "bg-[#fff] text-[#000]"
+                                  }`}
                               >
                                 A I Absent
                               </button>
 
-                              {/* Modal overlay and content */}
-                              {isOpen && (
-                                <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                                  <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-[200px] p-6">
-                                    <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-                                      Sure You Want To Accept ?{" "}
-                                    </h2>
-                                    <p className="text-center mb-[16px] text-[14px]">
-                                      Are you sure you want to accept this ??
-                                    </p>
-
-                                    <div className="flex justify-around ">
-                                      <button
-                                        onClick={() => {
-                                          confirmation(item);
-                                        }}
-                                        disabled={loading}
-                                        className={`px-4 py-2 bg-[#27004a] text-white rounded-md ${
-                                          loading ? "opacity-50" : ""
-                                        }`}
-                                      >
-                                        {loading
-                                          ? "Confirming..."
-                                          : " Yes , Confirm"}
-                                      </button>
-                                      <button
-                                        onClick={closeModal}
-                                        className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                      >
-                                        No , Cancel
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
                             </div>
                           </div>
                         </div>
@@ -1339,609 +1311,570 @@ const Attendence_summary = () => {
           );
         })}
 
-      {!summaryDate && attendance.length === 0 && (
-        <div className="text-center">
-          <h2 className="text-[#ff0000] font-medium py-9 text-[20px]">
-            Please Select Date
-          </h2>
-        </div>
-      )}
 
-      {others.length > 0 && (
-        <div>
-          <div className="mt-0 pt-4">Other Departments ({others.length})</div>
 
-          {others.map((item, index) => {
-            return (
-              <>
-                <div className="shadow p-[20px] mt-[7px] rounded-md shadow-cs">
-                  <div className="flex items-start justify-between  flex-col xl:flex-row lg:flex-row md:flex-row xl:items-center lg:items-center md:items-center gap-4 xl:gap-0 lg:gap-0 md:gap-0">
-                    <div>
-                      <p className="text-[16px]">
-                        {item?.punchRecord?.staff?.User?.name}
-                      </p>
-                      <p className="text-[16px]">
-                        {item?.punchRecord?.staff?.User?.email}
-                      </p>
-                      <p className="text-[red] text-[14px]">
-                        {item?.punchRecord?.status}
-                      </p>
-                      <p className="text-[#27004a] font-medium text-[14px] mt-[10px] w-[150px]">
-                        Add Note - Login
-                      </p>
-                    </div>
+      {
 
-                    <div className="flex gap-[18px] xl:flex-col flex-row md:flex-col lg:flex-col set-workd w-full justify-between xl:justify-start md:justify-start lg:justify-start ">
-                      <div className="flex gap-[20px] flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
-                        <div className="flex xl:justify-center justify-start items-center">
-                          {/* Button to open modal */}
-                          <button
-                            onClick={() => {
-                              setSelectedStatus("PRESENT");
-                              openModal();
-                            }}
-                            className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "PRESENT"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
-                          >
-                            P I Present
-                          </button>
-                        </div>
 
-                        <div className="flex justify-center items-center">
-                          {/* Button to open modal */}
-                          <button
-                            onClick={() => {
-                              setSelectedStatus("HALFDAY");
-                              openModal();
-                            }}
-                            className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "HALFDAY"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
-                          >
-                            HD I HalfDay
-                          </button>
-                        </div>
+        others?.length > 0 && (
+          <div>
+            <div className="mt-0 pt-2">Other Departments ({others?.length})</div>
 
-                        <div className="flex xl:justify-center justify-start items-center">
-                          {/* Button to open modal */}
-                          <button
-                            onClick={() => {
-                              fineId(item?.staffId);
-                            }}
-                            className=" btns px-6 py-3 text-[14px] text-[#27004a] font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
-                          >
-                            F I Fine
-                          </button>
-
-                          {/* Modal overlay and content */}
-                          {isOpen0 && (
-                            <div className="fixed inset-0 z-50 p-[10px] flex items-center justify-center bg-black bg-opacity-50">
-                              <div className="bg-white rounded-lg shadow-lg max-w-lg w-full overflow-y-scroll h-[100%] p-6 scroll-bar-design">
-                                <div className="">
-                                  <div className="mb-[20px]">
-                                    <h2 className="text-xl text-[18px] text-[black] font-semibold  ">
-                                      {" "}
-                                      Fine{" "}
-                                    </h2>
-                                    <p className=" text-[14px]">
-                                      {staffName} I{" "}
-                                      {formatSummaryDate(summaryDate)}
-                                    </p>
-                                  </div>
-
-                                  <div className="flex justify-between items-center mb-[10px]">
-                                    <p className="text-[16px]  font-medium">
-                                      DAILY SHIFT
-                                    </p>
-                                    {/* <DeleteIcon className='del-icon2 text-[#89868d] cursor-pointer' /> */}
-                                  </div>
-                                </div>
-
-                                <div className="  ">
-                                  <div className="flex items-center justify-between mb-[5px]">
-                                    <p className="text-[14px] font-medium">
-                                      Late Entry
-                                    </p>
-                                    {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
-                                  </div>
-
-                                  <div className="flex items-center gap-[20px] mb-2">
-                                    <div className="w-[33%]">
-                                      <p className="text-[12px]">Hours</p>
-                                      <TimePicker
-                                        showSecond={false}
-                                        defaultValue={null}
-                                        className="xxx"
-                                        onChange={(e) =>
-                                          handleChangeTime(e, perMinSalary)
-                                        }
-                                        format="HH:mm"
-                                        inputReadOnly
-                                      />
-                                      <p className="text-[12px]">
-                                        Amount{" "}
-                                        {(
-                                          lateEntryAmount * lateEntrySalaryTime
-                                        ).toFixed(2)}{" "}
-                                      </p>
-                                    </div>
-                                    <div className="flex gap-[28px] w-[66%]">
-                                      <div className="w-[100%]">
-                                        <select
-                                          onChange={(e) => {
-                                            setLateEntrySalaryTime(
-                                              e.target.value
-                                            );
-                                          }}
-                                          className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
-                                        >
-                                          <option value={1}>1x Salary</option>
-                                          <option value={1.5}>
-                                            1.5x Salary
-                                          </option>
-                                        </select>
-                                      </div>
-                                      <div className="">
-                                        {/* {Number(calculateFinePerMinute(selectedStaffSalary, 30, 8))}  */}
-                                        <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
-                                          {perMinSalary} Per Min
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className=" ">
-                                  <div className="flex items-center justify-between mb-[5px]">
-                                    <p className="text-[14px] font-medium">
-                                      Excess Breaks
-                                    </p>
-                                    {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
-                                  </div>
-
-                                  <div className="flex items-center gap-[20px] mb-2">
-                                    <div className="w-[33%]">
-                                      <p className="text-[12px]">Hours</p>
-                                      {/* <input type="time" onChange={(e) => { setExcessBreakHours(e.target.value) }} className='text-[14px]  rounded-md select-pe p-[6px] w-[100%] ' /> */}
-                                      <TimePicker
-                                        showSecond={false}
-                                        defaultValue={null}
-                                        className="xxx"
-                                        onChange={(e) =>
-                                          handleChangeTimeExcessBreak(
-                                            e,
-                                            perMinSalaryExcessBreak
-                                          )
-                                        }
-                                        format="HH:mm"
-                                        inputReadOnly
-                                      />
-
-                                      <p className="text-[12px]">
-                                        Amount{" "}
-                                        {(
-                                          excessBreakAmount * excessBreakTime
-                                        ).toFixed(2)}
-                                      </p>
-                                    </div>
-                                    <div className="flex gap-[28px] w-[66%]">
-                                      <div className="w-[100%]">
-                                        <select
-                                          onChange={(e) => {
-                                            setExcessBreakTime(e.target.value);
-                                          }}
-                                          className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
-                                        >
-                                          <option value={1}>1x Salary</option>
-                                          <option value={1.5}>
-                                            1.5x Salary
-                                          </option>
-                                        </select>
-                                      </div>
-                                      <div className="">
-                                        <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
-                                          {perMinSalary} Per Min
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className=" ">
-                                  <div className="flex items-center justify-between mb-[5px]">
-                                    <p className="text-[14px] font-medium">
-                                      Early Out
-                                    </p>
-                                    {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
-                                  </div>
-
-                                  <div className="flex items-center gap-[20px] mb-2">
-                                    <div className="w-[33%]">
-                                      <p className="text-[12px]">Hours</p>
-                                      {/* <input type="time" onChange={(e) => { setEarlyOutHours(e.target.value) }} className='text-[14px]  rounded-md select-pe p-[6px] w-[100%] ' /> */}
-                                      <TimePicker
-                                        showSecond={false}
-                                        defaultValue={null}
-                                        className="xxx"
-                                        onChange={(e) =>
-                                          handleChangeTimeEarlyOut(
-                                            e,
-                                            perMinSalaryEarlyOut
-                                          )
-                                        }
-                                        format="HH:mm"
-                                        inputReadOnly
-                                      />
-                                      <p className="text-[12px]">
-                                        Amount{" "}
-                                        {(
-                                          earlyOutAmount * earlyOutTime
-                                        ).toFixed(2)}
-                                      </p>
-                                    </div>
-                                    <div className="flex gap-[28px] w-[66%]">
-                                      <div className="w-[100%]">
-                                        <select
-                                          onChange={(e) => {
-                                            setEarlyOutTime(e.target.value);
-                                          }}
-                                          className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
-                                        >
-                                          <option value={1}>1x Salary</option>
-                                          <option value={1.5}>
-                                            1.5x Salary
-                                          </option>
-                                        </select>
-                                      </div>
-                                      <div className="">
-                                        <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
-                                          {perMinSalary} Per Min
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="mt-[10px] mb-[10px]">
-                                  <span className="text-[12px]">
-                                    Total Amount
-                                  </span>
-                                  <p className="text-[14px]">
-                                    {fineTotalAmount}
-                                  </p>
-                                </div>
-                                <div className="flex items-center mb-[20px] gap-[4px] ">
-                                  <input type="checkbox" />
-                                  <p className="text-[14px]">
-                                    Send SMS to Staff
-                                  </p>
-                                </div>
-
-                                <div className="flex flex-col gap-[10px] ">
-                                  <button
-                                    onClick={applyFine}
-                                    className="px-4 py-2 bg-[#27004a] border border-[#27004a] transition-all text-white rounded-md hover:text-[#27004a] hover:bg-[#ffff] "
-                                  >
-                                    Apply Fine
-                                  </button>
-                                  <button
-                                    onClick={closeModal0}
-                                    className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                  >
-                                    Cancel
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
+            {others?.map((item, index) => {
+              return (
+                <>
+                  <div className="shadow p-[20px] mt-[7px] rounded-md shadow-cs">
+                    <div className="flex items-start justify-between  flex-col xl:flex-row lg:flex-row md:flex-row xl:items-center lg:items-center md:items-center gap-4 xl:gap-0 lg:gap-0 md:gap-0">
+                      <div>
+                        <p className="text-[16px]">
+                          {item?.punchRecord?.staff?.User?.name}
+                        </p>
+                        <p className="text-[16px]">
+                          {item?.punchRecord?.staff?.User?.email}
+                        </p>
+                        <p className="text-[red] text-[14px]">
+                          {item?.punchRecord?.status}
+                        </p>
+                        <p className="text-[#27004a] font-medium text-[14px] mt-[10px] w-[150px]">
+                          Add Note - Login
+                        </p>
                       </div>
-                      <div className="flex gap-[20px] flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
-                        <div className="flex justify-center items-center">
-                          {/* Button to open modal */}
-                          <button
-                            // onClick={openModal12}
-                            onClick={() => {
-                              overTimeId(item?.staffId);
-                            }}
-                            className=" btns px-6 py-3 text-[14px] text-black font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
-                          >
-                            OT I Overtime
-                          </button>
 
-                          {/* Modal overlay and content */}
-                          {isOpen12 && (
-                            <div className="fixed inset-0 z-50 p-[10px] flex items-center justify-center bg-black bg-opacity-50">
-                              <div className="bg-white rounded-lg shadow-lg max-w-lg w-full overflow-y-scroll h-[100%] p-6 scroll-bar-design">
-                                <div className="">
-                                  <div className="mb-[20px]">
-                                    <h2 className="text-xl text-[18px] text-[black] font-semibold  ">
-                                      {" "}
-                                      OverTime Day{" "}
-                                    </h2>
-                                    <p className=" text-[14px]">
-                                      {staffName} I{" "}
-                                      {formatSummaryDate(summaryDate)}
-                                    </p>
-                                  </div>
+                      <div className="flex gap-[18px] xl:flex-col flex-row md:flex-col lg:flex-col set-workd w-full justify-between xl:justify-start md:justify-start lg:justify-start ">
+                        <div className="flex gap-[20px] flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
+                          <div className="flex xl:justify-center justify-start items-center">
+                            {/* Button to open modal */}
+                            <button
+                              onClick={() => {
+                                setSelectedStatus("PRESENT");
+                                setApplyPunchRecordId(item?.punchRecord?.id);
+                              }}
+                              className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
+                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
+                                                    ${item?.punchRecord
+                                  ?.status === "PRESENT"
+                                  ? "bg-[#008000] text-white"
+                                  : "bg-[#fff] text-[#000]"
+                                }`}
+                            >
+                              P I Present
+                            </button>
+                          </div>
 
-                                  <div className="flex justify-between items-center mb-[10px]">
-                                    <p className="text-[16px]  font-medium">
-                                      DAILY SHIFT
-                                    </p>
-                                    {/* <DeleteIcon className='del-icon2 text-[#89868d] cursor-pointer' /> */}
-                                  </div>
-                                </div>
+                          <div className="flex justify-center items-center">
+                            {/* Button to open modal */}
+                            <button
+                              onClick={() => {
+                                setSelectedStatus("HALFDAY");
+                                setApplyPunchRecordId(item?.punchRecord?.id);
+                              }}
+                              className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
+                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
+                                                    ${item?.punchRecord
+                                  ?.status === "HALFDAY"
+                                  ? "bg-[#008000] text-white"
+                                  : "bg-[#fff] text-[#000]"
+                                }`}
+                            >
+                              HD I HalfDay
+                            </button>
+                          </div>
 
-                                <div className="  ">
-                                  <div className="flex items-center justify-between mb-[5px]">
-                                    <p className="text-[14px] font-medium">
-                                      Late Out
-                                    </p>
-                                    {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
-                                  </div>
+                          <div className="flex xl:justify-center justify-start items-center">
+                            {/* Button to open modal */}
+                            <button
+                              onClick={() => {
+                                fineId(item?.staffId);
+                                setApplyPunchRecordId(item?.punchRecord?.id);
+                              }}
+                              className=" btns px-6 py-3 text-[14px] text-[#27004a] font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
+                            >
+                              F I Fine
+                            </button>
 
-                                  <div className="flex items-center gap-[20px] mb-2">
-                                    <div className="w-[33%]">
-                                      <p className="text-[12px]">Hours</p>
-                                      <TimePicker
-                                        showSecond={false}
-                                        defaultValue={null}
-                                        className="xxx"
-                                        onChange={(e) =>
-                                          handleChangeOverTime(
-                                            e,
-                                            perMinSalaryOverTime
-                                          )
-                                        }
-                                        format="HH:mm"
-                                        inputReadOnly
-                                      />
-
-                                      <p className="text-[12px]">
-                                        Amount{" "}
-                                        {(
-                                          overTimeLateOutAmount *
-                                          overTimeSalaryTime
-                                        ).toFixed(2)}{" "}
+                            {/* Modal overlay and content */}
+                            {isOpen0 && (
+                              <div className="fixed inset-0 z-50 p-[10px] flex items-center justify-center bg-black bg-opacity-50">
+                                <div className="bg-white rounded-lg shadow-lg max-w-lg w-full overflow-y-scroll h-[100%] p-6 scroll-bar-design">
+                                  <div className="">
+                                    <div className="mb-[20px]">
+                                      <h2 className="text-xl text-[18px] text-[black] font-semibold  ">
+                                        {" "}
+                                        Fine{" "}
+                                      </h2>
+                                      <p className=" text-[14px]">
+                                        {staffName} I{" "}
+                                        {formatSummaryDate(summaryDate)}
                                       </p>
                                     </div>
-                                    <div className="flex gap-[28px] w-[66%]">
-                                      <div className="w-[100%]">
-                                        <select
-                                          onChange={(e) => {
-                                            setOverTimeSalaryTime(
-                                              e.target.value
-                                            );
-                                          }}
-                                          className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
-                                        >
-                                          <option value={1}>1x Salary</option>
-                                          <option value={1.5}>
-                                            1.5x Salary
-                                          </option>
-                                        </select>
-                                      </div>
-                                      <div className="">
-                                        <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
-                                          {perMinSalaryOverTime} Per Min
+
+                                    <div className="flex justify-between items-center mb-[10px]">
+                                      <p className="text-[16px]  font-medium">
+                                        DAILY SHIFT
+                                      </p>
+                                      {/* <DeleteIcon className='del-icon2 text-[#89868d] cursor-pointer' /> */}
+                                    </div>
+                                  </div>
+
+                                  <div className="  ">
+                                    <div className="flex items-center justify-between mb-[5px]">
+                                      <p className="text-[14px] font-medium">
+                                        Late Entry
+                                      </p>
+                                      {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
+                                    </div>
+
+                                    <div className="flex items-center gap-[20px] mb-2">
+                                      <div className="w-[33%]">
+                                        <p className="text-[12px]">Hours</p>
+                                        <TimePicker
+                                          showSecond={false}
+                                          defaultValue={null}
+                                          className="xxx"
+                                          onChange={(e) =>
+                                            handleChangeTime(e, perMinSalary)
+                                          }
+                                          format="HH:mm"
+                                          inputReadOnly
+                                        />
+                                        <p className="text-[12px]">
+                                          Amount{" "}
+                                          {(
+                                            lateEntryAmount *
+                                            lateEntrySalaryTime
+                                          ).toFixed(2)}{" "}
                                         </p>
+                                      </div>
+                                      <div className="flex gap-[28px] w-[66%]">
+                                        <div className="w-[100%]">
+                                          <select
+                                            onChange={(e) => {
+                                              setLateEntrySalaryTime(
+                                                e.target.value
+                                              );
+                                            }}
+                                            className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
+                                          >
+                                            <option value={1}>
+                                              1x Salary
+                                            </option>
+                                            <option value={1.5}>
+                                              1.5x Salary
+                                            </option>
+                                          </select>
+                                        </div>
+                                        <div className="">
+                                          {/* {Number(calculateFinePerMinute(selectedStaffSalary, 30, 8))}  */}
+                                          <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
+                                            {perMinSalary} Per Min
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className=" ">
-                                  <div className="flex items-center justify-between mb-[5px]">
-                                    <p className="text-[14px] font-medium">
-                                      Early In
+                                  <div className=" ">
+                                    <div className="flex items-center justify-between mb-[5px]">
+                                      <p className="text-[14px] font-medium">
+                                        Excess Breaks
+                                      </p>
+                                      {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
+                                    </div>
+
+                                    <div className="flex items-center gap-[20px] mb-2">
+                                      <div className="w-[33%]">
+                                        <p className="text-[12px]">Hours</p>
+                                        {/* <input type="time" onChange={(e) => { setExcessBreakHours(e.target.value) }} className='text-[14px]  rounded-md select-pe p-[6px] w-[100%] ' /> */}
+                                        <TimePicker
+                                          showSecond={false}
+                                          defaultValue={null}
+                                          className="xxx"
+                                          onChange={(e) =>
+                                            handleChangeTimeExcessBreak(
+                                              e,
+                                              perMinSalaryExcessBreak
+                                            )
+                                          }
+                                          format="HH:mm"
+                                          inputReadOnly
+                                        />
+
+                                        <p className="text-[12px]">
+                                          Amount{" "}
+                                          {(
+                                            excessBreakAmount *
+                                            excessBreakTime
+                                          ).toFixed(2)}
+                                        </p>
+                                      </div>
+                                      <div className="flex gap-[28px] w-[66%]">
+                                        <div className="w-[100%]">
+                                          <select
+                                            onChange={(e) => {
+                                              setExcessBreakTime(
+                                                e.target.value
+                                              );
+                                            }}
+                                            className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
+                                          >
+                                            <option value={1}>
+                                              1x Salary
+                                            </option>
+                                            <option value={1.5}>
+                                              1.5x Salary
+                                            </option>
+                                          </select>
+                                        </div>
+                                        <div className="">
+                                          <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
+                                            {perMinSalary} Per Min
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className=" ">
+                                    <div className="flex items-center justify-between mb-[5px]">
+                                      <p className="text-[14px] font-medium">
+                                        Early Out
+                                      </p>
+                                      {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
+                                    </div>
+
+                                    <div className="flex items-center gap-[20px] mb-2">
+                                      <div className="w-[33%]">
+                                        <p className="text-[12px]">Hours</p>
+                                        {/* <input type="time" onChange={(e) => { setEarlyOutHours(e.target.value) }} className='text-[14px]  rounded-md select-pe p-[6px] w-[100%] ' /> */}
+                                        <TimePicker
+                                          showSecond={false}
+                                          defaultValue={null}
+                                          className="xxx"
+                                          onChange={(e) =>
+                                            handleChangeTimeEarlyOut(
+                                              e,
+                                              perMinSalaryEarlyOut
+                                            )
+                                          }
+                                          format="HH:mm"
+                                          inputReadOnly
+                                        />
+                                        <p className="text-[12px]">
+                                          Amount{" "}
+                                          {(
+                                            earlyOutAmount * earlyOutTime
+                                          ).toFixed(2)}
+                                        </p>
+                                      </div>
+                                      <div className="flex gap-[28px] w-[66%]">
+                                        <div className="w-[100%]">
+                                          <select
+                                            onChange={(e) => {
+                                              setEarlyOutTime(e.target.value);
+                                            }}
+                                            className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
+                                          >
+                                            <option value={1}>
+                                              1x Salary
+                                            </option>
+                                            <option value={1.5}>
+                                              1.5x Salary
+                                            </option>
+                                          </select>
+                                        </div>
+                                        <div className="">
+                                          <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
+                                            {perMinSalary} Per Min
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="mt-[10px] mb-[10px]">
+                                    <span className="text-[12px]">
+                                      Total Amount
+                                    </span>
+                                    <p className="text-[14px]">
+                                      {fineTotalAmount}
                                     </p>
-                                    {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
+                                  </div>
+                                  <div className="flex items-center mb-[20px] gap-[4px] ">
+                                    <input type="checkbox" />
+                                    <p className="text-[14px]">
+                                      Send SMS to Staff
+                                    </p>
                                   </div>
 
-                                  <div className="flex items-center gap-[20px] mb-2">
-                                    <div className="w-[33%]">
-                                      <p className="text-[12px]">Hours</p>
-                                      <TimePicker
-                                        showSecond={false}
-                                        defaultValue={null}
-                                        className="xxx"
-                                        onChange={(e) =>
-                                          handleChangeTimeEarlyIn(
-                                            e,
-                                            perMinSalaryEarlyOutOverTime
-                                          )
-                                        }
-                                        format="HH:mm"
-                                        inputReadOnly
-                                      />
+                                  <div className="flex flex-col gap-[10px] ">
+                                    <button
+                                      onClick={() => {
+                                        console.log(item.punchRecord);
+                                        applyFine();
+                                      }}
+                                      className="px-4 py-2 bg-[#27004a] border border-[#27004a] transition-all text-white rounded-md hover:text-[#27004a] hover:bg-[#ffff] "
+                                    >
+                                      Apply Fine
+                                    </button>
+                                    <button
+                                      onClick={closeModal0}
+                                      className="px-4 py-2 bg-[#27004a] text-white rounded-md"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex gap-[20px] flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
+                          <div className="flex justify-center items-center">
+                            {/* Button to open modal */}
+                            <button
+                              // onClick={openModal12}
+                              onClick={() => {
+                                overTimeId(item?.staffId);
+                                setApplyPunchRecordId(item?.punchRecord?.id);
+                              }}
+                              className=" btns px-6 py-3 text-[14px] text-black font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
+                            >
+                              OT I Overtime
+                            </button>
 
-                                      <p className="text-[12px]">
-                                        Amount{" "}
-                                        {(
-                                          overTimeEarlyOutAmount *
-                                          overTimeEarlySalaryTime
-                                        ).toFixed(2)}
+                            {/* Modal overlay and content */}
+                            {isOpen12 && (
+                              <div className="fixed inset-0 z-50 p-[10px] flex items-center justify-center bg-black bg-opacity-50">
+                                <div className="bg-white rounded-lg shadow-lg max-w-lg w-full overflow-y-scroll h-[100%] p-6 scroll-bar-design">
+                                  <div className="">
+                                    <div className="mb-[20px]">
+                                      <h2 className="text-xl text-[18px] text-[black] font-semibold  ">
+                                        {" "}
+                                        OverTime Day{" "}
+                                      </h2>
+                                      <p className=" text-[14px]">
+                                        {staffName} I{" "}
+                                        {formatSummaryDate(summaryDate)}
                                       </p>
                                     </div>
-                                    <div className="flex gap-[28px] w-[66%]">
-                                      <div className="w-[100%]">
-                                        <select
-                                          onChange={(e) => {
-                                            setOverTimeEarlySalaryTime(
-                                              e.target.value
-                                            );
-                                          }}
-                                          className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
-                                        >
-                                          <option value={1}>1x Salary</option>
-                                          <option value={1.5}>
-                                            1.5x Salary
-                                          </option>
-                                        </select>
-                                      </div>
-                                      <div className="">
-                                        <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
-                                          {perMinSalaryEarlyOutOverTime} Per Min
+
+                                    <div className="flex justify-between items-center mb-[10px]">
+                                      <p className="text-[16px]  font-medium">
+                                        DAILY SHIFT
+                                      </p>
+                                      {/* <DeleteIcon className='del-icon2 text-[#89868d] cursor-pointer' /> */}
+                                    </div>
+                                  </div>
+
+                                  <div className="  ">
+                                    <div className="flex items-center justify-between mb-[5px]">
+                                      <p className="text-[14px] font-medium">
+                                        Late Out
+                                      </p>
+                                      {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
+                                    </div>
+
+                                    <div className="flex items-center gap-[20px] mb-2">
+                                      <div className="w-[33%]">
+                                        <p className="text-[12px]">Hours</p>
+                                        <TimePicker
+                                          showSecond={false}
+                                          defaultValue={null}
+                                          className="xxx"
+                                          onChange={(e) =>
+                                            handleChangeOverTime(
+                                              e,
+                                              perMinSalaryOverTime
+                                            )
+                                          }
+                                          format="HH:mm"
+                                          inputReadOnly
+                                        />
+
+                                        <p className="text-[12px]">
+                                          Amount{" "}
+                                          {(
+                                            overTimeLateOutAmount *
+                                            overTimeSalaryTime
+                                          ).toFixed(2)}{" "}
                                         </p>
+                                      </div>
+                                      <div className="flex gap-[28px] w-[66%]">
+                                        <div className="w-[100%]">
+                                          <select
+                                            onChange={(e) => {
+                                              setOverTimeSalaryTime(
+                                                e.target.value
+                                              );
+                                            }}
+                                            className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
+                                          >
+                                            <option value={1}>
+                                              1x Salary
+                                            </option>
+                                            <option value={1.5}>
+                                              1.5x Salary
+                                            </option>
+                                          </select>
+                                        </div>
+                                        <div className="">
+                                          <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
+                                            {perMinSalaryOverTime} Per Min
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className="mt-[10px] mb-[10px]">
-                                  <span className="text-[12px]">
-                                    Total Amount
-                                  </span>
-                                  <p className="text-[14px]">
-                                    {(
-                                      overTimeLateOutAmount *
+                                  <div className=" ">
+                                    <div className="flex items-center justify-between mb-[5px]">
+                                      <p className="text-[14px] font-medium">
+                                        Early In
+                                      </p>
+                                      {/* <CloseIcon className='close-icon text-[#89868d]' /> */}
+                                    </div>
+
+                                    <div className="flex items-center gap-[20px] mb-2">
+                                      <div className="w-[33%]">
+                                        <p className="text-[12px]">Hours</p>
+                                        <TimePicker
+                                          showSecond={false}
+                                          defaultValue={null}
+                                          className="xxx"
+                                          onChange={(e) =>
+                                            handleChangeTimeEarlyIn(
+                                              e,
+                                              perMinSalaryEarlyOutOverTime
+                                            )
+                                          }
+                                          format="HH:mm"
+                                          inputReadOnly
+                                        />
+
+                                        <p className="text-[12px]">
+                                          Amount{" "}
+                                          {(
+                                            overTimeEarlyOutAmount *
+                                            overTimeEarlySalaryTime
+                                          ).toFixed(2)}
+                                        </p>
+                                      </div>
+                                      <div className="flex gap-[28px] w-[66%]">
+                                        <div className="w-[100%]">
+                                          <select
+                                            onChange={(e) => {
+                                              setOverTimeEarlySalaryTime(
+                                                e.target.value
+                                              );
+                                            }}
+                                            className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
+                                          >
+                                            <option value={1}>
+                                              1x Salary
+                                            </option>
+                                            <option value={1.5}>
+                                              1.5x Salary
+                                            </option>
+                                          </select>
+                                        </div>
+                                        <div className="">
+                                          <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
+                                            {perMinSalaryEarlyOutOverTime} Per
+                                            Min
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="mt-[10px] mb-[10px]">
+                                    <span className="text-[12px]">
+                                      Total Amount
+                                    </span>
+                                    <p className="text-[14px]">
+                                      {(
+                                        overTimeLateOutAmount *
                                         overTimeSalaryTime +
-                                      overTimeEarlyOutAmount *
+                                        overTimeEarlyOutAmount *
                                         overTimeEarlySalaryTime
-                                    ).toFixed(2)}
-                                  </p>
-                                </div>
-                                <div className="flex items-center mb-[20px] gap-[4px] ">
-                                  <input type="checkbox" />
-                                  <p className="text-[14px]">
-                                    Send SMS to Staff
-                                  </p>
-                                </div>
+                                      ).toFixed(2)}
+                                    </p>
+                                  </div>
+                                  <div className="flex items-center mb-[20px] gap-[4px] ">
+                                    <input type="checkbox" />
+                                    <p className="text-[14px]">
+                                      Send SMS to Staff
+                                    </p>
+                                  </div>
 
-                                <div className="flex flex-col gap-[10px] ">
-                                  <button
-                                    onClick={applyOverTime}
-                                    className="px-4 py-2 bg-[#27004a] border border-[#27004a] transition-all text-white rounded-md hover:text-[#27004a] hover:bg-[#ffff] "
-                                  >
-                                    Apply OverTime
-                                  </button>
-                                  <button
-                                    onClick={closeModal12}
-                                    className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                  >
-                                    Cancel
-                                  </button>
+                                  <div className="flex flex-col gap-[10px] ">
+                                    <button
+                                      onClick={applyOverTime}
+                                      className="px-4 py-2 bg-[#27004a] border border-[#27004a] transition-all text-white rounded-md hover:text-[#27004a] hover:bg-[#ffff] "
+                                    >
+                                      Apply OverTime
+                                    </button>
+                                    <button
+                                      onClick={closeModal12}
+                                      className="px-4 py-2 bg-[#27004a] text-white rounded-md"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex justify-center items-center">
-                          {/* Button to open modal */}
-                          <button
-                            onClick={() => {
-                              setSelectedStatus("PAIDLEAVE");
-                              openModal();
-                            }}
-                            className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
+                            )}
+                          </div>
+                          <div className="flex justify-center items-center">
+                            {/* Button to open modal */}
+                            <button
+                              onClick={() => {
+                                setSelectedStatus("PAIDLEAVE");
+                                setApplyPunchRecordId(item?.punchRecord?.id);
+
+                              }}
+                              className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "PAIDLEAVE"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
-                          >
-                            L I Paid Leave
-                          </button>
+                                                    ${item?.punchRecord
+                                  ?.status === "PAIDLEAVE"
+                                  ? "bg-[#008000] text-white"
+                                  : "bg-[#fff] text-[#000]"
+                                }`}
+                            >
+                              L I Paid Leave
+                            </button>
 
-                          {/* Modal overlay and content */}
-                          {isOpen14 && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                              <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-[200px] p-6">
-                                <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-                                  Sure You Want To Accept ?{" "}
-                                </h2>
-                                <p className="text-center mb-[16px] text-[14px]">
-                                  Are you sure you want to accept this ??
-                                </p>
+                          </div>
+                          <div className="flex xl:justify-center lg:justify-center md:justify-center items-center justify-end">
+                            {/* Button to open modal */}
+                            <button
+                              onClick={() => {
+                                setSelectedStatus("ABSENT");
+                                setApplyPunchRecordId(item?.punchRecord?.id);
 
-                                <div className="flex justify-around ">
-                                  <button className="px-4 py-2 bg-[#27004a] text-white rounded-md">
-                                    Yes , Confirm
-                                  </button>
-                                  <button
-                                    onClick={closeModal14}
-                                    className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                  >
-                                    No , Cancel
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex xl:justify-center lg:justify-center md:justify-center items-center justify-end">
-                          {/* Button to open modal */}
-                          <button
-                            onClick={() => {
-                              setSelectedStatus("ABSENT");
-                              openModal();
-                            }}
-                            className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
+
+                              }}
+                              className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "ABSENT"
-                                                        ? "bg-[#e02929] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
-                          >
-                            A I Absent
-                          </button>
+                                                    ${item?.punchRecord
+                                  ?.status === "ABSENT"
+                                  ? "bg-[#d62727] text-white"
+                                  : "bg-[#fff] text-[#000]"
+                                }`}
+                            >
+                              A I Absent
+                            </button>
 
-                          {/* Modal overlay and content */}
-                          {isOpen && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                              <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-[200px] p-6">
-                                <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-                                  Sure You Want To Accept ?{" "}
-                                </h2>
-                                <p className="text-center mb-[16px] text-[14px]">
-                                  Are you sure you want to accept this ??
-                                </p>
-
-                                <div className="flex justify-around ">
-                                  <button
-                                    onClick={() => {
-                                      confirmation(item);
-                                    }}
-                                    disabled={loading}
-                                    className={`px-4 py-2 bg-[#27004a] text-white rounded-md ${
-                                      loading ? "opacity-50" : ""
-                                    }`}
-                                  >
-                                    {loading
-                                      ? "Confirming..."
-                                      : " Yes , Confirm"}
-                                  </button>
-                                  <button
-                                    onClick={closeModal}
-                                    className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                  >
-                                    No , Cancel
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          )}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </>
-            );
-          })}
-        </div>
-      )}
+                </>
+              );
+            })}
+          </div>
+        )
+
+
+      }
+
+
     </div>
   );
 };

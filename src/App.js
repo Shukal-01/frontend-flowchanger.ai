@@ -144,7 +144,7 @@ const App = () => {
           <SideBar />
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set max-h-screen ">
             <NavBar />
-            <div className="p-[10px]  w-full h-[90%] overflow-y-scroll content-container">
+            <div className="p-[10px]  w-full h-[98vh] md:h-[90%] overflow-y-scroll content-container">
               <Outlet />
             </div>
           </div>
