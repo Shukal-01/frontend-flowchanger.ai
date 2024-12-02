@@ -6,9 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../../Context/GlobalContext';
 const EditRole = () => {
 
-    const { baseUrl, openToast,roleName, setRoleName, roleId,setEditPermissions,editPermissions : permissions} = useGlobalContext();
+    const { baseUrl, openToast, roleName, setRoleName, roleId, setEditPermissions, editPermissions: permissions } = useGlobalContext();
     const navigate = useNavigate()
-    
+    const [isLoading, setIsLoading] = useState(false)
 
     const handlePermissionChange = (section, permission) => {
         setEditPermissions(prev => ({
@@ -21,28 +21,37 @@ const EditRole = () => {
     };
 
     async function updateRole() {
-        console.log({roleName:roleName,permissions:{...permissions}})
-       
-        const response = await fetch(baseUrl + "role/" + roleId, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ roleName: roleName,permissions })
-        });
-         
-         const data = await response.json();
-         console.log("API Response: ", data);
-         console.log(response)
-    
-        if (response.status === 200) {
-            navigate("/role-detail");
-            openToast("Update Role Successfully", "success");
-        } else {
-            openToast("An error occurred", "error");
+        console.log({ roleName: roleName, permissions: { ...permissions } })
+
+        try {
+            setIsLoading(true);
+            const response = await fetch(baseUrl + "role/" + roleId, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ roleName: roleName, permissions })
+            });
+
+            const data = await response.json();
+            console.log("API Response: ", data);
+            console.log(response)
+
+            if (response.status === 200) {
+                navigate("/role-detail");
+                openToast("Update Role Successfully", "success");
+            } else {
+                openToast("An error occurred", "error");
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+        finally {
+            setIsLoading(false);
         }
     }
-    
+
 
     useEffect(() => {
         if (roleName === "" || roleId === "") {
@@ -62,7 +71,7 @@ const EditRole = () => {
 ] rounded-md focus:outline-none w-[100%] text-[15px] text-[#aeabab]'
                         value={roleName} onChange={(e) => setRoleName(e.target.value)}
                     />
-                   
+
                     <table className='border mt-5 w-[100%] border-1'>
                         <thead className='border border-1 '>
                             <tr>
@@ -78,7 +87,7 @@ const EditRole = () => {
                                     <input
                                         type="checkbox"
                                         className='cursor-pointer'
-                                        checked={permissions.clients_permissions.view_global}  
+                                        checked={permissions.clients_permissions.view_global}
                                         onChange={() => handlePermissionChange('clients_permissions', 'view_global')}
                                     />
                                     <label className='ml-3 text-[13px] cursor-pointer text-[#64748b]'>View Global</label><br />
@@ -361,8 +370,8 @@ const EditRole = () => {
 
 
                     <div className='flex justify-end mt-3 gap-2'>
-                    <Link to="/role-detail" className='first-btn flex items-center' >Cancel</Link>
-                        <button className='second-btn' onClick={updateRole}>Update</button>
+                        <Link to="/role-detail" className='first-btn flex items-center' >Cancel</Link>
+                        <button className={`second-btn ${isLoading==true ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={updateRole}>Update</button>
                     </div>
                 </div>
             </div>

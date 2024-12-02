@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ConfirmationModal({id,callback,loading,setClose}) {
+export default function ConfirmationModal({id,callback,isLoading,setClose,}) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
       <div className="bg-white rounded-lg shadow-cs max-w-lg w-full h-[200px] p-6">
@@ -13,13 +13,14 @@ export default function ConfirmationModal({id,callback,loading,setClose}) {
           <button
             onClick={() => {
               callback(id)
+
             }}
-            disabled={loading ?? false}
+            disabled={isLoading ?? false}
             className={`px-4 py-2 bg-[#27004a] text-[14px] text-white rounded-md ${
-              loading ? "opacity-50" : ""
+              isLoading ? "opacity-50" : ""
             }`}
           >
-            {loading ? "Confirming..." : " Yes , Confirm"}
+            {isLoading ? "Confirming..." : " Yes , Confirm"}
           </button>
           <button
             onClick={setClose}

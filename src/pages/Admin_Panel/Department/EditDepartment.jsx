@@ -8,26 +8,35 @@ const EditDepartment = () => {
 
     const { baseUrl, name, setName, depId, openToast } = useGlobalContext();
     const navigate = useNavigate()
-
+    const [isLoading, setIsLoading] = useState(false); 
 
 
     async function updateDepartment() {
-        const response = await fetch(baseUrl + "department/" + depId, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ departmentName: name }) // send the formatted data
-        });
+        try {
+            setIsLoading(true)
+            const response = await fetch(baseUrl + "department/" + depId, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ departmentName: name }) // send the formatted data
+            });
 
-        console.log(response);
-        const result = await response.json();
-        if (response.status === 200) {
-            navigate("/department-details")
-            openToast("Update Department Successfully", "success");
-        } else {
-            openToast("An error occurred", "error");
+            console.log(response);
+            const result = await response.json();
+            if (response.status === 200) {
+                navigate("/department-details")
+                openToast("Update Department Successfully", "success");
+            } else {
+                openToast("An error occurred", "error");
 
+            }
+        }
+        catch(error){
+            console.log("error",error)
+        }
+        finally{
+            setIsLoading(false)            
         }
     }
 
@@ -176,7 +185,8 @@ const EditDepartment = () => {
                         <Link to="/department-details " className='first-btn flex items-center '>
                             Cancel
                         </Link>
-                        <button className='second-btn ' onClick={updateDepartment}>Update</button>
+                        <button className={`second-btn ${isLoading==true ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                         onClick={updateDepartment}>Update</button>
                     </div>
                 </div>
             </div>

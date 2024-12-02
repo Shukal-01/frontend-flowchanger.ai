@@ -96,25 +96,27 @@ const DepartmentDetail = () => {
   };
 
   const deleteDepartments = async (id) => {
-    console.log(id);
     try {
+      setIsLoading(true);
       const result = await fetch(`${baseUrl}department/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json", // Corrected the header spelling for consistency
         },
       });
-      console.log(result);
       if (result.status === true) {
-        // Use result.ok instead of checking the status directly
         openToast(result.message);
         setDepartments(result);
-        setOpen10(false)
+        onCloseModal10();
+        fetchDepartments()
       } else {
         openToast(result.message);
       }
     } catch (error) {
       console.error("Error deleting department:", error);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -345,7 +347,7 @@ const DepartmentDetail = () => {
                           className="text-red-500 cursor-pointer"
                         />
                       </button> 
-                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={dep.id} callback={deleteDepartments}/>}
+                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={dep.id} isLoading={isLoading} callback={deleteDepartments}/>}
                     </td>
                   </tr>
                 ))

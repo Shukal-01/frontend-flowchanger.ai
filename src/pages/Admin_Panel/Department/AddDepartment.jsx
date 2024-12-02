@@ -2,39 +2,49 @@ import React, { useState } from 'react'
 import { useGlobalContext } from '../../../Context/GlobalContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { set } from 'react-hook-form';
 
 
 
 const AddDepartment = () => {
     const [department, setDepartment] = useState("");
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { baseUrl ,openToast} = useGlobalContext();
+
+    const { baseUrl, openToast } = useGlobalContext();
 
 
     async function submitDepartment() {
-// showed message for empty department field
-        if (!department.trim()) {
-            openToast("Department name cannot be empty", "error");
-            return;
-        }
-        const response = await fetch(baseUrl + "department", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({departmentName:department}) // send the formatted data
-        });
+        try {
+            setIsLoading(true);
+            if (!department.trim()) {
+                openToast("Department name cannot be empty", "error");
+                return;
+            }
+            const response = await fetch(baseUrl + "department", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ departmentName: department }) // send the formatted data
+            });
 
-        console.log(response);
-        const result = await response.json();
-        if (response.status === 200) {
-          
-            console.log(result);
-            openToast(result.message||"Department successfully added","success");
-            navigate("/department-details");
-        } else {
-            openToast(result.message || "An error occurred","error");
+            console.log(response);
+            const result = await response.json();
+            if (response.status === 200) {
+
+                console.log(result);
+                openToast(result.message || "Department successfully added", "success");
+                navigate("/department-details");
+            } else {
+                openToast(result.message || "An error occurred", "error");
+            }
+        } catch (error) {
+            setIsLoading(false);
+        }
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -176,7 +186,7 @@ const AddDepartment = () => {
                         <Link to="/department-details" className='first-btn flex items-center pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1]'>
                             Cancel
                         </Link>
-                        <button className='second-btn pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1]' onClick={submitDepartment}>Save</button>
+                        <button className={`second-btn pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1] ${isLoading == true ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={submitDepartment}>Save</button>
                     </div>
                 </div>
             </div>

@@ -55,12 +55,12 @@ const Permission = () => {
           </thead>
           <tbody>
         {
-            isLoading && staffDetail.length === 0 ? (<tr className="h-[100px]">
+            isLoading && staffDetail?.length === 0 ? (<tr className="h-[100px]">
               <td colSpan="9" className="text-center text-gray-600 text-xl font-semibold py-4">
                   <ClipLoader color="#4A90E2" size={50} />
               </td>
           </tr>
-          ) : staffDetail && staffDetail.length > 0 ? (
+          ) : staffDetail && staffDetail?.length > 0 ? (
           staffDetail?.map((items,index)=>{
             return  <tr className='border'>
             <td className="border-r border-[#dbdbdb] whitespace-nowrap"><input type='checkbox' className='border border-1 rounded-md ' /></td>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState  } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useGlobalContext } from '../../../Context/GlobalContext'
 
@@ -6,8 +6,10 @@ const AddBranch = () => {
     const navigate = useNavigate();
     const { baseUrl, openToast } = useGlobalContext();
     const [branchName, setBranchName] = React.useState("");
+    const [isLoading, setIsLoading] = useState(false); 
     async function addBranch() {
         try {
+            setIsLoading(true)
             const result = await fetch(baseUrl + "branch", {
                 method: "POST",
                 headers: {
@@ -26,6 +28,9 @@ const AddBranch = () => {
         catch (error) {
             console.log("error", error)
         }
+        finally{
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -41,7 +46,9 @@ const AddBranch = () => {
                         <Link to="/branch-details" className='first-btn flex items-center pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1]'>
                             Cancel
                         </Link>
-                        <button className='second-btn pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1]' onClick={addBranch}>Save</button>
+                        <button className={`${isLoading==true ? 'opacity-50 cursor-not-allowed' : ''}
+                        second-btn pt-2 py-2 pl-5 pr-5 rounded-md text-white hover:bg-[#7526d1]`}
+                         onClick={addBranch}>Save</button>
                     </div>
                 </div>
             </div>

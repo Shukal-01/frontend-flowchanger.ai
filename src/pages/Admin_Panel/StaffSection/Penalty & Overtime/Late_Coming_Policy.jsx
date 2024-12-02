@@ -187,12 +187,12 @@ const Late_Coming_Policy = () => {
             </thead>
             <tbody>
               {
-                isLoading && staffDetail.length === 0 ? (<tr className="h-[100px]">
+                isLoading && staffDetail?.length === 0 ? (<tr className="h-[100px]">
                   <td colSpan="9" className="text-center text-gray-600 text-xl font-semibold py-4">
                     <ClipLoader color="#4A90E2" size={50} />
                   </td>
                 </tr>
-                ) : staffDetail && staffDetail.length > 0 ? (
+                ) : staffDetail && staffDetail?.length > 0 ? (
 
                   staffDetail?.map((items) => {
                     const overTime = items?.staffDetails?.LateComingPolicy[0]

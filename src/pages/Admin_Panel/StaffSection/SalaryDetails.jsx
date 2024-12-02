@@ -152,17 +152,17 @@ const SalaryDetails = () => {
 
               {
 
-                isLoading && staffDetail.length === 0 ? (
+                isLoading && staffDetail?.length === 0 ? (
                   <tr className="h-[100px]">
                   <td colSpan="8" className="text-center text-gray-600 text-sm font-semibold py-4 mx-auto">
                   <ClipLoader color="#4A90E2" size={50} />
                   </td>
                 </tr>
-                ) : staffDetail && staffDetail.length > 0 ? (
+                ) : staffDetail && staffDetail?.length > 0 ? (
 
 
                   staffDetail?.map((item, index) => {
-                    const salaryDetail = item?.staffDetails.SalaryDetails[item.staffDetails?.SalaryDetails?.length - 1]
+                    const salaryDetail = item?.staffDetails?.SalaryDetails[item.staffDetails?.SalaryDetails?.length - 1]
                     console.log(salaryDetail)
                     return <tr className='border'>
                       <td className="border-r border-[#dbdbdb] whitespace-nowrap">
