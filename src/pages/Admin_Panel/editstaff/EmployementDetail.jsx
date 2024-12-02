@@ -3,12 +3,13 @@ import { useGlobalContext } from '../../../Context/GlobalContext';
 
 const EmployementDetail = () => {
 
-
+    const [isLoading, setIsLoading] = useState(false);
     const [allRoles, setAllRoles] = useState([]);
     const [allDepartments, setAllDepartments] = useState([]);
+    const [allBranches, setAllBranches] = useState([]);
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
 
-    const [branch, setBranch] = useState("");
+    const [branchId, setBranchId] = useState("");
     const [department, setDepartment] = useState("");
     const [role, setRole] = useState("");
     const [departmentID, setDepartmentID] = useState("");
@@ -21,7 +22,29 @@ const EmployementDetail = () => {
     const [esiNumber, setESINumber] = useState("");
     const [pfNumber, setPFNumber] = useState("");
     // console.log(branch, department, employmentID, role, dateOfJoining, dateOfLeaving, jobTitle, email, esiNumber, pfNumber);
+    const fetchBranch = async (e) => {
+        try {
+            const response = await fetch(baseUrl + "branch/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
 
+            if (response.status === 200) {
+                const result = await response.json();
+                setAllBranches(result);
+                console.log("Filtered data by ID:", result);
+
+                console.log("Data retrieved successfully:", result);
+                // navigate("/admin/staff");
+            } else {
+                console.error("Failed to retrieve data:", response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+        }
+    };
     const fetchDepartments = async () => {
         try {
             const result = await fetch(baseUrl + "department");
@@ -54,17 +77,20 @@ const EmployementDetail = () => {
     };
 
     useEffect(() => {
+        fetchBranch();
         fetchDepartments();
         fetchRoles();
     }, []);
 
     async function handlesubmit(e) {
+        setIsLoading(true);
         e.preventDefault();
         const data = {};
 
         if (jobTitle !== "") data.job_title = jobTitle;
         if (roleID !== "") data.roleID = roleID;
         if (departmentID !== "") data.departmentID = departmentID;
+        if (branchId !== "") data.branchID = branchId;
         if (email !== "") data.official_email = email;
         if (dateOfJoining !== "") data.date_of_joining = dateOfJoining;
 
@@ -88,10 +114,12 @@ const EmployementDetail = () => {
         } catch (error) {
             console.error("Error updating employment details:", error);
             openToast("An error occurred while updating employment details", "error");
+        } finally {
+            setIsLoading(false);
         }
     }
 
-    console.log(departmentID, roleID);
+    // console.log(departmentID, roleID);
 
     return (
         // <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '>
@@ -100,7 +128,7 @@ const EmployementDetail = () => {
             <div className='flex justify-between items-center px-[30px] w-[100%] p-[20px] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
                 <h3 className='font-medium ml-3'>Employment Details
                 </h3>
-                <button onClick={(e) => handlesubmit(e)} className='second-btn'>Update Details</button>
+                <button onClick={(e) => handlesubmit(e)} disabled={isLoading} className={'second-btn ' + (isLoading && 'animate-pulse opacity-50 cursor-not-allowed')}>Update Details</button>
             </div>
 
             <h2 className='bg-[#fff]  pt-[10px] pb-[10px] pl-[14px] rounded-lg font-normal shadow-cs'>Current Employment</h2>
@@ -109,12 +137,14 @@ const EmployementDetail = () => {
                 <div className='flex xl:flex-row flex-col w-[100%] gap-[10px] justify-between mb-[10px] '>
                     <div className='w-[100%]  xl:w-[48%] 2xl:w-[48%]'>
                         <label className='text-[14px]'>Branches</label><br />
-                        <select value={branch} onChange={(e) => {
-                            setBranch(e.target.value)
+                        <select value={branchId} onChange={(e) => {
+                            setBranchId(e.target.value)
                         }} className='border border-1 rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'>
-                            <option value="First">First</option>
-                            <option value={"Second"}>Second</option>
-                            <option value={"Third"}>Third</option>
+                            {allBranches?.map((branchValue) => (
+                                <option key={branchValue?.id} value={branchValue?.id}>
+                                    {branchValue?.branchName}
+                                </option>
+                            ))}
 
                         </select>
                     </div>
@@ -254,8 +284,8 @@ const EmployementDetail = () => {
 
 
 
-        {/* // </div> */}
-       </>
+            {/* // </div> */}
+        </>
     )
 }
 

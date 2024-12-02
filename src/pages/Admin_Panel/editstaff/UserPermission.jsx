@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useGlobalContext } from '../../../Context/GlobalContext';
 
 const UserPermission = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [allRoles, setAllRoles] = useState([]);
     const [allDepartments, setAllDepartments] = useState([]);
     const { selectedStaff } = useGlobalContext();
@@ -73,11 +74,12 @@ const UserPermission = () => {
         setDepartmentID(selectedStaff?.departmentId);
     }, [])
     async function handlesubmit(e) {
+        setIsLoading(true);
         e.preventDefault();
         const data = {
             roleId: roleID,
             departmentId: departmentID,
-            branchId:branchID
+            branchId: branchID
         };
 
         try {
@@ -101,6 +103,8 @@ const UserPermission = () => {
         } catch (error) {
             console.error("Error updating user permission:", error);
             openToast("An error occurred while updating user permission", "error");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -110,7 +114,7 @@ const UserPermission = () => {
             <div className='flex justify-between items-center  w-[100%] p-[20px] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
 
                 <h3 className='font-medium'>User Permission</h3>
-                <button onClick={(e) => handlesubmit(e)} className='second-btn'>Update Details</button>
+                <button onClick={(e) => handlesubmit(e)} disabled={isLoading} className={'second-btn '+(isLoading && 'opacity-50 cursor-not-alloweds') }>Update Details</button>
             </div>
 
             <h2 className='bg-[#fff] pt-[10px] pb-[10px] pl-[14px] rounded-lg font-normal shadow-cs'>Select Roles</h2>

@@ -16,7 +16,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 
 const EditAttendanceDetail = () => {
-
+    const [isLoading, setIsLoading] = useState(false);
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
     const [flexibleDays, setFlexibleDays] = useState([]);
     const [daysInMonth, setDaysInMonth] = useState([]);
@@ -240,6 +240,7 @@ const EditAttendanceDetail = () => {
 
     async function updateAttendanceMode(e) {
         e.preventDefault();
+        setIsLoading(true);
         const data = {
             staff_ids: [
                 selectedStaff?.staffDetails.id
@@ -265,7 +266,6 @@ const EditAttendanceDetail = () => {
 
             if (response.status === 200) {
                 console.log(result);
-                openModal6();
                 openToast("Attendance Mode created and updated Successfully", "success");
             }
             else {
@@ -274,11 +274,16 @@ const EditAttendanceDetail = () => {
         } catch (error) {
             console.error("Error creating and updating attendance mode:", error);
             openToast("An error occurred while creating and updating attendance mode", "error");
+        } finally {
+            closeModal5();
+            openModal6();
+            setIsLoading(false);
         }
     }
 
     async function updateAttendanceAutomationRules(e) {
         e.preventDefault();
+        setIsLoading(true);
         const data = {
             staff_ids: [selectedStaff?.staffDetails?.id],
             automation_rules: {
@@ -302,7 +307,6 @@ const EditAttendanceDetail = () => {
 
             if (response.status === 200) {
                 console.log(result);
-                openModal8();
                 openToast("Attendance Automation Rules created and updated Successfully", "success");
             }
             else {
@@ -311,6 +315,10 @@ const EditAttendanceDetail = () => {
         } catch (error) {
             console.error("Error creating and updating attendance automation rules:", error);
             openToast("An error occurred while creating and updating attendance automation rules", "error");
+        } finally {
+            closeModal7();
+            openModal8();
+            setIsLoading(false);
         }
     }
 
@@ -791,16 +799,16 @@ const EditAttendanceDetail = () => {
 
             <div className='mt-5'>
                 <button type="button" onClick={openModal} className=" shadow-cs bg-white w-full flex items-center justify-between mb-4  text-start text-[14px]  text-[#000] p-4 rounded-md " id="menu-button" aria-expanded="true" aria-haspopup="true">
-                    Update Work Timings <ArrowForwardIosIcon className='allarrow-verify'/>
+                    Update Work Timings <ArrowForwardIosIcon className='allarrow-verify' />
 
                 </button>
 
                 <button type="button" onClick={openModal5} className=" shadow-cs bg-white w-full flex items-center justify-between mb-4  text-start  text-[14px] text-[#000] p-4 rounded-md" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                    Update Attendance Modes <ArrowForwardIosIcon className='allarrow-verify'/>
+                    Update Attendance Modes <ArrowForwardIosIcon className='allarrow-verify' />
 
                 </button>
                 <button type="button" onClick={openModal7} className="  shadow-cs bg-white w-full flex items-center justify-between mb-4  text-start  text-[14px] text-[#000] p-4 rounded-md" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                    Update Automation Rules <ArrowForwardIosIcon className='allarrow-verify'/>
+                    Update Automation Rules <ArrowForwardIosIcon className='allarrow-verify' />
 
                 </button>
 
@@ -822,8 +830,8 @@ const EditAttendanceDetail = () => {
                     </div>
                 </div>
             </div>
-            
-            
+
+
 
             {/* update work timing */}
             <Modal
@@ -876,7 +884,7 @@ const EditAttendanceDetail = () => {
                                                     {hasWeekOff.MonWeekOff === true && (
                                                         <div className="w-full  rounded-md p-[5px] mt-1 focus:outline-none text-[#000] xl:text-[14px] text-[12px] mr-[0px] ml-[7px]"
                                                         >{getWeekOffSummaryForDay("Mon")}</div>
-                                                    )} 
+                                                    )}
                                                     <Select
                                                         options={options}
                                                         isMulti
@@ -1249,61 +1257,61 @@ const EditAttendanceDetail = () => {
 
                     <TabPanel>
                         <div className='first-panel'>
-                        
-                            <div className="overflow-y-scroll h-[50vh]">
-                            <div className="relative w-full h-fit flex justify-center items-center gap-2">
-                                <p>Select Month</p>
-                                <button
-                                    onClick={() => setOpenCalendar(!openCalendar)}
-                                    className="w-[300px] px-4 py-2 text-left bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none"
-                                >
-                                    {formatDate(selectedMonth)}
-                                </button>
-                                {openCalendar && (
-                                    <div className="absolute top-10 z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
-                                        <div className="p-3">
-                                            <div className="flex items-center justify-between mb-4">
-                                                <button
-                                                    onClick={() => handleYearChange(-1)}
-                                                    className="p-1 text-gray-600 hover:text-gray-900 focus:outline-none"
-                                                >
-                                                    &lt;
-                                                </button>
-                                                <div className="font-semibold">{year}</div>
-                                                <button
-                                                    onClick={() => handleYearChange(1)}
-                                                    className="p-1 text-gray-600 hover:text-gray-900 focus:outline-none"
-                                                >
-                                                    &gt;
-                                                </button>
-                                            </div>
-                                            <div className="grid grid-cols-3 gap-2">
-                                                {months.map((row, rowIndex) =>
-                                                    row.map((month, colIndex) => {
-                                                        const monthIdx = rowIndex * 3 + colIndex
-                                                        const isSelected =
-                                                            selectedMonth.getMonth() === monthIdx &&
-                                                            selectedMonth.getFullYear() === year
 
-                                                        return (
-                                                            <button
-                                                                key={month}
-                                                                onClick={() => handleMonthSelect(monthIdx)}
-                                                                className={`py-2 text-sm font-medium rounded-md focus:outline-none ${isSelected
-                                                                    ? 'bg-[#27004a] text-white'
-                                                                    : 'bg-white text-gray-700 hover:bg-gray-100'
-                                                                    }`}
-                                                            >
-                                                                {month}
-                                                            </button>
-                                                        )
-                                                    })
-                                                )}
+                            <div className="overflow-y-scroll h-[50vh]">
+                                <div className="relative w-full h-fit flex justify-center items-center gap-2">
+                                    <p>Select Month</p>
+                                    <button
+                                        onClick={() => setOpenCalendar(!openCalendar)}
+                                        className="w-[300px] px-4 py-2 text-left bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none"
+                                    >
+                                        {formatDate(selectedMonth)}
+                                    </button>
+                                    {openCalendar && (
+                                        <div className="absolute top-10 z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+                                            <div className="p-3">
+                                                <div className="flex items-center justify-between mb-4">
+                                                    <button
+                                                        onClick={() => handleYearChange(-1)}
+                                                        className="p-1 text-gray-600 hover:text-gray-900 focus:outline-none"
+                                                    >
+                                                        &lt;
+                                                    </button>
+                                                    <div className="font-semibold">{year}</div>
+                                                    <button
+                                                        onClick={() => handleYearChange(1)}
+                                                        className="p-1 text-gray-600 hover:text-gray-900 focus:outline-none"
+                                                    >
+                                                        &gt;
+                                                    </button>
+                                                </div>
+                                                <div className="grid grid-cols-3 gap-2">
+                                                    {months.map((row, rowIndex) =>
+                                                        row.map((month, colIndex) => {
+                                                            const monthIdx = rowIndex * 3 + colIndex
+                                                            const isSelected =
+                                                                selectedMonth.getMonth() === monthIdx &&
+                                                                selectedMonth.getFullYear() === year
+
+                                                            return (
+                                                                <button
+                                                                    key={month}
+                                                                    onClick={() => handleMonthSelect(monthIdx)}
+                                                                    className={`py-2 text-sm font-medium rounded-md focus:outline-none ${isSelected
+                                                                        ? 'bg-[#27004a] text-white'
+                                                                        : 'bg-white text-gray-700 hover:bg-gray-100'
+                                                                        }`}
+                                                                >
+                                                                    {month}
+                                                                </button>
+                                                            )
+                                                        })
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )}
-                            </div>
+                                    )}
+                                </div>
                                 <table className="w-full">
                                     <thead className="border-b border-[#000]">
                                         <tr>
@@ -1628,7 +1636,7 @@ const EditAttendanceDetail = () => {
 
                     <div className='pr-[10px] pb-3 flex gap-[10px] justify-end border-t pt-3'>
                         <button className='first-btn' onClick={closeModal2}>Cancel</button>
-                        <button className='second-btn' onClick={submitShift}>Confirm</button>
+                        <button disabled={isLoading} className={'second-btn '+(isLoading && 'opacity-50 cursor-not-allowed')} onClick={submitShift}>Confirm</button>
                     </div>
                 </div>
             </Modal>
@@ -1806,7 +1814,7 @@ const EditAttendanceDetail = () => {
                         <button className="first-btn" onClick={(e) => {
                             closeModal5();
                         }}>Cancel</button>
-                        <button className="second-btn" onClick={(e) => {
+                        <button className={"second-btn " + (isLoading && "opacity-50 cursor-not-allowed")} onClick={(e) => {
                             updateAttendanceMode(e);
                         }}>Update Attendance Modes for All Staff</button>
                     </div>
@@ -1926,7 +1934,7 @@ const EditAttendanceDetail = () => {
 
                     <div className="pr-[10px] pb-3 flex gap-[10px] justify-end  pt-3">
                         <button className="first-btn" onClick={closeModal7}>Cancel</button>
-                        <button className="second-btn" onClick={(e) => {
+                        <button className={"second-btn " + (isLoading && "opacity-50 cursor-not-allowed")} onClick={(e) => {
                             updateAttendanceAutomationRules(e);
                         }} >Update Automation Rules for All Staff</button>
                     </div>

@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 const VerifyDrivingLicense = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
-
+    const [isLoading, setIsLoading] = useState(false);
     const [drivingLicense, setDrivingLicense] = useState({
         number: selectedStaff?.staffDetails?.staff_bg_verification?.driving_license_number,
         status: selectedStaff?.staffDetails?.staff_bg_verification?.driving_license_status,
@@ -44,9 +44,10 @@ const VerifyDrivingLicense = () => {
 
 
     async function submitDrivingLicense() {
-
+        setIsLoading(true);
         if (!drivingLicense?.number || !drivingLicense?.verificationFile) {
-            openToast("Driving License number and file are required", "error");
+            openToast(" Provide either Driving License number or upload file", "warning");
+            return;
         }
 
         console.log(drivingLicense);
@@ -76,6 +77,9 @@ const VerifyDrivingLicense = () => {
             console.error("Error adding or updating Driving License:", error);
             openToast("An error occurred while adding or updating Driving License", "error");
         }
+        finally {
+            setIsLoading(false);
+        }
     }
 
 
@@ -84,7 +88,7 @@ const VerifyDrivingLicense = () => {
         <div className='w-full  relative xl:pt-[10px]   flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] p-[20px] pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>Driving License Verification</h3>
-                <button className='second-btn' onClick={submitDrivingLicense}>
+                <button className={'second-btn '+(isLoading && "opacity-50 animate-pulse cursor-not-allowed")} disabled={isLoading}  onClick={submitDrivingLicense}>
                     Update Driving License
                 </button>
             </div>

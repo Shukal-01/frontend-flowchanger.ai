@@ -9,6 +9,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 const VerifyAadhaar = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
+    const [isLoading, setIsLoading] = useState(false);
 
     const [aadhaar, setAadhaar] = useState({
         number: selectedStaff?.staffDetails?.staff_bg_verification?.aadhaar_number,
@@ -17,9 +18,9 @@ const VerifyAadhaar = () => {
     });
 
     async function submitAadhar() {
-
+        setIsLoading(true);
         if (!aadhaar?.number || !aadhaar?.verificationFile) {
-            openToast("Aadhaar number and file are required", "error");
+            openToast("Provide either aadhaar number or upload file", "warning");
             return;
         }
 
@@ -68,6 +69,8 @@ const VerifyAadhaar = () => {
         } catch (error) {
             console.error("Error submitting Aadhaar:", error);
             openToast("An error occurred while adding or updating Aadhaar", "error");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -108,7 +111,7 @@ const VerifyAadhaar = () => {
         <div className='w-full  relative xl:pt-[30px]    flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] pb-[10px] pr-0 xl:pr-[0px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>Aadhaar Verification</h3>
-                <button className='second-btn' onClick={submitAadhar}>
+                <button className={'second-btn ' + (isLoading && 'opacity-50 cursor-not-allowed animate-pulse')}  onClick={submitAadhar}>
                     Update Aadhaar
                 </button>
             </div>
@@ -124,7 +127,7 @@ const VerifyAadhaar = () => {
 
 
             <div className='flex justify-between items-center mb-3 p-4 border border-1 shadow-cs bg-[#fff] rounded-lg ' >
-                <h4 className='font-light'>Verification Status 
+                <h4 className='font-light'>Verification Status
                 </h4>
                 <p className='font-light'>{aadhaar?.status}</p>
             </div>

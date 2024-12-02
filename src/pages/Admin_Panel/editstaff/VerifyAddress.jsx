@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 const VerifyAddress = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
-
+    const [isLoading, setIsLoading] = useState(false);
 
     let subtitle;
 
@@ -31,14 +31,14 @@ const VerifyAddress = () => {
     };
 
     // Function to handle file selection
-    
+
     const [address, setAddress] = useState({
         current: selectedStaff?.staffDetails?.staff_bg_verification?.current_address,
         permanent: selectedStaff?.staffDetails?.staff_bg_verification?.permanent_address,
         status: selectedStaff?.staffDetails?.staff_bg_verification?.address_status,
         verificationFile: selectedStaff?.staffDetails?.staff_bg_verification?.address_file
     });
-    
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setAddress({ ...address, verificationFile: file });
@@ -47,6 +47,12 @@ const VerifyAddress = () => {
 
 
     async function submitAddress() {
+        if (!address?.current || !address?.permanent || !address?.verificationFile) {
+            openToast(" Provide either current or permanent address or upload file", "warning");
+            return;
+        }
+
+        setIsLoading(true);
         const newFormData = new FormData();
         newFormData.append("current_address", address?.current);
         newFormData.append("permanent_address", address?.permanent);
@@ -62,7 +68,7 @@ const VerifyAddress = () => {
             if (response.status === 201) {
                 const result = await response.json();
                 console.log(result);
-                setAddress({ ...address, current: result?.data?.current_address, permanent: result?.data?.permanent_address, status: result?.data?.address_status , verificationFile: result?.data?.address_file });
+                setAddress({ ...address, current: result?.data?.current_address, permanent: result?.data?.permanent_address, status: result?.data?.address_status, verificationFile: result?.data?.address_file });
                 openToast("Address successfully updated or created", "success");
                 closeModal2();
             } else {
@@ -72,6 +78,9 @@ const VerifyAddress = () => {
             console.error("Error adding or updating Address:", error);
             openToast("An error occurred while adding or updating Address", "error");
         }
+        finally {
+            setIsLoading(false);
+        }
     }
 
 
@@ -79,7 +88,7 @@ const VerifyAddress = () => {
         <div className='w-full pt-[10px] relative  flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] p-[20px]  pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>Address Verification</h3>
-                <button className='second-btn' onClick={submitAddress}>
+                <button className={'second-btn ' + (isLoading && 'opacity-50 cursor-not-allowed animate-pulse')} onClick={submitAddress}>
                     Update Address
                 </button>
             </div>
@@ -87,8 +96,8 @@ const VerifyAddress = () => {
             <div className='flex justify-between items-center mb-3 p-4 border border-1 bg-[#fff] shadow-cs rounded-lg' >
                 <h4 className='font-light'>Address</h4>
                 <div>
-                <p className='font-light'>{address.current}</p> 
-                <p className='font-light'>{address.permanent}</p> 
+                    <p className='font-light'>{address.current}</p>
+                    <p className='font-light'>{address.permanent}</p>
                 </div>
 
                 <button className='second-btn' onClick={openModal2}  >
