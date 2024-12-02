@@ -5,19 +5,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useGlobalContext } from '../../../Context/GlobalContext';
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ClipLoader from "react-spinners/ClipLoader";
-/*************  ✨ Codeium Command ⭐  *************/
-/**
- * Component for rendering custom details of a staff member
- *
- * @component
- * @returns {ReactElement}
- */
-/******  86860ca5-c6ef-478e-9e32-7266d9206a6f  *******/import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-
 
 const CustomDetail = () => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     let subtitle;
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
     const [staffDetail, setStaffDetail] = React.useState(null);
@@ -69,7 +61,8 @@ const CustomDetail = () => {
     const [description, setDescription] = useState("");
 
     async function submitField() {
-        const data = { field_name: fieldName, field_value: description, staffId: staffDetail?.staffDetails?.id };
+        setIsLoading(true);
+        const data = { field_name: fieldName, field_value: description, staffId: selectedStaff?.staffDetails?.id };
         console.log(data);
         try {
             const response = await fetch(baseUrl + "custom-details", {
@@ -95,9 +88,14 @@ const CustomDetail = () => {
             console.error("Error submitting custom field:", error);
             openToast("An error occurred while adding custom field", "error");
         }
+        finally {
+            closeModal2();
+            setIsLoading(false);
+        }
     }
 
     async function editCustomField() {
+        setIsLoading(true);
         const data = { field_name: fieldName, field_value: description };
         console.log(data);
 
@@ -127,6 +125,9 @@ const CustomDetail = () => {
         } catch (error) {
             console.error("Error editing custom field:", error);
             openToast("An error occurred while editing custom field", "success");
+        } finally {
+            setIsLoading(false);
+            closeModal2();
         }
     }
 
@@ -180,18 +181,18 @@ const CustomDetail = () => {
                                 openModal2();
                                 setEditingId(id);
                             }} className="px-3 py-1 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded">
-                            <BorderColorIcon className="text-[#27004a] font-light cursor-pointer text-[10px]]" />
+                                <BorderColorIcon className="text-[#27004a] font-light cursor-pointer text-[10px]]" />
                             </button>
                             <button onClick={() => {
                                 console.log(id);
                                 deleteCustomDetail(id)
                             }} className="px-3 py-1 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded">
                                 <DeleteOutlineIcon
-                        className="text-red-500 font-light cursor-pointer text-[10px]"
-                      />
+                                    className="text-red-500 font-light cursor-pointer text-[10px]"
+                                />
                             </button>
                         </div>
-                    </div>)) : staffDetail !== null ? <div className='flex items-center justify-center h-[80px] text-sm font-medium text-gray-700'>No Custom Details</div> : ( <ClipLoader color="#4A90E2" size={40} />)}
+                    </div>)) : staffDetail !== null ? <div className='flex items-center justify-center h-[80px] text-sm font-medium text-gray-700'>No Custom Details</div> : (<ClipLoader color="#4A90E2" size={40} />)}
 
                 </div>
             </div>
@@ -227,15 +228,14 @@ const CustomDetail = () => {
                     </div>
                     <div className='pr-[10px] pb-3 flex gap-[10px] justify-end border-t pt-3'>
                         <button className='first-btn' onClick={closeModal2}>Cancel</button>
-                        <button className='second-btn' onClick={() => {
+                        <button className={'second-btn ' + (isLoading && "animate-pulse cursor-not-allowed")} disabled={isLoading} onClick={() => {
                             if (editingId !== "") {
                                 editCustomField();
                             }
                             else {
                                 submitField();
                             }
-                            closeModal2();
-                        }}>Add Custom Field </button>
+                        }}>{editingId !== "" ? " Edit " : " Add "} Custom Field </button>
                     </div>
                 </div>
             </Modal>

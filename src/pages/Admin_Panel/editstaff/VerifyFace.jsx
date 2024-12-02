@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 const VerifyFace = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
-
+    const [isLoading, setIsLoading] = useState(false);
 
     const [face, setFace] = useState({
         status: selectedStaff?.staffDetails?.staff_bg_verification?.face_verification_status,
@@ -15,7 +15,11 @@ const VerifyFace = () => {
 
 
     async function submitFace() {
-
+        setIsLoading(true);
+        if (!face.verificationFile) {
+            openToast("Please upload a face file", "warning");
+            return;
+        }
         // Create a new FormData instance
         const newFormData = new FormData();
 
@@ -56,6 +60,8 @@ const VerifyFace = () => {
         } catch (error) {
             console.error("Error submitting Face:", error);
             openToast("An error occurred while adding or updating Face", "error");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -92,7 +98,7 @@ const VerifyFace = () => {
         <div className='w-full pt-[10px] relative     flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] p-[20px]  pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>Face Verification</h3>
-                <button className='second-btn' onClick={submitFace}>
+                <button disabled={isLoading} className={'second-btn ' + (isLoading && 'opacity-50 cursor-not-allowed animate-pulse')} onClick={submitFace}>
                     Update Face
                 </button>
             </div>

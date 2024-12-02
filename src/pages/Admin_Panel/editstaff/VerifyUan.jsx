@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 const VerifyUan = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
-
+    const [isLoading, setIsLoading] = useState(false);
 
     let subtitle;
 
@@ -47,6 +47,11 @@ const VerifyUan = () => {
     };
 
     async function submitUan() {
+        setIsLoading(true);
+        if (uan?.number || uan?.verificationFile) {
+            openToast("Provide either UAN number or upload file", "warning");
+            return;
+        }
         const newFormData = new FormData();
         newFormData.append("uan_number", uan?.number);
         newFormData.append("verificationFile", uan?.verificationFile);
@@ -71,6 +76,9 @@ const VerifyUan = () => {
         } catch (error) {
             console.error("Error adding or updating Driving License:", error);
             openToast("An error occurred while adding or updating UAN", "error");
+        }
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -112,7 +120,7 @@ const VerifyUan = () => {
                     onChange={handleFileChange}
                     style={{ display: "none" }}
                 />
-                {uan?.verificationFile && <img src={uan?.verificationFile} className="w-[100px] h-[50px] rounded-md" alt="Selected file"/>}
+                {uan?.verificationFile && <img src={uan?.verificationFile} className="w-[100px] h-[50px] rounded-md" alt="Selected file" />}
                 <button className='second-btn' onClick={handleUploadClick}>
                     Upload
                 </button>

@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 const VerifyPan = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
-
+    const [isLoading, setIsLoading] = useState(false);
 
 
     let subtitle;
@@ -19,10 +19,11 @@ const VerifyPan = () => {
 
 
 
-    
+
     async function submitPan() {
+        setIsLoading(true);
         if (!pan?.number || !pan?.verificationFile) {
-            openToast("Pan number and file are required", "error");
+            openToast("Provide either pan number or upload file", "warning");
             return;
         }
         const newFormData = new FormData();
@@ -49,6 +50,9 @@ const VerifyPan = () => {
         } catch (error) {
             console.error("Error submitting Pan:", error);
             openToast("An error occurred while adding or updating Pan", "error");
+        }
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -84,7 +88,7 @@ const VerifyPan = () => {
         <div className='w-full  pt-[10px]  relative    flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] pb-[14px] p-[20px] pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>PAN Verification</h3>
-                <button className='second-btn' onClick={submitPan}>
+                <button className={'second-btn ' + (isLoading && "animate-pulse opacity-50 cursor-not-allowed")} disabled={isLoading} onClick={submitPan}>
                     Update Pan
                 </button>
             </div>
@@ -144,7 +148,7 @@ const VerifyPan = () => {
                     <div className='modal-field field-modal p-[10px] border border-t'>
                         <label className='text-[13px] xl:text-[14px] font-medium' >PAN
                         </label><br />
-                        <input type='text' placeholder="Enter PAN" className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' value={pan?.number} onChange={(e) => setPan({ ...pan, number: e.target.value })} required/><br />
+                        <input type='text' placeholder="Enter PAN" className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' value={pan?.number} onChange={(e) => setPan({ ...pan, number: e.target.value })} required /><br />
                     </div>
                     <div className='pr-[10px] pb-3 flex gap-[10px] justify-end border-t pt-3'>
                         <button className='first-btn' onClick={closeModal2}>Cancel</button>
