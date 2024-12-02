@@ -178,7 +178,7 @@
   .sidebar {
     left: -300px;
     position: absolute;
-    top: 63px;
+    top: 55px;
     border-radius: 0px 10px 10px 0px;
   }
 
@@ -189,8 +189,7 @@
 }
 
 .sidebar {
-  height: auto;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   left: 0;
   position: relative;
   transition: all 0.3s linear;

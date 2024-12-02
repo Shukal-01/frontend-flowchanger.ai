@@ -144,7 +144,7 @@ const App = () => {
           <SideBar />
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set max-h-screen ">
             <NavBar />
-            <div className="p-[10px]  w-full h-[90%] overflow-y-scroll content-container">
+            <div className="p-[10px]  w-full h-[98vh] md:h-[90%] overflow-y-scroll content-container">
               <Outlet />
             </div>
           </div>
@@ -190,22 +190,13 @@ const App = () => {
   function Client_Panel() {
     return (
       <>
-        <div className="flex max-h-screen ">
-          {toggleSideBar && <SidebarClient toggleSideBar={toggleSideBar} />}
-
-          {/* container for navbar and outlet */}
-          <div
-            className={`flex flex-col  flex-grow overflow-hidden max-h-screen`}
-          >
-            <ClientHeader
-              handleToggleSideBar={handleToggleSideBar}
-              toggleSideBar={toggleSideBar}
-            />
-            <main className="flex-1 z-[1]    h-[90%] overflow-y-scroll content-container">
-              <div className="mx-auto px-4 pl-3 pr-3 py-8 lg:px-4 view-not  ">
-                <Outlet />
-              </div>
-            </main>
+        <div className="flex max-h-screen">
+          <SidebarClient />
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set min-h-screen shadow-lg">
+            <ClientHeader/>
+            <div className="w-full h-[98vh] md:h-[88%] overflow-y-scroll content-container">
+              <Outlet />
+            </div>
           </div>
         </div>
       </>
@@ -234,12 +225,12 @@ const App = () => {
   function Payroll_Summary() {
     return (
       <>
-        <div className="flex box-border overflow-hidden ">
+        <div className="flex box-border overflow-hidden max-h-screen">
           <SideBar />
           <div
             className={`${
               !toggleSideBar ? "w-[calc(100%-20%)]" : "w-full"
-            } flex-grow-0`}
+            } flex-grow-0  admin-sidebar-set min-h-screen shadow-lg`}
           >
             <NavBar
               className="w-full"
