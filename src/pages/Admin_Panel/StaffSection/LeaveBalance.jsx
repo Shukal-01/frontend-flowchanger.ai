@@ -173,10 +173,10 @@ const LeaveBalance = () => {
 
                                 <input type="date" className='border rounded-md bg-[#F4F5F9] p-[8px] pl-[30px] w-[100%] lg:w-[225px] focus-visible:outline-none' />
 
-                                <div className='flex gap-[10px] whitespace-nowrap justify-end items-center cursor-pointer'>
+                                {/* <div className='flex gap-[10px] whitespace-nowrap justify-end items-center cursor-pointer'>
                                     <img src={Filter} className='w-[40px] h-[40px] bg-[#F4F5F9] rounded-full p-[10px]' />
                                     <h2 className='text-[14px] font-normal	'>More Filters</h2>
-                                </div>
+                                </div> */}
 
                             </div>
                             {/* <div className='flex gap-[15px] justify-between lg:justify-start'>

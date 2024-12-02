@@ -30,11 +30,11 @@ const Permission = () => {
           <select className='border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm'>
             <option>All Departments</option>
           </select>
-
+{/* 
           <div className='flex gap-[10px] whitespace-nowrap justify-end items-center cursor-pointer'>
             <img src={Filter} className='w-[40px] h-[40px] bg-[#F4F5F9] rounded-full p-[10px]' />
             <h2 className='text-[14px] font-normal	'>More Filters</h2>
-          </div>
+          </div> */}
 
         </div>
         
