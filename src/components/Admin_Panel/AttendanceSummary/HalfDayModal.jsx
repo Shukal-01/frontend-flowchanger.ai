@@ -1,13 +1,67 @@
 import React,{useState } from 'react'
 import Modal from 'react-responsive-modal'
+import { useGlobalContext } from '../../../Context/GlobalContext';
 
-const HalfDay = ({ id, setStatus }) => {
-    const [shiftType, setShiftType] = useState("DAILY SHIFT")
+const HalfDay = ({  id, setStatus, status,selecteddate,attendance }) => {
+    const { baseUrl, shift, openToast } = useGlobalContext();
+    const [shiftType, setShiftType] = useState("")
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
+
+    function combineDateWithTimeAndFormat(time) {
+        const today = new Date();
+        const formattedDate = today.toISOString().split("T")[0]; 
+         const [hours, minutes] = time.split(":");
+        const hour = parseInt(hours, 10);
+        const period = hour >= 12 ? "PM" : "AM";
+        const formattedHour = hour % 12 || 12;  
+    
+        const formattedTime = `${formattedHour}:${minutes} ${period}`;  
+        return `${formattedDate} ${formattedTime}`;  
+    }
+    
+
+    async function confirmation() {
+         try {
+            setIsLoading(true);
+            if (status == "") {
+                openToast("Please Select Status", "error");
+                return;
+            }
+            const formattedStartTime = combineDateWithTimeAndFormat(startTime);
+            const formattedEndTime = combineDateWithTimeAndFormat(endTime);
+    
+            const result = await fetch(
+                baseUrl + `attendance/status/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                    body: JSON.stringify({ status: status, startTime: new Date(formattedStartTime),
+                        endTime:  new Date(formattedEndTime), }),
+                }
+            );
+            if (result.status == 200) {
+                openToast("Updated Status Successfully", "success");
+                setStatus("")
+                attendance()
+
+
+            } else {
+                openToast("Something went wrong", "error");
+            }
+        } catch (error) {
+            openToast("Something went wrong", "error");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
   
     return (
-        <Modal open={id == "HALFDAY"} onClose={() => setStatus("")} center >
+        <Modal open={status == "HALFDAY"} onClose={() => setStatus("")} center >
              <div className="pt-5">
                 <div className="flex justify-between items-center mb-6">
                     <div>
@@ -86,7 +140,8 @@ const HalfDay = ({ id, setStatus }) => {
                     </div>
                 </div>
 
-                <button className="second-btn w-full">
+                <button className={`second-btn w-full ${isLoading==true ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={confirmation}>
+
                     Save
                 </button>
             </div>

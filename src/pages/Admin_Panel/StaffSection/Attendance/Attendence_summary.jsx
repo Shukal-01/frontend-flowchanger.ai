@@ -16,7 +16,8 @@ import "rc-time-picker/assets/index.css";
 import { set } from "react-hook-form";
 import PresentModal from "../../../../components/Admin_Panel/AttendanceSummary/PresentModal";
 import HalfDay from "../../../../components/Admin_Panel/AttendanceSummary/HalfDayModal";
-
+import PaidLeaveModal from "../../../../components/Admin_Panel/AttendanceSummary/PaidLeaveModal";
+import AbsentModal from "../../../../components/Admin_Panel/AttendanceSummary/AbsentModal";
 const Attendence_summary = () => {
   const { baseUrl, openToast, fetchStaff, staffDetail } = useGlobalContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -213,6 +214,7 @@ const Attendence_summary = () => {
     }
   }, [summaryDate]);
   const [selectedStatus, setSelectedStatus] = useState("");
+
   async function confirmation(item) {
     setLoading(true);
     try {
@@ -517,7 +519,6 @@ const Attendence_summary = () => {
 
   const [fine, setFine] = useState();
   const [overtime, setOverTime] = useState();
-  console.log(overtime);
 
   async function fetchFineDetails() {
     try {
@@ -554,7 +555,7 @@ const Attendence_summary = () => {
   const [others, setOthers] = useState([]);
 
   useEffect(() => {
-    if (departments.length && attendance.length) {
+    if (departments?.length && attendance?.length) {
       setOthers(
         attendance?.filter((a) => a.punchRecord?.staff?.departmentId == null)
       );
@@ -562,15 +563,46 @@ const Attendence_summary = () => {
     }
   }, [departments, attendance]);
 
+  console.log(applyPunchRecordId);
+
   return (
     <div className="p-[20px] w-full work-fine">
       {selectedStatus == "PRESENT" && (
-        <PresentModal id={selectedStatus} setStatus={setSelectedStatus} />
+        <PresentModal
+          id={applyPunchRecordId}
+          status={selectedStatus}
+          setStatus={setSelectedStatus}
+          selecteddate={summaryDate}
+          attendance={fetchAttendanceDetail}
+        />
       )}
       {selectedStatus == "HALFDAY" && (
-        <HalfDay id={selectedStatus} setStatus={setSelectedStatus} />
+        <HalfDay
+          id={applyPunchRecordId}
+          status={selectedStatus}
+          setStatus={setSelectedStatus}
+          selecteddate={summaryDate}
+          attendance={fetchAttendanceDetail}
+        />
       )}
-
+      {selectedStatus == "PAIDLEAVE" && (
+        <PaidLeaveModal
+          id={applyPunchRecordId}
+          status={selectedStatus}
+          setStatus={setSelectedStatus}
+          selecteddate={summaryDate}
+          attendance={fetchAttendanceDetail}
+        />
+      )}
+      {selectedStatus == "ABSENT" && (
+        <AbsentModal
+          id={applyPunchRecordId}
+          status={selectedStatus}
+          setStatus={setSelectedStatus}
+          selecteddate={summaryDate}
+          attendance={fetchAttendanceDetail}
+        />
+      )}
       <div className="flex  justify-between satisfy-summary  ">
         <div className="flex gap-[10px] summary-bold">
           <h1 className="font-semibold">Attendence Summary</h1>
@@ -613,14 +645,14 @@ const Attendence_summary = () => {
             </Link>
           </div>
         </div>
-        <div className="mt-[16px] flex gap-[30px] summary-bold1">
-          <div className="total-staff w-[15%] new-staff3">
+        <div className="mt-[16px] flex gap-[30px] flex-wrap	whitespace-nowrap summaryrecord">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Total Staff
             </h2>
             <p className="text-[14px] font-semibold">{attendance?.length}</p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Present
             </h2>
@@ -632,7 +664,7 @@ const Attendence_summary = () => {
               }
             </p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">Absent</h2>
             <p className="text-[14px] font-semibold">
               {
@@ -642,7 +674,7 @@ const Attendence_summary = () => {
               }
             </p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Half Day
             </h2>
@@ -654,23 +686,23 @@ const Attendence_summary = () => {
               }
             </p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
-            <h2 className="text-[14px] font-normal whitespace-nowrap text-[#000000bf]">
-              Overtime Hours
+          <div className="total-staff ">
+            <h2 className="text-[14px] pr-0 font-normal whitespace-nowrap text-[#000000bf]">
+              Overtime <br /> Hours
             </h2>
             <p className="text-[14px] font-semibold">
-              {attendance.length ? calculateTotalOvertimeHours(attendance) : 0}
+              {attendance?.length ? calculateTotalOvertimeHours(attendance) : 0}
             </p>
           </div>
-          <div className="total-staff w-[15%] new-staff3">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Fine Hours
             </h2>
             <p className="text-[14px] font-semibold">
-              {attendance.length ? calculateTotalFineHours(attendance) : 0}
+              {attendance?.length ? calculateTotalFineHours(attendance) : 0}
             </p>
           </div>
-          <div className="total-staff1 w-[15%]">
+          <div className="total-staff ">
             <h2 className="text-[14px] font-normal text-[#000000bf]">
               Paid Leave
             </h2>
@@ -684,22 +716,22 @@ const Attendence_summary = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[#ffff] shadow-cs p-[20px] rounded-md mt-[24px] flex gap-[10px] over-new">
+      <div className="bg-[#ffff] shadow-cs p-[20px] rounded-md mt-[24px]  flex gap-[10px] over-new">
         <Link
           to="/worktime"
-          className="total-staff text-[#27004a]  text-[14px] font-medium  transition hover:text-[#8e54c2]"
+          className=" text-[#27004a] border-r pr-2 whitespace-nowrap text-[14px] font-medium  transition hover:text-[#8e54c2]"
         >
           Daily Work Entry
         </Link>
         <Link
           to="/reviewfine"
-          className="total-staff  text-[#27004a]  text-[14px] font-medium transition hover:text-[#8e54c2]"
+          className=" text-[#27004a] border-r  pr-2 whitespace-nowrap text-[14px] font-medium transition hover:text-[#8e54c2]"
         >
           Fine
         </Link>
         <Link
           to="/overtime"
-          className=" total-staff  text-[#27004a] text-[14px] font-medium  transition hover:text-[#8e54c2]"
+          className="  text-[#27004a] border-r  pr-2 whitespace-nowrap text-[14px] font-medium  transition hover:text-[#8e54c2]"
         >
           Overtime
         </Link>
@@ -712,18 +744,32 @@ const Attendence_summary = () => {
           placeholder="Search Staff by Name , Phone Number or Employee ID"
         />
       </div>
-      {departments.length &&
-        attendance.length &&
-        departments.map((d) => {
+
+      {!summaryDate && attendance?.length === 0 && (
+        <div className="text-center">
+          <h2 className="text-[#ff0000] font-medium py-9 text-[20px]">
+            Please Select Date
+          </h2>
+        </div>
+      )}
+
+      {departments?.length &&
+        attendance?.length &&
+        departments?.map((d) => {
+          console.log(d);
           const rec = attendance?.filter(
-            (a) => a.punchRecord?.staff?.departmentId == d.id
+            (a) => a?.punchRecord?.staff?.departmentId == d?.id
           );
           return (
             <div className="flex flex-col gap-[10px] mt-[0px]">
               <h1 className="pt-2">
-                {d.department_name} ({rec.length})
+                {rec && rec?.length > 0 && (
+                  <span>
+                    {d?.department_name} ({rec?.length})
+                  </span>
+                )}
               </h1>
-              {rec.map((item, index) => {
+              {rec?.map((item, index) => {
                 return (
                   <>
                     <div className="shadow p-[20px]  rounded-md shadow-cs">
@@ -750,6 +796,7 @@ const Attendence_summary = () => {
                               <button
                                 onClick={() => {
                                   setSelectedStatus("PRESENT");
+                                  setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
@@ -769,6 +816,7 @@ const Attendence_summary = () => {
                               <button
                                 onClick={() => {
                                   setSelectedStatus("HALFDAY");
+                                  setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
@@ -1034,10 +1082,6 @@ const Attendence_summary = () => {
                               <button
                                 // onClick={openModal12}
                                 onClick={() => {
-                                  console.log(
-                                    item?.punchRecord?.id,
-                                    "ggfjjhgjgjhg798----"
-                                  );
                                   overTimeId(item?.staffId);
                                   setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
@@ -1232,7 +1276,7 @@ const Attendence_summary = () => {
                               <button
                                 onClick={() => {
                                   setSelectedStatus("PAIDLEAVE");
-                                  openModal();
+                                  setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
@@ -1245,39 +1289,13 @@ const Attendence_summary = () => {
                               >
                                 L I Paid Leave
                               </button>
-
-                              {/* Modal overlay and content */}
-                              {isOpen14 && (
-                                <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                                  <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-[200px] p-6">
-                                    <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-                                      Sure You Want To Accept ?{" "}
-                                    </h2>
-                                    <p className="text-center mb-[16px] text-[14px]">
-                                      Are you sure you want to accept this ??
-                                    </p>
-
-                                    <div className="flex justify-around ">
-                                      <button className="px-4 py-2 bg-[#27004a] text-white rounded-md">
-                                        Yes , Confirm
-                                      </button>
-                                      <button
-                                        onClick={closeModal14}
-                                        className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                      >
-                                        No , Cancel
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
                             </div>
                             <div className="flex xl:justify-center lg:justify-center md:justify-center items-center justify-end">
                               {/* Button to open modal */}
                               <button
                                 onClick={() => {
                                   setSelectedStatus("ABSENT");
-                                  openModal();
+                                  setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
@@ -1290,42 +1308,6 @@ const Attendence_summary = () => {
                               >
                                 A I Absent
                               </button>
-
-                              {/* Modal overlay and content */}
-                              {isOpen && (
-                                <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                                  <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-[200px] p-6">
-                                    <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-                                      Sure You Want To Accept ?{" "}
-                                    </h2>
-                                    <p className="text-center mb-[16px] text-[14px]">
-                                      Are you sure you want to accept this ??
-                                    </p>
-
-                                    <div className="flex justify-around ">
-                                      <button
-                                        onClick={() => {
-                                          confirmation(item);
-                                        }}
-                                        disabled={loading}
-                                        className={`px-4 py-2 bg-[#27004a] text-white rounded-md ${
-                                          loading ? "opacity-50" : ""
-                                        }`}
-                                      >
-                                        {loading
-                                          ? "Confirming..."
-                                          : " Yes , Confirm"}
-                                      </button>
-                                      <button
-                                        onClick={closeModal}
-                                        className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                      >
-                                        No , Cancel
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
                             </div>
                           </div>
                         </div>
@@ -1339,19 +1321,11 @@ const Attendence_summary = () => {
           );
         })}
 
-      {!summaryDate && attendance.length === 0 && (
-        <div className="text-center">
-          <h2 className="text-[#ff0000] font-medium py-9 text-[20px]">
-            Please Select Date
-          </h2>
-        </div>
-      )}
-
-      {others.length > 0 && (
+      {others?.length > 0 && (
         <div>
-          <div className="mt-0 pt-4">Other Departments ({others.length})</div>
+          <div className="mt-0 pt-2">Other Departments ({others?.length})</div>
 
-          {others.map((item, index) => {
+          {others?.map((item, index) => {
             return (
               <>
                 <div className="shadow p-[20px] mt-[7px] rounded-md shadow-cs">
@@ -1378,7 +1352,7 @@ const Attendence_summary = () => {
                           <button
                             onClick={() => {
                               setSelectedStatus("PRESENT");
-                              openModal();
+                              setApplyPunchRecordId(item?.punchRecord?.id);
                             }}
                             className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
@@ -1398,7 +1372,7 @@ const Attendence_summary = () => {
                           <button
                             onClick={() => {
                               setSelectedStatus("HALFDAY");
-                              openModal();
+                              setApplyPunchRecordId(item?.punchRecord?.id);
                             }}
                             className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
@@ -1418,6 +1392,7 @@ const Attendence_summary = () => {
                           <button
                             onClick={() => {
                               fineId(item?.staffId);
+                              setApplyPunchRecordId(item?.punchRecord?.id);
                             }}
                             className=" btns px-6 py-3 text-[14px] text-[#27004a] font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
                           >
@@ -1627,7 +1602,10 @@ const Attendence_summary = () => {
 
                                 <div className="flex flex-col gap-[10px] ">
                                   <button
-                                    onClick={applyFine}
+                                    onClick={() => {
+                                      console.log(item.punchRecord);
+                                      applyFine();
+                                    }}
                                     className="px-4 py-2 bg-[#27004a] border border-[#27004a] transition-all text-white rounded-md hover:text-[#27004a] hover:bg-[#ffff] "
                                   >
                                     Apply Fine
@@ -1651,6 +1629,7 @@ const Attendence_summary = () => {
                             // onClick={openModal12}
                             onClick={() => {
                               overTimeId(item?.staffId);
+                              setApplyPunchRecordId(item?.punchRecord?.id);
                             }}
                             className=" btns px-6 py-3 text-[14px] text-black font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
                           >
@@ -1838,7 +1817,7 @@ const Attendence_summary = () => {
                           <button
                             onClick={() => {
                               setSelectedStatus("PAIDLEAVE");
-                              openModal();
+                              setApplyPunchRecordId(item?.punchRecord?.id);
                             }}
                             className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
@@ -1851,87 +1830,25 @@ const Attendence_summary = () => {
                           >
                             L I Paid Leave
                           </button>
-
-                          {/* Modal overlay and content */}
-                          {isOpen14 && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                              <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-[200px] p-6">
-                                <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-                                  Sure You Want To Accept ?{" "}
-                                </h2>
-                                <p className="text-center mb-[16px] text-[14px]">
-                                  Are you sure you want to accept this ??
-                                </p>
-
-                                <div className="flex justify-around ">
-                                  <button className="px-4 py-2 bg-[#27004a] text-white rounded-md">
-                                    Yes , Confirm
-                                  </button>
-                                  <button
-                                    onClick={closeModal14}
-                                    className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                  >
-                                    No , Cancel
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          )}
                         </div>
                         <div className="flex xl:justify-center lg:justify-center md:justify-center items-center justify-end">
                           {/* Button to open modal */}
                           <button
                             onClick={() => {
                               setSelectedStatus("ABSENT");
-                              openModal();
+                              setApplyPunchRecordId(item?.punchRecord?.id);
                             }}
                             className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
                                                     focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
                                                     ${
                                                       item?.punchRecord
                                                         ?.status === "ABSENT"
-                                                        ? "bg-[#e02929] text-white"
+                                                        ? "bg-[#d62727] text-white"
                                                         : "bg-[#fff] text-[#000]"
                                                     }`}
                           >
                             A I Absent
                           </button>
-
-                          {/* Modal overlay and content */}
-                          {isOpen && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                              <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-[200px] p-6">
-                                <h2 className="text-xl text-center text-[18px] text-[black] font-semibold mt-[28px] mb-[6px] ">
-                                  Sure You Want To Accept ?{" "}
-                                </h2>
-                                <p className="text-center mb-[16px] text-[14px]">
-                                  Are you sure you want to accept this ??
-                                </p>
-
-                                <div className="flex justify-around ">
-                                  <button
-                                    onClick={() => {
-                                      confirmation(item);
-                                    }}
-                                    disabled={loading}
-                                    className={`px-4 py-2 bg-[#27004a] text-white rounded-md ${
-                                      loading ? "opacity-50" : ""
-                                    }`}
-                                  >
-                                    {loading
-                                      ? "Confirming..."
-                                      : " Yes , Confirm"}
-                                  </button>
-                                  <button
-                                    onClick={closeModal}
-                                    className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                  >
-                                    No , Cancel
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>

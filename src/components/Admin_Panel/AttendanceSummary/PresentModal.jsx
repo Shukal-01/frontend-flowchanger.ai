@@ -1,17 +1,68 @@
-import React,{useState } from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-responsive-modal'
 import { useGlobalContext } from '../../../Context/GlobalContext'
+import { set } from 'react-hook-form';
 
-const PresentModal = ({ id, setStatus }) => {
-    const {baseUrl,shift}=useGlobalContext();
-    console.log(shift)
-    const [shiftType, setShiftType] = useState("DAILY SHIFT")
+const PresentModal = ({ id, setStatus, status,selecteddate,attendance }) => {
+    console.log(id)
+    const { baseUrl, shift, openToast } = useGlobalContext();
+    const [shiftType, setShiftType] = useState("")
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
-  
+    const [isLoading, setIsLoading] = useState(false);
+
+    function combineDateWithTimeAndFormat(time) {
+        const today = new Date();
+        const formattedDate = today.toISOString().split("T")[0]; 
+         const [hours, minutes] = time.split(":");
+        const hour = parseInt(hours, 10);
+        const period = hour >= 12 ? "PM" : "AM";
+        const formattedHour = hour % 12 || 12;  
+    
+        const formattedTime = `${formattedHour}:${minutes} ${period}`;  
+        return `${formattedDate} ${formattedTime}`;  
+    }
+    
+
+    async function confirmation() {
+         try {
+            setIsLoading(true);
+            if (status == "") {
+                openToast("Please Select Status", "error");
+                return;
+            }
+            const formattedStartTime = combineDateWithTimeAndFormat(startTime);
+            const formattedEndTime = combineDateWithTimeAndFormat(endTime);
+    
+            const result = await fetch(
+                baseUrl + `attendance/status/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                    body: JSON.stringify({ status: status, startTime: new Date(formattedStartTime),
+                        endTime:  new Date(formattedEndTime), }),
+                }
+            );
+            if (result.status == 200) {
+                openToast("Updated Status Successfully", "success");
+                setStatus("")
+                attendance()
+
+            } else {
+                openToast("Something went wrong", "error");
+            }
+        } catch (error) {
+            openToast("Something went wrong", "error");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     return (
-        <Modal open={id == "PRESENT"} onClose={() => setStatus("")} center >
-             <div className="pt-5">
+        <Modal open={status == "PRESENT"} onClose={() => setStatus("")} center >
+            <div className="pt-5">
                 <div className="flex justify-between items-center mb-6">
                     <div>
                         <h1 className="text-[22px] font-medium text-gray-900">Present</h1>
@@ -33,7 +84,7 @@ const PresentModal = ({ id, setStatus }) => {
                                 >
                                     <option>Select Shift</option>
                                     {
-                                        shift?.map((item)=>{
+                                        shift?.map((item) => {
                                             return <option value={item?.id}>{item?.shiftName}</option>
                                         })
                                     }
@@ -90,7 +141,7 @@ const PresentModal = ({ id, setStatus }) => {
                     </div>
                 </div>
 
-                <button className="second-btn w-full">
+                <button className={`second-btn w-full ${isLoading==true ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={confirmation}>
                     Save
                 </button>
             </div>

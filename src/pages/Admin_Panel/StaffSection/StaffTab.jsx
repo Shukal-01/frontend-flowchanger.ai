@@ -458,7 +458,6 @@ const StaffTab = () => {
                     <td className="border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
                       {"N/A"}
                     </td>
-                    
                   </tr>
                 ))
               ) : (
