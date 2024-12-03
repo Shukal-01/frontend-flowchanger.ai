@@ -31,7 +31,7 @@ const SalaryDetails = () => {
   function handledrop() {
     setToggleDrop(!toggleDrop);
   }
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   // when onclick update staff
   const [modalIsOpen9, setIsOpen9] = React.useState(false);
   function openModal9() {
@@ -118,7 +118,7 @@ const SalaryDetails = () => {
             className="border rounded-md bg-[#F4F5F9] p-[8px] pl-[30px] w-[100%] lg:w-[225px] focus-visible:outline-none"
           />
 
-       
+
         </div>
         <div className="flex gap-[15px] justify-between lg:justify-start">
           <button
@@ -154,10 +154,10 @@ const SalaryDetails = () => {
 
                 isLoading && staffDetail?.length === 0 ? (
                   <tr className="h-[100px]">
-                  <td colSpan="8" className="text-center text-gray-600 text-sm font-semibold py-4 mx-auto">
-                  <ClipLoader color="#4A90E2" size={50} />
-                  </td>
-                </tr>
+                    <td colSpan="8" className="text-center text-gray-600 text-sm font-semibold py-4 mx-auto">
+                      <ClipLoader color="#4A90E2" size={50} />
+                    </td>
+                  </tr>
                 ) : staffDetail && staffDetail?.length > 0 ? (
 
 

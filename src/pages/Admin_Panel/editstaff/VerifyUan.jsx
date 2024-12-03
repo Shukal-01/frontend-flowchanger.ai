@@ -49,7 +49,7 @@ const VerifyUan = () => {
     async function submitUan() {
         setIsLoading(true);
         if (uan?.number || uan?.verificationFile) {
-            openToast("Provide either UAN number or upload file", "warning");
+            openToast("c", "warning");
             return;
         }
         const newFormData = new FormData();

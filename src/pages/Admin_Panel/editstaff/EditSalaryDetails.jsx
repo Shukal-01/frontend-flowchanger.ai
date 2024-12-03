@@ -13,6 +13,7 @@ import { State } from "country-state-city";
 const EditSalaryDetails = () => {
 
   const { baseUrl, selectedStaff, openToast } = useGlobalContext();
+  const [isLoading, setIsLoading] = useState(false);
   const statesLWF = [
     { state: "Andaman and Nicobar Islands", employeelwf: 0, employerlwf: 0 },
     { state: "Andhra Pradesh", employeelwf: 2.5, employerlwf: 5.83 },
@@ -72,7 +73,7 @@ const EditSalaryDetails = () => {
       items: [
         { id: 'basic_var', label: 'BASIC', checked: false },
         { id: 'hra_var', label: 'HRA', checked: false },
-         { id: 'da_var', label: 'Dearness Allowance', checked: false },
+        { id: 'da_var', label: 'Dearness Allowance', checked: false },
         { id: 'overtime_var', label: 'Overtime', checked: false },
         { id: 'incentive_var', label: 'Incentive', checked: false },
       ]
@@ -540,6 +541,7 @@ const EditSalaryDetails = () => {
   console.log(selectedStaff);
 
   async function createORUpdateSalaryDetails(e) {
+    setIsLoading(true);
     const data = {
       effective_date: selectedMonth,
       salary_type: selectSalaryType,
@@ -582,6 +584,9 @@ const EditSalaryDetails = () => {
     } catch (error) {
       console.error("Error submitting Salary:", error);
       openToast("An error occurred while adding or updating Salary", "error");
+    }
+    finally {
+      setIsLoading(false);
     }
   }
   async function createNewEarningField(heads) {
@@ -644,7 +649,7 @@ const EditSalaryDetails = () => {
         </h1>
         <div className="mt-2 xl:mt-0">
 
-          <button onClick={() => { createORUpdateSalaryDetails() }} className="second-btn">
+          <button onClick={() => { createORUpdateSalaryDetails() }} disabled={isLoading} className={"second-btn " + (isLoading && "opacity-50 cursor-not-allowed animate-pulse")}>
             Update
           </button>
         </div>

@@ -551,23 +551,31 @@ const EditAttendanceDetail = () => {
         });
     };
     async function submitShift() {
-        const result = await fetch(baseUrl + "shift", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(newShift)
-        })
-        if (result.status == 201) {
-            const data = await result.json();
-            console.log(data);
-            openToast("Add Shift Successfully", "success")
+        setIsLoading(true);
+        try {
+            const result = await fetch(baseUrl + "shift", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(newShift)
+            });
 
-        }
-        else {
-            openToast("An Error Occured", "error")
+            if (result.status === 201) {
+                const data = await result.json();
+                console.log(data);
+                openToast("Add Shift Successfully", "success");
+            } else {
+                openToast("An Error Occurred", "error");
+            }
+        } catch (error) {
+            console.error("Error submitting shift:", error);
+            openToast("An Unexpected Error Occurred", "error");
+        } finally {
+            setIsLoading(false);
         }
     }
+
 
     useEffect(() => {
         fetchShiftDetails();
@@ -592,6 +600,7 @@ const EditAttendanceDetail = () => {
 
 
     async function createFixedShift(e) {
+        setIsLoading(true);
         const data = {
             staffId: selectedStaff?.staffDetails?.id,
             shifts: [
@@ -706,13 +715,16 @@ const EditAttendanceDetail = () => {
                     "error"
                 );
             }
-            closeModal();
         } catch (error) {
             console.error("Error submitting Work Timing:", error);
             openToast("An error occurred while adding or updating Work Timing", "error");
+        } finally {
+            closeModal();
+            setIsLoading(false);
         }
     }
     async function createFlexibleShift(e) {
+        setIsLoading(true);
         const data = {
             staffId: selectedStaff?.staffDetails?.id,
             shifts: flexibleDays.map(({ day, shifts, weekOff }) => ({
@@ -748,10 +760,12 @@ const EditAttendanceDetail = () => {
                     "error"
                 );
             }
-            closeModal();
         } catch (error) {
             console.error("Error submitting Flexible Shift Work Timing:", error);
             openToast("An error occurred while adding or updating Flexible Shift Work Timing", "error");
+        } finally {
+            setIsLoading(false);
+            closeModal();
         }
     }
 
@@ -1249,7 +1263,7 @@ const EditAttendanceDetail = () => {
                             </div>
                             <div class="pr-[10px] pb-3 flex gap-[10px] justify-end border-t pt-3">
                                 <button className="first-btn" onClick={closeModal}>Cancel</button>
-                                <button className="second-btn" onClick={(e) => createFixedShift(e)}>Confirm</button>
+                                <button disabled={isLoading} className={"second-btn " + (isLoading && "opacity-50 animate-pulse cursor-not-allowed")} onClick={(e) => createFixedShift(e)}>Confirm</button>
                             </div>
                         </div>
                     </TabPanel>
@@ -1401,7 +1415,7 @@ const EditAttendanceDetail = () => {
                             </div>
                             <div class="pr-[10px] pb-3 flex gap-[10px] justify-end border-t pt-3">
                                 <button class="first-btn" onClick={closeModal}>Cancel</button>
-                                <button class="second-btn" onClick={() => createFlexibleShift()}>Update Flexible Shift Work Timings </button></div>
+                                <button disabled={isLoading} className={"second-btn " + (isLoading && "opacity-50 animate-pulse cursor-not-allowed")} onClick={() => createFlexibleShift()}>Update Flexible Shift Work Timings </button></div>
                         </div>
                     </TabPanel>
 
@@ -1636,7 +1650,7 @@ const EditAttendanceDetail = () => {
 
                     <div className='pr-[10px] pb-3 flex gap-[10px] justify-end border-t pt-3'>
                         <button className='first-btn' onClick={closeModal2}>Cancel</button>
-                        <button disabled={isLoading} className={'second-btn '+(isLoading && 'opacity-50 cursor-not-allowed')} onClick={submitShift}>Confirm</button>
+                        <button disabled={isLoading} className={'second-btn ' + (isLoading && 'opacity-50 cursor-not-allowed')} onClick={submitShift}>Confirm</button>
                     </div>
                 </div>
             </Modal>

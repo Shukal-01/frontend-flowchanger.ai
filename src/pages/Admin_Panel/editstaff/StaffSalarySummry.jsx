@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import WarningIcon from '@mui/icons-material/Warning';
-import DownloadIcon from '@mui/icons-material/Download';
-import SettingsIcon from '@mui/icons-material/Settings';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import SearchIcon from '@mui/icons-material/Search';
-import DeleteIcon from '@mui/icons-material/Delete';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import AvTimerIcon from '@mui/icons-material/AvTimer';
-import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CloseIcon from '@mui/icons-material/Close';
+import TimePicker from "rc-time-picker";
+import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router';
+import { Link } from "react-router-dom";
 import { useGlobalContext } from "../../../Context/GlobalContext";
 import PresentAndHalfDayModal from "../../../components/Edit_Staff/PresentAndHalfDayModal";
-
 const StaffSalarySummry = () => {
     const { id } = useParams();
     // console.log(id)
 
-    const { baseUrl, selectedStaff, openToast } = useGlobalContext();
-
+    const { baseUrl, selectedStaff, openToast, shift: allShift } = useGlobalContext();
+    const [totalOvertime, setTotalOvertime] = useState(null);
     const [punchId, setPunchId] = useState("");
     const [isOpen, setIsOpen] = useState(false);
 
@@ -35,17 +27,10 @@ const StaffSalarySummry = () => {
         excessBreakAmount: 1,
         earlyOutFineAmount: 0,
         earlyOutAmount: 1,
+        shiftIds: "",
     });
 
-    const [presentAndHalfDay, setPresntAndHalfDay] = useState({
-        status: "",
-        startTime: "",
-        endTime: "",
-        shiftId: "",
-    })
-    const [submitPresentAndHalfDay, setSubmitPresentAndHalfDay] = useState(false);
 
-    console.log(presentAndHalfDay);
 
     function formatDate(date) {
         return date.toLocaleDateString('en-US', {
@@ -158,6 +143,8 @@ const StaffSalarySummry = () => {
         };
     });
 
+
+
     // Function to handle previous month click
     const handlePrevMonth = () => {
         const currentMonthDate = new Date(selectedMonth.original);
@@ -202,6 +189,17 @@ const StaffSalarySummry = () => {
             if (response.status === 200) {
                 console.log(result);
                 setAttendanceRecord(result?.attendanceRecords);
+                const overtimePairs = result?.attendanceRecords?.flatMap(({ Overtime }) => {
+                    if (Overtime?.earlyCommingEntryHoursTime || Overtime?.lateOutOvertimeHoursTime) {
+                        return [[
+                            Overtime?.earlyCommingEntryHoursTime || "00:00",
+                            Overtime?.lateOutOvertimeHoursTime || "00:00"
+                        ]];
+                    }
+                    return [];
+                }) || [];
+                console.log(overtimePairs)
+                setTotalOvertime(calculateTotalOvertime(overtimePairs)); // Assuming `setTotalOvertime` is for state
                 // openModal6();
                 // openToast("Attendance Mode created and updated Successfully", "success");
             }
@@ -227,10 +225,10 @@ const StaffSalarySummry = () => {
 
     // console.log(selectedMonth);
     // console.log(shiftDetails);
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     async function updateAttendanceStatus(commmenStatus) {
-        setLoading(true)
+        setIsLoading(true)
         try {
             if (commmenStatus === "") {
                 openToast("Please Select Status", "error")
@@ -257,7 +255,7 @@ const StaffSalarySummry = () => {
         } catch (error) {
             openToast("Something went wrong", "error")
         } finally {
-            setLoading(false);
+            setIsLoading(false);
             if (commmenStatus === "PRESENT") {
                 closeModal6();
             }
@@ -297,27 +295,18 @@ const StaffSalarySummry = () => {
         } catch (error) {
             openToast("Something went wrong", "error")
         } finally {
-            setLoading(false);
-            if (presentAndHalfDay.status === "PRESENT") {
+            setIsLoading(false);
+            if (data.status === "PRESENT") {
                 closeModal6();
             }
-            if (presentAndHalfDay.status === "HALFDAY") {
+            if (data.status === "HALFDAY") {
                 closeModal2();
             }
-            setPresntAndHalfDay({
-                status: "",
-                startTime: "",
-                endTime: "",
-                shiftId: "",
-            });
         }
     }
     async function createFine() {
+        setIsLoading(true)
         try {
-
-
-            // console.log(commmenStatus);
-
             const result = await fetch(baseUrl + `fine/create`, {
                 method: "POST",
                 headers: {
@@ -326,16 +315,20 @@ const StaffSalarySummry = () => {
                 body: JSON.stringify({
                     punchRecordId: punchId,
                     staffId: selectedStaff?.staffDetails?.id,
-                    lateEntryFineAmount: Number(fine.lateEntryFineAmount),
+                    // shiftIds: fine?.shiftIds ? [fine?.shiftIds] : [],
+                    lateEntryFineAmount: Number(fine.lateEntryFineAmount) * Number(fine.lateEntryAmount),
                     lateEntryAmount: Number(fine.lateEntryAmount),
-                    excessBreakFineAmount: Number(fine.excessBreakFineAmount),
+                    lateEntryFineHoursTime: fine.lateEntryHour,
+                    excessBreakFineAmount: Number(fine.excessBreakFineAmount) * Number(fine.excessBreakAmount),
                     excessBreakAmount: Number(fine.excessBreakAmount),
-                    earlyOutFineAmount: Number(fine.earlyOutFineAmount),
+                    excessBreakFineHoursTime: fine.excessBreakHour,
+                    earlyOutFineAmount: Number(fine.earlyOutFineAmount) * Number(fine.earlyOutAmount),
                     earlyOutAmount: Number(fine.earlyOutAmount),
-                    totalAmount: (Number(fine.lateEntryFineAmount) + Number(fine.excessBreakFineAmount) + Number(fine.earlyOutFineAmount)),
+                    earlyOutFineHoursTime: fine.earlyOutHour,
+                    totalAmount: (Number(fine.lateEntryFineAmount) * Number(fine.lateEntryAmount) + Number(fine.excessBreakFineAmount) * Number(fine.excessBreakAmount) + Number(fine.earlyOutFineAmount) * Number(fine.earlyOutAmount)),
                 })
             })
-            if (result.status == 201) {
+            if (result.ok) {
                 openToast("Create Fine Successfully", "success")
                 setFine({
                     staffId: selectedStaff?.staffDetails?.id,
@@ -348,16 +341,24 @@ const StaffSalarySummry = () => {
                     excessBreakAmount: 1,
                     earlyOutFineAmount: 0,
                     earlyOutAmount: 1,
+                    shiftIds: "",
                 });
                 setPunchId("");
-                fetchAttendanceSummary();
-                closeModal0();
+                if (!isLoading) {
+                    fetchAttendanceSummary();
+                    setAttendanceRecord([]);
+                }
+
             }
             else {
                 openToast("Something went wrong", "error")
             }
         } catch (error) {
             openToast("Something went wrong", "error")
+        }
+        finally {
+            setIsLoading(false);
+            closeModal0();
         }
     }
     const [overTime, setOverTime] = useState({
@@ -368,8 +369,10 @@ const StaffSalarySummry = () => {
         lateEntryAmount: 1,
         earlyOutFineAmount: 0,
         earlyOutAmount: 1,
+        shiftIds: ""
     });
     async function createOvertime() {
+        setIsLoading(true);
         try {
 
             // console.log(commmenStatus);
@@ -382,14 +385,17 @@ const StaffSalarySummry = () => {
                 body: JSON.stringify({
                     punchRecordId: punchId,
                     staffId: selectedStaff?.staffDetails?.id,
-                    lateEntryFineAmount: Number(fine.lateEntryFineAmount),
-                    lateEntryAmount: Number(fine.lateEntryAmount),
-                    earlyOutFineAmount: Number(fine.earlyOutFineAmount),
-                    earlyOutAmount: Number(fine.earlyOutAmount),
-                    totalAmount: (Number(fine.lateEntryFineAmount) + Number(fine.earlyOutFineAmount)),
+                    lateOutAmount: Number(overTime?.lateEntryFineAmount) * Number(overTime?.lateEntryAmount),
+                    lateOutOvertimeAmount: Number(overTime?.lateEntryAmount),
+                    lateOutOvertimeHoursTime: overTime?.lateEntryHour,
+                    earlyEntryAmount: Number(overTime?.earlyOutFineAmount) * Number(overTime?.earlyOutAmount),
+                    earlyCommingEntryAmount: Number(overTime?.earlyOutAmount),
+                    earlyCommingEntryHoursTime: overTime?.earlyOutHour,
+                    // shiftIds: overTime?.shiftIds,
+                    totalAmount: (Number(overTime.lateEntryFineAmount) * Number(overTime.lateEntryAmount) + Number(overTime.earlyOutFineAmount) * Number(overTime.earlyOutAmount)),
                 })
             })
-            if (result.status == 201) {
+            if (result.ok) {
                 openToast("Create Overtime Fine Successfully", "success")
                 setOverTime({
                     staffId: selectedStaff?.staffDetails?.id,
@@ -399,16 +405,24 @@ const StaffSalarySummry = () => {
                     lateEntryAmount: 1,
                     earlyOutFineAmount: 0,
                     earlyOutAmount: 1,
+                    shiftIds: "",
                 });
                 setPunchId("");
-                fetchAttendanceSummary();
-                closeModal12();
+                if (!isLoading) {
+                    fetchAttendanceSummary();
+                    setAttendanceRecord([]);
+                }
             }
             else {
                 openToast("Something went wrong", "error")
             }
         } catch (error) {
             openToast("Something went wrong", "error")
+        }
+        finally {
+            closeModal12();
+            setIsLoading(false);
+
         }
     }
     function calculateFinePerMinute(monthlySalary, workingDays, workingHoursPerDay) {
@@ -418,12 +432,52 @@ const StaffSalarySummry = () => {
         const finePerMinute = monthlySalary / (workingDays * workingHoursPerDay * 60);
         return finePerMinute.toFixed(2);
     }
+    function calculateTotalOvertime(times, thresholdHours = 8) {
+        const thresholdMinutes = thresholdHours * 60;
 
+        // Helper function to add two time strings
+        function addTimes(earlyTime = "00:00", lateTime = "00:00") {
+            const [earlyHours = 0, earlyMinutes = 0] = earlyTime.split(":").map(Number);
+            const [lateHours = 0, lateMinutes = 0] = lateTime.split(":").map(Number);
+
+            let totalHours = earlyHours + lateHours;
+            let totalMinutes = earlyMinutes + lateMinutes;
+
+            if (totalMinutes >= 60) {
+                totalHours += Math.floor(totalMinutes / 60);
+                totalMinutes %= 60;
+            }
+
+            return totalHours * 60 + totalMinutes;
+        }
+
+        let totalOvertimeMinutes = 0;
+
+        times.forEach(([earlyTime, lateTime]) => {
+            const totalMinutes = addTimes(earlyTime, lateTime);
+
+            if (totalMinutes > thresholdMinutes) {
+                totalOvertimeMinutes += totalMinutes - thresholdMinutes;
+            }
+        });
+
+        const overtimeHours = Math.floor(totalOvertimeMinutes / 60);
+        const overtimeMinutes = totalOvertimeMinutes % 60;
+
+        return {
+            totalOvertimeMinutes,
+            formattedOvertime: `${overtimeHours}h ${overtimeMinutes}m`,
+        };
+    }
+    // useEffect(() => {
+    // }, [attendanceRecord]);
+
+    console.log(totalOvertime);
 
     useEffect(() => {
         fetchAttendanceSummary();
     }, [selectedMonth])
-
+    // console.log(fine, overTime);
     return (
         <div className='  w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[100px]    xl:pl-[320px] flex flex-col '>
             <div className='flex  justify-between  '>
@@ -475,7 +529,10 @@ const StaffSalarySummry = () => {
                         </div>
                         <div className=' total-staff-salary text-end xl:text-center lg:text-center md:text-center'>
                             <h2 className='text-[14px] font-normal text-[#000000bf]'>Overtime Hours</h2>
-                            <p className='text-[14px] font-medium'>00.00</p>
+                            <p className='text-[14px] font-medium'>{
+                                totalOvertime === null ? "00:00" :
+                                    totalOvertime?.formattedOvertime
+                            }</p>
                         </div>
                         <div className=' total-staff-salary text-end xl:text-center lg:text-center md:text-center'>
                             <h2 className='text-[14px] font-normal text-[#000000bf]'>Weekly Off</h2>
@@ -486,7 +543,7 @@ const StaffSalarySummry = () => {
             </div>
 
             {
-                attendanceRecord?.length > 0 && loading === false ? attendanceRecord?.map((record, index) => {
+                attendanceRecord?.length > 0 && isLoading === false ? attendanceRecord?.map((record, index) => {
                     // console.log(record.id);
                     return (
                         <div key={record?.id} className='shadow p-[20px] mt-[18px] rounded-md'>
@@ -558,13 +615,31 @@ const StaffSalarySummry = () => {
                                                                 <p className=' text-[14px]'>{selectedStaff?.name} {formatDate(date)} I </p>
                                                             </div>
 
-                                                            <div className='flex justify-between items-center mb-[10px]'>
-                                                                <p className='text-[16px]  font-medium'>DAILY SHIFT</p>
-                                                                <DeleteIcon className='del-icon2 text-[#89868d]' />
-                                                            </div>
-
-
-                                                        </div>
+                                                            <div>
+                                                                <label className="block text-sm text-[#000] mb-1">Shift Name</label>
+                                                                <div className="relative">
+                                                                    <select
+                                                                        value={fine.shiftIds}
+                                                                        onChange={(e) => {
+                                                                            console.log(e.target.value);
+                                                                            setFine({ ...fine, shiftIds: e.target.value });
+                                                                            console.log(fine)
+                                                                        }}
+                                                                        className="focus:outline-none w-full px-3 py-2 border border-gray-200 rounded-md appearance-none bg-white text-gray-600 pr-10"
+                                                                    >
+                                                                        {allShift.map((shift) => (
+                                                                            <option key={shift.id} value={shift.id}>
+                                                                                {`${shift.shiftName} (${shift.shiftStartTime} - ${shift.shiftEndTime})`}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                    <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                                                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                        </div>
 
                                                         <div className=' p-[10px]   '>
                                                             <div className='flex items-center justify-between mb-[5px]'>
@@ -577,13 +652,31 @@ const StaffSalarySummry = () => {
                                                                 <div>
                                                                     <p className='text-[12px]'>Hours</p>
                                                                     {/* <p className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md'>00:41      hrs</p> */}
-                                                                    <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={fine.lateEntryHour} onChange={(e) => {
+                                                                    <TimePicker
+                                                                        placeholder={record?.fine?.lateEntryHour}
+                                                                        showSecond={false}
+                                                                        format="HH:mm"
+                                                                        inputReadOnly
+                                                                        onChange={(time) => {
+                                                                            const value = time ? time.format('HH:mm') : "00:00";
+                                                                            const [hours, minutes] = value.split(':').map(Number);
+                                                                            const totalMinutes = hours * 60 + minutes;
+                                                                            setFine({
+                                                                                ...fine,
+                                                                                lateEntryHour: value,
+                                                                                lateEntryFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2)
+                                                                            });
+                                                                        }}
+                                                                        className="text-[14px] select-pe rounded-md"
+                                                                    />
+
+                                                                    {/* <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={fine.lateEntryHour} onChange={(e) => {
                                                                         const value = e.target.value;
                                                                         const [hours, minutes] = value.split(':').map(Number);
                                                                         const totalMinutes = hours * 60 + minutes;
                                                                         setFine({ ...fine, lateEntryHour: e.target.value, lateEntryFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
-                                                                    }} />
-                                                                    <p className='text-[12px]' >Amount ₹ {fine.lateEntryFineAmount}</p>
+                                                                    }} /> */}
+                                                                    <p className='text-[12px]' >Amount ₹ {fine.lateEntryFineAmount * fine.lateEntryAmount}</p>
                                                                 </div>
                                                                 <div className='flex gap-[28px] '>
 
@@ -615,14 +708,28 @@ const StaffSalarySummry = () => {
 
                                                                 <div>
                                                                     <p className='text-[12px]'>Hours</p>
-                                                                    <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={fine.excessBreakHour} onChange={(e) => {
+                                                                    <TimePicker
+                                                                        placeholder={record?.fine?.excessBreakHour}
+                                                                        showSecond={false}
+                                                                        format="HH:mm"
+                                                                        inputReadOnly
+                                                                        onChange={(time) => {
+                                                                            const value = time ? time.format('HH:mm') : "00:00";
+                                                                            const [hours, minutes] = value.split(':').map(Number);
+                                                                            const totalMinutes = hours * 60 + minutes;
+                                                                            setFine({ ...fine, excessBreakHour: value, excessBreakFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
+                                                                        }}
+                                                                        className="text-[14px] select-pe rounded-md"
+                                                                    />
+
+                                                                    {/* <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={fine.excessBreakHour} onChange={(e) => {
                                                                         const value = e.target.value;
                                                                         const [hours, minutes] = value.split(':').map(Number);
                                                                         const totalMinutes = hours * 60 + minutes;
                                                                         setFine({ ...fine, excessBreakHour: e.target.value, excessBreakFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
-                                                                    }} />
+                                                                    }} /> */}
                                                                     {/* <p className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md'>00:41      hrs</p> */}
-                                                                    <p className='text-[12px]' >Amount ₹ {fine.excessBreakFineAmount}</p>
+                                                                    <p className='text-[12px]' >Amount ₹ {fine.excessBreakFineAmount * fine.excessBreakAmount}</p>
                                                                 </div>
                                                                 <div className='flex gap-[28px] '>
 
@@ -655,14 +762,28 @@ const StaffSalarySummry = () => {
 
                                                                 <div>
                                                                     <p className='text-[12px]'>Hours</p>
-                                                                    <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={fine.earlyOutHour} onChange={(e) => {
+                                                                    <TimePicker
+                                                                        placeholder={record?.fine?.earlyOutHour}
+                                                                        showSecond={false}
+                                                                        format="HH:mm"
+                                                                        inputReadOnly
+                                                                        onChange={(time) => {
+                                                                            const value = time ? time.format('HH:mm') : "00:00";
+                                                                            const [hours, minutes] = value.split(':').map(Number);
+                                                                            const totalMinutes = hours * 60 + minutes;
+                                                                            setFine({ ...fine, earlyOutHour: value, earlyOutFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
+                                                                        }}
+                                                                        className="text-[14px] select-pe rounded-md"
+                                                                    />
+
+                                                                    {/* <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={fine.earlyOutHour} onChange={(e) => {
                                                                         const value = e.target.value;
                                                                         const [hours, minutes] = value.split(':').map(Number);
                                                                         const totalMinutes = hours * 60 + minutes;
                                                                         setFine({ ...fine, earlyOutHour: e.target.value, earlyOutFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
-                                                                    }} />
+                                                                    }} /> */}
                                                                     {/* <p className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md'>00:41      hrs</p> */}
-                                                                    <p className='text-[12px]' >Amount ₹ {fine.earlyOutFineAmount}</p>
+                                                                    <p className='text-[12px]' >Amount ₹ {fine.earlyOutFineAmount * fine.earlyOutAmount}</p>
                                                                 </div>
                                                                 <div className='flex gap-[28px] '>
 
@@ -687,7 +808,7 @@ const StaffSalarySummry = () => {
                                                         </div>
                                                         <div className='mt-[10px] mb-[10px]'>
                                                             <span className='text-[12px]'>Total Amount</span>
-                                                            <p className='text-[14px]'>₹ {(parseFloat(fine.earlyOutFineAmount) + parseFloat(fine.lateEntryFineAmount) + parseFloat(fine.excessBreakFineAmount))}</p>
+                                                            <p className='text-[14px]'>₹ {parseFloat(fine.earlyOutFineAmount * fine.earlyOutAmount + fine.lateEntryFineAmount * fine.lateEntryAmount + fine.excessBreakFineAmount * fine.excessBreakAmount).toFixed(2)}</p>
                                                         </div>
                                                         <div className='flex items-center mb-[20px] gap-[4px] '>
                                                             <input type="checkbox" />
@@ -696,10 +817,10 @@ const StaffSalarySummry = () => {
 
                                                         <div className="flex flex-col gap-[10px] ">
                                                             <button
+                                                                disabled={isLoading}
                                                                 onClick={() => {
-                                                                    console.log(punchId);
                                                                     createFine();
-                                                                }} className="px-4 py-2 bg-[#27004a] text-white rounded-md"
+                                                                }} className={"px-4 py-2 bg-[#27004a] text-white rounded-md " + (isLoading && "opacity-50 animate-pulse cursor-not-allowed")}
                                                             >
                                                                 Apply Fine
                                                             </button>
@@ -739,11 +860,27 @@ const StaffSalarySummry = () => {
                                                                 <p className=' text-[14px]'>{selectedStaff?.name} {formatDate(date)}</p>
                                                             </div>
 
-                                                            <div className='flex justify-between items-center mb-[10px]'>
-                                                                <p className='text-[14px] font-medium'>DAILY SHIFT</p>
-                                                                <DeleteIcon className='del-icon2 text-[#89868d]' />
+                                                            <div>
+                                                                <label className="block text-sm text-[#000] mb-1">Shift Name</label>
+                                                                <div className="relative">
+                                                                    <select
+                                                                        value={fine.shiftIds}
+                                                                        onChange={(e) => setOverTime({ ...overTime, shiftIds: e.target.value })}
+                                                                        className="focus:outline-none w-full px-3 py-2 border border-gray-200 rounded-md appearance-none bg-white text-gray-600 pr-10"
+                                                                    >
+                                                                        {allShift.map((shift) => (
+                                                                            <option key={shift.id} value={shift.id}>
+                                                                                {`${shift.shiftName} (${shift.shiftStartTime} - ${shift.shiftEndTime})`}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                    <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                                                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-
 
                                                         </div>
 
@@ -757,14 +894,28 @@ const StaffSalarySummry = () => {
 
                                                                 <div>
                                                                     <p className='text-[12px]'>Hours</p>
-                                                                    <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={overTime.lateEntryHour} onChange={(e) => {
+                                                                    <TimePicker
+                                                                        placeholder={record?.Overtime?.lateOutOvertimeHoursTime}
+                                                                        showSecond={false}
+                                                                        format="HH:mm"
+                                                                        inputReadOnly
+                                                                        onChange={(time) => {
+                                                                            const value = time ? time.format('HH:mm') : "00:00";
+                                                                            const [hours, minutes] = value.split(':').map(Number);
+                                                                            const totalMinutes = hours * 60 + minutes;
+                                                                            setOverTime({ ...overTime, lateEntryHour: value, lateEntryFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
+                                                                        }}
+                                                                        className="text-[14px] select-pe rounded-md"
+                                                                    />
+
+                                                                    {/* <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={overTime.lateEntryHour} onChange={(e) => {
                                                                         const value = e.target.value;
                                                                         const [hours, minutes] = value.split(':').map(Number);
                                                                         const totalMinutes = hours * 60 + minutes;
                                                                         setOverTime({ ...overTime, lateEntryHour: e.target.value, lateEntryFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
-                                                                    }} />
+                                                                    }} /> */}
                                                                     {/* <p className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md'>00:41      hrs</p> */}
-                                                                    <p className='text-[12px]' >Amount ₹ {overTime.lateEntryFineAmount}</p>
+                                                                    <p className='text-[12px]' >Amount ₹ {parseFloat(overTime.lateEntryFineAmount * overTime.lateEntryAmount).toFixed(2)}</p>
                                                                 </div>
                                                                 <div className='flex gap-[28px] '>
 
@@ -797,14 +948,22 @@ const StaffSalarySummry = () => {
 
                                                                 <div>
                                                                     <p className='text-[12px]'>Hours</p>
-                                                                    <input type="time" name="" id="" className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md' value={overTime.earlyOutHour} onChange={(e) => {
-                                                                        const value = e.target.value;
-                                                                        const [hours, minutes] = value.split(':').map(Number);
-                                                                        const totalMinutes = hours * 60 + minutes;
-                                                                        setOverTime({ ...overTime, earlyOutHour: e.target.value, earlyOutFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
-                                                                    }} />
+                                                                    <TimePicker
+                                                                        placeholder={record?.Overtime?.earlyCommingEntryHoursTime}
+                                                                        showSecond={false}
+                                                                        format="HH:mm"
+                                                                        inputReadOnly
+                                                                        onChange={(time) => {
+                                                                            const value = time ? time.format('HH:mm') : "00:00";
+                                                                            const [hours, minutes] = value.split(':').map(Number);
+                                                                            const totalMinutes = hours * 60 + minutes;
+                                                                            setOverTime({ ...overTime, earlyOutHour: value, earlyOutFineAmount: (calculateFinePerMinute(30000, 22, 8) * totalMinutes).toFixed(2) });
+                                                                        }}
+                                                                        className="text-[14px] select-pe rounded-md"
+                                                                    />
+
                                                                     {/* <p className='text-[14px] select-pe  pl-[30px] pr-[30px] pt-[6px] pb-[6px]  rounded-md'>00:41      hrs</p> */}
-                                                                    <p className='text-[12px]' >Amount ₹ {overTime.earlyOutFineAmount}</p>
+                                                                    <p className='text-[12px]' >Amount ₹ {parseFloat(overTime.earlyOutAmount * overTime.earlyOutFineAmount).toFixed(2)}</p>
                                                                 </div>
                                                                 <div className='flex gap-[28px] '>
 
@@ -829,7 +988,7 @@ const StaffSalarySummry = () => {
                                                         </div>
                                                         <div className='mt-[10px] mb-[10px]'>
                                                             <span className='text-[12px]'>Total Amount</span>
-                                                            <p className='text-[14px]'>₹ {(parseFloat(overTime.earlyOutFineAmount) + parseFloat(overTime.lateEntryFineAmount))}</p>
+                                                            <p className='text-[14px]'>₹ {(parseFloat(overTime.earlyOutFineAmount * overTime.earlyOutAmount) + parseFloat(overTime.lateEntryFineAmount * overTime.lateEntryAmount)).toFixed(2)}</p>
                                                         </div>
                                                         <div className='flex items-center mb-[20px] gap-[4px] '>
                                                             <input type="checkbox" />
@@ -839,12 +998,12 @@ const StaffSalarySummry = () => {
 
                                                         <div className="flex flex-col gap-[10px] ">
                                                             <button
+                                                                disabled={isLoading}
                                                                 onClick={() => {
                                                                     createOvertime();
                                                                 }}
 
-                                                                className="px-4 py-2 bg-[#27004a] text-white rounded-md"
-                                                            >
+                                                                className={"px-4 py-2 bg-[#27004a] text-white rounded-md " + (isLoading && "opacity-50 animate-pulse cursor-not-allowed")}                                                            >
                                                                 Apply Overtime
                                                             </button>
                                                             <button

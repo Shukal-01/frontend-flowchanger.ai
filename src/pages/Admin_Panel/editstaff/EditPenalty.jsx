@@ -11,6 +11,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const EditPenalty = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
+    const [isLoading, setIsLoading] = useState(false);
     const [fineType, setFineType] = useState(selectedStaff?.staffDetails?.EarlyLeavePolicy?.[0]?.fineType ?? "DAILY");
     const [gracePeriodMins, setGracePeriodMins] = useState(selectedStaff?.staffDetails?.EarlyLeavePolicy?.[0]?.gracePeriodMins ?? 0);
     const [fineAmountMins, setFineAmountMins] = useState(selectedStaff?.staffDetails?.EarlyLeavePolicy?.[0]?.fineAmountMins ?? 0);
@@ -32,6 +33,7 @@ const EditPenalty = () => {
     console.log(selectedStaff);
 
     async function submitEarlyLeavePolicy() {
+        setIsLoading(true);
         try {
             const response = await fetch(baseUrl + "policy/early", {
                 method: "POST",
@@ -56,7 +58,6 @@ const EditPenalty = () => {
                 setGracePeriodMins(result?.gracePeriodMins);
                 setFineAmountMins(result?.fineAmountMins);
                 setWaiveOffDays(result?.waiveOffDays);
-                closeModal12();
                 openToast("Early Leave Policy created Successfully", "success");
             }
             else {
@@ -66,10 +67,15 @@ const EditPenalty = () => {
             console.error("Error creating early leave policy:", error);
             openToast("An error occurred while creating early leave policy", "error");
         }
+        finally {
+            setIsLoading(false);
+            closeModal12();
+        }
 
     }
 
     async function submitLateComingPolicy(e) {
+        setIsLoading(true);
         e.preventDefault();
         try {
             const response = await fetch(baseUrl + "policy/late", {
@@ -93,7 +99,6 @@ const EditPenalty = () => {
                 console.log(result);
 
                 openToast("Late Coming Policy created Successfully", "success");
-                closeModal13();
             }
             else {
                 openToast("An error occurred while creating late coming policy", "error");
@@ -102,9 +107,14 @@ const EditPenalty = () => {
             console.error("Error creating late coming policy:", error);
             openToast("An error occurred while creating late coming policy", "error");
         }
+        finally {
+            setIsLoading(false);
+            closeModal13();
+        }
     }
 
     async function submitOvertimePolicy() {
+        setIsLoading(true);
         try {
             const response = await fetch(baseUrl + "policy/overtime", {
                 method: "POST",
@@ -127,7 +137,6 @@ const EditPenalty = () => {
                 console.log(result);
 
                 openToast("Overtime Policy created Successfully", "success");
-                closeModal14();
             }
             else {
                 openToast("An error occurred while creating Overtime policy", "error");
@@ -135,6 +144,9 @@ const EditPenalty = () => {
         } catch (error) {
             console.error("Error creating Overtime policy:", error);
             openToast("An error occurred while creating Overtime policy", "error");
+        } finally {
+            closeModal14();
+            setIsLoading(false);
         }
 
     }
@@ -251,7 +263,7 @@ const EditPenalty = () => {
                     <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={waiveOffDays} onChange={(e) => setWaiveOffDays(e.target.value)} />
 
                     <div className='text-center pt-4 pb-4'>
-                        <button className='second-btn' onClick={submitEarlyLeavePolicy}>Save Early Leave Policy</button>
+                        <button disabled={isLoading} className={'second-btn ' + (isLoading && 'cursor-not-allowed opacity-50 animate-pulse')} onClick={submitEarlyLeavePolicy}>Save Early Leave Policy</button>
                     </div>
 
 
@@ -304,7 +316,7 @@ const EditPenalty = () => {
                         <input type='number' className='border border-1 rounded-md p-[5px] mt-1 w-[100%] mb-[10px]  focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]' placeholder='0' value={lateWaiveOffDays} onChange={(e) => setLateWaiveOffDays(e.target.value)} required />
 
                         <div className='text-center pt-4 pb-4'>
-                            <button className='second-btn'>Save Late Coming Policy</button>
+                            <button disabled={isLoading} className={'second-btn ' + (isLoading && 'cursor-not-allowed opacity-50 animate-pulse')}>Save Late Coming Policy</button>
                         </div>
 
 
@@ -349,7 +361,7 @@ const EditPenalty = () => {
 
 
                     <div className='text-center pt-4 pb-4'>
-                        <button className='second-btn' onClick={submitOvertimePolicy}>Save Overtime Policy</button>
+                        <button disabled={isLoading} className={'second-btn ' + (isLoading && 'cursor-not-allowed opacity-50 animate-pulse')}  onClick={submitOvertimePolicy}>Save Overtime Policy</button>
                     </div>
 
 

@@ -12,6 +12,7 @@ const EditLeavePolicies = () => {
     const { id } = useParams();
     const [activeTab, setActiveTab] = useState('leave-requests')
     const [activeSubTab, setActiveSubTab] = useState('pending')
+    const [isLoading, setIsLoading] = useState(false);
     const { baseUrl, selectedStaff, openToast, } = useGlobalContext();
     const [staff, setStaff] = useState(null);
     const [selectDuration, setSelectDuration] = useState("");
@@ -71,6 +72,7 @@ const EditLeavePolicies = () => {
 
     // console.log(updateLeaveBalance);
     const updatedLeaveBalance = async () => {
+        setIsLoading(true);
         try {
             const allData = [];
             for (const data of updateLeaveBalance) {
@@ -96,6 +98,8 @@ const EditLeavePolicies = () => {
         } catch (error) {
             console.error("Error updating leave balance:", error);
             openToast("An error occurred while updating leave balance", "error");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -105,6 +109,7 @@ const EditLeavePolicies = () => {
 
     // console.log(selectDuration, leavePolicyType, allowedLeavesPerYear, carryForwardLeaves);
     async function createLeavePolicy(e) {
+        setIsLoading(true);
         e.preventDefault();
         const data = {
             policy_type: selectDuration,
@@ -139,10 +144,13 @@ const EditLeavePolicies = () => {
         } catch (error) {
             console.error("Error creating leave policy:", error);
             openToast("An error occurred while creating leave policy", "error");
+        } finally {
+            setIsLoading(false);
         }
     }
 
     async function updateLeavePolicy(e) {
+        setIsLoading(true);
         e.preventDefault();
         const data = {
             policy_type: selectDuration,
@@ -176,8 +184,10 @@ const EditLeavePolicies = () => {
         } catch (error) {
             console.error("Error updating leave policy:", error);
             openToast("An error occurred while updating leave policy", "error");
+        } finally {
+            setIsLoading(false);
+            setEditingRow(null);
         }
-        setEditingRow(null);
     }
 
     async function getAllLeaveRequest() {
@@ -231,6 +241,7 @@ const EditLeavePolicies = () => {
     }
 
     async function editLeaveRequest(e, id) {
+        setIsLoading(true);
         e.preventDefault();
         const data = {
             staffId: selectedStaff?.staffDetails?.id,
@@ -277,6 +288,8 @@ const EditLeavePolicies = () => {
         } catch (error) {
             console.error("Error updating leave request:", error);
             openToast("An error occurred while updating leave request", "error");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -381,9 +394,9 @@ const EditLeavePolicies = () => {
 
 
             <div className='mt-5'>
-                <button className='shadow-cs bg-white w-full mb-4 flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-lg ' onClick={openModal12}> Leave Policy <ArrowForwardIosIcon className='allarrow-verify'/></button>
-                <button className='shadow-cs bg-white w-full mb-4  flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-lg ' onClick={openModal10}> Leave Balances <ArrowForwardIosIcon className='allarrow-verify'/></button>
-                <button className='shadow-cs bg-white w-full mb-4  flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-lg ' onClick={openLeaveRequestModal} > Leave Request <ArrowForwardIosIcon className='allarrow-verify'/></button>
+                <button className='shadow-cs bg-white w-full mb-4 flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-lg ' onClick={openModal12}> Leave Policy <ArrowForwardIosIcon className='allarrow-verify' /></button>
+                <button className='shadow-cs bg-white w-full mb-4  flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-lg ' onClick={openModal10}> Leave Balances <ArrowForwardIosIcon className='allarrow-verify' /></button>
+                <button className='shadow-cs bg-white w-full mb-4  flex items-center justify-between text-start text-[14px]  text-[#000] p-4 rounded-lg ' onClick={openLeaveRequestModal} > Leave Request <ArrowForwardIosIcon className='allarrow-verify' /></button>
 
 
 
@@ -676,17 +689,17 @@ const EditLeavePolicies = () => {
                                     </button>
                                 </div>
                                 <div className="col-span-1 md:col-span-2 relative">
-                                        <input 
-                                            type="text"
-                                            placeholder="Search staff by name"
-                                            className="w-full pl-2 pr-4 py-2 border rounded-md mb-[16px] focus-visible:outline-none"
-                                            
-                                        />
-                                        <SearchIcon className="absolute right-[8px] top-[10px]  cursor-pointer" />
-                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder="Search staff by name"
+                                        className="w-full pl-2 pr-4 py-2 border rounded-md mb-[16px] focus-visible:outline-none"
+
+                                    />
+                                    <SearchIcon className="absolute right-[8px] top-[10px]  cursor-pointer" />
+                                </div>
 
                                 <div className=" flex w-[100%] gap-[14px] mb-2">
-                                 
+
                                     <div className="relative">
                                         <select className="  w-full appearance-none border rounded-md focus-visible:outline-none py-2 pl-4 pr-10">
                                             <option>Branch</option>
