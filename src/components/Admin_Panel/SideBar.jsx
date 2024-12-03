@@ -632,7 +632,7 @@ const SideBar = ({ toggleSideBar }) => {
 
           {/* Sidebar */}
           <div
-            className={`fixed top-[53px] md:top-0 w-[500px] lg:w-[270px]  left-0 h-[100vh]  text-white z-10 transform ${
+            className={`fixed top-[53px] md:top-0 w-[500px] lg:w-[288px]  left-[0] h-[100vh]  text-white z-10 transform ${
               isOpen ? "translate-x-0" : "-translate-x-full"
             } transition-transform duration-300 ease-in-out`}
           >

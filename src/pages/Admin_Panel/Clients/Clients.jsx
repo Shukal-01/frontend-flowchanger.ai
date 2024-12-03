@@ -464,130 +464,82 @@ const Clients = () => {
             Clients
           </h2>
 
-          <div className="flex justify-between items-center mb-[14px] betwe-cent">
-            <div className="flex mb-4 pl-[0] bulk-csv justify-between p-3 flex-col gap-2  sm:flex-row sm:gap-0">
-              <div className="left-side ">
-                <select
-                  onChange={handleSelectChange}
-                  className=" border border-[#e5e7eb] p-[7px] selcct-chng text-[14px]  shadow-sm mr-2 rounded-md  focus:outline-none"
-                >
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                  <option value="120">120</option>
-                </select>
+         
+          <div className='flex mb-4 justify-between p-3 flex-col gap-2 pl-[0] sm:flex-row sm:gap-0'>
+          <div className='left-side '>
+            <select
+              onChange={handleSelectChange}
+              className=' border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm  mr-0 sm:mr-2  rounded-md  focus:outline-none'>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="120">120</option>
 
-                <select
-                  onChange={(e) => setExportFormat(e.target.value)}
-                  className="border border-[#e5e7eb] p-[7px]  text-[14px] shadow-sm rounded-md  focus:outline-none"
-                >
-                  <option value="CSV">CSV</option>
-                  <option value="PDF">PDF</option>
-                  <option value="Print">Print</option>
-                </select>
+            </select>
 
-                <button
-                  onClick={handleExport}
-                  className='ml-2 bg-[#27004a] export-project-btn text-white p-[7px] text-[14px] rounded-md cursor-pointer'
-                >
-                  Export File
-                </button>
+            <select onChange={(e) => setExportFormat(e.target.value)}
+              className='border border-[#e5e7eb] p-[7px]  text-[14px] shadow-sm rounded-md  focus:outline-none'>
+              <option value="CSV">CSV</option>
+              <option value="PDF">PDF</option>
+              <option value="Print">Print</option>
+            </select>
 
-
-                <button className="border border-[#e5e7eb] export-project-btn text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] " onClick={onOpenModal} >Bulk Action  <CachedIcon className="newsidebar-icon" /> </button>
-                <Modal open={open} onClose={onCloseModal} center>
-                  <div className="border-b border-[#dbdbdb] pb-[20px]">
-                    <h2>Bulk Actions</h2>
-                  </div>
-                  <div className="flex items-center gap-[8px] mt-[32px] mb-[32px]">
-                    <input type="checkbox" />
-                    <p className="text-[14px]">Mass Delete</p>
-                  </div>
-                  <div className="w-[100%]">
+            <button
+              onClick={handleExport}
+              className='ml-2 bg-[#27004a] export-project-btn text-white p-[7px] text-[14px] rounded-md cursor-pointer'
+            >
+              Export File
+            </button>
+            <button className="border border-[#e5e7eb] export-project-btn text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] " onClick={onOpenModal} >Bulk Action  <CachedIcon className="newsidebar-icon" /> </button>
+            <Modal open={open} onClose={onCloseModal} center>
+              <div className="border-b border-[#dbdbdb] pb-[20px]">
+                <h2>Bulk Actions</h2>
+              </div>
+              <div className="flex items-center gap-[8px] mt-[32px] mb-[32px]">
+                <input type="checkbox" />
+                <p className="text-[14px]">Mass Delete</p>
+              </div>
+              <div className="w-[100%]">
 
 
-
-
-
-                    <Select
-                      isMulti
-                      name="isHiddenFor"
-                      options={allStaff?.map(({ id, label }) => ({ label: label, value: id }))}
-                      className="basic-multi-select"
-                      classNamePrefix="select"
-                      value={taskStatus.isHiddenFor || []}
-                      onChange={(selectedOptions) =>
-                        setTaskStatus((prev) => ({
-                          ...prev,
-                          isHiddenFor: selectedOptions || [] // ensures an array even if no options are selected
-                        }))
-                      }
-                      styles={customStyles}
-                    />
-                  </div>
-                  <p className="text-[red] text-[14px] mt-[10px]">if you do not select any groups assigned to the selected customers will be removed.</p>
-
-                  <div className='pr-[10px] pb-3 flex gap-[10px] justify-end mt-[24px]'>
-                    {/* Button to close the modal */}
-
-                    <button className='second-btn'>Confirm </button>
-                  </div>
-
-                </Modal>
-                {/* <button className="border border-[#e5e7eb] text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] " onClick={onOpenModal}>Bulk Action <CachedIcon className="newsidebar-icon" /> </button>
-                                <Modal open={open} onClose={onCloseModal} center>
-                                    <div className="border-b border-[#dbdbdb] pb-[20px]">
-                                        <h2>Bulk Actions</h2>
-                                    </div>
-                                    <div className="flex items-center gap-[8px] mt-[32px] mb-[32px]">
-                                        <input type="checkbox" />
-                                        <p className="text-[14px]">Mass Delete</p>
-                                    </div>
-                                    <div className="w-[100%]">
-                                    </div>
-                                    <p className="text-[red] text-[14px]">if you do not select any groups assigned to the selected customers will be removed.</p>
-
-                                    <div className='pr-[10px] pb-3 flex gap-[10px] justify-end mt-[24px]'>
-                                        <button
-                                            className="bg-red-500 text-white px-4 py-2 rounded"
-                                            onClick={toggleModal15}
-                                        >
-                                            Close
-                                        </button>
-                                        <button className='second-btn'>Confirm </button>
-                                    </div>
-
-                                </Modal> */}
-
-
-
-
-
-
-
+                <Select
+                  isMulti
+                  name="isHiddenFor"
+                  options={allStaff?.map(({ id, label }) => ({ label: label, value: id }))}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  value={taskStatus.isHiddenFor || []}
+                  onChange={(selectedOptions) =>
+                    setTaskStatus((prev) => ({
+                      ...prev,
+                      isHiddenFor: selectedOptions || [] // ensures an array even if no options are selected
+                    }))
+                  }
+                  styles={customStyles}
+                />
               </div>
 
+              <p className="text-[red] text-[14px] mt-[10px]">if you do not select any groups assigned to the selected customers will be removed.</p>
 
-            </div>
-            <div className="relative client-add">
-              <input
-                className="p-[8px] client-add  rounded-3xl pl-[10px] pr-[24px] focus-visible:outline-none  summary-border text-[13px] "
-                type="text"
-                placeholder=" Search......."
-                value={companyName}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setCompanyName(value);
-                  if (value === "") {
-                    setSearchClients(null);
-                    fetchDetail(); // Fetch all clients when the input is cleared
-                  }
-                }}
+              <div className='pr-[10px] pb-3 flex gap-[10px] justify-end mt-[24px]'>
 
-              />
-              <SearchIcon className="absolute newadd2 right-[8px] top-[11px]" />
-            </div>
+                <button className='second-btn'>Confirm </button>
+              </div>
+
+            </Modal>
+
+
+
+
           </div>
+
+          <div className='right-side relative  w-[200px]'>
+            <input type='text' placeholder='Search' className='border border-1 p-[10px] h-[38px] pr-7
+] rounded-3xl focus:outline-none w-[100%] text-[15px] text-[#000]' />
+            <SearchIcon className='absolute right-[10px] search-icon    text-[#000]  font-thin text-[#dddddd;
+]'/>
+          </div>
+        </div>
 
           <div className="bg-white rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto">
             <table className="w-full table-auto border border-[#dcdbdb] rounded-lg overflow-hidden border-collapse">

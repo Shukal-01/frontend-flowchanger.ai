@@ -24,7 +24,7 @@ const Project_Setting = ({closeform}) => {
     { id: 17, label: "Hide project tasks on main tasks table (admin area)" },
   ];
   return (
-    <div className="m-5">
+    <div className="m-0 xl:m-5 lg:5  ">
       <div className="space-y-4">
         <div className="space-y-2">
           <h1>* Send contacts notifications</h1>
@@ -52,7 +52,7 @@ const Project_Setting = ({closeform}) => {
             <div className="space-x-2 py-3">
               <input className="bg-[#511992]" type="checkbox" />
               <span
-                className="text-[15px]"
+                className="text-[14px] "
                 style={{ fontSize: permission.fontSize }}
               >
                 {permission.label}

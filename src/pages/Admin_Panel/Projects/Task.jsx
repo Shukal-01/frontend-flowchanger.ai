@@ -424,7 +424,7 @@ const Task = () => {
           <div className='left-side '>
             <select
               onChange={handleSelectChange}
-              className=' border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm mr-2 rounded-md  focus:outline-none'>
+              className=' border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm  mr-0 sm:mr-2  rounded-md  focus:outline-none'>
               <option value="25">25</option>
               <option value="50">50</option>
               <option value="100">100</option>

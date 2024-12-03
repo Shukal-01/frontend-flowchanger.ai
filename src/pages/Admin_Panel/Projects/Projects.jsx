@@ -196,11 +196,11 @@ const Projects = () => {
         <h2 className="font-medium mb-[10px] flex gap-[6px] items-center"> <LibraryBooksIcon />Projects</h2>
 
 
-        <div className='flex mb-4 pl-[0px] value-select justify-between p-3 flex-col gap-2  sm:flex-row sm:gap-0'>
+        <div className='flex mb-4 justify-between p-3 flex-col gap-2 pl-[0] sm:flex-row sm:gap-0'>
           <div className='left-side '>
             <select
               onChange={handleSelectChange}
-              className=' border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm mr-2 rounded-md  focus:outline-none'>
+              className=' border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm  mr-0 sm:mr-2  rounded-md  focus:outline-none'>
               <option value="25">25</option>
               <option value="50">50</option>
               <option value="100">100</option>
@@ -233,9 +233,6 @@ const Projects = () => {
               <div className="w-[100%]">
 
 
-
-
-
                 <Select
                   isMulti
                   name="isHiddenFor"
@@ -252,10 +249,10 @@ const Projects = () => {
                   styles={customStyles}
                 />
               </div>
+
               <p className="text-[red] text-[14px] mt-[10px]">if you do not select any groups assigned to the selected customers will be removed.</p>
 
               <div className='pr-[10px] pb-3 flex gap-[10px] justify-end mt-[24px]'>
-                {/* Button to close the modal */}
 
                 <button className='second-btn'>Confirm </button>
               </div>
@@ -268,9 +265,9 @@ const Projects = () => {
           </div>
 
           <div className='right-side relative  w-[200px]'>
-            <input type='text' placeholder='Search' className='border border-1  pl-3 h-[38px]  pr-7
+            <input type='text' placeholder='Search' className='border border-1 p-[10px] h-[38px] pr-7
 ] rounded-3xl focus:outline-none w-[100%] text-[15px] text-[#000]' />
-            <SearchIcon className='absolute right-[10px] search-icon top-[12px]    text-[#000]  font-thin text-[#dddddd;
+            <SearchIcon className='absolute right-[10px] search-icon    text-[#000]  font-thin text-[#dddddd;
 ]'/>
           </div>
         </div>

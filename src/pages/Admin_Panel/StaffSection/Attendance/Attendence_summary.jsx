@@ -19,6 +19,8 @@ import HalfDay from "../../../../components/Admin_Panel/AttendanceSummary/HalfDa
 import PaidLeaveModal from "../../../../components/Admin_Panel/AttendanceSummary/PaidLeaveModal";
 import AbsentModal from "../../../../components/Admin_Panel/AttendanceSummary/AbsentModal";
 import ClipLoader from "react-spinners/ClipLoader";
+import DailyWorkEntry from "./DailyWorkEntry";
+import SettingPanel from "./Setting_panel";
 const Attendence_summary = () => {
   const { baseUrl, openToast, fetchStaff, staffDetail } = useGlobalContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -612,7 +614,7 @@ const Attendence_summary = () => {
           attendance={fetchAttendanceDetail}
         />
       )}
-      <div className="flex md:flex-row gap-[7px]  flex-col justify-between satisfy-summary  ">
+      {/* <div className="flex md:flex-row gap-[7px]  flex-col justify-between satisfy-summary  ">
         <div className="flex gap-[10px] summary-bold">
           <h1 className="font-semibold">Attendence Summary</h1>
         </div>
@@ -627,7 +629,8 @@ const Attendence_summary = () => {
             Setting <SettingsIcon className="icon-filter" />
           </Link>
         </div>
-      </div>
+      </div> */}
+      <SettingPanel />
 
       <div className="bg-[#fff] shadow-cs p-[20px] rounded-md mt-[24px] ">
         <div className="flex gap-[14px] justify-between items-start md:items-center  review-summary  ">
