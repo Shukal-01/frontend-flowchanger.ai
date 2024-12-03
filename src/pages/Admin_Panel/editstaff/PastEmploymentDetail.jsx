@@ -11,6 +11,7 @@ const PastEmploymentDetail = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
     const [pastEmploymentID, setPastEmploymentID] = useState(selectedStaff?.staffDetails?.past_Employment?.id);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [editPastEmployment, setEditPastEmployment] = useState(!!selectedStaff?.staffDetails?.past_Employment);
     const [pastEmploymentStatus, setPastEmploymentStatus] = useState(selectedStaff?.staffDetails?.past_Employment?.past_Employment_status);
@@ -32,6 +33,7 @@ const PastEmploymentDetail = () => {
 
 
     async function addPastEmployment() {
+        setIsLoading(true);
         try {
             const response = await fetch(baseUrl + "/past-employment", {
                 method: "POST",
@@ -66,7 +68,6 @@ const PastEmploymentDetail = () => {
                 openToast("Past Employment successfully added", "success");
                 setEditPastEmployment(true);
                 setPastEmploymentID(result?.id);
-                closeModal2();
             } else {
                 openToast("An error occurred while adding past employment", "error");
             }
@@ -74,8 +75,13 @@ const PastEmploymentDetail = () => {
             console.error("Error adding past employment:", error);
             openToast("An error occurred while adding past employment", "error");
         }
+        finally {
+            setIsLoading(false);
+            closeModal2();
+        }
     }
     async function editingPastEmployment() {
+        setIsLoading(true);
         try {
             const response = await fetch(baseUrl + "/past-employment/" + selectedStaff?.staffDetails?.id, {
                 method: "PUT",
@@ -106,13 +112,16 @@ const PastEmploymentDetail = () => {
                 //     companyGst: result?.company_gst
                 // })
                 openToast("Past Employment successfully updated", "success");
-                closeModal2();
             } else {
                 openToast("An error occurred while updating past employment", "error");
             }
         } catch (error) {
             console.error("Error updating past employment:", error);
             openToast("An error occurred while updating past employment", "error");
+        }
+        finally {
+            setIsLoading(false);
+            closeModal2();
         }
     }
     async function deletedPastEmployment() {
@@ -182,7 +191,7 @@ const PastEmploymentDetail = () => {
 
     return (
         <>
-        {/* // <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
+            {/* // <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
             <div className='flex justify-between items-center  w-[100%] p-[20px]  pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>Past Employment Detail</h3>
             </div>
@@ -285,7 +294,7 @@ const PastEmploymentDetail = () => {
                                 name="currency"
                                 options={currencyOptions}
                                 value={currencyOptions.filter(option => option.value === pastEmployment?.currency)}
-                                onChange={(selectedOption)=>{
+                                onChange={(selectedOption) => {
                                     handleCurrencyChange(selectedOption.value);
                                 }}
                                 className="react-select-container"
@@ -325,19 +334,19 @@ const PastEmploymentDetail = () => {
                                 <button className='first-btn' onClick={() => {
                                     deletedPastEmployment()
                                 }}>Delete</button>
-                                <button className='second-btn' onClick={() => {
+                                <button disabled={isLoading} className={'second-btn ' + (isLoading && "cursor-not-allowed opacity-50")} onClick={() => {
                                     editingPastEmployment()
                                 }}>Edit </button>
 
                             </div>) : (<div className='pr-[10px] pb-3 flex gap-[10px] justify-end border-t pt-3'>
                                 <button className='first-btn' onClick={closeModal2}>Cancel</button>
-                                <button className='second-btn' onClick={handleSubmit}>Save </button>
+                                <button disabled={isLoading} className={'second-btn ' + (isLoading && "cursor-not-allowed opacity-50")} onClick={handleSubmit}>Save </button>
                             </div>)
                     }
                 </div>
             </Modal>
 
-        {/* </div> */}
+            {/* </div> */}
         </>
     )
 }

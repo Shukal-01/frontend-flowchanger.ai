@@ -4,7 +4,7 @@ import Monthly from "./Monthly";
 
 const Plan = () => {
   return (
-    <div className="buy-plans">
+    <div className="buy-plans p-[10px]">
       <div className="text-center text-[#566a7f]">
         <h1 className="text-[35px]">Pricing Plans</h1>
         <p>
@@ -15,7 +15,7 @@ const Plan = () => {
 
       <div className="tab-section ">
         <Tabs>
-          <TabList className="flex items-center justify-center border border-[#27004a] mx-[42%]">
+          <TabList className="flex items-center justify-center border  mx-[42%]">
             <Tab className= "hover:bg-[#27004a] text-[white]  px-2 py-2 border-none">Monthly</Tab>
             <Tab className="bg-[#27004a] text-[white]  px-2 py-2" >Yearly</Tab>
             <Tab className="bg-[#27004a] text-[white]  px-2 py-2">Lifetime</Tab>

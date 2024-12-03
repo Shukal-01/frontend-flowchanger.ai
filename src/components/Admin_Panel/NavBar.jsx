@@ -44,7 +44,7 @@ const NavBar = ({toggleRunTab,setToggleRunTab}) => {
   return (
 
  
-    <div className="w-[100%] flex items-center justify-between border-b shadow-sm navbar h-[10%] ">
+    <div className="w-[100%] flex items-center justify-between border-b shadow-sm  navbar  py-[7px]  sticky top-0 bg-white z-10">
       <button onClick={handleAddClass}>
 
         <MenuIcon className="menu-icon-navbar hidden " />

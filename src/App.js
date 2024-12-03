@@ -110,6 +110,9 @@ import AddBranch from "./pages/Admin_Panel/Branch/AddBranch";
 import UpdateBranch from "./pages/Admin_Panel/Branch/UpdateBranch";
 import Setting_panel from "./pages/Admin_Panel/StaffSection/Attendance/Setting_panel";
 import ClientDashBoard from "./pages/Client_Panel/ClientDashBoard";
+import DailyWorkEntry from "./pages/Admin_Panel/StaffSection/Attendance/DailyWorkEntry";
+import AttendenceSetting from "./pages/Admin_Panel/StaffSection/Attendance/AttendenceSetting";
+import TrackTime from "./pages/Admin_Panel/StaffSection/Attendance/TrackTime";
 
 const App = () => {
   const [toggleSideBar, setToggleSideBar] = useState(true);
@@ -142,9 +145,9 @@ const App = () => {
       <>
         <div className="flex max-h-screen">
           <SideBar />
-          <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set max-h-screen ">
-            <NavBar />
-            <div className="p-[10px]  w-full h-[98vh] md:h-[90%] overflow-y-scroll content-container">
+          <div className="w-[100%] xl:w-[80%] lg:w-[100%] h-lvh admin-sidebar-set overflow-y-scroll pb-[20px]">
+            <NavBar/>
+            <div className="py-2">
               <Outlet />
             </div>
           </div>
@@ -176,36 +179,17 @@ const App = () => {
       </>
     );
   }
-
-  // function CustomerPanel() {
-  //   return (
-  //     <>
-  //       <Customer_Navbar />
-  //       <Outlet />
-  //       <Customer_Footer />
-  //     </>
-  //   );
-  // }
-
+ 
   function Client_Panel() {
     return (
       <>
-        <div className="flex max-h-screen ">
-          {toggleSideBar && <SidebarClient toggleSideBar={toggleSideBar} />}
-
-          {/* container for navbar and outlet */}
-          <div
-            className={`flex flex-col  flex-grow overflow-hidden max-h-screen`}
-          >
-            <ClientHeader
-              handleToggleSideBar={handleToggleSideBar}
-              toggleSideBar={toggleSideBar}
-            />
-            <main className="flex-1 z-[1]    h-[90%] overflow-y-scroll content-container">
-              <div className="mx-auto px-4 pl-3 pr-3 py-8 lg:px-4 view-not  ">
-                <Outlet />
-              </div>
-            </main>
+        <div className="flex max-h-screen">
+          <SidebarClient />
+          <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set min-h-screen shadow-lg">
+            <ClientHeader/>
+            <div className="w-full h-[98vh] md:h-[88%] overflow-y-scroll content-container">
+              <Outlet />
+            </div>
           </div>
         </div>
       </>
@@ -234,12 +218,12 @@ const App = () => {
   function Payroll_Summary() {
     return (
       <>
-        <div className="flex box-border overflow-hidden ">
+        <div className="flex box-border overflow-hidden max-h-screen">
           <SideBar />
           <div
             className={`${
               !toggleSideBar ? "w-[calc(100%-20%)]" : "w-full"
-            } flex-grow-0`}
+            } flex-grow-0  admin-sidebar-set min-h-screen shadow-lg`}
           >
             <NavBar
               className="w-full"
@@ -293,6 +277,9 @@ const App = () => {
               element={<Attendence_summary />}
             />
             <Route path="/setting-panel" element={<Setting_panel />} />
+            <Route path="/daily-work-entry" element={<DailyWorkEntry />} />
+            <Route path="/attendence-setting" element={<AttendenceSetting />} />
+            <Route path="/tracktime" element={<TrackTime />} />
 
             <Route path="/project_summary" element={<Project_Summary />} />
             <Route path="/projects" element={<Projects />} />

@@ -8,8 +8,9 @@ const PersonalDetail = () => {
 
     const { id } = useParams();
     console.log(id)
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { baseUrl, selectedStaff,openToast } = useGlobalContext()
+    const { baseUrl, selectedStaff, openToast } = useGlobalContext()
     const [isEditable, setIsEditable] = useState(false);
     const [inputValue, setInputValue] = useState(selectedStaff?.staffDetails?.BankDetails?.bank_name);
 
@@ -30,8 +31,10 @@ const PersonalDetail = () => {
 
     // Function to toggle between editable and readonly mode
     const handleEditClick = async (e) => {
+
         e.preventDefault();
         if (isEditable) {
+            setIsLoading(true);
             try {
                 const response = await fetch(baseUrl + "bank-details/" + selectedStaff.staffDetails.id, {
                     method: "POST",
@@ -58,6 +61,9 @@ const PersonalDetail = () => {
                 console.error("Error submitting bank details:", error);
                 openToast("An error occurred while adding bank details", "error");
             }
+            finally {
+                setIsLoading(false);
+            }
         }
 
         setIsEditable(!isEditable); // Toggle editable state
@@ -65,6 +71,7 @@ const PersonalDetail = () => {
 
     const handleEditClick2 = async () => {
         if (isEditable6) {
+            setIsLoading(true);
             try {
                 const response = await fetch(baseUrl + "upi-details", {
                     method: "POST",
@@ -86,9 +93,10 @@ const PersonalDetail = () => {
             } catch (error) {
                 console.error("Error submitting bank details:", error);
                 openToast("An error occurred while adding Upi details", "error");
+            } finally {
+                setIsLoading(false);
             }
         }
-
         setIsEditable6(!isEditable6); // Toggle editable state
     };
 
@@ -141,11 +149,11 @@ const PersonalDetail = () => {
 
 
     return (
-       <>
-       {/* <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
+        <>
+            {/* <div className='w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[60px]    xl:pl-[320px] flex flex-col '> */}
             <div className='flex justify-between items-center  w-[100%] p-[20px] xl:pr-0 pr-0  pl-[0] top-0 bg-white'>
                 <h3 className='font-medium ml-3'>Bank Details</h3>
-                <button className='second-btn'>Update Details</button>
+                {/* <button className='second-btn'>Update Details</button> */}
             </div>
 
             <h2 className='bg-[#fff] pt-[10px] pb-[10px] pl-[14px] rounded-lg font-normal shadow-cs'>Bank Details</h2>
@@ -163,7 +171,7 @@ const PersonalDetail = () => {
                                 border: isEditable ? "1px solid #F4F5F9" : '#000'
                             }}
                             className=' rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
-                        required/>
+                            required />
                     </div>
 
                     <div className='w-[100%]  xl:w-[48%] 2xl:w-[48%] '>
@@ -178,7 +186,7 @@ const PersonalDetail = () => {
                                 border: isEditable ? "1px solid #F4F5F9" : '#000'
                             }}
                             className=' rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
-                        required/>
+                            required />
                     </div>
 
 
@@ -200,7 +208,7 @@ const PersonalDetail = () => {
                                 border: isEditable ? "1px solid #F4F5F9" : '#000'
                             }}
                             className=' rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
-                       required />
+                            required />
                     </div>
 
                     <div className='w-[100%]  xl:w-[48%] 2xl:w-[48%] '>
@@ -215,7 +223,7 @@ const PersonalDetail = () => {
                                 border: isEditable ? "1px solid #F4F5F9" : '#000'
                             }}
                             className=' rounded-md p-[5px] mt-1 w-[100%] bg-[#F4F5F9] focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]'
-                        required/>
+                            required />
                     </div>
 
 
@@ -233,7 +241,7 @@ const PersonalDetail = () => {
                 <div className='flex justify-end mt-4 p-3'>
 
                     <div className='flex gap-[20px] items-center '>
-                        <button type='button' className='second-btn' onClick={handleEditClick}>
+                        <button disabled={isLoading} type='button' className={'second-btn ' + (isLoading && 'opacity-50 cursor-not-allowed')} onClick={handleEditClick}>
                             {isEditable ? "Save" : "Edit"}
                         </button>
 
@@ -274,7 +282,7 @@ const PersonalDetail = () => {
                 <div className='flex justify-end mt-4 p-3'>
 
                     <div className='flex gap-[20px] items-center '>
-                        <button type='button' className='second-btn' onClick={handleEditClick2}>
+                        <button disabled={isLoading} type='button' className={'second-btn ' + (isLoading && 'opacity-50 cursor-not-allowed')} onClick={handleEditClick2}>
                             {isEditable6 ? "Save" : "Edit"}
                         </button>
 
@@ -283,7 +291,7 @@ const PersonalDetail = () => {
                 </div>
             </form>
             {/* </div> */}
-            </>
+        </>
     )
 }
 

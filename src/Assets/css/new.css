@@ -9,6 +9,23 @@
     padding: 6px 10px !important;
 
 }
+.allcrm-btn1{
+    background: #27004a;
+    color: #fff;
+    transition: all 0.3s linear;
+    border: 1px solid #27004a;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    
+}
+.allcrm-btn1:hover{  
+    transition: all 0.3s linear;
+    background: none;
+    color: #27004a;
+    
+}
+
 
 .newsetup{
     box-shadow: 0px 0px 5px #cfcfcf;
@@ -401,6 +418,9 @@
     .form-profile{
         width: 100%;
     }
+    .react-responsive-modal-modal{
+            width: 94%;
+    }
 }
 @media(max-width:670px){
     .main-flex{
@@ -409,6 +429,15 @@
     .save-btn{
         flex-basis: 100%;
     }
+    .billing-form-type{
+
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    .billing-type-project{
+        width: 100%;
+    }
+
 }
 @media(max-width:600px){
     .project-fear{
@@ -453,6 +482,10 @@
         flex-direction: column;
         gap: 10px;
     }
+    .add-project-form{
+        max-width: 100%;
+        margin: 0;
+    }
     .new-wid{
         width: 100%;
     }
@@ -478,15 +511,24 @@
     flex-direction: column;
     gap: 20px;
    }
+   .track-heading{
+    font-size: 16px ;
+   }
    .project-export{
     flex-direction: column;
     gap: 10px;
+   }
+   .staff-timeout{
+        font-size: 14px;
    }
    .system-project{
     width: 100%;
    }
   .summ-project{
     width: 100%;
+  }
+  .react-responsive-modal-modal{
+    width: 88%;
   }
 }
 @media(max-width:480px){
@@ -508,9 +550,7 @@
         flex-direction: column;
         gap: 10px;
     }
-    .summary-bold2{
-        text-align: right;
-    }
+
     .approval-new{
         width: 100%;
     }
@@ -549,12 +589,22 @@
         justify-content: center;
         
     }
+    .providing{
+        font-size: 16px;
+    }
+    .space-work{
+        flex-direction: column;
+        gap: 10px;
+    }
     .approval-new{
         flex-direction: column;
     }
     .review-btn{
         width: 100%;
         text-align: center;
+    }
+    .work-entry{
+        font-size: 18px;
     }
 }
 @media(max-width:400px){
@@ -574,6 +624,17 @@
     .amount-res{
         width: 100%;
     }
+    .react-responsive-modal-modal{
+        width: 90%;
+    }
+    .weekly-sms{
+        overflow: scroll;
+        margin-bottom: 30px;
+        height: 100%;
+    }
+    .enable-staff-panel{
+        font-size: 15px;
+    }
     .btn-apply{
         width: 100%;
     }
@@ -586,10 +647,14 @@
     .all-select2{
         width: 100%;
     }
+    
 }
 @media(max-width:350px){
     .daily-heading{
         font-size: 12px !important;
+    }
+    .daily-heading-entry{
+        font-size: 14px;
     }
     .toggle-btn{
         width: 46px;
@@ -612,8 +677,14 @@
     .btn-expense{
         font-size: 12px;
     }
+    .acc-setting{
+        font-size: 20px;
+    }
     .bulk-action{
         width: 110px;
+    }
+    .enable-staff-panel{
+        font-size: 13px;
     }
     .newcreated{
         font-size: 14px;
@@ -639,6 +710,12 @@
     .over-new{
         padding: 10px;
     }
+    .right-side{
+            width: 230px;
+    }
+    .search-icon{
+        top: 11px;
+    }
     .total-staff{
         font-size: 12px;
     }
@@ -657,6 +734,17 @@
     }
     .selcct-chng{
         margin-bottom: 12px;
+    }
+    .left-side {
+        flex-direction: column !important;
+        display: flex;
+        gap: 10px !important;
+    }
+    .export-project-btn{
+        margin: 0 !important;
+    }
+    .value-select{
+        margin-bottom: 0;
     }
 
 }
@@ -696,6 +784,12 @@
 
 @media screen and (max-width:576px){
     .total-staff{
-        flex-basis: 40%;
+        flex-basis: 44%;
+    }
+    .total-staff:nth-child(even){
+        border-right: none !important;
+    }
+    .total-staff:last-child{
+        border-right: none !important;
     }
 }

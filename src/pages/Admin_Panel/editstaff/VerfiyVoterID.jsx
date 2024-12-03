@@ -9,7 +9,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 const VerifyVoterID = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
-
+    const [isLoading, setIsLoading] = useState(false);
     const [voter, setVoter] = useState({
         number: selectedStaff?.staffDetails?.staff_bg_verification?.voter_id_number,
         status: selectedStaff?.staffDetails?.staff_bg_verification?.voter_id_verification_status,
@@ -19,6 +19,12 @@ const VerifyVoterID = () => {
     console.log(voter);
 
     async function submitVoterID() {
+        if (!voter?.number || !voter?.veriicationFile) {
+            openToast("Provide either voter id number or upload file", "warning");
+            return;
+        }
+
+        setIsLoading(true);
         const newFormData = new FormData();
         newFormData.append("voter_id_number", voter?.number);
         newFormData.append("verificationFile", voter?.veriicationFile);
@@ -43,6 +49,9 @@ const VerifyVoterID = () => {
         } catch (error) {
             console.error("Error submitting Aadhaar:", error);
             openToast("An error occurred while adding or updating Voter ID", "error");
+        }
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -81,7 +90,7 @@ const VerifyVoterID = () => {
         <div className='w-full pt-[10px]  relative    flex flex-col '>
             <div className='flex justify-between items-center  w-[100%] p-[20px]  pr-0 xl:pr-[20px] pl-[0] top-0 bg-white'>
                 <h3 className='font-medium'>Voter ID Verification</h3>
-                <button className='second-btn' onClick={submitVoterID}>
+                <button className={'second-btn ' + (isLoading && 'opacity-50 cursor-not-allowed animate-pulse')} onClick={submitVoterID}>
                     Update Voter ID
                 </button>
             </div>

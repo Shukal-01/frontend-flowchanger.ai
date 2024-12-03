@@ -63,9 +63,9 @@ const ClientChatInterFace = () => {
  
 
   return (
-    <div class=" overflow-hidden">
+    <div class=" overflow-hidden ">
       {/* <!-- Container for Chat Section --> */}
-      <div class="flex   shadow-lg rounded-lg  h-[calc(100vh-50px)] parent-container bg-white">
+      <div class="flex   shadow-lg rounded-lg h-[90vh]  parent-container bg-white">
         {/* <!-- Left Section: Members List --> */}
         <div
       className={`w-full ${

@@ -9,6 +9,8 @@ import { useParams } from 'react-router';
 const PersonalDetail = () => {
 
     const { baseUrl, selectedStaff, openToast } = useGlobalContext();
+    const [isLoadingPersonalDetails, setIsLoadingPersonalDetails] = useState(false);
+    const [isLoadingGovernmentIds, setIsLoadingGovernmentIds] = useState(false);
 
     const [personalDetailsUpdate, setPersonalDetailsUpdate] = useState({
         name: selectedStaff?.name,
@@ -37,6 +39,7 @@ const PersonalDetail = () => {
 
 
     const updatePersonalDetails = async (e) => {
+        setIsLoadingGovernmentIds(true);
         e.preventDefault();
 
         const data = {};
@@ -93,6 +96,9 @@ const PersonalDetail = () => {
         } catch (error) {
             console.error("Error updating personal details:", error);
             openToast("An error occurred while updating personal details", "error");
+        }
+        finally {
+            setIsLoadingGovernmentIds(false);
         }
     };
 
@@ -197,6 +203,7 @@ const PersonalDetail = () => {
 
 
     async function updateAllGovernmentIds() {
+        setIsLoadingGovernmentIds(true);
         const idsToUpdate = [
             { idType: "aadhaar", value: governmentIds?.aadhaar_number },
             { idType: "pan", value: governmentIds?.pan_number },
@@ -233,6 +240,9 @@ const PersonalDetail = () => {
         } catch (error) {
             console.error("Error updating government IDs:", error);
             openToast("An error occurred while updating government IDs", "error");
+        }
+        finally {
+            setIsLoadingGovernmentIds(false);
         }
     }
 
@@ -485,7 +495,7 @@ const PersonalDetail = () => {
                 <div className='flex justify-end mt-4 p-3'>
 
                     <div className='flex gap-[20px] items-center '>
-                        <button type='button' className='second-btn' onClick={
+                        <button type='button' disabled={isLoadingPersonalDetails} className={'second-btn ' + (isLoadingPersonalDetails && "cursor-not-allowed animate-pulse")} onClick={
                             (e) => {
                                 handleEditClick(e)
                             }

@@ -195,7 +195,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                 >
                   <div className="py-1" role="none">
                     <NavLink
-                      to="/calender"
+                      to="#"
                       className=" hover:bg-[#e3e3e3] px-4 py-2 text-sm text-gray-700 flex gap-[10px] items-center"
                       role="menuitem"
                       tabindex="-1"
@@ -205,7 +205,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                       Download Pay Slip
                     </NavLink>
                     <NavLink
-                      to="/day-wise"
+                      to="#"
                       className=" hover:bg-[#e3e3e3] px-4 py-2 text-sm text-gray-700 flex gap-[10px] items-center"
                       role="menuitem"
                       tabindex="-1"
@@ -262,7 +262,7 @@ const RunPayroll = ({ toggleRunTab }) => {
             </div>
           </div>
 
-          <button className="second-btn" onClick={openModal9}>
+          <button className="second-btn mb-2" onClick={openModal9}>
             Filter
           </button>
         </div>
@@ -289,7 +289,7 @@ const RunPayroll = ({ toggleRunTab }) => {
         </div>
       </div>
 
-      <div className=" mt-5  p-4 py-2">
+      <div className=" mt-5 ">
         {/* <div className="mt-5"> */}
 
         <div className="bg-white  rounded-lg  shadow-cs border border-[#dcdbdb] overflow-x-auto  h[100%]">
@@ -674,7 +674,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                 </div>
               </th>
 
-              <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
+              {/* <th className="border-r p-[10px] text-xs font-medium whitespace-nowrap text-center">
                 <div className="flex">
                   Bank/UPI Verified
                   <div className="relative dropdown-container">
@@ -714,7 +714,7 @@ const RunPayroll = ({ toggleRunTab }) => {
                     )}
                   </div>
                 </div>
-              </th>
+              </th> */}
 
               {toggleDrop11 && (
                 <>
@@ -1524,7 +1524,7 @@ const RunPayroll = ({ toggleRunTab }) => {
       >
         <h2
           ref={(_subtitle) => (subtitle = _subtitle)}
-          className="border-b p-3     text-[14px]   bg-[#F0F6FE]  rounded-b-none rounded-t-lg"
+          className="border-b p-3     text-[14px]   rounded-b-none rounded-t-lg"
         >
           Apply Filters
         </h2>

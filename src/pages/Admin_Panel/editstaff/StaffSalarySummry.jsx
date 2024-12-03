@@ -37,6 +37,16 @@ const StaffSalarySummry = () => {
         earlyOutAmount: 1,
     });
 
+    const [presentAndHalfDay, setPresntAndHalfDay] = useState({
+        status: "",
+        startTime: "",
+        endTime: "",
+        shiftId: "",
+    })
+    const [submitPresentAndHalfDay, setSubmitPresentAndHalfDay] = useState(false);
+
+    console.log(presentAndHalfDay);
+
     function formatDate(date) {
         return date.toLocaleDateString('en-US', {
             day: '2-digit',
@@ -51,7 +61,7 @@ const StaffSalarySummry = () => {
         setIsOpen(true);
     };
 
-    // Function to close the modal
+    // Function to close the modal 
     const closeModal = () => {
         setIsOpen(false);
     };
@@ -134,6 +144,8 @@ const StaffSalarySummry = () => {
         setIsOpen14(true);
     };
 
+
+
     // Function to close the modal 14
     const closeModal14 = () => {
         setIsOpen14(false);
@@ -202,16 +214,7 @@ const StaffSalarySummry = () => {
             // openToast("An error occurred while creating and updating attendance mode", "error");
         }
     }
-    async function fetchShiftDetails() {
-        const result = await fetch(baseUrl + "shift");
-        if (result.status == 200) {
-            const data = await result.json();
-            setShiftDetails(data)
-        }
-        else {
-            // openToast("No Record Found")
-        }
-    }
+
     function formatDate(isoString) {
         const date = new Date(isoString);
 
@@ -267,6 +270,46 @@ const StaffSalarySummry = () => {
             if (commmenStatus === "PAIDLEAVE") {
                 closeModal14();
             }
+        }
+    }
+    async function updatePresentAndHalfDayAttendace(punchID, data) {
+        try {
+            if (data.status === "") {
+                openToast("Please Select Status", "error")
+                return
+            }
+
+            const result = await fetch(baseUrl + `attendance/status/${punchID}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            if (result.status == 200) {
+                openToast("Update " + data?.status + " Status Successfully", "success")
+                setAttendanceRecord([]);
+                fetchAttendanceSummary();
+            }
+            else {
+                openToast("Something went wrong", "error")
+            }
+        } catch (error) {
+            openToast("Something went wrong", "error")
+        } finally {
+            setLoading(false);
+            if (presentAndHalfDay.status === "PRESENT") {
+                closeModal6();
+            }
+            if (presentAndHalfDay.status === "HALFDAY") {
+                closeModal2();
+            }
+            setPresntAndHalfDay({
+                status: "",
+                startTime: "",
+                endTime: "",
+                shiftId: "",
+            });
         }
     }
     async function createFine() {
@@ -378,13 +421,9 @@ const StaffSalarySummry = () => {
 
 
     useEffect(() => {
-        fetchShiftDetails();
-    }, [])
-    useEffect(() => {
         fetchAttendanceSummary();
     }, [selectedMonth])
 
-    console.log(selectedStaff);
     return (
         <div className='  w-full p-[20px] pt-[80px] xl:p-[40px] relative xl:pt-[100px]    xl:pl-[320px] flex flex-col '>
             <div className='flex  justify-between  '>
@@ -440,7 +479,7 @@ const StaffSalarySummry = () => {
                         </div>
                         <div className=' total-staff-salary text-end xl:text-center lg:text-center md:text-center'>
                             <h2 className='text-[14px] font-normal text-[#000000bf]'>Weekly Off</h2>
-                            <p className='text-[14px] font-medium'>04.29</p>
+                            <p className='text-[14px] font-medium'>00:00</p>
                         </div>
                     </div>
                 </div>
@@ -475,7 +514,7 @@ const StaffSalarySummry = () => {
 
                                             {/* Modal overlay and content */}
                                             {isOpen6 && (
-                                                <PresentAndHalfDayModal type={"Present"} modalHeading={`${selectedStaff?.name} ${formatDate(date)}`} isOpenModal={isOpen6} isCloseModal={closeModal6} />
+                                                <PresentAndHalfDayModal type={"PRESENT"} modalHeading={`${selectedStaff?.name} ${formatDate(date)}`} isOpenModal={isOpen6} isCloseModal={closeModal6} punchRecordId={punchId} updateStatus={updatePresentAndHalfDayAttendace} />
                                             )}
                                         </div>
 
@@ -493,8 +532,7 @@ const StaffSalarySummry = () => {
 
                                             {/* Modal overlay and content */}
                                             {isOpen2 && (
-                                                <PresentAndHalfDayModal type={"Half Day"} modalHeading={`${selectedStaff?.name} ${formatDate(date)}`} isOpenModal={isOpen2} isCloseModal={closeModal2} />
-
+                                                <PresentAndHalfDayModal type={"HALFDAY"} modalHeading={`${selectedStaff?.name} ${formatDate(date)}`} isOpenModal={isOpen2} isCloseModal={closeModal2} punchRecordId={punchId} updateStatus={updatePresentAndHalfDayAttendace} />
                                             )}
                                         </div>
 

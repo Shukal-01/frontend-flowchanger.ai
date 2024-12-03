@@ -66,47 +66,46 @@ const PaymentHistory = () => {
 
   return (
     <div className="mt-[20px]">
-      <div className="flex justify-between items-end flex-col xl:flex-row lg:flex-row md:flex-col gap-[15px] lg:gap-[0px]">
-        <div className=" w-full flex  items-center gap-[44px] justify-normal ">
-          <div className="xl:w-[200px]">
-            <label htmlFor="" className="text-[14px] font-medium">
-              Payroll Month
-            </label>
-            <input
-              type="date"
-              className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm"
-            />
-          </div>
-          <div className="xl:w-[200px]">
-            <label htmlFor="" className="text-[14px] font-medium">
-              Company Branches
-            </label>
-            <select className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm">
-              <option>All Branches</option>
-              <option>Demo Main Branchs</option>
-            </select>
-          </div>
+      <div className="flex justify-between items-center  flex-col xl:flex-row lg:flex-row md:flex-col gap-[15px] lg:gap-[0px] ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:flex lg:items-center lg:gap-[44px]">
+  <div className="xl:w-[200px]">
+    <label htmlFor="" className="text-[14px] font-medium">
+      Payroll Month
+    </label>
+    <input
+      type="date"
+      className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm"
+    />
+  </div>
+  <div className="xl:w-[200px]">
+    <label htmlFor="" className="text-[14px] font-medium">
+      Company Branches
+    </label>
+    <select className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm">
+      <option>All Branches</option>
+      <option>Demo Main Branchs</option>
+    </select>
+  </div>
+  <div className="xl:w-[200px]">
+    <label htmlFor="" className="text-[14px] font-medium">
+      Departments
+    </label>
+    <select className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm">
+      <option>All Departments</option>
+      <option>Website</option>
+    </select>
+  </div>
+  <div className="xl:w-[200px]">
+    <label htmlFor="" className="text-[14px] font-medium">
+      Payment Mode
+    </label>
+    <select className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm">
+      <option>All</option>
+      <option>Google Pay</option>
+    </select>
+  </div>
+</div>
 
-          <div className="xl:w-[200px]">
-            <label htmlFor="" className="text-[14px] font-medium">
-              Departments
-            </label>
-            <select className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm">
-              <option>All Departments</option>
-              <option>Website</option>
-            </select>
-          </div>
-
-          <div className="xl:w-[200px]">
-            <label htmlFor="" className="text-[14px] font-medium">
-              Payment Mode
-            </label>
-            <select className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm">
-              <option>All </option>
-              <option>Google Pay</option>
-            </select>
-          </div>
-        </div>
       </div>
 
       <div className="mt-5">
