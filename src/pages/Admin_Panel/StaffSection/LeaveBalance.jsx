@@ -114,7 +114,7 @@ const LeaveBalance = () => {
         const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, 'LeaveBalancePolicy.csv');
     };
-    
+
     const [selectedId, setSelectedId] = useState([]);
     console.log("selec", selectedId)
     const [leaveName, setLeaveName] = useState();
@@ -285,7 +285,7 @@ const LeaveBalance = () => {
 
                             </div>
                             <div className='flex gap-[15px] justify-between lg:justify-start'>
-                                <button className='border border-1 pl-3 pr-3 rounded-md pt-2 pb-2 text-sm second-btn' disabled={selectedId.length === 0} onClick={openModal12}>Update Leave Policy</button>
+                                <button className={'border border-1 pl-3 pr-3 rounded-md pt-2 pb-2 text-sm second-btn ' + (isLoading && 'cursor-not-allowed opacity-50 animate-pulse')} disabled={isLoading || selectedId.length === 0} onClick={openModal12}>Update Leave Policy</button>
 
                             </div>
                         </div>
@@ -450,8 +450,8 @@ const LeaveBalance = () => {
                         <table className='table-section mt-4'>
                             <thead className='border border-1 '>
                                 <th>Leave Name</th>
-                                <th>Allowed Leaves (Per {policyType=== "MONTHLY" ? "Month" : "Year"})</th>
-                                <th>Carry-forward Leaves (On {policyType=== "MONTHLY" ? "Month" : "Year"} End)</th>
+                                <th>Allowed Leaves (Per {policyType === "MONTHLY" ? "Month" : "Year"})</th>
+                                <th>Carry-forward Leaves (On {policyType === "MONTHLY" ? "Month" : "Year"} End)</th>
 
                             </thead>
                             <tbody>
@@ -460,7 +460,7 @@ const LeaveBalance = () => {
                                 <td><input type='text' onChange={(e) => setCarryLeave(e.target.value)} className="border rounded-md focus:outline-none p-2" /></td>
 
                             </tbody>
-                            <button className='second-btn mb-2' onClick={updateBalance}>Update Leave Balances</button>
+                            <button disabled={isLoading} className={'second-btn mb-2 ' + (isLoading && 'cursor-not-allowed opacity-50 animate-pulse')} onClick={updateBalance}>Update Leave Balances</button>
                         </table>
                     </div>
 

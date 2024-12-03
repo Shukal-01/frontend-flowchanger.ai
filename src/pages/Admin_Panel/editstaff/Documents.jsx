@@ -8,6 +8,7 @@ const Documents = () => {
 
   const { baseUrl, selectedStaff, openToast } = useGlobalContext();
   const [staff, setStaff] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [uploadFileType, setUploadFileType] = useState('');
   const fileUploadTypes = [
@@ -80,10 +81,10 @@ const Documents = () => {
       console.error('URL is required for downloading the file.');
       return;
     }
-  
+
     // Create an anchor element
     const anchor = document.createElement('a');
-    
+
     // Handle potential CORS issues (using Blob if necessary)
     fetch(url)
       .then(response => {
@@ -97,12 +98,12 @@ const Documents = () => {
         anchor.href = blobUrl;
         anchor.target = '_blank';
         anchor.download = filename || 'downloaded_file';
-        
+
         // Append the anchor element to the body and trigger the download
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);
-        
+
         // Revoke the object URL after download to release resources
         URL.revokeObjectURL(blobUrl);
       })
@@ -110,7 +111,7 @@ const Documents = () => {
         console.error('There was an error with the file download:', error);
       });
   }
-  
+
 
 
   useEffect(() => {
@@ -136,6 +137,7 @@ const Documents = () => {
   const [uploadFile, setUploadFile] = useState(null);
 
   async function uploadingFile() {
+    setIsLoading(true);
 
     const newFormData = new FormData();
 
@@ -176,6 +178,7 @@ const Documents = () => {
       console.error("Error in uploading file ", error);
       openToast("An error occurred during file upload", "error");
     } finally {
+      setIsLoading(false);
       onCloseModal();
     }
   }
@@ -225,7 +228,7 @@ const Documents = () => {
 
             <div className='flex items-center gap-[10px] border-t border-[#dbdbdb] pt-[16px] justify-end '>
               <button className='p-[6px] text-[14px] rounded-md  border border-[#dbdbdb]' onClick={onCloseModal}>Cancel</button>
-              <button className='bg-[#27004a] text-[14px] pl-[18px] pr-[18px] rounded-md text-[white] p-[6px]' onClick={uploadingFile}>OK</button>
+              <button disabled={isLoading} className={' p-[6px] pl-[18px] pr-[18px] rounded-lg bg-[#27004a] text-[white] ' + (isLoading && "opacity-50 cursor-not-allowed animate-pulse")} onClick={uploadingFile}>OK</button>
             </div>
           </Modal>
 
