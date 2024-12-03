@@ -3,7 +3,7 @@ import Modal from 'react-responsive-modal'
 import { useGlobalContext } from '../../../Context/GlobalContext'
 import { set } from 'react-hook-form';
 
-const PresentModal = ({ id, setStatus, status,selecteddate,attendance }) => {
+const PresentModal = ({ id, setStatus, status,attendance,name,date }) => {
     console.log(id)
     const { baseUrl, shift, openToast } = useGlobalContext();
     const [shiftType, setShiftType] = useState("")
@@ -63,10 +63,10 @@ const PresentModal = ({ id, setStatus, status,selecteddate,attendance }) => {
     return (
         <Modal open={status == "PRESENT"} onClose={() => setStatus("")} center >
             <div className="pt-5">
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center ">
                     <div>
                         <h1 className="text-[22px] font-medium text-gray-900">Present</h1>
-                        <p className="text-sm text-gray-600">AMAN DESIGNER FC | 28 Nov, 2024</p>
+                        <p className="text-sm text-gray-600">{name} | {date}</p>
                     </div>
                 </div>
 

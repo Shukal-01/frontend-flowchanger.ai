@@ -18,6 +18,7 @@ import PresentModal from "../../../../components/Admin_Panel/AttendanceSummary/P
 import HalfDay from "../../../../components/Admin_Panel/AttendanceSummary/HalfDayModal";
 import PaidLeaveModal from "../../../../components/Admin_Panel/AttendanceSummary/PaidLeaveModal";
 import AbsentModal from "../../../../components/Admin_Panel/AttendanceSummary/AbsentModal";
+import ClipLoader from "react-spinners/ClipLoader";
 const Attendence_summary = () => {
   const { baseUrl, openToast, fetchStaff, staffDetail } = useGlobalContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +38,7 @@ const Attendence_summary = () => {
   const [time, setTime] = useState(null);
   const [overTotalAmount, setOverTotalAmount] = useState(0);
   const [staffName, setStaffName] = useState();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [overTimelateHour, setOverTimelateHour] = useState();
   const [overTimeSalaryTime, setOverTimeSalaryTime] = useState();
   const [overTimeLateOutAmount, setOverTimeLateOutAmount] = useState(0);
@@ -49,6 +50,9 @@ const Attendence_summary = () => {
   const [applyOvertimePunchRecordId, setApplyOvertimePunchRecordId] =
     useState();
   const [id, setId] = useState(null);
+  const [name, setName] = useState();
+  const [sendDate, setSendDate] = useState();
+  
 
   function calculateTotalMinutes(timeString) {
     const [hours, minutes] = timeString?.split(":")?.map(Number);
@@ -431,8 +435,8 @@ const Attendence_summary = () => {
   useEffect(() => {
     const totalSalary =
       Number(lateEntryAmount) +
-        Number(excessBreakAmount) +
-        Number(earlyOutAmount) || 0;
+      Number(excessBreakAmount) +
+      Number(earlyOutAmount) || 0;
     setFineTotalAmount(totalSalary);
   }, [lateEntryAmount, excessBreakAmount, earlyOutAmount]);
 
@@ -497,7 +501,7 @@ const Attendence_summary = () => {
       lateOutAmount: Number(overTimeSalaryTime),
       totalAmount: Number(
         overTimeLateOutAmount * overTimeSalaryTime +
-          overTimeEarlyOutAmount * overTimeEarlySalaryTime
+        overTimeEarlyOutAmount * overTimeEarlySalaryTime
       ),
       staffId: sendOverTimeStaffId,
       punchRecordId: applyOvertimePunchRecordId,
@@ -574,6 +578,9 @@ const Attendence_summary = () => {
           setStatus={setSelectedStatus}
           selecteddate={summaryDate}
           attendance={fetchAttendanceDetail}
+          name={name}
+          date={sendDate}
+
         />
       )}
       {selectedStatus == "HALFDAY" && (
@@ -583,6 +590,8 @@ const Attendence_summary = () => {
           setStatus={setSelectedStatus}
           selecteddate={summaryDate}
           attendance={fetchAttendanceDetail}
+          name={name}
+          date={sendDate}
         />
       )}
       {selectedStatus == "PAIDLEAVE" && (
@@ -592,6 +601,8 @@ const Attendence_summary = () => {
           setStatus={setSelectedStatus}
           selecteddate={summaryDate}
           attendance={fetchAttendanceDetail}
+          name={name}
+          date={sendDate}
         />
       )}
       {selectedStatus == "ABSENT" && (
@@ -601,9 +612,10 @@ const Attendence_summary = () => {
           setStatus={setSelectedStatus}
           selecteddate={summaryDate}
           attendance={fetchAttendanceDetail}
+          
         />
       )}
-      <div className="flex  justify-between satisfy-summary  ">
+      <div className="flex md:flex-row gap-[7px]  flex-col justify-between satisfy-summary  ">
         <div className="flex gap-[10px] summary-bold">
           <h1 className="font-semibold">Attendence Summary</h1>
         </div>
@@ -621,16 +633,16 @@ const Attendence_summary = () => {
       </div>
 
       <div className="bg-[#fff] shadow-cs p-[20px] rounded-md mt-[24px] ">
-        <div className="flex gap-[14px] justify-between items-center review-summary  ">
+        <div className="flex gap-[14px] justify-between items-start md:items-center  review-summary  ">
           <div className="flex ">
             <input
-              className="bg-transparent font-medium text-[14px]"
+              className=" focus:outline-none  w-full px-3 py-2 text-gray-600 placeholder-gray-400"
               type="date"
               value={summaryDate} // Set value in YYYY-MM-DD
               onChange={handleChange} // Update state on change
             />
           </div>
-          <div className="flex items-center justify-between gap-[14px] approval-new ">
+          <div className="flex md:items-center items-start justify-between gap-[14px] approval-new ">
             <h2 className="text-[14px] font-medium">
               Total Pending for Approval :
               {attendance &&
@@ -688,7 +700,7 @@ const Attendence_summary = () => {
           </div>
           <div className="total-staff ">
             <h2 className="text-[14px] pr-0 font-normal whitespace-nowrap text-[#000000bf]">
-              Overtime <br /> Hours
+              Overtime Hours
             </h2>
             <p className="text-[14px] font-semibold">
               {attendance?.length ? calculateTotalOvertimeHours(attendance) : 0}
@@ -753,8 +765,9 @@ const Attendence_summary = () => {
         </div>
       )}
 
-      {departments?.length &&
-        attendance?.length &&
+      {departments?.length > 0 &&
+        attendance?.length > 0 &&
+
         departments?.map((d) => {
           console.log(d);
           const rec = attendance?.filter(
@@ -763,11 +776,11 @@ const Attendence_summary = () => {
           return (
             <div className="flex flex-col gap-[10px] mt-[0px]">
               <h1 className="pt-2">
-                {rec && rec?.length > 0 && (
-                  <span>
-                    {d?.department_name} ({rec?.length})
-                  </span>
-                )}
+                {rec?.length > 0 && d?.department_name ? (
+                  <h2 className="font-medium">
+                    {d?.department_name} <span className="bg-[#27004a] py-[1px] px-[8px] text-white rounded-full font-medium text-[14px]">{rec?.length}</span>
+                  </h2>
+                ) : null}
               </h1>
               {rec?.map((item, index) => {
                 return (
@@ -790,22 +803,23 @@ const Attendence_summary = () => {
                         </div>
 
                         <div className="flex gap-[18px] xl:flex-col flex-row md:flex-col lg:flex-col set-workd w-full justify-between xl:justify-start md:justify-start lg:justify-start ">
-                          <div className="flex gap-[20px] flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
+                          <div className="flex gap-[20px] w-[50%] md:w-full xl:w-full flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
                             <div className="flex xl:justify-center justify-start items-center">
                               {/* Button to open modal */}
                               <button
                                 onClick={() => {
                                   setSelectedStatus("PRESENT");
                                   setApplyPunchRecordId(item?.punchRecord?.id);
+                                  setName(item?.punchRecord?.staff?.User?.name);
+                                  setSendDate(summaryDate)
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "PRESENT"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                                    focus:outline-none w-full  xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                                    ${item?.punchRecord
+                                    ?.status === "PRESENT"
+                                    ? "bg-[#008000] text-white"
+                                    : "bg-[#fff] text-[#000]"
+                                  }`}
                               >
                                 P I Present
                               </button>
@@ -817,15 +831,16 @@ const Attendence_summary = () => {
                                 onClick={() => {
                                   setSelectedStatus("HALFDAY");
                                   setApplyPunchRecordId(item?.punchRecord?.id);
+                                  setName(item?.punchRecord?.staff?.User?.name);
+                                  setSendDate(summaryDate)
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "HALFDAY"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                                    focus:outline-none w-full   xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                                    ${item?.punchRecord
+                                    ?.status === "HALFDAY"
+                                    ? "bg-[#008000] text-white"
+                                    : "bg-[#fff] text-[#000]"
+                                  }`}
                               >
                                 HD I HalfDay
                               </button>
@@ -837,8 +852,11 @@ const Attendence_summary = () => {
                                 onClick={() => {
                                   fineId(item?.staffId);
                                   setApplyPunchRecordId(item?.punchRecord?.id);
+                                  setName(item?.punchRecord?.staff?.User?.name);
+                                  setSendDate(summaryDate)
+
                                 }}
-                                className=" btns px-6 py-3 text-[14px] text-[#27004a] font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
+                                className=" btns px-6 py-3 text-[14px] text-[#27004a] font-medium bg-[white] rounded-md focus:outline-none w-full  xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow"
                               >
                                 F I Fine
                               </button>
@@ -853,10 +871,8 @@ const Attendence_summary = () => {
                                           {" "}
                                           Fine{" "}
                                         </h2>
-                                        <p className=" text-[14px]">
-                                          {staffName} I{" "}
-                                          {formatSummaryDate(summaryDate)}
-                                        </p>
+                                        <p className="text-sm text-gray-600">{name} | {sendDate}</p>
+
                                       </div>
 
                                       <div className="flex justify-between items-center mb-[10px]">
@@ -1076,7 +1092,8 @@ const Attendence_summary = () => {
                               )}
                             </div>
                           </div>
-                          <div className="flex gap-[20px] flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
+
+                          <div className="flex gap-[20px] w-[50%] md:w-full xl:w-full flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
                             <div className="flex justify-center items-center">
                               {/* Button to open modal */}
                               <button
@@ -1084,8 +1101,14 @@ const Attendence_summary = () => {
                                 onClick={() => {
                                   overTimeId(item?.staffId);
                                   setApplyPunchRecordId(item?.punchRecord?.id);
+                                  setName(item?.punchRecord?.staff?.User?.name);
+                                  setSendDate(summaryDate)
+
+                                  
                                 }}
-                                className=" btns px-6 py-3 text-[14px] text-black font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
+                                className="btns px-6 py-3 text-[14px]  font-medium rounded-md 
+                                                    focus:outline-none w-full   xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                                    bg-[#fff] text-[#000]"
                               >
                                 OT I Overtime
                               </button>
@@ -1100,10 +1123,7 @@ const Attendence_summary = () => {
                                           {" "}
                                           OverTime Day{" "}
                                         </h2>
-                                        <p className=" text-[14px]">
-                                          {staffName} I{" "}
-                                          {formatSummaryDate(summaryDate)}
-                                        </p>
+                                        <p className="text-sm text-gray-600">{name} | {sendDate}</p>
                                       </div>
 
                                       <div className="flex justify-between items-center mb-[10px]">
@@ -1240,9 +1260,9 @@ const Attendence_summary = () => {
                                       <p className="text-[14px]">
                                         {(
                                           overTimeLateOutAmount *
-                                            overTimeSalaryTime +
+                                          overTimeSalaryTime +
                                           overTimeEarlyOutAmount *
-                                            overTimeEarlySalaryTime
+                                          overTimeEarlySalaryTime
                                         ).toFixed(2)}
                                       </p>
                                     </div>
@@ -1279,13 +1299,12 @@ const Attendence_summary = () => {
                                   setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "PAIDLEAVE"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                  focus:outline-none w-full  xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                  ${item?.punchRecord
+                                    ?.status === "PAIDLEAVE"
+                                    ? "bg-[#008000] text-white"
+                                    : "bg-[#fff] text-[#000]"
+                                  }`}
                               >
                                 L I Paid Leave
                               </button>
@@ -1298,13 +1317,12 @@ const Attendence_summary = () => {
                                   setApplyPunchRecordId(item?.punchRecord?.id);
                                 }}
                                 className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "ABSENT"
-                                                        ? "bg-[#d62727] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                  focus:outline-none w-full  xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                  ${item?.punchRecord
+                                    ?.status === "ABSENT"
+                                    ? "bg-[#d62727] text-white"
+                                    : "bg-[#fff] text-[#000]"
+                                  }`}
                               >
                                 A I Absent
                               </button>
@@ -1319,11 +1337,30 @@ const Attendence_summary = () => {
               {/* <p className='bg-[#fff] shadow-cs four'>4</p> */}
             </div>
           );
-        })}
+        })
+
+      }
+
+
+      {
+        isLoading && attendance?.length === 0 ? (<div className="h-[100px]">
+          <div colSpan="9" className="text-center text-gray-600 text-xl font-semibold py-4">
+            <ClipLoader color="#4A90E2" size={50} />
+          </div>
+        </div>
+        ) : !isLoading && attendance?.length === 0 && (
+          "No Data Found"
+        )
+      }
 
       {others?.length > 0 && (
         <div>
-          <div className="mt-0 pt-2">Other Departments ({others?.length})</div>
+          <div className="mt-0 pt-2">
+            <h2 className="font-medium">
+              Other Departments
+              <span className="ml-1 bg-[#27004a] py-[1px] px-[8px] text-white rounded-full font-medium text-[14px]">{others?.length}</span>
+            </h2>
+          </div>
 
           {others?.map((item, index) => {
             return (
@@ -1346,22 +1383,23 @@ const Attendence_summary = () => {
                     </div>
 
                     <div className="flex gap-[18px] xl:flex-col flex-row md:flex-col lg:flex-col set-workd w-full justify-between xl:justify-start md:justify-start lg:justify-start ">
-                      <div className="flex gap-[20px] flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
+                      <div className="flex gap-[20px] w-[50%] md:w-full xl:w-full flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
                         <div className="flex xl:justify-center justify-start items-center">
                           {/* Button to open modal */}
                           <button
                             onClick={() => {
                               setSelectedStatus("PRESENT");
                               setApplyPunchRecordId(item?.punchRecord?.id);
+                              setName(item?.punchRecord?.staff?.User?.name);
+                              setSendDate(summaryDate)
                             }}
                             className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "PRESENT"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                                    focus:outline-none w-full  xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                                    ${item?.punchRecord
+                                ?.status === "PRESENT"
+                                ? "bg-[#008000] text-white"
+                                : "bg-[#fff] text-[#000]"
+                              }`}
                           >
                             P I Present
                           </button>
@@ -1373,15 +1411,16 @@ const Attendence_summary = () => {
                             onClick={() => {
                               setSelectedStatus("HALFDAY");
                               setApplyPunchRecordId(item?.punchRecord?.id);
+                              setName(item?.punchRecord?.staff?.User?.name);
+                              setSendDate(summaryDate)
                             }}
                             className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "HALFDAY"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                                    focus:outline-none w-full   xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                                    ${item?.punchRecord
+                                ?.status === "HALFDAY"
+                                ? "bg-[#008000] text-white"
+                                : "bg-[#fff] text-[#000]"
+                              }`}
                           >
                             HD I HalfDay
                           </button>
@@ -1393,8 +1432,11 @@ const Attendence_summary = () => {
                             onClick={() => {
                               fineId(item?.staffId);
                               setApplyPunchRecordId(item?.punchRecord?.id);
+                              setName(item?.punchRecord?.staff?.User?.name);
+                              setSendDate(summaryDate)
+
                             }}
-                            className=" btns px-6 py-3 text-[14px] text-[#27004a] font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
+                            className=" btns px-6 py-3 text-[14px] text-[#27004a] font-medium bg-[white] rounded-md focus:outline-none w-full  xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow"
                           >
                             F I Fine
                           </button>
@@ -1409,10 +1451,7 @@ const Attendence_summary = () => {
                                       {" "}
                                       Fine{" "}
                                     </h2>
-                                    <p className=" text-[14px]">
-                                      {staffName} I{" "}
-                                      {formatSummaryDate(summaryDate)}
-                                    </p>
+                                    <p className="text-sm text-gray-600">{name} || {sendDate}</p>
                                   </div>
 
                                   <div className="flex justify-between items-center mb-[10px]">
@@ -1447,7 +1486,8 @@ const Attendence_summary = () => {
                                       <p className="text-[12px]">
                                         Amount{" "}
                                         {(
-                                          lateEntryAmount * lateEntrySalaryTime
+                                          lateEntryAmount *
+                                          lateEntrySalaryTime
                                         ).toFixed(2)}{" "}
                                       </p>
                                     </div>
@@ -1461,7 +1501,9 @@ const Attendence_summary = () => {
                                           }}
                                           className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
                                         >
-                                          <option value={1}>1x Salary</option>
+                                          <option value={1}>
+                                            1x Salary
+                                          </option>
                                           <option value={1.5}>
                                             1.5x Salary
                                           </option>
@@ -1505,7 +1547,8 @@ const Attendence_summary = () => {
                                       <p className="text-[12px]">
                                         Amount{" "}
                                         {(
-                                          excessBreakAmount * excessBreakTime
+                                          excessBreakAmount *
+                                          excessBreakTime
                                         ).toFixed(2)}
                                       </p>
                                     </div>
@@ -1513,11 +1556,15 @@ const Attendence_summary = () => {
                                       <div className="w-[100%]">
                                         <select
                                           onChange={(e) => {
-                                            setExcessBreakTime(e.target.value);
+                                            setExcessBreakTime(
+                                              e.target.value
+                                            );
                                           }}
                                           className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
                                         >
-                                          <option value={1}>1x Salary</option>
+                                          <option value={1}>
+                                            1x Salary
+                                          </option>
                                           <option value={1.5}>
                                             1.5x Salary
                                           </option>
@@ -1571,7 +1618,9 @@ const Attendence_summary = () => {
                                           }}
                                           className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
                                         >
-                                          <option value={1}>1x Salary</option>
+                                          <option value={1}>
+                                            1x Salary
+                                          </option>
                                           <option value={1.5}>
                                             1.5x Salary
                                           </option>
@@ -1622,7 +1671,8 @@ const Attendence_summary = () => {
                           )}
                         </div>
                       </div>
-                      <div className="flex gap-[20px] flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
+
+                      <div className="flex gap-[20px] w-[50%] md:w-full xl:w-full flex-col xl:flex-row lg:flex-row md:flex-row xl:justify-end lg:justify-end md:justify-end">
                         <div className="flex justify-center items-center">
                           {/* Button to open modal */}
                           <button
@@ -1630,8 +1680,13 @@ const Attendence_summary = () => {
                             onClick={() => {
                               overTimeId(item?.staffId);
                               setApplyPunchRecordId(item?.punchRecord?.id);
+                              setName(item?.punchRecord?.staff?.User?.name);
+                              setSendDate(summaryDate)
+
                             }}
-                            className=" btns px-6 py-3 text-[14px] text-black font-medium bg-[white] rounded-md focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow"
+                            className="btns px-6 py-3 text-[14px]  font-medium rounded-md 
+                                                    focus:outline-none w-full   xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                                    bg-[#fff] text-[#000]"
                           >
                             OT I Overtime
                           </button>
@@ -1643,13 +1698,10 @@ const Attendence_summary = () => {
                                 <div className="">
                                   <div className="mb-[20px]">
                                     <h2 className="text-xl text-[18px] text-[black] font-semibold  ">
-                                      {" "}
-                                      OverTime Day{" "}
+                                      OverTime Day
                                     </h2>
-                                    <p className=" text-[14px]">
-                                      {staffName} I{" "}
-                                      {formatSummaryDate(summaryDate)}
-                                    </p>
+                                    <p className="text-sm text-gray-600">{name} || {sendDate}</p>
+
                                   </div>
 
                                   <div className="flex justify-between items-center mb-[10px]">
@@ -1703,7 +1755,9 @@ const Attendence_summary = () => {
                                           }}
                                           className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
                                         >
-                                          <option value={1}>1x Salary</option>
+                                          <option value={1}>
+                                            1x Salary
+                                          </option>
                                           <option value={1.5}>
                                             1.5x Salary
                                           </option>
@@ -1760,7 +1814,9 @@ const Attendence_summary = () => {
                                           }}
                                           className="border border-[#c9c9c9] rounded-md pr-[20px] pt-[6px] pb-[6px]  w-[100%]   focus:outline-none text-[#000] placeholder:font-font-normal text-[14px]"
                                         >
-                                          <option value={1}>1x Salary</option>
+                                          <option value={1}>
+                                            1x Salary
+                                          </option>
                                           <option value={1.5}>
                                             1.5x Salary
                                           </option>
@@ -1768,7 +1824,8 @@ const Attendence_summary = () => {
                                       </div>
                                       <div className="">
                                         <p className="text-[14px]  rounded-md select-pe p-[6px] w-[124px]">
-                                          {perMinSalaryEarlyOutOverTime} Per Min
+                                          {perMinSalaryEarlyOutOverTime} Per
+                                          Min
                                         </p>
                                       </div>
                                     </div>
@@ -1781,9 +1838,9 @@ const Attendence_summary = () => {
                                   <p className="text-[14px]">
                                     {(
                                       overTimeLateOutAmount *
-                                        overTimeSalaryTime +
+                                      overTimeSalaryTime +
                                       overTimeEarlyOutAmount *
-                                        overTimeEarlySalaryTime
+                                      overTimeEarlySalaryTime
                                     ).toFixed(2)}
                                   </p>
                                 </div>
@@ -1820,13 +1877,12 @@ const Attendence_summary = () => {
                               setApplyPunchRecordId(item?.punchRecord?.id);
                             }}
                             className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "PAIDLEAVE"
-                                                        ? "bg-[#008000] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                  focus:outline-none w-full  xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                  ${item?.punchRecord
+                                ?.status === "PAIDLEAVE"
+                                ? "bg-[#008000] text-white"
+                                : "bg-[#fff] text-[#000]"
+                              }`}
                           >
                             L I Paid Leave
                           </button>
@@ -1839,13 +1895,12 @@ const Attendence_summary = () => {
                               setApplyPunchRecordId(item?.punchRecord?.id);
                             }}
                             className={`btns px-6 py-3 text-[14px]  font-medium rounded-md 
-                                                    focus:outline-none xl:w-[200px] lg:w-[200px] md:w-[140px] whitespace-nowrap shadow-md 
-                                                    ${
-                                                      item?.punchRecord
-                                                        ?.status === "ABSENT"
-                                                        ? "bg-[#d62727] text-white"
-                                                        : "bg-[#fff] text-[#000]"
-                                                    }`}
+                                  focus:outline-none w-full  xl:w-[200px] lg:w-[142px] md:w-[140px] whitespace-nowrap shadow-md 
+                                  ${item?.punchRecord
+                                ?.status === "ABSENT"
+                                ? "bg-[#d62727] text-white"
+                                : "bg-[#fff] text-[#000]"
+                              }`}
                           >
                             A I Absent
                           </button>

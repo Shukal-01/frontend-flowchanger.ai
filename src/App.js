@@ -145,9 +145,9 @@ const App = () => {
       <>
         <div className="flex max-h-screen">
           <SideBar />
-          <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set max-h-screen ">
-            <NavBar />
-            <div className="p-[10px]  w-full h-[98vh] md:h-[90%] overflow-y-scroll content-container">
+          <div className="w-[100%] xl:w-[80%] lg:w-[100%] h-lvh admin-sidebar-set overflow-y-scroll pb-[20px]">
+            <NavBar/>
+            <div className="py-2">
               <Outlet />
             </div>
           </div>
@@ -179,17 +179,7 @@ const App = () => {
       </>
     );
   }
-
-  // function CustomerPanel() {
-  //   return (
-  //     <>
-  //       <Customer_Navbar />
-  //       <Outlet />
-  //       <Customer_Footer />
-  //     </>
-  //   );
-  // }
-
+ 
   function Client_Panel() {
     return (
       <>

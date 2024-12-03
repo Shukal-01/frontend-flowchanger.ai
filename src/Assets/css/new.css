@@ -550,9 +550,7 @@
         flex-direction: column;
         gap: 10px;
     }
-    .summary-bold2{
-        text-align: right;
-    }
+
     .approval-new{
         width: 100%;
     }
@@ -786,6 +784,12 @@
 
 @media screen and (max-width:576px){
     .total-staff{
-        flex-basis: 40%;
+        flex-basis: 44%;
+    }
+    .total-staff:nth-child(even){
+        border-right: none !important;
+    }
+    .total-staff:last-child{
+        border-right: none !important;
     }
 }

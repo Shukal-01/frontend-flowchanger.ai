@@ -2,7 +2,7 @@ import React,{useState } from 'react'
 import Modal from 'react-responsive-modal'
 import { useGlobalContext } from '../../../Context/GlobalContext';
 
-const HalfDay = ({  id, setStatus, status,selecteddate,attendance }) => {
+const HalfDay = ({  id, setStatus, status,selecteddate,attendance,name,date }) => {
     const { baseUrl, shift, openToast } = useGlobalContext();
     const [shiftType, setShiftType] = useState("")
     const [startTime, setStartTime] = useState("")
@@ -63,10 +63,10 @@ const HalfDay = ({  id, setStatus, status,selecteddate,attendance }) => {
     return (
         <Modal open={status == "HALFDAY"} onClose={() => setStatus("")} center >
              <div className="pt-5">
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center ">
                     <div>
                         <h1 className="text-[22px] font-medium text-gray-900">HALFDAY</h1>
-                        <p className="text-sm text-gray-600">AMAN DESIGNER FC | 28 Nov, 2024</p>
+                        <p className="text-sm text-gray-600">{name} | {date}</p>
                     </div>
                 </div>
 

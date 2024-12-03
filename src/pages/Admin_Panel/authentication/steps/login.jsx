@@ -8,9 +8,10 @@ import { Link } from "react-router-dom";
 import flowChangerLogo from "../../../../Assets/Images/flowchangerAINew.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { AiOutlineEyeInvisible } from "react-icons/ai";
-import { AiOutlineEye } from "react-icons/ai";
 import { useGlobalContext } from "../../../../Context/GlobalContext";
+import EmailIcon from '@mui/icons-material/Email';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const LoginPage = () => {
   const { loginWithRedirect } = useAuth0();
@@ -85,85 +86,79 @@ const LoginPage = () => {
   };
   return (
     <GoogleOAuthProvider>
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <div className="text-white text-4xl font-bold mb-8 flex justify-center">
-            <img
-              src={flowChangerLogo}
-              alt="Flowchangers Logo"
-              className="bg-black w-[350px] h-[200px]"
-            />
-          </div>
-          <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-300">
-            <h2 className="text-2xl font-bold mb-6 text-center">Log in</h2>
-            <button
-              onClick={handleGoogleLogin}
-              className="w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center mb-4 hover:bg-gray-50 transition duration-300"
-            >
-              Login With Google
-            </button>
-            <div className="flex items-center justify-center my-4">
-              <div className="border-t border-gray-300 flex-grow mr-3"></div>
-              <div className="text-center text-gray-500 px-4 py-2 border-gray-300">
-                or Log in with Email
+      <div className="flex h-lvh justify-center items-center py-[10px] px-[10px] xl:py-[20px] xl:px-[20px]  lg:py-[20px] lg:px-[20px]  md:py-[20px] md:px-[20px]">
+        <div className="login-div w-[100%] xl:w-[80%] flex justify-center  bg-white rounded-lg items-center p-3 xl:p-8 lg:p-8 md:p-8 ">
+          <div className="w-[100%] lg:w-[82] xl:w-[50%]">
+            <div className="xl:px-[30px] lg:px-[62px] sm:space-y-0 space-y-2">
+              <div className="">
+                <h2 className="text-[30px] text-[#8a25b1] font-semibold	  text-center">Log in</h2>
+                <p className="text-center text-[#8c8c8c] pb-2">Log in to Your Account</p>
+
               </div>
-              <div className="border-t border-gray-300 flex-grow ml-3"></div>
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-4">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  aria-label="Email"
-                  className="w-full px-3 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-100"
-                  {...register("email", { required: "email is required" })}
-                />
-                {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
-                )}
+              <div className="flex items-center justify-center my-4">
               </div>
-              <div className="mb-6 relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  aria-label="Password"
-                  className="w-full px-3 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-100"
-                  {...register("password", {
-                    required: "password is required",
-                  })}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                >
-                  {showPassword ? (
-                    <AiOutlineEye size={20} />
-                  ) : (
-                    <AiOutlineEyeInvisible size={20} />
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 sm:space-y-0 mt-4 sm:mt-0">
+                <div className="mb-4 relative">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    aria-label="Email"
+                    className="login-input-field "
+                    {...register("email", { required: "email is required" })}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email.message}</p>
                   )}
+                  <EmailIcon className="email-icon absolute right-[5px] top-[7px] text-[#8a25b1]" />
+                </div>
+                <div className=" relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    aria-label="Password"
+                    className="login-input-field"
+                    {...register("password", {
+                      required: "password is required",
+                    })}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute top-[3px]  "
+                  >
+                    {showPassword ? (
+                      <VisibilityIcon className="email-icon absolute right-[5px] top-[7px] text-[#8a25b1]" />
+                    ) : (
+                      <VisibilityOffIcon className="email-icon absolute right-[5px] top-[7px] text-[#8a25b1]" />
+                    )}
+                  </button>
+                </div>
+                <div className="flex justify-between items-center py-2">
+                  <Link to="/authentication/request-password" className="text-gray-400 mr-2">Forgot password?</Link>
+                  <Link to="#" className="text-gray-400 mr-2 transition-all hover:text-[#8a25b1]">Reset</Link>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`w-full ${isLoading ? "bg-[#8a25b1]" : "bg-[#8a25b1]"
+                    } text-white py-4 px-4 hover:bg-purple-500 transition duration-300 rounded-full`}
+                >
+                  Log in
                 </button>
+              </form>
+              <div className="text-center mt-4 xl:flex lg:flex  flex-col justify-center 2xl:gap-[10px] gap-y-3">
+                <p className="text-gray-400">Don't have an account ?   </p>
+                <Link to="/authentication?step=1" className="text-[#8a25b1] font-medium" >Sign up</Link>
+
               </div>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className={`w-full ${
-                  isLoading ? "bg-purple-400" : "bg-purple-600"
-                } text-white py-4 px-4 hover:bg-purple-500 transition duration-300 rounded-full`}
-              >
-                Log in
-              </button>
-            </form>
-            <div className="text-center mt-4 flex flex-col justify-center gap-y-3">
-              <a href="#" className="text-purple-600 hover:text-purple-500">
-                <span className="text-gray-400 mr-2">Forgot password?</span>
-                <Link to="/authentication/request-password">Reset</Link>
-              </a>
-              <a href="#" className="text-purple-600 hover:text-purple-500">
-                <span className="text-gray-400">Don't have an account?</span>
-                <Link to="/authentication?step=1">Sign up</Link>
-              </a>
             </div>
+          </div>
+          <div className="w-[50%] px-[30px] text-4xl text-center hidden xl:block lg:block">
+            {/* <img src={flowChangerLogo} className="w-[230px] h-[230px]" /> */}
+            <h2>WELCOME</h2>
+            <h2>TO <span className="text-[#8a25b1] font-bold">FLOWCHANGER AI</span></h2>
+            <p className="text-sm font-semibold font-sans			">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae nihil temporibus blanditiis dolorum, rem quidem nulla excepturi magni quod eveniet libero alias modi atque totam possimus vitae.</p>
           </div>
         </div>
       </div>

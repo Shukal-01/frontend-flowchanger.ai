@@ -16,7 +16,7 @@ const Subscription = () => {
   }
 
   return (
-    <div className="subscription-panel space-y-8">
+    <div className="subscription-panel space-y-8 p-[10px]">
       <h1 className="font-medium text-[22px] max-[600px]:text-[18px]">Subscription Plan</h1>
       <div className="space-y-8">
         <div className="left-card  w-[100%] flex gap-8 h-[220px] max-[1100px]:block max-[1100px]:space-y-6">
