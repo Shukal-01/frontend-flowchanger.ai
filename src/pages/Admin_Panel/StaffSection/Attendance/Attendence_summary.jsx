@@ -672,7 +672,7 @@ const Attendence_summary = () => {
           </div>
           <div className="total-staff ">
             <h2 className="text-[14px] pr-0 font-normal whitespace-nowrap text-[#000000bf]">
-              Overtime <br/> Hours
+              Overtime <br /> Hours
             </h2>
             <p className="text-[14px] font-semibold">
               {attendance?.length ? calculateTotalOvertimeHours(attendance) : 0}
@@ -736,9 +736,6 @@ const Attendence_summary = () => {
             Please Select Date
           </h2>
         </div>
-
-        
-
       )}
 
       {departments?.length &&
@@ -751,12 +748,11 @@ const Attendence_summary = () => {
           return (
             <div className="flex flex-col gap-[10px] mt-[0px]">
               <h1 className="pt-2">
-                {rec &&  rec?.length > 0 && (
-                
+                {rec?.length > 0 && d?.department_name ? (
                   <span>
                     {d?.department_name} ({rec?.length})
                   </span>
-                )}
+                ) : "No Data Found"}
               </h1>
               {rec?.map((item, index) => {
                 return (
