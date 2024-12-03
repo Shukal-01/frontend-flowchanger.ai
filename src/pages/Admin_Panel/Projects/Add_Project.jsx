@@ -199,7 +199,7 @@ const Add_Project = () => {
   },[])
 
   return (
-    <div className="max-w-[80%] mx-auto">
+    <div className="max-w-[80%] mx-auto add-project-form">
       
     <Tabs className="m-5 shadow-cs rounded-lg">
       <div className="">
@@ -258,8 +258,8 @@ const Add_Project = () => {
             <div className="h-[6px] bg-[#27004a] border border-[#D9D9D9] rounded-md"></div>
           </div>
 
-          <div className="flex w-[100%] gap-10">
-            <div className="w-[50%] space-y-2">
+          <div className="flex w-[100%] gap-10 billing-form-type ">
+            <div className="w-[50%] space-y-2 billing-type-project">
               <label className="text-sm font-medium text-gray-700">* Billing Type</label>
               <select onChange={(e) => { setBillingType(e.target.value) }} className="h-[40px] w-[100%] focus-visible:outline-none bg-white border border-[#DBDCDE] rounded-md pl-5" name = "billingType" required>
                 <option value="Fixed Rate">Fixed rate</option>
@@ -268,7 +268,7 @@ const Add_Project = () => {
               </select>
             </div>
 
-            <div className="w-[50%] space-y-2">
+            <div className="w-[50%] space-y-2 billing-type-project">
               <label className="text-sm font-medium text-gray-700">Status</label>
               <select className="h-[40px] w-[100%] focus-visible:outline-none bg-white border border-[#DBDCDE] rounded-md pl-5" name = "status" required>
                 <option value="">In Progress</option>
@@ -296,8 +296,8 @@ const Add_Project = () => {
           </div>
 
           <div className="grid grid-rows-2 space-y-2">
-            <div className="flex w-[100%] gap-10">
-              <div className="w-[50%] space-y-2">
+            <div className="flex w-[100%] gap-10 billing-form-type ">
+              <div className="w-[50%] space-y-2 billing-type-project">
                 <label className="text-sm font-medium text-gray-700">Estimated Hours</label>
                 <input
                   className="h-[40px] w-[100%] focus-visible:outline-none border border-[#DBDCDE] rounded-md pl-2"
@@ -308,7 +308,7 @@ const Add_Project = () => {
                 />
               </div>
 
-              <div className="w-[50%] space-y-2">
+              <div className="w-[50%] space-y-2 billing-type-project">
                 <label className="text-sm font-medium text-gray-700">Members</label>
 
                 <Select
@@ -347,8 +347,8 @@ const Add_Project = () => {
               </div>
             </div>
 
-            <div className="flex w-[100%] gap-10">
-              <div className="w-[50%] space-y-2">
+            <div className="flex w-[100%] gap-10 billing-form-type">
+              <div className="w-[50%] space-y-2 billing-type-project">
                 <label className="text-sm font-medium text-gray-700">* Start Date</label>
                 <input
                   className="h-[35px] w-[100%] border border-[#DBDCDE] rounded-md px-2"
@@ -359,7 +359,7 @@ const Add_Project = () => {
                 />
               </div>
 
-              <div className="w-[50%] space-y-2">
+              <div className="w-[50%] space-y-2 billing-type-project">
                 <label className="text-sm font-medium text-gray-700">Deadline</label>
                 <input
                   className="h-[35px] w-[100%] border border-[#DBDCDE] rounded-md px-2"
@@ -423,7 +423,7 @@ const Add_Project = () => {
 
           <div className="flex justify-end gap-5  pb-[20px] ">
             <button onClick={handleCloseForm} className="bg-white text-[#27004a] border border-[#27004a] h-10 w-20 rounded-md">Cancel</button>
-            <button type= "submit" className="second-btn" >Save</button>
+            <button type= "submit" className="allcrm-btn1" >Save</button>
           </div>
         </div>
         </form>

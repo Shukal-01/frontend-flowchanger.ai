@@ -449,7 +449,7 @@ const SideBar = ({ toggleSideBar }) => {
             className={`fixed top-0 w-[270px] left-0 h-[100vh]  text-white z-10 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
               } transition-transform duration-300 ease-in-out`}
           >
-            <div className="w-65 h-full bg-[#27004a] opacity-100">
+            <div className="w-70 h-full bg-[#27004a] opacity-100">
               {/* Close Button */}
               <div className="p-4 flex items-center justify-end text-lg font-bold">
 

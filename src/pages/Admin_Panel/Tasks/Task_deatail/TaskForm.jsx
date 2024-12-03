@@ -186,7 +186,7 @@ const TaskForm = () => {
   }, []);
 
   return (
-    <div className="w-[100%] flex justify-center mt-[30px] mb-[30px] items-center min-h-screen">
+    <div className="w-[100%]  form-main flex justify-center mt-[30px] mb-[30px] items-center min-h-screen">
       <div className="bg-white p-6 rounded-lg shadow-cs w-[80%] relative h-[100%]  ">
         <h2 className="text-lg font-semibold mb-[16px]">Add new Task</h2>
         <form action="" onSubmit={submitTask}>
@@ -204,7 +204,7 @@ const TaskForm = () => {
               />{" "}
               <br />
             </div>
-            <div className="flex gap-[8px]">
+            <div className="flex gap-[8px] billing-form-type">
               <div className="w-[100%]">
                 <label className="text-[13px] xl:text-[14px] text-[#000000ba] font-medium">
                   Task Status
@@ -224,8 +224,8 @@ const TaskForm = () => {
                 </select>
               </div>
             </div>
-            <div className="flex gap-[8px]">
-              <div className="w-[50%]">
+            <div className="flex gap-[8px] billing-form-type ">
+              <div className="w-[50%] billing-type-project">
                 <label className="text-[13px] xl:text-[14px] text-[#000000ba] font-medium">
                   Start Date
                 </label>{" "}
@@ -238,7 +238,7 @@ const TaskForm = () => {
                 />{" "}
                 <br />
               </div>
-              <div className="w-[50%]">
+              <div className="w-[50%] billing-type-project">
                 <label className="text-[13px] xl:text-[14px] text-[#000000ba] font-medium">
                   End Date
                 </label>{" "}
@@ -251,8 +251,8 @@ const TaskForm = () => {
                 <br />
               </div>
             </div>
-            <div className="flex gap-[8px]">
-              <div className="w-[50%]">
+            <div className="flex gap-[8px] billing-form-type ">
+              <div className="w-[50%] billing-type-project">
                 <label className="text-[13px] xl:text-[14px] text-[#000000ba] font-medium">
                   Due Date
                 </label>{" "}
@@ -264,7 +264,7 @@ const TaskForm = () => {
                 />{" "}
                 <br />
               </div>
-              <div className="w-[50%]">
+              <div className="w-[50%] billing-type-project">
                 <label className="text-[13px] xl:text-[14px] text-[#000000ba] font-medium">
                   Select Project
                 </label>{" "}
@@ -284,8 +284,8 @@ const TaskForm = () => {
                 </select>
               </div>
             </div>
-            <div className="w-[100%] flex gap-[10px]">
-              <div className="w-[50%]">
+            <div className="w-[100%] flex gap-[10px] billing-form-type">
+              <div className="w-[50%] billing-type-project">
                 <label className="text-[13px] xl:text-[14px] text-[#000000ba] font-medium">
                   Select Department
                 </label>{" "}
@@ -303,7 +303,7 @@ const TaskForm = () => {
                   ))}
                 </select>
               </div>
-              <div className="w-[50%]">
+              <div className="w-[50%] billing-type-project">
                 <label className="text-[13px] xl:text-[14px] text-[#000000ba] font-medium">
                   Task Priority
                 </label>{" "}

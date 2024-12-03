@@ -110,6 +110,10 @@ import AddBranch from "./pages/Admin_Panel/Branch/AddBranch";
 import UpdateBranch from "./pages/Admin_Panel/Branch/UpdateBranch";
 import Setting_panel from "./pages/Admin_Panel/StaffSection/Attendance/Setting_panel";
 import ClientDashBoard from "./pages/Client_Panel/ClientDashBoard";
+import DailyWorkEntry from "./pages/Admin_Panel/StaffSection/Attendance/DailyWorkEntry";
+import AttendenceSetting from "./pages/Admin_Panel/StaffSection/Attendance/AttendenceSetting";
+import TrackTime from "./pages/Admin_Panel/StaffSection/Attendance/TrackTime";
+
 
 const App = () => {
   const [toggleSideBar, setToggleSideBar] = useState(true);
@@ -144,7 +148,7 @@ const App = () => {
           <SideBar />
           <div className="w-[100%] xl:w-[80%] lg:w-[80%] admin-sidebar-set max-h-screen ">
             <NavBar />
-            <div className="p-[10px]  w-full h-[90%] overflow-y-scroll content-container">
+            <div className="p-[10px] h-[95vh]  w-full md:h-[90%] overflow-y-scroll content-container">
               <Outlet />
             </div>
           </div>
@@ -293,6 +297,9 @@ const App = () => {
               element={<Attendence_summary />}
             />
             <Route path="/setting-panel" element={<Setting_panel />} />
+            <Route path="/daily-work-entry" element={<DailyWorkEntry />} />
+            <Route path="/attendence-setting" element={<AttendenceSetting />} />
+            <Route path="/tracktime" element={<TrackTime />} />
 
             <Route path="/project_summary" element={<Project_Summary />} />
             <Route path="/projects" element={<Projects />} />

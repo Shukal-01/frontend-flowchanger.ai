@@ -196,7 +196,7 @@ const Projects = () => {
         <h2 className="font-medium mb-[10px] flex gap-[6px] items-center"> <LibraryBooksIcon />Projects</h2>
 
 
-        <div className='flex mb-4 pl-[0px] justify-between p-3 flex-col gap-2  sm:flex-row sm:gap-0'>
+        <div className='flex mb-4 pl-[0px] value-select justify-between p-3 flex-col gap-2  sm:flex-row sm:gap-0'>
           <div className='left-side '>
             <select
               onChange={handleSelectChange}
@@ -217,11 +217,11 @@ const Projects = () => {
 
             <button
               onClick={handleExport}
-              className='ml-2 bg-[#27004a] text-white p-[7px] text-[14px] rounded-md cursor-pointer'
+              className='ml-2 bg-[#27004a] export-project-btn text-white p-[7px] text-[14px] rounded-md cursor-pointer'
             >
               Export File
             </button>
-            <button className="border border-[#e5e7eb] text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] " onClick={onOpenModal} >Bulk Action  <CachedIcon className="newsidebar-icon" /> </button>
+            <button className="border border-[#e5e7eb] export-project-btn text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] " onClick={onOpenModal} >Bulk Action  <CachedIcon className="newsidebar-icon" /> </button>
             <Modal open={open} onClose={onCloseModal} center>
               <div className="border-b border-[#dbdbdb] pb-[20px]">
                 <h2>Bulk Actions</h2>
