@@ -239,7 +239,7 @@ const AddNewClient = () => {
           {/* <!-- Submit Button --> */}
           <div className="mt-6 w-full md:w-[45%] flex p-2 justify-between gap-[10px] md:justify-end md:float-right">
           <button onClick={handleCloseForm} className="bg-white text-[#27004a] border border-[#27004a] h-10 w-20 rounded-md">Cancel</button>
-            <button type="submit" className=" second-btn  ">
+            <button type="submit" className=" allcrm-btn1 ">
               Save
             </button>
           </div>

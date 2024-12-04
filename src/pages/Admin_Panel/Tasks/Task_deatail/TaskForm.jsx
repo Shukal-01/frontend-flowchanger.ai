@@ -187,7 +187,7 @@ const TaskForm = () => {
 
   return (
     <div className="w-[100%]  form-main flex justify-center mt-[30px] mb-[30px] items-center min-h-screen">
-      <div className="bg-white p-6 rounded-lg shadow-cs w-[80%] relative h-[100%]  ">
+      <div className="bg-white p-6 rounded-lg shadow-cs xl:w-[80%] lg:w-[80%] w-[100%] relative h-[100%]  ">
         <h2 className="text-lg font-semibold mb-[16px]">Add new Task</h2>
         <form action="" onSubmit={submitTask}>
           <div className="w-[100%]">
@@ -449,7 +449,7 @@ const TaskForm = () => {
               </button>
 
               <button
-                className={`second-btn ${
+                className={`allcrm-btn1 ${
                   isLoading == true ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >

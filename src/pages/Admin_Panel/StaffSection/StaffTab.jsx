@@ -191,7 +191,7 @@ const StaffTab = () => {
           </div>
 
           <select
-            className="border rounded-md bg-[#F4F5F9] p-[8px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm"
+            className="border rounded-md bg-[#F4F5F9] p-[8px]  h-[42px] lg:w-[240px] w-[100%] focus-visible:outline-none text-sm"
             onChange={(e) => {
               setSelectedDepartmentName(e.target.value);
               handleSearchStaff(); // calling the searchStaff function here to prevent unnecessery API calls
@@ -218,7 +218,7 @@ const StaffTab = () => {
             {isDropdownOpen && (
               <div
                 ref={dropdownRef}
-                className="absolute w-[325px] mt-2 md:w-[400px] xl:w-[400px] lg:w-[400px] lg:left-[0px] p-[20px] bg-white border border-gray-200 rounded-md shadow-lg z-10"
+                className="absolute w-[270px] mt-2 md:w-[400px] xl:w-[400px] lg:w-[325px] sm:w-[286px] lg:left-[0px] p-[20px] bg-white border border-gray-200 rounded-md shadow-lg z-10"
               >
                 <h2 className="border-b">More Filters</h2>
                 <div className="flex gap-[10px] mt-2 items-center">
@@ -270,7 +270,7 @@ const StaffTab = () => {
                   </select>
                 </div>
 
-                <div className="flex w-[50%] mx-auto justify-between text-center mt-2">
+                <div className="flex w-full  justify-end items-center gap-[5px] text-center mt-2">
                   <button
                     onClick={() => {
                       setDropdownOpen(false);
@@ -290,7 +290,7 @@ const StaffTab = () => {
             )}
           </div>
         </div>
-        <div className="flex gap-[15px] justify-between lg:justify-start">
+        <div className="flex gap-[15px] mt-[0] lg:mt-[10px] justify-between lg:justify-start">
           {/* <button className='border border-1 pl-3 pr-3 rounded-md pt-2 pb-2 text-sm'>Update Staff</button> */}
           <div>
             <div className="relative inline-block text-left">
@@ -321,7 +321,7 @@ const StaffTab = () => {
               {toggleDrop && (
                 <div
                   ref={staffDropDown}
-                  className="absolute right-0 z-10 mt-2 w-56 staff-page-res origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="absolute right-0 z-10 mt-2 w-56 left-[0] xl:left-[-96px] lg:left-[-96px] staff-page-res origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"

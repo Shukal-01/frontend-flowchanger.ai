@@ -49,9 +49,9 @@ const EditDepartment = () => {
 
 
     return (
-        <div className='flex  gap-1 sm:flex-col lg:flex-row flex-row md:flex-col'>
+        <div className='flex  gap-1 flex-col md:flex-row'>
             <div className='addnewrole  pl-[10px] sm:w-[100%] lg:w-[50%] md:w-[100%] w-[100%] pr-2 mb-3 pb-4'>
-                <h2 className='mt-[20px]'>Edit Department Content Writer</h2>
+                <h2 className='mt-[20px]'>Edit Department</h2>
 
                 <div className='bg-[#fff] p-3  md:w-[100%] sm:w-[100%] w-[100%] mt-[20px] rounded-lg shadow-cs'>
                     <label>Department Name</label><br />
@@ -194,7 +194,7 @@ const EditDepartment = () => {
             <div className='staff-member w-[100%] sm:w-[100%] lg:w-[50%] md:w-[100%]'>
                 <h2 className='mt-[20px]'>Staff members using this role</h2>
 
-                <div className=' bg-[#fff] shadow-cs  p-2 rounded-lg mt-[20px]'>
+                <div className=' bg-[#fff] shadow-cs  p-2 rounded-lg mt-[20px] mb-[40px] md:mb-0'>
                     <div className='flex mb-4 justify-between p-2 pl-0 pr-0 flex-col gap-2  sm:flex-row sm:gap-0'>
                         <div className='left-side '>
                             <select className=' border border-[#e5e7eb] p-[7px] text-[14px] shadow-sm mr-2 rounded-md  pr-3 focus:outline-none'>

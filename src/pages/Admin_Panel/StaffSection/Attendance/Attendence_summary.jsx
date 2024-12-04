@@ -18,6 +18,7 @@ import PresentModal from "../../../../components/Admin_Panel/AttendanceSummary/P
 import HalfDay from "../../../../components/Admin_Panel/AttendanceSummary/HalfDayModal";
 import PaidLeaveModal from "../../../../components/Admin_Panel/AttendanceSummary/PaidLeaveModal";
 import AbsentModal from "../../../../components/Admin_Panel/AttendanceSummary/AbsentModal";
+import DailyWorkEntry from "./DailyWorkEntry";
 const Attendence_summary = () => {
   const { baseUrl, openToast, fetchStaff, staffDetail } = useGlobalContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +50,7 @@ const Attendence_summary = () => {
   const [applyOvertimePunchRecordId, setApplyOvertimePunchRecordId] =
     useState();
   const [id, setId] = useState(null);
+
 
   function calculateTotalMinutes(timeString) {
     const [hours, minutes] = timeString?.split(":")?.map(Number);

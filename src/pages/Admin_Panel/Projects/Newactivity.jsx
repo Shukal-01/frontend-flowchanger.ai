@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Accordion = () => {
+const Newactivity = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   // Function to handle accordion toggling
@@ -34,9 +34,7 @@ const Accordion = () => {
 
           {/* Accordion Content */}
           {openIndex === index && (
-            <div className="p-4 text-gray-700 bg-white">
-              {item.content}
-            </div>
+            <div className="p-4 text-gray-700 bg-white">{item.content}</div>
           )}
         </div>
       ))}
@@ -44,4 +42,4 @@ const Accordion = () => {
   );
 };
 
-export default Accordion;
+export default Newactivity;
