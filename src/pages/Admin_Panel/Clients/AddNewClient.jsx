@@ -100,13 +100,13 @@ const AddNewClient = () => {
   return (
     <div className=" flex justify-center items-center min-h-screen ">
 
-      <div className="w-full max-w-3xl bg-white shadow-cs border border-gray-100 rounded-lg p-[20px]">
+      <div className="w-full max-w-3xl mt-[20px] ml-[20px] mr-[20px] xl:ml-[0] xl:mr-[0] bg-white shadow-cs border border-gray-100 rounded-lg p-[20px]">
         {/* <Link to = "/clients"><FaArrowLeft /></Link> */}
         <div className="mb-6">
           {/* <!-- Tabs for form sections --> */}
           <nav className="flex space-x-4 border-b pb-[10px] ">
-            <a href="#" className=" py-2 hover:border-b-1 hover:border-[#27004a] text-sm font-medium">Customer Details</a>
-            <a href="#" className="text-gray-600 py-2 text-sm font-medium hover:border-b-1 hover:border-[#27004a]">Billing & Shipping</a>
+            <a href="#" className=" py-2 hover:border-b-1 hover:border-[#27004a] text-[13px] xl:text-[14px] font-medium">Customer Details</a>
+            <a href="#" className="text-gray-600 py-2 text-[13px] font-medium xl:text-[14px] hover:border-b-1 hover:border-[#27004a]">Billing & Shipping</a>
           </nav>
         </div>
 
@@ -167,10 +167,10 @@ const AddNewClient = () => {
             </div>
 
             {/* <!-- Currency and Default Language in one row --> */}
-            <div className="flex flex-row justify-between items-center space-x-2 w-full ">
+            <div className="flex flex-col justify-between md:flex-row items-center gap-[8px] w-full ">
               {/* <!-- Currency --> */}
 
-              <div className="relative inline-block text-left w-1/2">
+              <div className="relative inline-block text-left w-[100%] md:w-[50%] ">
                 <label htmlFor="currency" className="block text-sm font-medium text-gray-700 ">currency</label>
                 <Select
                   name="currency"
@@ -187,7 +187,7 @@ const AddNewClient = () => {
 
 
               {/* <!-- Default Language --> */}
-              <div className="w-1/2">
+              <div className="w-[100%] md:w-[50%] mt-[22px] ml-0 md:mt-[0]">
                 <label for="language" className="block text-sm font-medium text-gray-700">Default Language</label>
                 <Select
                   name="language"
@@ -237,7 +237,7 @@ const AddNewClient = () => {
           </div>
 
           {/* <!-- Submit Button --> */}
-          <div className="mt-6 w-full md:w-[45%] flex p-2 justify-between gap-[10px] md:justify-end md:float-right">
+          <div className="mt-6 w-full   flex p-2 justify-end gap-[10px] ">
           <button onClick={handleCloseForm} className="bg-white text-[#27004a] border border-[#27004a] h-10 w-20 rounded-md">Cancel</button>
             <button type="submit" className=" allcrm-btn1 ">
               Save

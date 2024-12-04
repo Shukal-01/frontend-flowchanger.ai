@@ -34,7 +34,7 @@ const AddBranch = () => {
     }
 
     return (
-        <div className='addnewrole  pl-[10px] w-[100%] pr-2 mb-3 pb-4'>
+        <div className='addnewrole  p-[20px]  w-[100%] '>
             <h2 className='text-[#27004a] font-medium text-[18px]'>Add New Branch</h2>
 
             <div className='w-[100%]'>

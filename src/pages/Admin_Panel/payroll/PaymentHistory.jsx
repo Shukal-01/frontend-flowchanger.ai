@@ -109,9 +109,9 @@ const PaymentHistory = () => {
       </div>
 
       <div className="mt-5">
-        <div className="flex   gap-[10px] flex-row  justify-between items-center">
-          <div className="flex flex-row justify-between items-center w-[35%]">
-          <div className="relative  xl:w-[240px] lg:w-[240px] w-full mt-2">
+        <div className="flex   gap-[10px] flex-col md:flex-row  justify-between items-center">
+          <div className="flex flex-row justify-between items-center ">
+          <div className="relative  w-full ">
             <input
               type="text"
               placeholder="Search"
@@ -119,7 +119,7 @@ const PaymentHistory = () => {
             />
             <SearchIcon className="absolute right-[10px] top-[10px] text-gray-500" />
           </div>
-          <button className="first-btn mt-3  allcrm-btn">Refresh</button>
+      
           </div>
           <button className="second-btn mr-3">Download Report</button>
           {/* <div className="flex gap-[10px] w-full justify-between">
