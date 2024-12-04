@@ -237,13 +237,13 @@ const EditAttendanceDetail = () => {
         label: `${seo?.shiftName} | ${seo?.shiftStartTime} - ${seo?.shiftEndTime}`
     }));
     const isSelected = (shiftId) => selectedShift.some((s) => s.id === shiftId);
-
+console.log(selectedStaff);
     async function updateAttendanceMode(e) {
         e.preventDefault();
         setIsLoading(true);
         const data = {
             staff_ids: [
-                selectedStaff?.staffDetails.id
+                selectedStaff?.staffDetails?.id
             ],
             attendence_mode: {
                 "selfie_attendance": toggleSelfieAttendance,
