@@ -113,21 +113,20 @@ const Subscription_History = () => {
       <div div className="m-4  "></div>
       <div>
         <div className="w-full p-[14px] md:p-[20px] shadow-cs rounded-lg border border-[#dbdbdb]  ">
-          <div className="flex mb-4 justify-between p-3 flex-col gap-2 pl-[0] sm:flex-row sm:gap-0">
-            <div className="left-side ">
+        <div className="flex items-center justify-between sm:flex-row flex-col gap-2 mb-3">
+            <div className="flex items-center flex-wrap gap-2 sm:flex-row flex-col w-full">
               <select
                 onChange={handleSelectChange}
-                className=" border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm  mr-0 sm:mr-2  rounded-md  focus:outline-none"
+                className=" border border-[#e5e7eb] p-[7px] text-[14px] shadow-sm rounded-md w-full sm:w-[60px] focus:outline-none"
               >
                 <option value="25">25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
                 <option value="120">120</option>
               </select>
-
               <select
                 onChange={(e) => setExportFormat(e.target.value)}
-                className="border border-[#e5e7eb] p-[7px]  text-[14px] shadow-sm rounded-md  focus:outline-none"
+                className="border border-[#e5e7eb] p-[7px]  text-[14px] shadow-sm rounded-md w-full sm:w-[67px] focus:outline-none"
               >
                 <option value="CSV">CSV</option>
                 <option value="PDF">PDF</option>
@@ -136,67 +135,28 @@ const Subscription_History = () => {
 
               <button
                 onClick={handleExport}
-                className="ml-2 bg-[#27004a] export-project-btn text-white p-[7px] text-[14px] rounded-md cursor-pointer"
+                className="bg-[#27004a] text-white p-[7px] text-[14px] w-full sm:w-[83px] rounded-md cursor-pointer"
               >
                 Export File
               </button>
               <button
-                className="border border-[#e5e7eb] export-project-btn text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] "
+                className="border border-[#e5e7eb] text-[14px] rounded-lg shadow-sm p-[7px] w-full sm:w-[123px]"
                 onClick={onOpenModal}
               >
                 Bulk Action <CachedIcon className="newsidebar-icon" />{" "}
               </button>
-              <Modal open={open} onClose={onCloseModal} center>
-                <div className="border-b border-[#dbdbdb] pb-[20px]">
-                  <h2>Bulk Actions</h2>
-                </div>
-                <div className="flex items-center gap-[8px] mt-[32px] mb-[32px]">
-                  <input type="checkbox" />
-                  <p className="text-[14px]">Mass Delete</p>
-                </div>
-                <div className="w-[100%]">
-                  <Select
-                    isMulti
-                    name="isHiddenFor"
-                    options={allStaff?.map(({ id, label }) => ({
-                      label: label,
-                      value: id,
-                    }))}
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    value={taskStatus.isHiddenFor || []}
-                    onChange={(selectedOptions) =>
-                      setTaskStatus((prev) => ({
-                        ...prev,
-                        isHiddenFor: selectedOptions || [], // ensures an array even if no options are selected
-                      }))
-                    }
-                    styles={customStyles}
-                  />
-                </div>
-
-                <p className="text-[red] text-[14px] mt-[10px]">
-                  if you do not select any groups assigned to the selected
-                  customers will be removed.
-                </p>
-
-                <div className="pr-[10px] pb-3 flex gap-[10px] justify-end mt-[24px]">
-                  <button className="second-btn">Confirm </button>
-                </div>
-              </Modal>
             </div>
-
-            <div className="right-side relative  w-[200px]">
+            <div className="flex items-center relative flex-wrap gap-2 w-full justify-end">
               <input
                 type="text"
                 placeholder="Search"
                 className="border border-1 p-[10px] h-[38px] pr-7
-] rounded-3xl focus:outline-none w-[100%] text-[15px] text-[#000]"
+] rounded-3xl focus:outline-none w-[100%] md:w-[200px] text-[15px] text-[#000]"
               />
               <SearchIcon
                 className="absolute right-[10px] search-icon    text-[#000]  font-thin text-[#dddddd;
 ]"
-              />
+              />{" "}
             </div>
           </div>
           <div className="bg-white rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto">
