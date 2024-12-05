@@ -24,6 +24,10 @@ const SideBar = ({ toggleSideBar }) => {
     setSelectedSidebarTab,
   } = useGlobalContext();
 
+ 
+
+
+
   useEffect(() => {
     console.log(activeSubmenu, selectedSidebarTab);
   }, [activeSubmenu, selectedSidebarTab]);
@@ -62,15 +66,29 @@ const SideBar = ({ toggleSideBar }) => {
   const [isMenuOpen10, setIsMenuOpen10] = useState(false);
   const toggleMenu10 = () => setIsMenuOpen10(!isMenuOpen9);
 
+
   //setup sidebar
 
   // State to manage sidebar visibility
   const [isOpen, setIsOpen] = useState(false);
+  // handle admin sidebar on small screens
+  const handleLinkClick = (tab) => {
+    // Set the selected sidebar tab
+    setSelectedSidebarTab(tab);
+
+    // Close sidebar on small screens
+    if (window.innerWidth < 640) { // Tailwind's 'sm' breakpoint is 640px
+      document.body.classList.remove("custom-body-class");
+    }
+  }
+ 
 
   // Toggle sidebar visibility
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+ 
 
   //setup sidebar
 
@@ -85,6 +103,9 @@ const SideBar = ({ toggleSideBar }) => {
   const handlePageClick = (page) => {
     setSelectedPage(page);
     setIsOpen(true); // Keep sidebar open on page selection
+    if (window.innerWidth < 640) { // Tailwind's 'sm' breakpoint is 640px
+      setIsOpen(false);
+    }
   };
 
   const [selectedPage, setSelectedPage] = useState(""); // Track active page
@@ -92,21 +113,21 @@ const SideBar = ({ toggleSideBar }) => {
   return (
     // <div className="sidebar w-[250px] xl:w-[244px] lg:w-[300px] md:w-[300px] bg-[#27004a] h-full p-[10px] ">
 
-    <div className="sidebar flex-shrink-0 w-[100%] xl:w-[20%] lg:w-[20%] md:w-[300px] bg-[#27004a]  p-[10px]  h-[95vh] md:h-[100vh]   overflow-y-scroll content-container">
-      <div className="flex xl:justify-center lg:justify-center  p-[20px]">
+    <div className="sidebar flex-shrink-0 w-full sm:w-[340px] md:w-[270px] bg-[#27004a] p-[5px] sm:p-[10px]  h-[95vh] sm:h-[100vh]   overflow-y-scroll content-container selection">
+      <Link to = "/" className="flex xl:justify-center lg:justify-center  p-[20px]">
         <img src={logo} alt="" className="w-[120px]" />
-      </div>
+      </Link>
       <ul className="pl-[2px] pr-[2px] pt-[0px] pb-[20px]">
         <li
           onClick={() => {
-            setSelectedSidebarTab("dashboard");
+            handleLinkClick("dashboard");
             handleActiveSubmenu();
           }}
           className={`flex items-center gap-[10px] hover:bg-[#fff] mb-[5px] hover:text-[#8a25b0] p-[10px]   rounded-md  transition-all ${
             selectedSidebarTab === "dashboard"
               ? "bg-white text-[#8a25b0]"
               : "text-white"
-          }`}
+          } `}
         >
           {/* <img src={home} /> */}
           <HomeIcon />
@@ -125,7 +146,7 @@ const SideBar = ({ toggleSideBar }) => {
                 : "text-white"
             }`}
             onClick={() => {
-              setSelectedSidebarTab("project");
+              handleLinkClick("project");
               handleActiveSubmenu();
             }}
           >
@@ -157,7 +178,7 @@ const SideBar = ({ toggleSideBar }) => {
           <Link
             to="/task"
             onClick={() => {
-              setSelectedSidebarTab("task");
+              handleLinkClick("task");
               handleActiveSubmenu();
             }}
             className={`flex items-center gap-[10px]  p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all ${
@@ -211,7 +232,7 @@ const SideBar = ({ toggleSideBar }) => {
                 : "text-white"
             }`}
             onClick={() => {
-              setSelectedSidebarTab("client");
+              handleLinkClick("client");
               handleActiveSubmenu();
             }}
           >
@@ -253,7 +274,7 @@ const SideBar = ({ toggleSideBar }) => {
         <div className="">
           <div
             onClick={() => {
-              setSelectedSidebarTab("report");
+              handleLinkClick("report");
             }}
             className={`flex items-center gap-[10px]  p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all ${
               selectedSidebarTab === "report"
@@ -301,7 +322,7 @@ const SideBar = ({ toggleSideBar }) => {
           {/* Main Staff Tab */}
           <Link
             to="/staff-menu"
-            onClick={() => setSelectedSidebarTab("staff")} // Set selected tab
+            onClick={() => handleLinkClick("staff")} // Set selected tab
             className={`flex items-center gap-[10px] p-[10px]  hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all ${
               selectedSidebarTab === "staff"
                 ? "bg-white mb-[5px] text-[#8a25b0]"
@@ -347,7 +368,7 @@ const SideBar = ({ toggleSideBar }) => {
                 <Link
                   to="/payroll-menu"
                   onClick={() => {
-                    setSelectedSidebarTab("payroll-menu");
+                    handleLinkClick("payroll-menu");
                   }}
                   className={`w-full text-left py-[10px] flex items-center gap-[10px] pl-[40px] whitespace-nowrap transition-all rounded-md overflow-hidden ${
                     selectedSidebarTab === "payroll-menu"
@@ -363,7 +384,7 @@ const SideBar = ({ toggleSideBar }) => {
                 <Link
                   to="/attendence_summary"
                   onClick={() => {
-                    setSelectedSidebarTab("attendance");
+                    handleLinkClick("attendance");
                   }}
                   className={`w-full text-left py-[10px] flex items-center gap-[10px] pl-[40px] whitespace-nowrap transition-all rounded-md overflow-hidden ${
                     selectedSidebarTab === "attendance"
@@ -382,7 +403,7 @@ const SideBar = ({ toggleSideBar }) => {
         <div className="">
           <Link
             onClick={() => {
-              setSelectedSidebarTab("role");
+              handleLinkClick("role");
               handleActiveSubmenu();
             }}
             to="/role-detail"
@@ -441,7 +462,7 @@ const SideBar = ({ toggleSideBar }) => {
           <Link
             to="/department-details"
             onClick={() => {
-              setSelectedSidebarTab("department");
+              handleLinkClick("department");
               handleActiveSubmenu();
             }}
             className={`flex items-center gap-[10px]  p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all ${
@@ -479,7 +500,7 @@ const SideBar = ({ toggleSideBar }) => {
           <Link
             to="/branch-details"
             onClick={() => {
-              setSelectedSidebarTab("branch");
+              handleLinkClick("branch");
               handleActiveSubmenu();
             }}
             className={`flex items-center gap-[10px] mt-[5px] p-[10px] hover:bg-[#fff] rounded-md hover:text-[#8a25b0] transition-all ${
@@ -516,7 +537,7 @@ const SideBar = ({ toggleSideBar }) => {
         <div className="mt-[5px] mb-[5px]">
           <Link
             onClick={() => {
-              setSelectedSidebarTab("subscription-plan");
+              handleLinkClick("subscription-plan");
               handleActiveSubmenu();
             }}
             to="/subscription-plan"
@@ -632,24 +653,24 @@ const SideBar = ({ toggleSideBar }) => {
 
           {/* Sidebar */}
           <div
-            className={`fixed top-[53px] md:top-0 w-[500px] lg:w-[288px]  left-[0] h-[100vh]  text-white z-10 transform ${
+            className={`fixed  top-[54px] sm:top-[53px]  lg:top-[54px] xl:top-[0px] w-[100%] sm:w-[340px] md:w-[270px]   left-[0] h-[100vh]  text-white z-10 transform ${
               isOpen ? "translate-x-0" : "-translate-x-full"
             } transition-transform duration-300 ease-in-out`}
           >
             <div className="w-full h-full bg-[#27004a] opacity-100">
               {/* Close Button bg-[#27004a]*/}
-              <div className="p-4 flex items-center justify-end text-lg font-bold">
+              <div className="px-4 py-2 flex items-center justify-end text-lg font-bold">
                 <button onClick={toggleSidebar}>
                   <CloseIcon />
                 </button>
               </div>
 
               {/* Sidebar Links */}
-              <ul className="p-4">
+              <ul className="px-4 py-0">
                 <Link
                   to="/status-main-page"
                   onClick={() => handlePageClick("status")}
-                  className={`p-2 flex items-center gap-[6px]  mb-[10px] rounded-lg cursor-pointer ${
+                  className={`p-2  flex items-center gap-[6px]  mb-[10px] rounded-lg cursor-pointer ${
                     selectedPage === "status"
                       ? "bg-white text-[purple]"
                       : "hover:bg-white hover:text-[purple]"
@@ -660,7 +681,7 @@ const SideBar = ({ toggleSideBar }) => {
                 </Link>
                 <Link
                   onClick={() => handlePageClick("home")}
-                  className={`p-2 flex items-center  gap-[6px] mb-[10px] rounded-lg cursor-pointer ${
+                  className={`p-2  flex items-center  gap-[6px] mb-[10px] rounded-lg cursor-pointer ${
                     selectedPage === "home"
                       ? "bg-white text-[purple]"
                       : "hover:bg-white hover:text-[purple]"

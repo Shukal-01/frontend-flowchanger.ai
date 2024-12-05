@@ -17,7 +17,7 @@ const Subscription = () => {
 
   return (
     <div className="subscription-panel space-y-8 p-[10px]">
-      <h1 className="font-medium text-[22px] max-[600px]:text-[18px]">Subscription Plan</h1>
+      <h1 className="font-medium text-[22px] mt-[20px] max-[600px]:text-[18px]">Subscription Plan</h1>
       <div className="space-y-8">
         <div className="left-card  w-[100%] flex gap-8 h-[220px] max-[1100px]:block max-[1100px]:space-y-6">
           <div className="shadow w-[60%] flex items-center justify-between border rounded-lg   max-[1100px]:w-[100%]">
@@ -75,13 +75,13 @@ const Subscription = () => {
         </div>
 
         <div>
-          <Tabs className="shadow p-5 h-[100%] border rounded-lg subscription-tab max-[1100px]:mt-[230px] max-[823px]:mt-[254px] max-[600px]:mt-[225px] ">
-            <TabList className="flex items-center text-[15px] font-medium text-[#566a7f] gap-4 rounded-md m-2 max-[600px]:text-[10px]">
-              <Tab className="hover:bg-[#eceef1] cursor-pointer focus-visible:outline-none px-3 py-2 rounded-lg">
+          <Tabs className="shadow p-[10px] md:p-[20px] h-[100%]  border rounded-lg subscription-tab max-[1100px]:mt-[230px] max-[823px]:mt-[254px] max-[600px]:mt-[225px] ">
+            <TabList className="flex items-center text-[15px] flex-col md:flex-row font-medium text-[#566a7f] gap-4 rounded-md m-2 max-[600px]:text-[10px]">
+              <Tab className="hover:bg-[#eceef1] cursor-pointer w-full md:w-[28%] whitespace-nowrap focus-visible:outline-none px-3 py-2 rounded-lg">
                 <AssignmentIcon className="mr-1" />
                 Subscription History
               </Tab>
-              <Tab className="hover:bg-[#eceef1] cursor-pointer focus-visible:outline-none px-3 py-2 rounded-lg">
+              <Tab className="hover:bg-[#eceef1] cursor-pointer w-full md:w-[28%] whitespace-nowrap focus-visible:outline-none px-3 py-2 rounded-lg">
                 <PaidIcon className="mr-1" />
                 Transactions
               </Tab>

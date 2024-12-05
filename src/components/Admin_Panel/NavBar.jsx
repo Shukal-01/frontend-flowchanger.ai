@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useAuthContext } from "../../Context/AuthContext";
 import Cookies from "js-cookie";
 import menu from "../../Assets/Images/menu-fill.png";
 import search from "../../Assets/Images/search.png";
@@ -14,11 +13,37 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { TbLogout2 } from "react-icons/tb";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../Context/AuthContext";
+import { useGlobalContext } from "../../Context/GlobalContext";
 
-const NavBar = ({ toggleRunTab, setToggleRunTab }) => {
-  useEffect(() => {
-    console.log(toggleRunTab);
-  }, [toggleRunTab]);
+const NavBar = () => {
+  const {flowChangerToken} = useAuthContext();
+  const {baseUrl} = useGlobalContext();
+  console.log(baseUrl);
+  console.log(flowChangerToken);
+  const [user , setUser] = useState([]);
+ 
+
+  useEffect(()=>{
+  const fetchData = async () =>{
+    try{
+      const result = await fetch(baseUrl + "user/",{
+        headers : {
+          'Authorization' : `Bearer ${flowChangerToken}`
+        }
+      });
+      console.log(result);
+  const response = await result.json();
+  console.log(response);
+  setUser(response);
+    }
+ catch(error){
+  console.log("error while fetching user", error)
+  setUser([]);
+ }
+  } 
+  fetchData();
+  },[])
 
   const handleProfileDropDown = () => {
     setProfileDropDown(!profileDropdown);
@@ -49,7 +74,7 @@ const NavBar = ({ toggleRunTab, setToggleRunTab }) => {
         <div className=" items-center gap-4 mr-7 flex ml-3">
           <div className="relative client-add">
             <input
-              className="py-2.5 client-add  rounded-2xl pl-[10px] pr-[24px] focus-visible:outline-none  summary-border text-[13px] "
+              className="py-2.5 client-add  rounded-3xl pl-[10px] pr-[24px] focus-visible:outline-none  summary-border text-[13px] "
               type="text"
               placeholder="Search...."
             />
@@ -89,10 +114,10 @@ const NavBar = ({ toggleRunTab, setToggleRunTab }) => {
                   id="menu-item-0"
                 >
                   <p className="text-white hover:bg-white rounded-md hover:text-[#8a25b0] font-medium p-2">
-                    Tp
+                    {user.name}
                   </p>
                   <p className="text-white hover:bg-white rounded-md hover:text-[#8a25b0] font-medium p-2">
-                    Role - Admin
+                    Role -{user.role}
                   </p>
                 </div>
                 <Link

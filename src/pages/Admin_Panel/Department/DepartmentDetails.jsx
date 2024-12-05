@@ -8,7 +8,7 @@ import { useGlobalContext } from "../../../Context/GlobalContext";
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
 import ClipLoader from "react-spinners/ClipLoader";
-import { Modal } from 'react-responsive-modal';
+import { Modal } from "react-responsive-modal";
 import Select from "react-select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ConfirmationModal from "../../../components/Staff/Modals/ConfirmationModal";
@@ -86,8 +86,7 @@ const DepartmentDetail = () => {
       } else {
         console.log(res.message || "An unexpected error occured", "error");
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log("Fetch error:", error.message || error);
       console.log(error.message || "An unexpected error occurred.");
     } finally {
@@ -108,14 +107,13 @@ const DepartmentDetail = () => {
         openToast(result.message);
         setDepartments(result);
         onCloseModal10();
-        fetchDepartments()
+        fetchDepartments();
       } else {
         openToast(result.message);
       }
     } catch (error) {
       console.error("Error deleting department:", error);
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -158,15 +156,12 @@ const DepartmentDetail = () => {
     return () => clearTimeout(delayDebounceFn); // Cleanup function to clear the timeout
   }, [searchDepartment]);
 
-
   const [open, setOpen] = useState(false);
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
 
-
   const [allStaff, setAllStaff] = useState();
-
 
   const [taskStatus, setTaskStatus] = useState({
     name: "",
@@ -174,49 +169,46 @@ const DepartmentDetail = () => {
     order: "",
     isHiddenFor: [],
     canBeChangedTo: [],
-  })
+  });
 
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: '#F4F5F9',
-      borderColor: '#E2E8F0',
-      minHeight: '38px',
+      backgroundColor: "#F4F5F9",
+      borderColor: "#E2E8F0",
+      minHeight: "38px",
     }),
     multiValue: (provided) => ({
       ...provided,
-      backgroundColor: '#E2E8F0',
+      backgroundColor: "#E2E8F0",
     }),
     multiValueLabel: (provided) => ({
       ...provided,
-      fontSize: '14px',
+      fontSize: "14px",
     }),
     multiValueRemove: (provided) => ({
       ...provided,
-      color: '#4A5568',
-      ':hover': {
-        backgroundColor: '#CBD5E0',
-        color: '#2D3748',
+      color: "#4A5568",
+      ":hover": {
+        backgroundColor: "#CBD5E0",
+        color: "#2D3748",
       },
     }),
   };
 
   return (
     <div className="p-[10px] top-[95px] pl-[10px] w-[100%] pr-2 mb-3 pb-4">
-      <Link
-        to="/adddepartment"
-        className="allcrm-btn "
-      >
+      <Link to="/adddepartment" className="allcrm-btn ">
         {" "}
         <AddIcon className="addicon-all" /> New Department
       </Link>
 
       <div className="table-section mt-5 bg-white shadow-cs p-[20px]  rounded-lg ">
-        <div className="flex mb-4 justify-between flex-col gap-2  sm:flex-row sm:gap-0">
-          <div className="left-side ">
+        <div className="flex items-center justify-between sm:flex-row flex-col gap-2 mb-3">
+          <div className="flex items-center flex-wrap gap-2 sm:flex-row flex-col w-full">
             <select
               onChange={handleSelectChange}
-              className=" border border-[#e5e7eb] p-[7px]  shadow-sm mr-2 rounded-md text-[14px]  pr-3 focus:outline-none"
+              className=" border border-[#e5e7eb] p-[7px] text-[14px] shadow-sm rounded-md w-full sm:w-[60px] focus:outline-none"
             >
               <option value="25">25</option>
               <option value="50">50</option>
@@ -225,7 +217,7 @@ const DepartmentDetail = () => {
             </select>
             <select
               onChange={(e) => setExportFormat(e.target.value)}
-              className="border border-[#e5e7eb] p-[7px] shadow-sm rounded-md text-[14px] pr-3 focus:outline-none"
+              className="border border-[#e5e7eb] p-[7px]  text-[14px] shadow-sm rounded-md w-full sm:w-[67px] focus:outline-none"
             >
               <option value="CSV">CSV</option>
               <option value="PDF">PDF</option>
@@ -234,78 +226,40 @@ const DepartmentDetail = () => {
 
             <button
               onClick={handleExport}
-              className="ml-2 bg-[#27004a] text-[14px] text-white p-2 rounded-md cursor-pointer"
+              className="bg-[#27004a] text-white p-[7px] text-[14px] w-full sm:w-[83px] rounded-md cursor-pointer"
             >
               Export File
             </button>
-            <button className="border border-[#e5e7eb] text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] " onClick={onOpenModal} >Bulk Action  <CachedIcon className="newsidebar-icon" /> </button>
-            <Modal open={open} onClose={onCloseModal} center>
-              <div className="border-b border-[#dbdbdb] pb-[20px]">
-                <h2>Bulk Actions</h2>
-              </div>
-              <div className="flex items-center gap-[8px] mt-[32px] mb-[32px]">
-                <input type="checkbox" />
-                <p className="text-[14px]">Mass Delete</p>
-              </div>
-              <div className="w-[100%]">
-
-
-
-
-
-                <Select
-                  isMulti
-                  name="isHiddenFor"
-                  options={allStaff?.map(({ id, label }) => ({ label: label, value: id }))}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  value={taskStatus.isHiddenFor || []}
-                  onChange={(selectedOptions) =>
-                    setTaskStatus((prev) => ({
-                      ...prev,
-                      isHiddenFor: selectedOptions || [] // ensures an array even if no options are selected
-                    }))
-                  }
-                  styles={customStyles}
-                />
-              </div>
-              <p className="text-[red] text-[14px] mt-[10px]">if you do not select any groups assigned to the selected customers will be removed.</p>
-
-              <div className='pr-[10px] pb-3 flex gap-[10px] justify-end mt-[24px]'>
-                {/* Button to close the modal */}
-
-                <button className='second-btn'>Confirm </button>
-              </div>
-
-            </Modal>
+            <button
+              className="border border-[#e5e7eb] text-[14px] rounded-lg shadow-sm p-[7px] w-full sm:w-[123px]"
+              onClick={onOpenModal}
+            >
+              Bulk Action <CachedIcon className="newsidebar-icon" />{" "}
+            </button>
           </div>
-
-          <div className="right-side relative  w-[200px]">
+          <div className="flex items-center relative flex-wrap gap-2 w-full justify-end">
             <input
               type="text"
               placeholder="Search"
-              className="border rounded-3xl border-1 pl-3 h-[38px] pr-7
-    ] focus:outline-none w-[100%] text-[15px] text-[#aeabab]"
-              name="searchDepartment"
-              value={searchDepartment}
-              onChange={(e) => {
-                setSearchDepartMent(e.target.value);
-              }}
+              className="border border-1 p-[10px] h-[38px] pr-7
+] rounded-3xl focus:outline-none w-[100%] md:w-[200px] text-[15px] text-[#000]"
             />
             <SearchIcon
-              className="absolute right-[10px] search-icon top-[12px]   text-[#aeabab]  font-thin text-[#dddddd;
-    ]"
-            />
+              className="absolute right-[10px] search-icon    text-[#000]  font-thin text-[#dddddd;
+]"
+            />{" "}
           </div>
         </div>
-        <div className='bg-white rounded-lg w-full shadow-cs  overflow-x-auto'>
+        <div className="bg-white rounded-lg w-full shadow-cs  overflow-x-auto">
           <table class="table-auto w-[100%] p-[10px]">
             <thead className="bg-[#ffff] ">
               <tr>
                 <th className="text-center p-4 border-b border-[#dbdbdb] roll-name text-sm font-medium ">
                   Department Name
                 </th>
-                <th className="text-center border-b border-[#dbdbdb]  p-4 text-sm font-medium ">Actions</th>
+                <th className="text-center border-b border-[#dbdbdb]  p-4 text-sm font-medium ">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -319,14 +273,12 @@ const DepartmentDetail = () => {
                   </td>
                 </tr>
               ) : departments && departments.length > 0 ? (
-                
                 departments.slice(0, rowsToShow).map((dep) => (
                   <tr key={dep.id} className="border-b  border-[#dbdbdb] pb-2">
                     <td className="pt-4 pb-3 pl-3 border-r border-[#dbdbdb]">
                       <Link to="/" className="text-[#27004a] text-[14px]">
                         {dep.department_name}
                       </Link>
-
                     </td>
                     <td className="flex pt-4 gap-2 justify-center">
                       <Link
@@ -338,21 +290,26 @@ const DepartmentDetail = () => {
                       >
                         <BorderColorIcon className="text-[#27004a] font-light cursor-pointer text-[10px]]" />
                       </Link>
-                      <button onClick={() =>  {
-                         deleteDepartments(dep.id)
+                      <button
+                        onClick={() => {
+                          deleteDepartments(dep.id);
 
-                        onOpenModal10()
-                      }}>
-                        <DeleteIcon
-                          className="text-red-500 cursor-pointer"
+                          onOpenModal10();
+                        }}
+                      >
+                        <DeleteIcon className="text-red-500 cursor-pointer" />
+                      </button>
+                      {open10 && (
+                        <ConfirmationModal
+                          setClose={onCloseModal10}
+                          id={dep.id}
+                          isLoading={isLoading}
+                          callback={deleteDepartments}
                         />
-                      </button> 
-                      {open10 && <ConfirmationModal setClose={onCloseModal10} id={dep.id} isLoading={isLoading} callback={deleteDepartments}/>}
+                      )}
                     </td>
                   </tr>
                 ))
-
-
               ) : (
                 <tr className="h-[70px]">
                   <td
