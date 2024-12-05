@@ -1,10 +1,6 @@
-
-
-
 import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CachedIcon from "@mui/icons-material/Cached";
 import SearchIcon from "@mui/icons-material/Search";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
@@ -12,30 +8,21 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useGlobalContext } from "../../../Context/GlobalContext";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteIcon from "@mui/icons-material/Delete";
-// import Modal from "react-modal";
 import CloseIcon from "@mui/icons-material/Close";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { IoIosArrowDown } from "react-icons/io";
-import { FiPlus } from "react-icons/fi";
 import Select from "react-select";
-import { MdOutlineDone } from "react-icons/md";
-import CustomDialog from "./DialougeBox";
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
-import ClipLoader from 'react-spinners/ClipLoader';
-import ReactDOM from 'react-dom';
-import 'react-responsive-modal/styles.css';
-import { Modal } from 'react-responsive-modal';
+import ClipLoader from "react-spinners/ClipLoader";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 import { IoMdArrowDropright } from "react-icons/io";
-
-
 
 const Clients = () => {
   const [isOn3, setIsOn3] = useState(false);
 
   const toggleSwitch3 = () => {
     setIsOn3(!isOn3);
-  }
+  };
   const [open8, setOpen8] = useState(false);
 
   const onOpenModal8 = () => setOpen8(true);
@@ -43,11 +30,10 @@ const Clients = () => {
 
   const [allStaff, setAllStaff] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [departments, setDepartments] = useState([])
+  const [departments, setDepartments] = useState([]);
   const [companyName, setCompanyName] = useState("");
   const [searchedClients, setSearchClients] = useState(null);
   const [rowsToShow, setRowsToShow] = useState(25);
-
 
   const [taskStatus, setTaskStatus] = useState({
     name: "",
@@ -55,48 +41,44 @@ const Clients = () => {
     order: "",
     isHiddenFor: [],
     canBeChangedTo: [],
-  })
-
-
+  });
 
   const fetchAllStaff = async () => {
-    const response = await fetch(baseUrl + 'staff');
+    const response = await fetch(baseUrl + "staff");
     const data = await response.json();
-    setAllStaff(data?.map((staff) => {
-      return {
-        id: staff?.id,
-        label: staff?.name
-      }
-    }));
-  }
+    setAllStaff(
+      data?.map((staff) => {
+        return {
+          id: staff?.id,
+          label: staff?.name,
+        };
+      })
+    );
+  };
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: '#F4F5F9',
-      borderColor: '#E2E8F0',
-      minHeight: '38px',
+      backgroundColor: "#F4F5F9",
+      borderColor: "#E2E8F0",
+      minHeight: "38px",
     }),
     multiValue: (provided) => ({
       ...provided,
-      backgroundColor: '#E2E8F0',
+      backgroundColor: "#E2E8F0",
     }),
     multiValueLabel: (provided) => ({
       ...provided,
-      fontSize: '14px',
+      fontSize: "14px",
     }),
     multiValueRemove: (provided) => ({
       ...provided,
-      color: '#4A5568',
-      ':hover': {
-        backgroundColor: '#CBD5E0',
-        color: '#2D3748',
+      color: "#4A5568",
+      ":hover": {
+        backgroundColor: "#CBD5E0",
+        color: "#2D3748",
       },
     }),
   };
-
-
-
-
 
   const [isOpen15, setIsOpen15] = useState(false);
 
@@ -122,8 +104,6 @@ const Clients = () => {
   };
   //salary dropdown
   const [isOpen1, setIsOpen1] = useState(false);
-
-
 
   const toggleDropdown1 = () => {
     setIsOpen1(!isOpen1);
@@ -198,9 +178,9 @@ const Clients = () => {
   useEffect(() => {
     console.log(clientData);
     if (clientData) {
-      clientData.map(client => {
+      clientData.map((client) => {
         console.log(client.id);
-      })
+      });
     }
   }, [clientData]);
 
@@ -218,11 +198,10 @@ const Clients = () => {
       } else {
         openToast(res.message);
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error, "error");
     }
-  }
+  };
 
   //   handle search company
   const handleSearchCompany = async () => {
@@ -237,15 +216,13 @@ const Clients = () => {
       if (response.status === 200) {
         console.log(result);
         setSearchClients(result);
-
       } else {
         console.log("data is not filtered");
         openToast(result.message);
       }
     } catch (error) {
       console.error("Error searching staff:", error);
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -374,20 +351,18 @@ const Clients = () => {
 
   useEffect(() => {
     if (selectedClient && selectedClient.clientDetails) {
-      setCompany(selectedClient.clientDetails.company)
-      setVatNumber(selectedClient.clientDetails.vat_number)
-      setPhone(selectedClient.mobile)
-      setWebsite(selectedClient.clientDetails.website)
-      setAddress(selectedClient.clientDetails.address)
-      setCity(selectedClient.clientDetails.city)
-      setState(selectedClient.clientDetails.state)
-      setZipCode(selectedClient.clientDetails.zip_code)
-      setCountry(selectedClient.clientDetails.country)
-      setClientGroup(selectedClient.clientDetails.groups)
-
-
+      setCompany(selectedClient.clientDetails.company);
+      setVatNumber(selectedClient.clientDetails.vat_number);
+      setPhone(selectedClient.mobile);
+      setWebsite(selectedClient.clientDetails.website);
+      setAddress(selectedClient.clientDetails.address);
+      setCity(selectedClient.clientDetails.city);
+      setState(selectedClient.clientDetails.state);
+      setZipCode(selectedClient.clientDetails.zip_code);
+      setCountry(selectedClient.clientDetails.country);
+      setClientGroup(selectedClient.clientDetails.groups);
     }
-  }, [selectedClient])
+  }, [selectedClient]);
 
   const [deleteClient, setDeleteClient] = useState();
   const updateData = async (e) => {
@@ -396,23 +371,32 @@ const Clients = () => {
       const result = await fetch(baseUrl + "/client/" + selectedClient.id, {
         method: "PUT",
         headers: {
-          "Content-type": "application/json"
+          "Content-type": "application/json",
         },
-        body: JSON.stringify({ company: company, vat_number: vatNumber, phone: phone, website: website, groups: selectedGroups, currency: currency, default_language: language, address: address, country: country, state: state, city: city, zip_code: zipCode })
-      })
+        body: JSON.stringify({
+          company: company,
+          vat_number: vatNumber,
+          phone: phone,
+          website: website,
+          groups: selectedGroups,
+          currency: currency,
+          default_language: language,
+          address: address,
+          country: country,
+          state: state,
+          city: city,
+          zip_code: zipCode,
+        }),
+      });
       const res = await result.json();
       if (result.status == 200) {
-        fetchDetail()
-        openToast(res.message)
-      }
-      else (
-        openToast(res.message)
-      )
-    }
-    catch (error) {
+        fetchDetail();
+        openToast(res.message);
+      } else openToast(res.message);
+    } catch (error) {
       console.log("error", error);
     }
-  }
+  };
 
   async function deleteData(id) {
     console.log(id);
@@ -456,7 +440,6 @@ const Clients = () => {
           </Link>
         </div>
 
-
         <div className="border border-[#dbdbdb] shadow-cs rounded-lg p-[20px]">
           <h2 className="font-medium mb-[10px] flex gap-[6px] items-center">
             {" "}
@@ -464,82 +447,52 @@ const Clients = () => {
             Clients
           </h2>
 
-         
-          <div className='flex mb-4 justify-between p-3 flex-col gap-2 pl-[0] sm:flex-row sm:gap-0'>
-          <div className='left-side '>
-            <select
-              onChange={handleSelectChange}
-              className=' border border-[#e5e7eb] p-[7px] text-[14px]  shadow-sm  mr-0 sm:mr-2  rounded-md  focus:outline-none'>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-              <option value="120">120</option>
+          <div className="flex items-center justify-between sm:flex-row flex-col gap-2 mb-3">
+            <div className="flex items-center flex-wrap gap-2 sm:flex-row flex-col w-full">
+              <select
+                onChange={handleSelectChange}
+                className=" border border-[#e5e7eb] p-[7px] text-[14px] shadow-sm rounded-md w-full sm:w-[60px] focus:outline-none"
+              >
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="120">120</option>
+              </select>
+              <select
+                onChange={(e) => setExportFormat(e.target.value)}
+                className="border border-[#e5e7eb] p-[7px]  text-[14px] shadow-sm rounded-md w-full sm:w-[67px] focus:outline-none"
+              >
+                <option value="CSV">CSV</option>
+                <option value="PDF">PDF</option>
+                <option value="Print">Print</option>
+              </select>
 
-            </select>
-
-            <select onChange={(e) => setExportFormat(e.target.value)}
-              className='border border-[#e5e7eb] p-[7px]  text-[14px] shadow-sm rounded-md  focus:outline-none'>
-              <option value="CSV">CSV</option>
-              <option value="PDF">PDF</option>
-              <option value="Print">Print</option>
-            </select>
-
-            <button
-              onClick={handleExport}
-              className='ml-2 bg-[#27004a] export-project-btn text-white p-[7px] text-[14px] rounded-md cursor-pointer'
-            >
-              Export File
-            </button>
-            <button className="border border-[#e5e7eb] export-project-btn text-[14px] ml-[10px] rounded-lg shadow-sm p-[7px] " onClick={onOpenModal} >Bulk Action  <CachedIcon className="newsidebar-icon" /> </button>
-            <Modal open={open} onClose={onCloseModal} center>
-              <div className="border-b border-[#dbdbdb] pb-[20px]">
-                <h2>Bulk Actions</h2>
-              </div>
-              <div className="flex items-center gap-[8px] mt-[32px] mb-[32px]">
-                <input type="checkbox" />
-                <p className="text-[14px]">Mass Delete</p>
-              </div>
-              <div className="w-[100%]">
-
-
-                <Select
-                  isMulti
-                  name="isHiddenFor"
-                  options={allStaff?.map(({ id, label }) => ({ label: label, value: id }))}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  value={taskStatus.isHiddenFor || []}
-                  onChange={(selectedOptions) =>
-                    setTaskStatus((prev) => ({
-                      ...prev,
-                      isHiddenFor: selectedOptions || [] // ensures an array even if no options are selected
-                    }))
-                  }
-                  styles={customStyles}
-                />
-              </div>
-
-              <p className="text-[red] text-[14px] mt-[10px]">if you do not select any groups assigned to the selected customers will be removed.</p>
-
-              <div className='pr-[10px] pb-3 flex gap-[10px] justify-end mt-[24px]'>
-
-                <button className='second-btn'>Confirm </button>
-              </div>
-
-            </Modal>
-
-
-
-
+              <button
+                onClick={handleExport}
+                className="bg-[#27004a] text-white p-[7px] text-[14px] w-full sm:w-[83px] rounded-md cursor-pointer"
+              >
+                Export File
+              </button>
+              <button
+                className="border border-[#e5e7eb] text-[14px] rounded-lg shadow-sm p-[7px] w-full sm:w-[123px]"
+                onClick={onOpenModal}
+              >
+                Bulk Action <CachedIcon className="newsidebar-icon" />{" "}
+              </button>
+            </div>
+            <div className="flex items-center relative flex-wrap gap-2 w-full justify-end">
+              <input
+                type="text"
+                placeholder="Search"
+                className="border border-1 p-[10px] h-[38px] pr-7
+] rounded-3xl focus:outline-none w-[100%] md:w-[200px] text-[15px] text-[#000]"
+              />
+              <SearchIcon
+                className="absolute right-[10px] search-icon    text-[#000]  font-thin text-[#dddddd;
+]"
+              />{" "}
+            </div>
           </div>
-
-          <div className='right-side relative  w-[200px]'>
-            <input type='text' placeholder='Search' className='border border-1 p-[10px] h-[38px] pr-7
-] rounded-3xl focus:outline-none w-[100%] text-[15px] text-[#000]' />
-            <SearchIcon className='absolute right-[10px] search-icon    text-[#000]  font-thin text-[#dddddd;
-]'/>
-          </div>
-        </div>
 
           <div className="bg-white rounded-lg w-full shadow-cs border border-[#dcdbdb] overflow-x-auto">
             <table className="w-full table-auto border border-[#dcdbdb] rounded-lg overflow-hidden border-collapse">
@@ -549,38 +502,41 @@ const Clients = () => {
                 onClick={toggleAccordion}
               >
                 <tr>
-                  <th className="border-r p-2 flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
-                    <IoMdArrowDropright className={`text-[20px] transition-transform duration-200 ${isOpen ? "rotate-90 text-[black]" : "rotate-0"}`}
+                  <th className="border-r p-3 flex justify-center items-center text-xs font-medium whitespace-nowrap text-center">
+                    <IoMdArrowDropright
+                      className={`text-[20px] transition-transform duration-200 ${
+                        isOpen ? "rotate-90 text-[black]" : "rotate-0"
+                      }`}
                     />
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     #
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     Name
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     Company
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     Primary Contact
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     Primary Email
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     Phone
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     Active
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     Groups
                   </th>
-                  <th className="border-r p-2 text-xs font-medium whitespace-nowrap text-center">
+                  <th className="border-r p-3 text-xs font-medium whitespace-nowrap text-center">
                     Date Created
                   </th>
-                  <th className="p-2 text-xs font-medium text-center">
+                  <th className="p-3 text-xs font-medium text-center">
                     Action
                   </th>
                 </tr>
@@ -588,21 +544,30 @@ const Clients = () => {
 
               {/* Conditionally Rendered Table Body */}
               {isOpen && (
-                <tbody className={`transition-body ${isOpen ? "open" : ""}`}  >
+                <tbody className={`transition-body ${isOpen ? "open" : ""}`}>
                   {isLoading && clientData.length === 0 ? (
                     <tr className="h-[100px]">
-                      <td colSpan="10" className="text-center text-gray-600 text-sm font-semibold py-4">
+                      <td
+                        colSpan="10"
+                        className="text-center text-gray-600 text-sm font-semibold py-4"
+                      >
                         <ClipLoader color="#4A90E2" size={50} />
                       </td>
                     </tr>
-                  ) : searchedClients === null && clientData && clientData.length > 0 ? (
+                  ) : searchedClients === null &&
+                    clientData &&
+                    clientData.length > 0 ? (
                     clientData?.map((item, index) => (
                       <tr key={item?.id} className="border-b border-gray-300">
                         <td className="p-2 text-center border-r border-[#dbdbdb]">
                           <input type="checkbox" className="text-xs h-4" />
                         </td>
-                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">{index + 1}</td>
-                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">{item?.name}</td>
+                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">
+                          {index + 1}
+                        </td>
+                        <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">
+                          {item?.name}
+                        </td>
                         <td className="p-2 whitespace-nowrap border-r border-[#dbdbdb] text-xs text-center">
                           {item?.clientDetails?.company}
                         </td>
@@ -618,12 +583,17 @@ const Clients = () => {
                         <td className="text-[11px] font-medium border-r border-[#dbdbdb] p-[10px] whitespace-nowrap">
                           <div className="flex items-center justify-center gap-[6px]">
                             <div
-                              className={`${item?.status ? "bg-[#8a25b0]" : "bg-gray-300"} relative inline-block w-12 h-6 rounded-full transition-colors duration-300 ease-in-out cursor-pointer`}
+                              className={`${
+                                item?.status ? "bg-[#8a25b0]" : "bg-gray-300"
+                              } relative inline-block w-12 h-6 rounded-full transition-colors duration-300 ease-in-out cursor-pointer`}
                               onClick={toggleSwitch1}
                             >
                               <span
-                                className={`${item?.status == "active" ? "translate-x-6" : "translate-x-0"
-                                  } inline-block w-6 h-6 bg-[#f3ecec] rounded-full transform transition-transform duration-300 ease-in-out`}
+                                className={`${
+                                  item?.status == "active"
+                                    ? "translate-x-6"
+                                    : "translate-x-0"
+                                } inline-block w-6 h-6 bg-[#f3ecec] rounded-full transform transition-transform duration-300 ease-in-out`}
                               />
                             </div>
                           </div>
@@ -632,7 +602,9 @@ const Clients = () => {
                           {item?.groups}
                         </td>
                         <td className="p-2 text-xs border-r border-[#dbdbdb] text-center whitespace-nowrap ">
-                          {new Date(item?.clientDetails?.created_at).toDateString()}
+                          {new Date(
+                            item?.clientDetails?.created_at
+                          ).toDateString()}
                         </td>
                         <td className="p-2  flex justify-center gap-2">
                           <BorderColorIcon
@@ -641,26 +613,38 @@ const Clients = () => {
                           />
 
                           <div>
-                            <button onClick={() => {
-                              setDeleteClient(item.id)
-                              onOpenModal8()
-                            }}>
-                              <DeleteIcon
-                                className="text-red-500 cursor-pointer"
-                              />
+                            <button
+                              onClick={() => {
+                                setDeleteClient(item.id);
+                                onOpenModal8();
+                              }}
+                            >
+                              <DeleteIcon className="text-red-500 cursor-pointer" />
                             </button>
                             <Modal open={open8} onClose={onCloseModal8} center>
                               <div className="flex items-center justify-center h-[120px]">
-                                <h2 className="text-[18px] font-medium text-center text-[#27004a]">Are you sure want to delete this</h2>
-
+                                <h2 className="text-[18px] font-medium text-center text-[#27004a]">
+                                  Are you sure want to delete this
+                                </h2>
                               </div>
                               <div className="flex items-center justify-around ">
-                                <button className="allcrm-btn" onClick={() => { deleteData(deleteClient) }}>Yes , Confirm</button>
-                                <button className="allcrm-btn" onClick={() => setOpen8(false)}>No , Cancel</button>
+                                <button
+                                  className="allcrm-btn"
+                                  onClick={() => {
+                                    deleteData(deleteClient);
+                                  }}
+                                >
+                                  Yes , Confirm
+                                </button>
+                                <button
+                                  className="allcrm-btn"
+                                  onClick={() => setOpen8(false)}
+                                >
+                                  No , Cancel
+                                </button>
                               </div>
                             </Modal>
                           </div>
-
                         </td>
                       </tr>
                     ))
@@ -671,8 +655,12 @@ const Clients = () => {
                         <td className="p-2 text-center border-r">
                           <input type="checkbox" className="text-xs h-4" />
                         </td>
-                        <td className="p-2 text-xs text-center whitespace-nowrap ">{index + 1}</td>
-                        <td className="p-2 text-xs text-center whitespace-nowrap ">{client?.name}</td>
+                        <td className="p-2 text-xs text-center whitespace-nowrap ">
+                          {index + 1}
+                        </td>
+                        <td className="p-2 text-xs text-center whitespace-nowrap ">
+                          {client?.name}
+                        </td>
                         <td className="p-2 text-xs text-center whitespace-nowrap ">
                           {client?.company}
                         </td>
@@ -702,7 +690,9 @@ const Clients = () => {
                           {client?.groups}
                         </td>
                         <td className="p-2 text-xs text-center whitespace-nowrap ">
-                          {new Date(client?.clientDetails?.created_at).toDateString()}
+                          {new Date(
+                            client?.clientDetails?.created_at
+                          ).toDateString()}
                         </td>
                         <td className="p-2 flex justify-center gap-2">
                           <BorderColorIcon
@@ -729,26 +719,28 @@ const Clients = () => {
                 </tbody>
               )}
             </table>
-
           </div>
 
-
-          <div className='flex justify-between p-[14px] pb-[0] w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0'>
-            <p className=' text-[#a5a1a1] text-[14px]'>Showing 1 to {rowsToShow} of {departments.length} entries</p>
-            <div className='pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md'>
-              <Link to="#" className='text-[12px]  pt-2 pb-[8px]'>Previous</Link>
-              <span className='text-[12px] bg-[#27004a] flex items-center  text-white pl-3 pr-3 '>1</span>
-              <Link to="#" className='text-[12px]  pt-2 pb-[8px] '>Next</Link>
-
+          <div className="flex justify-between p-[14px] pb-[0] w-[100%] items-center  flex-col gap-2  sm:flex-row sm:gap-0">
+            <p className=" text-[#a5a1a1] text-[14px]">
+              Showing 1 to {rowsToShow} of {departments.length} entries
+            </p>
+            <div className="pagination flex gap-2 border pt-0 pl-4 pb-0 pr-4 rounded-md">
+              <Link to="#" className="text-[12px]  pt-2 pb-[8px]">
+                Previous
+              </Link>
+              <span className="text-[12px] bg-[#27004a] flex items-center  text-white pl-3 pr-3 ">
+                1
+              </span>
+              <Link to="#" className="text-[12px]  pt-2 pb-[8px] ">
+                Next
+              </Link>
             </div>
           </div>
         </div>
-
-
       </div>
 
       <Modal
-
         isOpen={selectedClient ? true : false}
         onAfterOpen={afterOpenModal2}
         onRequestClose={closeModal2}
@@ -1032,12 +1024,7 @@ const Clients = () => {
           </form>
         </div>
       </Modal>
-
-
-
-
-
     </div>
   );
 };
-export default Clients
+export default Clients;

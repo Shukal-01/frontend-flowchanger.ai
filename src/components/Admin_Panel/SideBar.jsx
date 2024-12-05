@@ -645,7 +645,7 @@ const SideBar = ({ toggleSideBar }) => {
               </div>
 
               {/* Sidebar Links */}
-              <ul className="p-4">
+              <ul className="pt-[0] pb-[20px] pl-[20px] pr-[20px] ">
                 <Link
                   to="/status-main-page"
                   onClick={() => handlePageClick("status")}

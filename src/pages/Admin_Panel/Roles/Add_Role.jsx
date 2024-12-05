@@ -374,7 +374,7 @@ const AddNewRole = () => {
 
                                 {/* Chat Module Section */}
                                 <tr className='border border-1'>
-                                    <td className='p-3 text-[16px] border-r-[1px] text-[#64748b] font-normal'>Chat Module</td>
+                                    <td className='p-3 text-[16px] whitespace-nowrap border-r-[1px] text-[#64748b] font-normal'>Chat Module</td>
                                     <td className='p-3'>
                                         <input
                                             type="checkbox"
